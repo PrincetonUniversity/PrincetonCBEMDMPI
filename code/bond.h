@@ -13,11 +13,14 @@
 #include <vector>
 #include <string>
 #include <map>
+#include "misc.h"
 
 using namespace std;
+using namespace misc;
 
 //! Namespace containing pertinent Bond information
 namespace bond {
+	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	
 	class Bond {
 	public:
