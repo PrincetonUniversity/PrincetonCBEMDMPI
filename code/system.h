@@ -31,11 +31,9 @@ namespace system {
 		System();
 		~System();
 		int read_xml (const string filename);			//!< Read atom coordinates and properties from a file (xml)
-		int set_integrator (const integrator new_int);	//!< Set the system integrator
 		int set_box (const double* new_box);			//!< Set the system box size
 		void set_T (const double T) {Temp_ = T;}		//!< Set the system temperature
 		void set_P (const double P) {Press_ = P;}		//!< Set the system pressure
-		int integrate ();								//!< Integrate the system forward in time one step
 		int natoms () const {return atoms_.size();}		//!< Return the number of atoms currently in the system
 		int nbonds() const {return bonds_.size();}		//!< Return the number of bonds currently in the system
 		int add_atom_type (const string atom_name);		//!< Index an atom name
@@ -51,13 +49,13 @@ namespace system {
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
+		double KE_, U_;									//!< Total internal kinetic energy and potential energy
 		vector <double> box_;							//!< System cartesian dimensions
 		double dt_;										//!< Timestep size
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		vector < pair < pair <int, int>, int> > bonded_;//!< Vector of indices of atoms in atoms_ that are bonded, and the type of bond they have
 		vector <Bond> bond_;							//!< Vector of bond types in the system
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
-		Integrator sys_integrator_;						//!< System integrator function
 		map <string, int> atom_type_;					//!< Maps user specified name of atom type to internal index
 		map <string, int> bond_type_;					//!< Maps user specified name of bond type to internal index
 		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
@@ -180,31 +178,8 @@ namespace system {
 			return 1;
 		}
 	}
-
-	//!< Run (i.e. integrate) a system forward in time for a specified number of timesteps
-	/*!
-	 Function returns 0 if successful, -1 if it encountered an error.
-	 \param [in] timesteps Number of timesteps to integrate over
-	 */
-	int run (const int timeteps) {
-		// The way this function is written it can be easily interpreted by SWIG with python!
-		// Inside this function we should initially check if the system is "prepared", i.e. all necessary vars specified
-		
-		// loop for timestep steps, report any errors as encountered
-		
-		// That's it!
-	}
 	
 	// Can define addition "system-relevant" functions, classes, etc. below...
-	
-	
-	
-	
-	
-	
-	
-	
-	// need integrator class (make it inheritable so that sub-classes of integrators can be defined)
 
 }
 
