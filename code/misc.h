@@ -1,0 +1,127 @@
+/**
+ Miscellaneous Routines
+ \author Nathan A. Mahynski
+ **/
+
+#ifndef MISC_H_
+#define MISC_H_
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <string>
+#include <map>
+#include <assert.h>
+
+//! Namespace for miscellaneous functions and tools
+namespace misc {
+	enum {BAD_MEM = 1};				//!< Errors that are returned to command line if a failure condition is met
+	const int ERR_FLAG_SIZE = 1000; //!< The maximum size allowed in an error or warning flag
+	
+	//! Report an error message
+	/*!
+	 Error messages are piped to stderr not stdout.
+	 \param [in] \*msg Character string to print out.
+	 \param [in] \*file __FILE__ this function is called from.
+	 \param [in] line __LINE__ this function is called from.
+	 */
+	void flag_error (const char *msg, const char *file, const int line) {			
+		fprintf(stderr, "*** Error :: %s :: [FILE: %s, LINE %d] ***\n", msg, file, line);
+	}
+	
+	//! Report a notification
+	/*!
+	 Notification messages are piped to stderr not stdout.
+	 \param [in] \*msg Character string to print out.
+	 \param [in] \*file __FILE__ this function is called from.
+	 \param [in] line __LINE__ this function is called from.
+	 */
+	void flag_notify (const char *msg, const char *file, const int line) {			
+		fprintf(stderr, "--- Note :: %s :: [FILE: %s, LINE %d] ---\n", msg, file, line);
+	}
+	
+	//! Safely open a file
+	/*!
+	 Tries to open a file, if fails it returns a NULL pointer and alerts the user with an error message.  If it suceeds it returns the file pointer.
+	 \param [in] \*filename Character name of file to open.
+	 \param [in] \*opt File option ("r","w","rw+",etc.).
+	 */
+	FILE *mfopen(const char *filename, const char *opt) {
+		FILE *fp1;
+		char err_msg[ERR_FLAG_SIZE]; 
+		if (!(fp1 = fopen(filename, opt))) {
+			sprintf(err_msg, "Could not open %s with %s permissions", filename, opt);
+			flag_error(err_msg, __FILE__, __LINE__);
+			return NULL;
+		}
+		return fp1;
+	}
+	
+	//! Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries.
+	/*!
+	 Recall that the simulation box is defined such that, regardless of the input file, it is normalized to 
+	 have a corner at (0,0,0).  If this routine fails, it returns an empty vector (size = 0).
+	 \param [in] coords Vector of cartesian coordinates.
+	 \param [in] box Vector of box dimensions (L_x, L_y, L_z).
+	 */
+	vector <double> pbc (const vector <double> coords, const vector <double> box) {
+		vector <double> in_box(3, 0.0), bad;
+		char err_msg[ERR_FLAG_SIZE]; 
+		
+		if (coords.size() != 3) {
+			sprintf(err_msg, "Number of coordinate dimensions incorrect, cannnot compute pbc");
+			flag_error(err_msg, __FILE__, __LINE__);
+			return bad;
+		}
+		if (box.size() != 3) {
+			sprintf(err_msg, "Number of box dimensions incorrect, cannnot compute pbc");
+			flag_error(err_msg, __FILE__, __LINE__);
+			return bad;
+		}
+		
+		for (int i = 0; i < 3; ++i) {
+			if (box[i] < 0.0) {
+				sprintf(err_msg, "Box dimension %d = %g < 0.0, cannnot compute pbc", i+1, box[i]);
+				flag_error(err_msg, __FILE__, __LINE__);
+				return bad;
+			}
+
+			in_box[i] = coords[i];
+			while (in_box[i] < 0.0) {
+				in_box[i] += box[i];
+			}
+			while (in_box[i] >= box[i]) {
+				in_box[i] -= box[i];
+			}
+		}
+		
+		return in_box;
+	}
+	
+	//! Return the square of the minimum image distance between 2 coordinate vectors
+	/*!
+	 \param [in] coords1 Vector of cartesian coordinates of one atom
+	 \param [in] coords2 Vector of cartesian coordinates of the other atom
+	 \param [in] box Vector of cartesian coordinates of the box
+	 */
+	double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
+		assert (coords1.size() == 3);
+		assert (coords2.size() == 3);
+		assert (box.size() == 3);
+		
+		double ans = 0.0;
+		for (int i = 0; i < 3; ++i) {
+			dist = coords1[i] - coords2[i];
+			dist2 = dist*dist;
+			shift = round(dist2/(box[i]*box[i]));
+			ans += (dist2 - shift);
+		}
+		
+		return ans;
+	}
+}
+
+
+#endif
