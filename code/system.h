@@ -57,7 +57,7 @@ namespace system {
 		unordered_map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
 		unordered_map <string, int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
 		unordered_map <int, int> glob_to_loc_id_;		//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
-		int *on_proc_;									//!< Stores processor each atom (by global sys_index) "lives" on; array not vector for MPI, since needs to be regularly passed.
+		vector <int> on_proc_;							//!< Stores processor each atom (by global sys_index) "lives" on
 		int num_neighbor_procs;							//!< Number of neighboring processors this system must communicate with
 		int *neighbor_procs_;							//!< Array of ranks of neighboring processors this system must communicate with
 	};
@@ -127,21 +127,18 @@ namespace system {
 			atoms_.erase(it-shift+indices[i]);
 			++shift;
 		}
-		
-		// update on_proc here?? is this responsible for this?
-		
-		
 		return shift;
 	}
 				 
 	/*!
 	 Attempt to push an atom(s) into the system.  This assigns the map automatically to link the atoms global index to the local storage location.
-	 This function returns an integer value of the number of atoms added to the system so the user can check that number was what they wanted. This 
-	 reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
+	 This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
+	 \param [in] natoms Length of the array of atoms to add to the system.
 	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
+	 \param [out] \*update_proc Array of global indices that have just been added to this proc to be used for updating on_proc_ list.
 	 */
-	int System::add_atoms (Atom *new_atoms) {
-		int natoms = new_atoms.size(), index = atoms_.size();
+	int* System::add_atoms (const int natoms, Atom *new_atoms) {
+		int index = atoms_.size(), *update_proc = new int [natoms];
 		if (natoms < 1) {
 			return natoms;
 		}
@@ -153,17 +150,15 @@ namespace system {
 			catch (bad_alloc& ba) {
 				sprintf(err_msg, "Could not allocate space for new atoms in the system");
 				flag_error (err_msg, __FILE__, __LINE__);
+				finalize();
 				exit(BAD_MEM);
 			}
 			glob_to_loc_id_[new_atoms[i].sys_index] = index;
+			update_proc[i] = new_atoms[i].sys_index;
 			index++;
 		}
-		
-		// update on_proc here?? is this responsible for this?
-		
-		
-		
-		return natoms;
+
+		return update_proc;
 	}
 	
 	/*!

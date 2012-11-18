@@ -68,11 +68,10 @@ int initialize (const char *filename, int *rank, int *nprocs, System *sys) {
 	return 0;
 }
 
-
 int finalize () {
 	// free atom type after we are done running
 	delete_MPI_atom();
 	MPI_Finalize();
-	return 0;
+	return flag;
 }
 #endif
