@@ -17,7 +17,7 @@
 
 //! Namespace for miscellaneous functions and tools
 namespace misc {
-	enum {BAD_MEM = 1, ILLEGAL_VALUE = 2};				//!< Values that are returned if a failure condition is met
+	enum {SAFE_EXIT = 0, BAD_MEM = 1, ILLEGAL_VALUE = 2, MPI_FAIL = 3, INTEGRATE_FAIL = 4};				//!< Values that are returned if a failure condition is met
 	const int ERR_FLAG_SIZE = 1000; //!< The maximum size allowed in an error or warning flag
 	
 	//! Report an error message

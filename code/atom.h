@@ -12,30 +12,19 @@
 
 //! Namespace containing pertinent Atom information
 namespace atom {
-  
+	const int MAX_BONDS = 2;		//!< Maximum number of bonds any atom may have
+	
+	//! Atom class is defined so as to be easy to pass with MPI 
 	class Atom {
-	public:
-		double *pos() const {return pos_;}				//!< Report atom position
-		double *vel() const {return vel_;}				//!< Report atom velocity
-		int type() const {return type_;}				//!< Report internally indexed atom type
-		double mass() const {return mass_;}				//!< Report atomic mass
-		double diam() const {return diam_;}				//!< Report atomic diameter
-		int sys_index () const {return sys_index_;}		//!< Report index in System vector where this atom has been stored
-		
-		void set_pos (const double new_pos[]);					//!< Set the atom position 
-		void set_vel (const double new_vel[]);					//!< Set the atom velocity
-		void set_diam (const double diam) {diam_ = diam;}		//!< Set the atomic diameter
-		void set_mass (const double mass) {mass_ = mass;}		//!< Set the atomic mass
-		void set_type (const int type) {type_ = type;}			//!< Set the atomic type index
-		void set_index (const int index) {sys_index_ = index;}	//!< Set the system index, which is the position in System's internal vector this atom is located
-		
-	private:
-		double pos_[3];				//!< Cartesian coordinates
-		double vel_[3];				//!< Cartesian velocities
-		int type_;					//!< Internally indexed type of this atom
-		double mass_;				//!< Atomic mass (in reduced units)
-		double diam_;				//!< Atomic diameter (in reduced units)
-		int	sys_index_;				//!< Location in internal vector of System::atoms_
+		double pos[3];				//!< Cartesian coordinates
+		double vel[3];				//!< Cartesian velocities
+		double force[3];			//!< Cartesian force, (fx, fy, fz)
+		double mass;				//!< Atomic mass (in reduced units)
+		double diam;				//!< Atomic diameter (in reduced units)
+		int type;					//!< Internally indexed type of this atom
+		int	sys_index;				//!< Global atom index, i.e. unique in the system
+		int nbonds;					//!< Number of bonds the atom has
+		int bonds[MAX_BONDS];		//!< Global indices of bonds, fixed size for MPI passing
 	};
 	
 	// Can define addition "atom-relevant" functions, classes, etc. below...

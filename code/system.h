@@ -16,6 +16,8 @@
 #include "atom.h"
 #include "bond.h"
 #include "misc.h"
+#include <list>
+#include <algorithm>
 
 using namespace std;
 using namespace atom;
@@ -30,36 +32,57 @@ namespace system {
 	public:
 		System();
 		~System();
-		int read_xml (const string filename);			//!< Read atom coordinates and properties from a file (xml)
-		int set_box (const double* new_box);			//!< Set the system box size
+		int set_box (const double* new_box);			//!< Set the global system box size
 		void set_T (const double T) {Temp_ = T;}		//!< Set the system temperature
 		void set_P (const double P) {Press_ = P;}		//!< Set the system pressure
-		int natoms () const {return atoms_.size();}		//!< Return the number of atoms currently in the system
-		int nbonds() const {return bonds_.size();}		//!< Return the number of bonds currently in the system
+		int natoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor)
 		int add_atom_type (const string atom_name);		//!< Index an atom name
 		int add_bond_type (const string bond_name);		//!< Index a bond name
 		int add_ppot_type (const string ppot_name);		//!< Index a pair potential's name
 		double T() const {return Temp_;}				//!< Report the temperature of the system
 		double P() const {return Press_;}				//!< Report the pressure of the system
 		vector <double> box() const {return box_;}		//!< Report system size
-		double dt() const {return dt_;}					//!< Report the timestep being used by the system
-		int add_atoms (const vector <Atom> *new_atoms);	//!< Add atoms to the system -- this should update the atoms as well with indices
-		int add_bond (const int atom1, const int atom2, const string type);		//!< Add a bond between atoms
+		int add_atoms (Atom *new_atoms);				//!< Add atom(s) to the system 
+		int delete_atoms (const vector <int> indices);	//!< Pop atoms with local indices from local storage
 
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
 		double KE_, U_;									//!< Total internal kinetic energy and potential energy
-		vector <double> box_;							//!< System cartesian dimensions
-		double dt_;										//!< Timestep size
+		vector <double> box_;							//!< Global system cartesian dimensions
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
-		vector < pair < pair <int, int>, int> > bonded_;//!< Vector of indices of atoms in atoms_ that are bonded, and the type of bond they have
 		vector <Bond> bond_;							//!< Vector of bond types in the system
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
-		map <string, int> atom_type_;					//!< Maps user specified name of atom type to internal index
-		map <string, int> bond_type_;					//!< Maps user specified name of bond type to internal index
-		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
+		unordered_map <string, int> atom_type_;			//!< Maps user specified name of atom type to internal index
+		unordered_map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
+		unordered_map <string, int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
+		unordered_map <int, int> glob_to_loc_id_;		//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
+		int *on_proc_;									//!< Stores processor each atom (by global sys_index) "lives" on; array not vector for MPI, since needs to be regularly passed.
+		int num_neighbor_procs;							//!< Number of neighboring processors this system must communicate with
+		int *neighbor_procs_;							//!< Array of ranks of neighboring processors this system must communicate with
 	};
+	
+	//! Initializes a system from a file, automatically handles MPI
+	int initialize (const char *filename, const int rank, System *sys);
+	
+	//!< Decomposes a box into domains for each processor to handle
+	int domain_decomposition (const vector <double> box, const int nprocs, vector < vector <int> > *neighbors);
+	
+	//! Read atom coordinates and properties from a file (xml)
+	int read_xml (const string filename, const int nprocs, System *new_systems);			
+	
+	// declare system before MPI Init
+	// then after initialization each proc has a copy of an empty System
+	// then read from file from proc1 and SEND data to each as it is read in!
+	// i.e. things like T/P are set for all, but atoms only need to be sent to the necessary dest but with global id's
+	// collect and create atoms before hand so that bonds can be assigned before being sent out
+	
+	// bonding -- store global index of atoms each is bonded to on the Atom class so bonds for atoms on each each proc can be cycled quickly
+	
+	// for now do simple force compute on each proc
+	// will need to establish r_cut,max for this
+	// at the beginning of this routine check for atoms close to boundary and send an array as necessary to neighbors
+	// then loop atoms that belong ON that proc with others on same proc and those received to compute their forces
 	
 	/*!
 	 Upon initialization, resize vectors as necessary.  
@@ -74,40 +97,70 @@ namespace system {
 			exit(BAD_MEM);
 		}
 	}
+	
+	/*!
+	 Remove atoms from the system.  Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index.
+	 Returns the number of atoms deleted.
+	 */
+	int delete_atoms (const vector <int> indices) {
+		vector <Atom>::iterator it = atoms_.begin();
+		
+		// sort indices from lowest to highest
+		sort (indices.begin(), indices.end());
+		
+		// pop in this order
+		int shift = 0;
+		for (int i = 0; i < indices.size(); ++i) {
+			// update glob_to_loc for all atoms following the erased atoms
+			if (i < indices.size()-1) {
+				upper = indices[i+1]-shift;
+			} else {
+				upper = atoms_.size();
+			}
+			for (int j = indices[i]+1-shift; j < upper; ++j) {
+				glob_to_loc[atoms_[j].sys_index] -= (shift+1);
+			}
+
+			atoms_.erase(it-shift+indices[i]);
+			++shift;
+		}
+		
+		// update on_proc here?? is this responsible for this?
+		
+		
+		return shift;
+	}
 				 
 	/*!
-	 Attempt to push an atom(s) into the system, these are stored in a vector and the index at which it is stored can be reported using Atom::sys_index().
+	 Attempt to push an atom(s) into the system.  This assigns the map automatically to link the atoms global index to the local storage location.
 	 This function returns an integer value of the number of atoms added to the system so the user can check that number was what they wanted. This 
 	 reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
-	 \param [in] \*new_atoms Pointer to a vector of atoms the user has created elsewhere; a copy is pushed into the system leaving the originals intact.
+	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
 	 */
-	int System::add_atoms (const vector <Atom> *new_atoms) {
-		int natoms = new_atoms->size(), index = atoms_.size();
+	int System::add_atoms (Atom *new_atoms) {
+		int natoms = new_atoms.size(), index = atoms_.size();
 		if (natoms < 1) {
 			return natoms;
 		}
 		
 		for (int i = 0; i < natoms; ++i) {
 			try {
-				atoms_.push_back(new_atoms->at(i));
+				atoms_.push_back(new_atoms[i]);
 			}
 			catch (bad_alloc& ba) {
 				sprintf(err_msg, "Could not allocate space for new atoms in the system");
 				flag_error (err_msg, __FILE__, __LINE__);
 				exit(BAD_MEM);
 			}
-			atoms_[index].set_index(index);
+			glob_to_loc_id_[new_atoms[i].sys_index] = index;
 			index++;
 		}
 		
+		// update on_proc here?? is this responsible for this?
+		
+		
+		
 		return natoms;
-	}
-	
-	/*!
-	 Adds a bond between two atoms.
-	 */
-	int System::add_bond (const int atom1, const int atom2, const string type) {
-		;
 	}
 	
 	/*!

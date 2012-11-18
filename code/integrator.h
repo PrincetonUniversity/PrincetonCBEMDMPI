@@ -31,45 +31,10 @@ namespace integrator {
 		Integrator();
 		~Integrator();
 		virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
-		int set_mpi (const int flag);			//!< Set flag to indicate if using MPI
-		int set_gpu (const int flag);			//!< Set flag to indicate if using GPU's
-		
-	private:
-		int use_mpi_;							//!< Flag to indicate if using MPI to perform calculations
-		int use_gpu_;							//!< Flag to indicate if using GPU's to perform calculations
 	};
 	
 	//! Default constructor sets parallel implementation flags to 0 (false) by default
-	Integrator::Integrator () {
-		use_gpu_ = 0;
-		use_mpi_ = 0;
-	}
-	
-	/*!
-	 \param [in] flag 0 for False, 1 for True.  Anything else will return an error and leave the flag alone.
-	 */
-	int Integrator::set_mpi (const int flag) {
-		if (flag != 0 && flag != 1) {
-			sprintf(err_msg, "Illegal MPI flag for integrator", __FILE__, __LINE__);
-			return ILLEGAL_VALUE;
-		} else {
-			use_mpi_ = flag;
-		}
-	}
-	
-	/*!
-	 \param [in] flag 0 for False, 1 for True.  Anything else will return an error and leave the flag alone.
-	 */
-	int Integrator::set_gpu (const int flag) {
-		if (flag != 0 && flag != 1) {
-			sprintf(err_msg, "Illegal GPU flag for integrator", __FILE__, __LINE__);
-			return ILLEGAL_VALUE;
-		} else {
-			use_gpu_ = flag;
-		}
-	}
-	
-	// More specific integrators include:
+	Integrator::Integrator () {}
 	
 	//! NVE, Verlet
 	class Verlet : public Integrator {
@@ -80,18 +45,12 @@ namespace integrator {
 	// example:
 	int Verlet::step (System *sys) {
 		// write the code to update positions, etc. here
-		// (but this should really go in a .cc file)
-		
+		// you can plan on being able to call a calc_force routine that calculates and stores the instantaneous force in
+		// the cartesian directions
 	}
 	
 	//! NVE, Velocity Verlet
 	class Velocity_verlet : public Integrator {
-	public:
-	private:
-	};
-	
-	//! NVE, Beeman algorithm
-	class Beeman : public Integrator {
 	public:
 	private:
 	};
@@ -124,11 +83,21 @@ namespace integrator {
 	 */
 	int run (System *sys, const Integrator *integrator, const int timeteps) {
 		// The way this function is written it can be easily interpreted by SWIG with python!
-		// Inside this function we should initially check if the system is "prepared", i.e. all necessary vars specified
+		int check = 0;
 		
-		// loop for timestep steps, report any errors as encountered
+		// before starting, need to check that all requisite variables are set
 		
-		// That's it!
+		// execute loops
+		MPI_Barrier(MPI_COMM_WORLD);
+		for (int i = 0; i < timeteps; ++i) {
+			check = integrator->step(sys);
+			if (check != 0) {
+				sprintf(err_msg, "Error encountered during integration after step %d", i+1);
+				flag_error (err_msg, __FILE__, __LINE__);
+				return check;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+		}
 	}
 }
 
