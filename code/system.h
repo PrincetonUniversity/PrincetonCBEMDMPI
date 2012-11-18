@@ -63,7 +63,10 @@ namespace system {
 	};
 	
 	//! Initializes a system from a file, automatically handles MPI
-	int initialize (const char *filename, const int rank, System *sys);
+	int initialize (const char *filename, int *rank, int *nprocs, System *sys);
+	
+	//!< Finalizes a system by performing any last minute tasks that must be done before the simulation finishes.
+	int finalize();
 	
 	//!< Decomposes a box into domains for each processor to handle
 	int domain_decomposition (const vector <double> box, const int nprocs, vector < vector <int> > *neighbors);

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include "mpi.h"
 
 //! Namespace containing pertinent Atom information
 namespace atom {
@@ -27,8 +28,41 @@ namespace atom {
 		int bonds[MAX_BONDS];		//!< Global indices of bonds, fixed size for MPI passing
 	};
 	
-	// Can define addition "atom-relevant" functions, classes, etc. below...
+	//! MPI version of Atom
+	MPI_Datatype MPI_ATOM;
 	
+	//! Creates the MPI_Atom class so it can be passed over MPI
+	/*
+	 \sa initialize
+	 */
+	// (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
+	void create_MPI_ATOM () {
+		int num_types = 2;
+		MPI_Datatype oldtypes[num_types];
+		MPI_Aint offsets[num_types], extent;
+		int blockcounts[num_types];
+		
+		MPI_Type_extent (MPI_DOUBLE, &extent);
+		
+		offsets[0] = 0;
+		blockcounts[0] = 11;
+		oldtypes[0] = MPI_DOUBLE;
+		
+		offsets[1] = (11*extent);
+		blockcounts[1] = (3+MAX_BONDS);
+		oldtypes[1] = MPI_INT;
+		
+		MPI_Type_struct (num_types, blockcounts, offsets, oldtypes, &MPI_ATOM);
+		MPI_Type_commit (&MPI_ATOM);
+	}
+	
+	//! Free the MPI type at the end of the program
+	/*! 
+	 \sa finalize
+	 */
+	void delete_MPI_atom() {
+		MPI_Type_free (&MPI_ATOM);
+	}
 }
 
 #endif
