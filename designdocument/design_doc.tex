@@ -1,0 +1,167 @@
+% PREAMBLE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[10pt]{article}
+\usepackage{geometry}                	% See geometry.pdf to learn the layout options. There are lots.
+\geometry{top=1.0in, bottom=1.0in, left=1.0in, right=1.0in}                   	% ... or a4paper or a5paper or ...
+%\geometry{landscape}                	% Activate for for rotated page geometry
+\usepackage{fancyhdr} 			% This should be set AFTER setting up the page geometry
+\pagestyle{fancy} 				% options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+%\usepackage[parfill]{parskip}   	   	% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{booktabs} 			% for much better looking tables
+\usepackage{array} 				% for better arrays (eg matrices) in maths
+\usepackage{paralist} 			% very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim}			% adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfigure} 			% make it possible to include more than one captioned figure/table in a single float
+\usepackage{algorithmic}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\usepackage{sectsty}
+%\allsectionsfont{\sffamily\mdseries\upshape} 	% (See the fntguide.pdf for font help)
+%\usepackage[utf8]{inputenc} 		% Any characters can be typed directly from the keyboard, eg éçñ
+%\usepackage{textcomp} 		% provide lots of new symbols
+\usepackage{graphicx}  			% Add graphics capabilities
+\usepackage{epstopdf} 			% to include .eps graphics files with pdfLaTeX
+\usepackage{flafter}  			% Don't place floats before their definition
+\usepackage{amsmath,amssymb} 	% Better maths support & more symbols
+\usepackage{bm}  				% Define \bm{} to use bold math fonts
+\usepackage{memhfixc}  			% remove conflict between the memoir class & hyperref
+%\usepackage{pdfsync}  			% enable tex source and pdf output syncronicity
+\usepackage[pdftex,bookmarks,colorlinks,breaklinks]{hyperref}  % PDF hyperlinks, with coloured links
+\hypersetup{linkcolor=black,citecolor=black,filecolor=black,urlcolor=black} % black links, for printed output
+\usepackage{cite}
+\usepackage{mathtools}
+\usepackage{subfigure}			% for putting figures "side-by-side"
+%\usepackage{sidecap}			% sidecaption figures
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{multicol}
+
+%\makeatletter
+%\newenvironment{tablehere}
+  %{\def\@captype{table}}
+  %{}
+
+%\newenvironment{figurehere}
+ % {\def\@captype{figure}}
+ % {}
+%\makeatother
+
+
+% Title Page
+\title{\textbf{CBEMD} Parallelized Molecular Dynamics in Various Thermodynamic Ensembles}
+\author{Nathan A. Mahynski, George A. Khoury, Francesco Ricci, \\Carmeline Dsilva, Arun Prabhu, Junyoung Park}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{figure}[htbp]
+   \centering
+   \includegraphics[width=2.5in]{princeton.jpg}
+\end{figure}
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\newpage
+
+\section{Project Overview}
+We propose to create a package capable of performing parallelized Molecular Dynamics (MD) for several different thermodynamic ensembles. Molecular Dynamics is a widely used simulation technique to estimate macroscopic properties from microscopic features of a particular system. Diffusion coefficients, specific heats, chemical potentials, etc. all properties commonly calculated in MD which are often difficult or impossible to measure in experiment.  MD has applications in fields like material science, pharmaceutical design, cellular biology, thermodynamics, and fluid mechanics.  Due to its simplicity and parallelized algorithm, MD is a common but powerful tool for many scientists and engineers today.
+
+\subsection{Background on Molecular Dynamics}
+MD first initializes a system of bodies, usually thought of as atoms or as a coarse grained collection of several atoms.  Given a user defined interaction potential between these atoms, MD simply integrates Newton's equations of motion, $\overrightarrow{F}=m\overrightarrow{a}$, forward in time.  Thus, the flow of the program follows a well defined set of steps:
+\begin{enumerate}
+    \item Provide initial positions and choose a timestep, dt
+    \item Calculate the forces $\overrightarrow{F} =  -\nabla V (\overrightarrow{r}) $
+    \item Integrate numerically to get the displacement $\overrightarrow{F}$ produces over dt
+    \item Update atom positions and time
+    \item Repeat from step 2 until final time
+\end{enumerate}
+
+Users of any molecular dynamics program must provide the initial coordinates for atoms.  In our project we will provide an additional interface for the user to help generate some configurations based on a questionnaire. Different potential functions can be used to describe the system to different levels of accuracy. These functions typically try to capture Van der Waals interactions due to coupling of electron clouds.  But often one needs to capture additional effects, such as electrostatic potential (long range charge-charge interactions), and solvation interactions (Debye screening effects). Our project provides an easily extensible interface for the user to add additional interactions easily in the future.
+
+The timestep in order for the simulations to be numerically stable are typically on the order of a femtosecond. The longest simulations for macromolecules such as proteins have been reported to be on the microsecond timescale, but can require specialized supercomputing clusters such as ANTON, GPUs, or other specialized hardware.
+
+%A typical MD cascade involves the minimization of the initial configuration of a system to a local minimum. Next, the system is heated, which may involve restraining the atoms of the system, or gently over longer periods of time. The system is next equilibrated and submitted for production, where temperatures, pressures, energies, and other properties intrinsic to the simulation are recorded. Higher order properties of the system are usually recorded here as well. Temperature controls the velocity of the system, and can be related to velocity using the equipartition theorem and the Maxwell-Boltzmann distribution.
+
+The evaluation of the potential energy and forces can be parallelized, which is the primary reason MD has met with such great success.  As this is a numerical integration, there are many different algorithms that have been developed, each with a slightly different purpose and long time numerical stability.  These include and are not limited to:
+
+\begin{enumerate}
+    \item Verlet
+    \item Velocity Verlet
+    \item Leapfrog
+\end{enumerate}
+
+But the above algorithms are designed to conserve energy (E), at constant volume (V), and number of particles (N).  This NVE ensemble is known in thermodynamics as the microcanonical ensemble and reaches equilibrium when the entropy of the system reaches a maximum. However, this ensemble is almost never applicable to real world problems.
+
+Other widely used ensembles include the canonical ensemble (N,V,T) and the isothermal-isobaric ensemble (N,P,T) which is the often the most representative of experimental conditions.
+These ensembles correspond to a maximization of entropy subject to constraints and their equilibrium corresponds to Helmholtz and Gibbs free energy, respectively.  Our project will incorporate these additional ensembles, which simply correspond to different integrators.
+
+Several MD packages already exist that incorporate such ensembles, including HOOMD, LAMPS, GROMACS, and NAMD. We each use some of these codes in our every day research, but do not know much about their internal structure due to their complexity. Therefore it is a prudent exercise to develop our own codebase with a well-written interface that we can build on for each of our own custom applications.
+
+\subsection{Molecular Dynamics Codebase}
+In our project, we plan to develop a molecular dynamics codebase \textbf{CBEMD} that can solve the equations of motion given an initial set of coordinates and velocities. This codebase will be written in C++ and Python. The bulk will be written in C++ to utilize conveniences of object oriented programming, its speed, and relative ease of parallelized implementation with MPI.  The code will be linked to boost to take advantage of number of special string manipulation features for data parsing, but will generally be completely developed from scratch. Testing will be performed using Googletests. We will have two levels of user interfaces.  The first and most basic will be simply through a C++ driver program which will take input from the command line.  A more user friendly on will be written in python, where a user can interactively set up their system for simulation. Documentation of the codebase will be done using Doxygen.
+
+%We plan to develop this codebase, and likely extend this in our own research. If successful, we potentially plan to publish it as an open-source alternative to those many that already exist.
+
+%For example, one may be able to measure the unfolding rate of a protein that unfolds slightly above room temperature experimentally. A thermophilic protein, one that can resist degradation due to increased temperatures as a result of evolutionary fitness, may unfold at temperatures higher than room temperature. Experiments are time consuming and costly, and therefore one would
+%Alternatively, when designing a possible drug to bind to and inhibit a target receptor, it would be prohibitively expensive and time consuming ..
+
+\section{Flowchart}
+A flowchart of our molecular dynamics program is presented in Figure ~\ref{fig:flowchart}
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{flowchart.png}
+\caption{Visual representation of the flow of the molecular dynamics program. First, the initial system configuration, choice of integrator and number of total simulation length are provided to the program. Then, the MD program begins and runs until tfinal. For each integration step, the intra-domain forces are calculated for each partitioning of the total system domain on an individual processor. This information is sent and received to/from the other processors, to allow to calculate the forces for the inter-domain forces. Using this information and the selected integration algorithm, one can do a timestep and update the positions. this continues until the time reaches its final time.}
+\label{fig:flowchart}
+\end{figure}
+
+
+% flow of MD program
+% need to talk to nate about making an image. when he describes it for a few minutes, I'll make a cool figure.
+% handling bonds, neighbor lists to accelerate
+\section{User Interface}
+The advanced user interface will be developed using Python. It will be interactive, and pose a questionnaire to the user from which it will populate an input file (in xml format).  More advanced users can simply provide this file on their own and call the program from the command line.  The latter option will be contained in our alpha release.  Using SWIG (http:www.swig.org) we intend to expand the interface such that a user can provide a pythonic input file which will replace the C++ driver program; this will be a part of our beta or final release version.
+
+% swig/pythonic
+% alternatively can make a very simple c++ code using built in functions
+
+\section{Schedule \& Assignments}
+\subsection{Design Document}
+Mr. Khoury and Mr. Mahynski will produce the design document and present it to the group. The group will make edits, and it will be submitted. (11/23/12)
+
+\subsection{Interface}
+Before any programming is done, we will design an efficient interface to facilitate group work. The general components will include a classes for the major components involved in MD including:
+\begin{enumerate}
+	\item{System} \par This class will contain all pertinent information about the simulation box such as temperature, pressure, box dimensions, etc.  Furthermore, this is where information about bonds and atoms will be stored.  When using MPI, a simulation box will be decomposed into "systems" each of which exists on a unique processor and is responsible for simulating a given region of the box.  These will be designed such that only nearest neighbors will need to communicate information.
+	\item{Atom} \par This will essentially be just a structure, i.e. no functions will be stored in this class.  This is because this is the main "workhorse" of the program and will need to be passed repeatedly between processors to communicate requite information for the integration step.  As a result only the absolutely necessary information will be kept here and will only store base data types easily passed through MPI.  This includes information such as position, velocity, type, etc. that is necessary for the force calculations.
+	\item{Bond} \par Bonds are by far the largest complication in MD.  The reason is that global indices must be tracked to manage what atoms are bonded to each other since these atoms may exist on different processors.  The Bond class is an abstract base class which allows users to define different types easily, requiring only that each defined type have an energy and force calculation.  Parameters involved in a bond "type" will be set by the user and available on all processors at all times so such information need not be passed; the only information necessary to compute bonding contributions an array of bonded pairs of atoms and their "type".  The bond type is an internally indexed quantity that is hidden from the user, and is accessed by a name (string).
+	\item{Integrator} \par There are many different integrators that exist which correspond to different ensembles.  Again this will be an abstract base class allowing the user expand on what we develop and add new integrators in the future.  We plan to implement integrators for the microcanonical  (NVE), canonical (NVT), and isothermal-isobaric ensemble (NPT).  For the NVE ensemble integrators include Verlet, Velocity Verlet, and the Leapfrog algorithm.  Thermostats and barostats include the Nose-Hoover and Anderson.
+	\item{Pair Potentials} \par This base class allows users to add new ones in the future, however, as it is the most common, we will provide a shifted Lennard-Jones pair potential to being with.
+\end{enumerate}
+\begin{equation}
+	U(r) = 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r - \Delta} \right)^{6} \right)
+\end{equation}
+
+\subsection{Alpha Version}
+Mr. Mahynski will develop the interface (classes, see above) and overall structure of the program, as well an the initialization routine to read from a standardized input (an xml file).  He will also be responsible for developing the derived Atom class for MPI to properly pass this information. (12/1/12)
+Mr. Khoury will develop user interface using SWIG (pythonic) and provide a some basic proof of concept; before this our interface will be through a C++ driver program. Mr. Khoury will figure out how to make SWIG work, and determine whether it will be better to use SWIG to make the user-interface, or, if to use python directly instead. (12/1/12)
+Mr. Park and Mr. Ricci will be responsible for the force calculation which is required in all integrators.  This will require a fair amount of work to work properly with MPI given an arbitrary domain decomposition. (12/5/12)
+Mr. Prabhu will be responsible for creating an algorithm to do an "optimal" domain decomposition given an arbitrary number of processors, and assist in the force calculation.  (12/1/12)
+Mrs. Dsilva will be responsible for handling pair potential classes, bonds, and integrators.  (12/1/12)
+\subsection{Beta Version}
+In this release, the integrators will be finished and tested.  MPI calls and force calculations should be finished and tested.
+Mr. Khoury will refine the Pythonic interface either directly in Python, or using Swig.  (12/15/12)
+Mrs. Dsilva will expand on the project goals and develop a routine to measure and externally optimize forces obtained during the run for the purpose of locating saddle points in the energy surface.  She will also handle output of system configurations for visualization.  (12/31/12)
+Mr. Prabhu, Mr. Mahynski, Mr. Khoury and Mr. Ricci will  be responsible for optimizing the code, and profiling. (12/15/12)
+Google tests will be used to test the C++ components, and Python unittests will be used to test the user interface. Mr. Khoury will be responsible for this. (12/31/12)
+\subsection{Final Version}
+Our final version should include integrators for all ensembles, a refined method of visualization, and final tests involving MPI.  We will verify our program with known results such as those for Lennard-Jones fluids and binary spheres.  This program should be implemented with SWIG or Python providing a convenient, pythonic user interface.
+
+\end{document}
+
