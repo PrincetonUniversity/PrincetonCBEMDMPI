@@ -55,8 +55,8 @@
 
 % Title Page
 \title{\textbf{CBEMD} Parallelized Molecular Dynamics in Various Thermodynamic Ensembles}
-\author{Carmeline J. Dsilva, George A. Khoury, Nathan A. Mahynski,\\ 
-Junyoung Park, Arun Prabhu, Francesco Ricci}
+\author{Nathan A. Mahynski, George A. Khoury, Carmeline J. Dsilva, \\
+Arun Prabhu, Francesco Ricci, and Junyoung Park}
 \date{}
 
 \begin{document}
@@ -72,10 +72,10 @@ Junyoung Park, Arun Prabhu, Francesco Ricci}
 \newpage
 
 \section{Project Overview}
-We propose to develop a software package to perform parallelized molecular dynamics (MD) calculations for several different thermodynamic ensembles. Molecular dynamics is a technique commonly used to simulate the motions of a system of interest on a microscopic level; one can then calculate macroscopic properties from the microscopic features of this system. Properties such as diffusion coefficients, specific heats, and chemical potentials, which are often difficult or impossible to measure in experiment, are commonly calculated in MD.  Because of the myriad of properties that can be calculated, MD has applications such fields as material science, pharmaceutical design, cellular biology, thermodynamics, and fluid mechanics.  Due to its relative simplicity and easily parallelized algorithm, MD is a common but powerful tool for many scientists and engineers today.
+We propose to develop a software package to perform parallelized molecular dynamics (MD) calculations for several different thermodynamic ensembles. Molecular dynamics is a technique commonly used to simulate the motions of a system of interest on a microscopic level; one can then calculate macroscopic properties from the microscopic features of this system. Properties such as diffusion coefficients, specific heats, and chemical potentials, which are often difficult or impossible to measure in experiment, are commonly calculated in MD.  Because of the myriad of properties that can be calculated, MD has applications such fields as material science, pharmaceutical design, cellular biology, thermodynamics, and fluid mechanics.  Due to its relative simplicity and its ability to be massively parallelized, MD is a common but powerful tool for many scientists and engineers today.
 
 \subsection{Background on Molecular Dynamics}
-MD first initializes a system of particles, usually thought of as atoms, molecules, or another relevant (molecular-scale) group.  Given an interaction potential $V (\overrightarrow{r})$ between these particles, MD simply integrates Newton's equation of motion, $\overrightarrow{F}=m\overrightarrow{a}$, forward in time.  Thus, the flow of the program follows a well defined set of steps:
+MD first initializes a system of particles, usually thought of as atoms, molecules, or another relevant (molecular-scale) group.  Given an interaction potential $V (\overrightarrow{r})$ between these particles, MD integrates Newton's equation of motion, $\overrightarrow{F}=m\overrightarrow{a}$, forward in time.  Thus, the flow of the program follows a well defined set of steps:
 \begin{enumerate}
     \item Initialize positions and choose a timestep, $dt$
     \item Calculate the forces $\overrightarrow{F} =  -\nabla V (\overrightarrow{r}) $
@@ -99,16 +99,16 @@ There are many different numerical integration algorithms that have been develop
 \end{enumerate}
 
 The above algorithms are designed to maintain constant energy ($E$), volume ($V$), and number of particles ($N$).  This NVE ensemble is known in thermodynamics as the {\em microcanonical ensemble}.
-% and reaches equilibrium when the entropy of the system reaches a maximum. 
-Although this emsemble is the simplest to analyze in a thermodynamic framework, it is almost never applicable to real world problems.
+% and reaches equilibrium when the entropy of the system reaches a maximum.
+Although this ensemble is the simplest to analyze in a thermodynamic framework, it is almost never applicable to real world problems.
 Other widely used ensembles include the {\em canonical ensemble} (NVT) and the {\em isothermal-isobaric ensemble} (NPT), which is the often the most representative of experimental conditions.
-%These ensembles correspond to a maximization of entropy subject to constraints and their equilibrium corresponds to Helmholtz and Gibbs free energy, respectively.  
+%These ensembles correspond to a maximization of entropy subject to constraints and their equilibrium corresponds to Helmholtz and Gibbs free energy, respectively.
 Our project will incorporate these additional ensembles, which corresponds to implementing different integrators.
 
 Several existing MD packages, such as HOOMD, LAMPS, GROMACS, and NAMD, incorporate such ensembles. Members of our group use some of these codes in our every day research, but we do not know much about their internal structure. Therefore, it is a prudent exercise to develop our own codebase with a well-written interface that we can each extend for our custom applications.
 
 \subsection{Molecular Dynamics Codebase}
-In our project, we plan to develop a molecular dynamics codebase \textbf{CBEMD}. This codebase will be written in C++ and Python. The bulk of the code will be written in C++, a language that maintains good performance while affording us the conveniences of object oriented programming and relative ease of parallelization with MPI.  The code will be linked to boost to utilizize a number of special string manipulation features for data parsing, but will otherwise be developed from scratch. Testing will be done using Googletests. 
+In our project, we plan to develop the molecular dynamics codebase \textbf{CBEMD}. This codebase will be written in C++ and Python. The bulk of the code will be written in C++, a language that maintains good performance while affording us the conveniences of object oriented programming and relative ease of parallelization with MPI. The code will be linked to boost to utilize a number of special string manipulation features for data parsing, but will otherwise be developed from scratch. Testing will be done using Googletests and potentially python unittests if we are able to wrap the C++ with Python by using SWIG.
 
 We will have two levels of user interfaces.  The first and more basic interface will be through a C++ driver program with command line input.  A more user friendly interface will be written in Python, where a user can interactively set up their simulation. Documentation of the codebase will be done using Doxygen.
 
@@ -122,7 +122,7 @@ A flowchart of our molecular dynamics program is presented in Figure \ref{fig:fl
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.75\textwidth]{flowchart.png}
-\caption{Visual representation of the flow of the molecular dynamics program. First, the initial system configuration, choice of integrator, and total simulation time $t_{final}$  are provided to the program. For each integration step, the intra-domain forces are calculated for each partitioning of the total system domain on an individual processor. This information is sent to the other processors to calculate the inter-domain forces. Using this information and the selected integration algorithm, one can update the positions and time. This continues until $t_{final}$.}
+\caption{Visual representation of the flow of the molecular dynamics program. First, the initial system configuration and other parameters of the simulation are provided, one of which is $t_{final}$, the time for which to run the simulation. For each integration step, the forces on each particle are calculated and used to update the positions of the particles.}
 \label{fig:flowchart}
 \end{figure}
 
@@ -172,7 +172,7 @@ Mr. Prabhu, Mr. Mahynski, Mr. Khoury and Mr. Ricci will  be responsible for opti
 Mr. Khoury will also be responsible for using Google tests to test the C++ components, and Python unittests to test the user interface. (12/31/12)
 
 \subsection{Final Version}
-Our final version will include integrators for all ensembles, a refined method of visualization, and final tests involving MPI.  We will validate our codebase against known results for Lennard-Jones fluids and binary spheres.  Our codebase will incorporporate a convenient, Pythonic user interface.
+Our final version will include integrators for all ensembles, a refined method of visualization, and final tests involving MPI.  We will validate our codebase against known results for Lennard-Jones fluids and binary spheres.  Our codebase will incorporate a convenient, Pythonic user interface.
 
 \end{document}
 

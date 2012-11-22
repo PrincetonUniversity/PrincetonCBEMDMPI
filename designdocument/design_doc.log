@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  21 NOV 2012 23:03
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  22 NOV 2012 13:17
 entering extended mode
 **C:/Users/George/Desktop/test/designdocument/design_doc.tex
 (C:/Users/George/Desktop/test/designdocument/design_doc.tex
@@ -609,7 +609,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 64.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-<princeton.jpg, id=47, 313.17pt x 349.305pt>
+<princeton.jpg, id=55, 313.17pt x 349.305pt>
 File: princeton.jpg Graphic file (type jpg)
  <use princeton.jpg>
 Package pdftex.def Info: princeton.jpg used on input line 66.
@@ -623,30 +623,30 @@ gnored
 <to be read again> 
                    \relax 
 l.109 
-       [1] <flowchart.png, id=75, 1048.3968pt x 519.8622pt>
+       [1] <flowchart.png, id=83, 1048.3968pt x 519.8622pt>
 File: flowchart.png Graphic file (type png)
 
 <use flowchart.png>
 Package pdftex.def Info: flowchart.png used on input line 124.
 (pdftex.def)             Requested size: 352.31625pt x 174.69629pt.
- [2 <C:/Users/George/Desktop/test/designdocument/flowchart.png>] [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 177.
- [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 177.
+ [2 <C:/Users/George/Desktop/test/designdocument/flowchart.png>] [3] [4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 194.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 194.
  (C:\Users\George\Desktop\test\designdocument\design_doc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 177.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 177.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 194.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 194.
 Package rerunfilecheck Info: File `design_doc.out' has not changed.
-(rerunfilecheck)             Checksum: AEBECE73691B5541ED06ED40E7F43461;681.
+(rerunfilecheck)             Checksum: B262A068AF85190DA1C2F531321387DA;814.
  ) 
 Here is how much of TeX's memory you used:
- 8952 strings out of 494045
- 134188 string characters out of 3145966
- 241553 words of memory out of 3000000
- 12048 multiletter control sequences out of 15000+200000
+ 8963 strings out of 494045
+ 134296 string characters out of 3145966
+ 241558 words of memory out of 3000000
+ 12050 multiletter control sequences out of 15000+200000
  17067 words of font info for 63 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 42i,15n,43p,936b,327s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,15n,43p,947b,412s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/
@@ -659,9 +659,9 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on design_doc.pdf (5 pages, 547223 bytes).
+Output written on design_doc.pdf (6 pages, 551704 bytes).
 PDF statistics:
- 145 PDF objects out of 1000 (max. 8388607)
- 31 named destinations out of 1000 (max. 500000)
- 99 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 166 PDF objects out of 1000 (max. 8388607)
+ 40 named destinations out of 1000 (max. 500000)
+ 115 words of extra memory for PDF output out of 10000 (max. 10000000)
 
