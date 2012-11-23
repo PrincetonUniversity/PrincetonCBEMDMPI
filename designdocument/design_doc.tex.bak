@@ -105,7 +105,7 @@ Other widely used ensembles include the {\em canonical ensemble} (NVT) and the {
 %These ensembles correspond to a maximization of entropy subject to constraints and their equilibrium corresponds to Helmholtz and Gibbs free energy, respectively.
 Our project will incorporate these additional ensembles, which corresponds to implementing different integrators.
 
-Several existing MD packages, such as HOOMD, LAMPS, GROMACS, and NAMD, incorporate such ensembles. Members of our group use some of these codes in our every day research, but we do not know much about their internal structure. Therefore, it is a prudent exercise to develop our own codebase with a well-written interface that we can each extend for our custom applications.
+Several existing MD packages, such as HOOMD, LAMMPS, GROMACS, and NAMD, incorporate such ensembles. Members of our group use some of these codes in our every day research, but we do not know much about their internal structure. Therefore, it is a prudent exercise to develop our own codebase with a well-written interface that we can each extend for our custom applications.
 
 \subsection{Molecular Dynamics Codebase}
 In our project, we plan to develop the molecular dynamics codebase \textbf{CBEMD}. This codebase will be written in C++ and Python. The bulk of the code will be written in C++, a language that maintains good performance while affording us the conveniences of object oriented programming and relative ease of parallelization with MPI. The code will be linked to boost to utilize a number of special string manipulation features for data parsing, but will otherwise be developed from scratch. Testing will be done using Googletests and potentially python unittests if we are able to wrap the C++ with Python by using SWIG.
@@ -187,8 +187,9 @@ The above was a description of the different deliverables from the codebase stan
     \item The program should be able to easily be extended to use arbitrary interparticle potentials as long as they conform to the abstract base class. As an example, we will use Lennard-Jones.
     \item The MD program should be able to print out binary files that can be visualized using VMD or other visualization programs that exist, as well as xml snapshots.
     \item The MD program should be able to stably run for an arbitrary length of time on an arbitrary number of processors.
-    \item Force constants will be able to be performed in parallel.
+    \item Force calculations will be able to be performed in parallel.
     \item The MD program should able to be started using two mechanisms. First, through reading an xml-based input file, or by using a python script with an easily usable user interface.
+    \item The MD program should write a checkpoint file after every so many iterations so that a simulation can pick up where it left off in case of power failure, system failure, or running out of walltime.
     \item The final version should be able to handle bonds of an arbitrary nature as long as they conform to the bond abstract base class. Because of this feature, our MD code can be extended to arbitrarily complex molecules.
 \end{enumerate}
 \end{document}
