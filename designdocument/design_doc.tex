@@ -152,7 +152,7 @@ Before any programming is done, we will design an efficient interface to facilit
 	\item{Pair Potentials} \par This class defines the interaction potential $V$ between particles. As it is the most common, we will provide a shifted Lennard-Jones pair potential, $V(r) = 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r - \Delta} \right)^{6} \right)$. Users can easily add additional pair potentials.
 \end{enumerate}
 
-\subsection{Alpha Version}
+\subsection{Prototype}
 In this release, the MD program will be able to read in an initial configuration of atoms, and utilize at least one of the integrators aforementioned to perform serial MD calculations.
 
 Mr. Mahynski will develop the interface (classes, see above) and overall structure of the codebase, as well an the initialization routine to read from a standardized input (an xml file).  He will also be responsible for developing the derived Atom class for MPI to properly pass this information. (12/1/12)
@@ -165,7 +165,7 @@ Mr. Prabhu will be responsible for creating an algorithm to do an ``optimal" dom
 
 Mrs. Dsilva will be responsible for handling pair potential classes, bonds, and integrators.  (12/1/12)
 
-\subsection{Beta Version}
+\subsection{Alpha Version}
 In this release, the integrators will be finished and tested.  MPI calls and force calculations will be finished and tested.
 
 Mr. Khoury will refine the Pythonic interface either directly in Python, or using Swig. Note, that Mr. Khoury will be away in Rome, Italy and Gaeta, Italy from 12/7/12/ until 12/14/12 for the CASP10 conference and will have limited access to computing resources during that time.   (12/15/12)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  22 NOV 2012 22:14
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  22 NOV 2012 22:27
 entering extended mode
 **C:/Users/George/Desktop/test/designdocument/design_doc.tex
 (C:/Users/George/Desktop/test/designdocument/design_doc.tex
@@ -637,7 +637,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 195.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 195.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 195.
 Package rerunfilecheck Info: File `design_doc.out' has not changed.
-(rerunfilecheck)             Checksum: B262A068AF85190DA1C2F531321387DA;814.
+(rerunfilecheck)             Checksum: C01CD5C2FA652858BF87F40C2E11D468;811.
  ) 
 Here is how much of TeX's memory you used:
  8964 strings out of 494045
@@ -659,7 +659,7 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on design_doc.pdf (6 pages, 551972 bytes).
+Output written on design_doc.pdf (6 pages, 551976 bytes).
 PDF statistics:
  167 PDF objects out of 1000 (max. 8388607)
  41 named destinations out of 1000 (max. 500000)
