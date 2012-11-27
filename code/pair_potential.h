@@ -23,7 +23,7 @@ namespace pair_potential {
 		void set_cutoff (const double nrcut, const double nUshift);
 		virtual void set_coeff (const vector <double> coeffs) = 0;						//!< Set coefficients in pair potential
 		virtual inline double energy (const double r2);									//!< Return U(r)
-		virtual void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	//!< Stores \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i on a1 and a2
+		virtual inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	//!< Stores \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i on a1 and a2
 		
 		double rcut;									//!< Cutoff radius for interactions
 		double Ushift;									//!< Constant shift to apply to energy function for r < r_{cut}
