@@ -97,12 +97,13 @@ namespace pair_potential {
 	 */
 	inline void slj::force (Atom *a1, Atom *a2, const double r2, const double *xyz) {
 		if (r2 < rcut*rcut) {
-			double a = sigma_/(sqrt(r2)-delta_), a2, a6, val;
+			double r = sqrt(r2), b = 1.0/(r-delta_), a = sigma_*b, a2, a6, val, factor;
 			a2 = a*a;
 			a6 = a2*a2*a2;
 			
+			factor = 24.0*epsilon_*a6*(2.0*a6-1.0)*b/r;
 			for (int i = 0; i < 3; ++i) {
-				val = 24.0*epsilon_*a*a6*(2.0*a6-1.0)*xyz[i];
+				val = xyz[i]*factor;
 				a1->force[i] -= val;
 				a2->force[i] += val;
 			}
