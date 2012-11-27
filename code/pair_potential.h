@@ -82,7 +82,7 @@ namespace pair_potential {
 			double a = sigma_/(sqrt(r2)-delta_), a2, a6;
 			a2 = a*a;
 			a6 = a2*a2*a2;
-			return 4.0*epsilon_*(a6*a6-a6);
+			return 4.0*epsilon_*(a6*a6-a6)+Ushift;
 		} else {
 			return 0.0;
 		}
