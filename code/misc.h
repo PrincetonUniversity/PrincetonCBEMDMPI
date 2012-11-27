@@ -106,21 +106,40 @@ namespace misc {
 	 \param [in] coords2 Vector of cartesian coordinates of the other atom
 	 \param [in] box Vector of cartesian coordinates of the box
 	 */
-	double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
+	inline double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
 		assert (coords1.size() == 3);
 		assert (coords2.size() == 3);
 		assert (box.size() == 3);
 		
-		double ans = 0.0;
+		double ans = 0.0, dist;
 		for (int i = 0; i < 3; ++i) {
-			dist = coords1[i] - coords2[i];
-			dist2 = dist*dist;
-			shift = round(dist2/(box[i]*box[i]));
-			ans += (dist2 - shift);
+			dist = coords2[i] - coords1[i];
+			dist -= round(dist/box[i])*box[i];
+			ans += dist*dist;
 		}
 		
 		return ans;
 	}
+	
+	//! Returns the square of the minimum image distance between 2 atoms, also returns the minimum image distance vector xyz that points from atom1 to atom2
+	/*!
+	 \param [in] \*a1 Pointer to one atom
+	 \param [in] \*a2 Pointer to the other atom
+	 \param [in] box Vector of cartesian coordinates of the box
+	 \param [in,out] \*xyz Array of xyz displacements to be returned to the user (length 3)
+	 */
+	inline double min_image_dist2 (Atom *a1, Atom *a2, const vector <double> box, double *xyz) {
+		double ans = 0.0;
+		for (int i = 0; i < 3; ++i) {
+			xyz[i] = a2->pos[i] - a1->pos[i];
+			xyz[i] -= round(xyz[i]/box[i])*box[i];
+			ans += xyz[i]*xyz[i];
+		}
+		
+		return ans;
+	}
+							
+							
 }
 
 

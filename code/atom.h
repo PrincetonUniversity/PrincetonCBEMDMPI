@@ -16,7 +16,7 @@ namespace atom {
 	const int MAX_BONDS = 2;		//!< Maximum number of bonds any atom may have
 	
 	//! Atom class is defined so as to be easy to pass with MPI 
-	class Atom {
+	struct Atom {
 		double pos[3];				//!< Cartesian coordinates
 		double vel[3];				//!< Cartesian velocities
 		double force[3];			//!< Cartesian force, (fx, fy, fz)
