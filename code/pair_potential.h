@@ -21,9 +21,10 @@ namespace pair_potential {
 	public:
 		// If distances were alredy computed, no need to recompute
 		void set_cutoff (const double nrcut, const double nUshift);
-		virtual void set_coeff (const vector <double> coeffs) = 0;						//!< Set coefficients in pair potential
-		virtual inline double energy (const double r2);									//!< Return U(r)
-		virtual inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	//!< Stores \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i on a1 and a2
+		virtual void set_coeff (const vector <double> coeffs) = 0;								//!< Set coefficients in pair potential
+		virtual inline double energy (const double r2) = 0;										//!< Return U(r)
+		//virtual inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	//!< Stores \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i on a1 and a2
+		virtual inline vector <double> force (const Atom *a1, const Atom *a2, const double r2, const double *xyz) = 0;
 		
 		double rcut;									//!< Cutoff radius for interactions
 		double Ushift;									//!< Constant shift to apply to energy function for r < r_{cut}
@@ -43,15 +44,16 @@ namespace pair_potential {
 	/*!
 	 This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
 	 \f{eqnarray*}{
-	 U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r < r_{cut} \\
-	 &=& 0 & r \ge r_{cut}
+	 U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\
+	 &=& 0 & r - \Delta \ge r_{cut}
 	 \f}
 	 */
 	class slj : public Potential {
 	public:
 		void set_coeff (const vector <double> coeffs);
 		inline double energy (const double r2);
-		inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	
+		//inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	
+		inline vector <double> force (const Atom *a1, const Atom *a2, const double r2, const double *xyz);
 		
 	private:
 		double epsilon_;
@@ -78,10 +80,9 @@ namespace pair_potential {
 	 \param [in] r2 Minimum image distance squared between atoms
 	 */
 	inline double slj::energy (const double r2) {
-		if (r2 < rcut*rcut) {
-			double a = sigma_/(sqrt(r2)-delta_), a2, a6;
-			a2 = a*a;
-			a6 = a2*a2*a2;
+		double r = sqrt(r2), x = r - delta_;
+		if (x < rcut) {
+			double a = sigma_/x, a2 = a*a, a6 = a2*a2*a2;
 			return 4.0*epsilon_*(a6*a6-a6)+Ushift;
 		} else {
 			return 0.0;
@@ -95,21 +96,20 @@ namespace pair_potential {
 	 \param [in] r2 Minimum image distance squared between atoms
 	 \param [in] \*xyz The minimum image vector from a1 to a2
 	 */
-	inline void slj::force (Atom *a1, Atom *a2, const double r2, const double *xyz) {
-		if (r2 < rcut*rcut) {
-			double r = sqrt(r2), b = 1.0/(r-delta_), a = sigma_*b, a2, a6, val, factor;
-			a2 = a*a;
-			a6 = a2*a2*a2;
-			
+	inline vector<double> slj::force (const Atom *a1, const Atom *a2, const double r2, const double *xyz) {
+		double r = sqrt(r2), x = r - delta_;
+		vector <double> force_vec(3,0.0);
+		if (x < rcut) {
+			double b = 1.0/x, a = sigma_*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
 			factor = 24.0*epsilon_*a6*(2.0*a6-1.0)*b/r;
 			for (int i = 0; i < 3; ++i) {
-				val = xyz[i]*factor;
-				a1->force[i] -= val;
-				a2->force[i] += val;
+				//val = xyz[i]*factor;
+				force_vec[i] = xyz[i]*factor;
+				//a1->force[i] -= val;
+				//a2->force[i] += val;
 			}
-		} else {
-			return;
-		}
+		} 
+		return force_vec;
 	}
 }
 
