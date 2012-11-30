@@ -128,18 +128,16 @@ namespace misc {
 	 \param [in] box Vector of cartesian coordinates of the box
 	 \param [in,out] \*xyz Array of xyz displacements to be returned to the user (length 3)
 	 */
-	inline double min_image_dist2 (Atom *a1, Atom *a2, const vector <double> box, double *xyz) {
+	inline double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz) {
 		double ans = 0.0;
 		for (int i = 0; i < 3; ++i) {
 			xyz[i] = a2->pos[i] - a1->pos[i];
-			xyz[i] -= round(xyz[i]/box[i])*box[i];
+			xyz[i] -= round(xyz[i]/box->at(i))*box->at(i);
 			ans += xyz[i]*xyz[i];
 		}
 		
 		return ans;
 	}
-							
-							
 }
 
 

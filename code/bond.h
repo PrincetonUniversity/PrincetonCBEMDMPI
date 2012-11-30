@@ -28,7 +28,7 @@ namespace bond {
 		virtual inline double energy (const double r2) const = 0;								//!< Pure virtual requirement of an energy function for a bond class 
 		virtual inline vector <double> force (const double r2, const double *xyz) const = 0;	//!< Pure virtual requirement of a force function for a bond class
 		virtual inline void set_coeff (const vector <double> coeffs) = 0;						//!< Set the coefficients for a bond potential
-		int bond_index;																	//!< Internal index associated with bond name assigned by the user
+		int bond_index;																			//!< Internal index associated with bond name assigned by the user
 	};
 	
 	// There a number of "standard" bond types, the two that are usually used are FENE and Harmonic, see below
@@ -129,7 +129,6 @@ namespace bond {
 		r0_ = coeffs[0];
 		k_ = coeffs[1];
 	}
-	
 }
 
 #endif

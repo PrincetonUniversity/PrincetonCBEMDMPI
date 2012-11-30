@@ -16,6 +16,7 @@
 #include "atom.h"
 #include "bond.h"
 #include "misc.h"
+#include "interaction.h"
 #include <list>
 #include <algorithm>
 
@@ -44,9 +45,7 @@ namespace system {
 		vector <double> box() const {return box_;}		//!< Report system size
 		int add_atoms (Atom *new_atoms);				//!< Add atom(s) to the system 
 		int delete_atoms (const vector <int> indices);	//!< Pop atoms with local indices from local storage
-		inline Potential* ppot (const int type1, const int type2) const {return pmatrix_[type1][type2];}
-		inline Potential* ppot (const Atom* a1, const Atom* a2) const {return pmatrix_[a1->type][a2->type];}
-			
+		
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
@@ -54,7 +53,6 @@ namespace system {
 		vector <double> box_;							//!< Global system cartesian dimensions
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		vector <Bond> bond_;							//!< Vector of bond types in the system
-		vector < vector < *Potential> > pmatrix_;		//!< Matrix of pair potential pointers based on internal index
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
 		unordered_map <string, int> atom_type_;			//!< Maps user specified name of atom type to internal index
 		unordered_map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
@@ -63,6 +61,7 @@ namespace system {
 		vector <int> on_proc_;							//!< Stores processor each atom (by global sys_index) "lives" on
 		int num_neighbor_procs;							//!< Number of neighboring processors this system must communicate with
 		int *neighbor_procs_;							//!< Array of ranks of neighboring processors this system must communicate with
+		vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
 	};
 	
 	//! Initializes a system from a file, automatically handles MPI

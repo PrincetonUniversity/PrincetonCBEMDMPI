@@ -22,9 +22,8 @@ namespace pair_potential {
 		// If distances were alredy computed, no need to recompute
 		void set_cutoff (const double nrcut, const double nUshift);
 		virtual void set_coeff (const vector <double> coeffs) = 0;								//!< Set coefficients in pair potential
-		virtual inline double energy (const double r2) = 0;										//!< Return U(r)
-		//virtual inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	//!< Stores \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i on a1 and a2
-		virtual inline vector <double> force (const Atom *a1, const Atom *a2, const double r2, const double *xyz) = 0;
+		virtual inline double energy (const double r2) = 0;										//!< Returns U(r)
+		virtual inline vector <double> force (const double r2, const double *xyz) = 0;			//!< Computes \f[ F(x_i) = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} \f] for each cartesian direction x_i
 		
 		double rcut;									//!< Cutoff radius for interactions
 		double Ushift;									//!< Constant shift to apply to energy function for r < r_{cut}
@@ -53,7 +52,7 @@ namespace pair_potential {
 		void set_coeff (const vector <double> coeffs);
 		inline double energy (const double r2);
 		//inline void force (Atom *a1, Atom *a2, const double r2, const double *xyz);	
-		inline vector <double> force (const Atom *a1, const Atom *a2, const double r2, const double *xyz);
+		inline vector <double> force (const double r2, const double *xyz);
 		
 	private:
 		double epsilon_;
@@ -91,12 +90,10 @@ namespace pair_potential {
 	
 	/*!
 	 The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
-	 \param [in] \*a1 Pointer to atom1
-	 \param [in] \*a2 Pointer to atom2
 	 \param [in] r2 Minimum image distance squared between atoms
 	 \param [in] \*xyz The minimum image vector from a1 to a2
 	 */
-	inline vector<double> slj::force (const Atom *a1, const Atom *a2, const double r2, const double *xyz) {
+	inline vector<double> slj::force (const double r2, const double *xyz) {
 		double r = sqrt(r2), x = r - delta_;
 		vector <double> force_vec(3,0.0);
 		if (x < rcut) {
