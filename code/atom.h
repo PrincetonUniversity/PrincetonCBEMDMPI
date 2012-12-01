@@ -13,8 +13,6 @@
 
 //! Namespace containing pertinent Atom information
 namespace atom {
-	const int MAX_BONDS = 2;		//!< Maximum number of bonds any atom may have
-	
 	//! Atom class is defined so as to be easy to pass with MPI 
 	struct Atom {
 		double pos[3];				//!< Cartesian coordinates
@@ -24,8 +22,6 @@ namespace atom {
 		double diam;				//!< Atomic diameter (in reduced units)
 		int type;					//!< Internally indexed type of this atom
 		int	sys_index;				//!< Global atom index, i.e. unique in the system
-		int nbonds;					//!< Number of bonds the atom has
-		int bonds[MAX_BONDS];		//!< Global indices of bonds, fixed size for MPI passing
 	};
 	
 	//! MPI version of Atom
@@ -49,7 +45,7 @@ namespace atom {
 		oldtypes[0] = MPI_DOUBLE;
 		
 		offsets[1] = (11*extent);
-		blockcounts[1] = (3+MAX_BONDS);
+		blockcounts[1] = 2;
 		oldtypes[1] = MPI_INT;
 		
 		MPI_Type_struct (num_types, blockcounts, offsets, oldtypes, &MPI_ATOM);
