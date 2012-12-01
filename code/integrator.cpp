@@ -22,6 +22,7 @@ namespace integrator {
   Verlet::Verlet(double deltat) {
     timestep = 0;
     dt_ = deltat;
+    dt2_ = dt_ * dt_;
   }
   
   // example:
@@ -39,7 +40,7 @@ namespace integrator {
       for (int i = 0; i < sys.natoms(); ++i) {
 	for (int j = 0; j < 3; ++j) {
 	  prev_pos_[i][j] = sys.get_atom(i).pos[j];
-	  sys.get_atom(i).pos[j] += sys.get_atom(i).vel[j] * dt_ + 0.5 * sys.get_atom(i).force[j] / sys.get_atom(i).mass * dt_ * dt_;
+	  sys.get_atom(i).pos[j] += sys.get_atom(i).vel[j] * dt_ + 0.5 * sys.get_atom(i).force[j] / sys.get_atom(i).mass * dt2_;
 	  sys.get_atom(i).vel[j] = (sys.get_atom(i).pos[j] - prev_pos_[i][j]) / dt_;
 	}
       }
@@ -51,7 +52,7 @@ namespace integrator {
 	for (int j = 0; j < 3; ++j) {
 	  prev_prev_pos = prev_pos_[i][j];
 	  prev_pos_[i][j] = sys.get_atom(i).pos[j];
-	  sys.get_atom(i).pos[j] = 2.0 *  prev_pos_[i][j] - prev_prev_pos + sys.get_atom(i).force[j] / sys.get_atom(i).mass * dt_ * dt_;
+	  sys.get_atom(i).pos[j] = 2.0 *  prev_pos_[i][j] - prev_prev_pos + sys.get_atom(i).force[j] / sys.get_atom(i).mass * dt2_;
 	  sys.get_atom(i).vel[j] = (sys.get_atom(i).pos[j] - prev_prev_pos) / (2.0 * dt_);
 	}
       }
