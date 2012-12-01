@@ -6,13 +6,6 @@
 #ifndef BOND_H_
 #define BOND_H_
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <vector>
-#include <string>
-#include <map>
 #include "misc.h"
 
 using namespace std;
@@ -59,39 +52,6 @@ namespace bond {
 		double delta_;								//!< Shift to account for molecules of different diameters, \f[ \Delta = (d_i + d_j)/2 - 1 \f], this is automatically calculated
 	};
 	
-	void Fene::set_coeff (const vector <double> coeffs) {
-		assert (coeffs.size() == 5);
-		epsilon_ = coeffs[0];
-		sigma_ = coeffs[1];
-		r0_ = coeffs[2];
-		k_ = coeffs[3];
-		delta_ = coeffs[4];
-	}
-	
-	inline double Fene::energy (const double r2) {
-		double r = sqrt(r2), ener = 0.0, b = r-delta_, a = b/r0_;
-		if (b < LJ_CUT*sigma_) {
-			double x = (sigma_/b), x2 = x*x, x6 = x2*x2*x2, x12 = x6*x6;
-			ener += 4.0*epsilon_*(x12-x6)+epsilon_;
-		}
-		return ener - 0.5*k_*r0_*r0_*log(1-a*a);
-	}
-	
-	inline vector <double> Fene::force (const double r2, const double *xyz) {
-		vector <double> bond_force(3,0.0);
-		double r = sqrt(r2), a = r - delta_;
-		for (int i = 0; i < 3; ++i) {
-			bond_force[i] = k_*a/(r-a*a*r/(r0_*r0_))*xyz[i];
-		}
-		if (a < LJ_CUT*sigma_) {
-			double x = (sigma_/a), x2 = x*x, x6 = x2*x2*x2, x12 = x6*x6;
-			for (int i = 0; i < 3; ++i) {
-				bond_force[i] += 24.0*epsilon_/(r*a)*(2.0*x12-x6)*xyz[i];
-			}
-		}
-		return bond_force;
-	}
-	
 	//! Harmonic Bond
 	/*!
 	 The Harmonic bond potential is given by:
@@ -110,25 +70,6 @@ namespace bond {
 		double k_;									//!< Bond force strength (in units of energy/distance^2)
 	};
 	
-	inline double Harmonic::energy (const double r2) {
-		double r = sqrt(r2);
-		return 0.5*k_*(r-r0_)*(r-r0_);
-	}
-	
-	inline vector <double> Harmonic::force (const double r2, const double *xyz) {
-		vector <double> bond_force(3,0.0);
-		double ir = 1.0/sqrt(r2);
-		for (int i = 0; i < 3; ++i) {
-			bond_force[i] = -k_*xyz[i]*(1-r0_*ir);
-		}
-		return bond_force;
-	}
-	
-	void Harmonic::set_coeff (const vector <double> coeffs) {
-		assert (coeffs.size() == 2);
-		r0_ = coeffs[0];
-		k_ = coeffs[1];
-	}
 }
 
 #endif
