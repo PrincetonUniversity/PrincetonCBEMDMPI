@@ -14,10 +14,14 @@
 #include <string>
 #include <map>
 #include <assert.h>
+#include "atom.h"
+
+using namespace std;
+using namespace atom;
 
 //! Namespace for miscellaneous functions and tools
 namespace misc {
-	enum {SAFE_EXIT = 0, BAD_MEM = 1, ILLEGAL_VALUE = 2, MPI_FAIL = 3, INTEGRATE_FAIL = 4};				//!< Values that are returned if a failure condition is met
+	enum {SAFE_EXIT = 0, BAD_MEM = 1, ILLEGAL_VALUE = 2, MPI_FAIL = 3, INTEGRATE_FAIL = 4, FILE_ERROR = 5};				//!< Values that are returned if a failure condition is met
 	const int ERR_FLAG_SIZE = 1000; //!< The maximum size allowed in an error or warning flag
 	
 	//! Report an error message
@@ -30,6 +34,7 @@ namespace misc {
 	void flag_error (const char *msg, const char *file, const int line) {			
 		fprintf(stderr, "*** Error :: %s :: [FILE: %s, LINE %d] ***\n", msg, file, line);
 	}
+	
 	
 	//! Report a notification
 	/*!
@@ -58,6 +63,7 @@ namespace misc {
 		}
 		return fp1;
 	}
+
 	
 	//! Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries.
 	/*!
@@ -87,7 +93,7 @@ namespace misc {
 				flag_error(err_msg, __FILE__, __LINE__);
 				return bad;
 			}
-
+			
 			in_box[i] = coords[i];
 			while (in_box[i] < 0.0) {
 				in_box[i] += box[i];
@@ -107,9 +113,9 @@ namespace misc {
 	 \param [in] box Vector of cartesian coordinates of the box
 	 */
 	inline double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
-		assert (coords1.size() == 3);
-		assert (coords2.size() == 3);
-		assert (box.size() == 3);
+		/*assert (coords1.size() == 3);
+		 assert (coords2.size() == 3);
+		 assert (box.size() == 3);*/
 		
 		double ans = 0.0, dist;
 		for (int i = 0; i < 3; ++i) {
@@ -138,6 +144,7 @@ namespace misc {
 		
 		return ans;
 	}
+	
 }
 
 

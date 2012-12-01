@@ -1,11 +1,7 @@
-/*
- *  interaction.h
- *  
- *
- *  Created by Nathan A. Mahynski on 11/30/12.
- *  Copyright 2012 Princeton University. All rights reserved.
- *
- */
+/**
+ Interaction Information
+ \author Nathan A. Mahynski
+ **/
 
 #ifndef INTERACTION_H_
 #define INTERACTION_H_
@@ -18,18 +14,34 @@ using namespace misc;
 using namespace bond;
 using namespace pair_potential;
 
+
+// do these typedefs
+typedef force_ptr vector <double> (*force_function) (const double r2, const double *xyz, const vector <double> *args);
+typedef energy_ptr double (*energy_function) (const double r2, const double *xyz, const vector <double> *args);
+
+
+// define new slj etc. functions here
+
+
+
+
+
+
+
+
 //! This class stores how a pair of particles interacts
 class Interaction {
 public:
 	inline vector <double> force (const Atom *a1, const Atom *a2, const vector <double> *box);	//!< Computes the cartesian force vector a1 experiences because of a2
 	inline double energy (const Atom *a1, const Atom *a2, const vector <double> *box);			//!< Computes the energy between a1 and a2
-	void set_bond (Bond ibond) {bond_interaction_ = ibond; is_bonded_ = 1;}						//!< Assign the bonding potential
-	void set_ppot (Potential ipair) {ppot_ = ipair; is_bonded_ = 0;}							//!< Assign the pair potential
+	void set_force (force_ptr iforce) {my_force_ = iforce;}										//!< Assign the force calculator
+	void set_energy (energy_ptr iener) {my_energy_ = iener;}									//!< Assign the potential calculator
 	
 private:
-	int is_bonded_;			//!< If this is 1, the atoms are bonded so use bond potential, else use pair potential
-	Bond bond_interaction_;	//!< Bond class
-	Potential ppot_;		//!< Pair potential class
+	force_ptr my_force_;
+	energy_ptr my_energy_;
+	vector <double> force_args_;			//!< Force arguments
+	vector <double> energy_args_;			//!< Energy arguments
 };
 
 /*!
@@ -37,17 +49,11 @@ private:
  \param [in] \*a2 Pointer to atom 2
  \param [in] \*box Pointer to vector of cartesian box size
 */
-inline vector <double> Interaction::force(const Atom *a1, const Atom *a2, const vector <double> *box) {
+inline vector <double> Interaction::force (const Atom *a1, const Atom *a2, const vector <double> *box) {
 	// compute min image distance
 	double xyz[3];
 	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	
-	// rcut belongs to these classes and they will establish if the force needs to be computed
-	if (is_bonded_) {
-		return bond_interaction_.force(d2, xyz);
-	} else {
-		return ppot_.force(d2, xyz);
-	}
+	return my_force_ (d2, xyz, force_args_);
 }
 
 /*!
@@ -59,13 +65,7 @@ inline double Interaction::energy(const Atom *a1, const Atom *a2, const vector <
 	// compute min image distance
 	double xyz[3];
 	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	
-	// rcut belongs to these classes and they will establish if the force needs to be computed
-	if (is_bonded_) {
-		return bond_interaction_.energy(d2);
-	} else {
-		return ppot_.energy(d2);
-	}
+	return my_energy_ (d2, xyz, energy_args_);
 }
 
 

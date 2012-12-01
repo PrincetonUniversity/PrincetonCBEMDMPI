@@ -79,7 +79,7 @@ namespace bond {
 	
 	inline vector <double> Fene::force (const double r2, const double *xyz) {
 		vector <double> bond_force(3,0.0);
-		double a = r - delta_;
+		double r = sqrt(r2), a = r - delta_;
 		for (int i = 0; i < 3; ++i) {
 			bond_force[i] = k_*a/(r-a*a*r/(r0_*r0_))*xyz[i];
 		}
@@ -115,7 +115,7 @@ namespace bond {
 		return 0.5*k_*(r-r0_)*(r-r0_);
 	}
 	
-	inline vector <double> Harmonic::force (const double r2, const double *xyz); {
+	inline vector <double> Harmonic::force (const double r2, const double *xyz) {
 		vector <double> bond_force(3,0.0);
 		double ir = 1.0/sqrt(r2);
 		for (int i = 0; i < 3; ++i) {

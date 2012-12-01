@@ -33,7 +33,7 @@ namespace system {
 	public:
 		System();
 		~System();
-		int set_box (const double* new_box);			//!< Set the global system box size
+		int set_box (const vector<double> new_box);			//!< Set the global system box size
 		void set_T (const double T) {Temp_ = T;}		//!< Set the system temperature
 		void set_P (const double P) {Press_ = P;}		//!< Set the system pressure
 		int natoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor)
