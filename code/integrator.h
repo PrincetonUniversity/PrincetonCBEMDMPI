@@ -17,7 +17,7 @@
 using namespace atom;
 using namespace std;
 using namespace misc;
-using namespace system;
+using namespace sim_system;
 
 namespace integrator {
 	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace

@@ -21,7 +21,7 @@
 #include <boost/function.hpp>
 
 using namespace std;
-using namespace system;
+using namespace sim_system;
 using namespace misc;
 using namespace atom;
 

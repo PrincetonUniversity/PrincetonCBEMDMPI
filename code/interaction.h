@@ -20,12 +20,7 @@ typedef force_ptr vector <double> (*force_function) (const double r2, const doub
 typedef energy_ptr double (*energy_function) (const double r2, const double *xyz, const vector <double> *args);
 
 
-// define new slj etc. functions here
-
-
-
-
-
+// declare new slj etc. functions here
 
 
 
@@ -43,30 +38,6 @@ private:
 	vector <double> force_args_;			//!< Force arguments
 	vector <double> energy_args_;			//!< Energy arguments
 };
-
-/*!
- \param [in] \*a1 Pointer to atom 1
- \param [in] \*a2 Pointer to atom 2
- \param [in] \*box Pointer to vector of cartesian box size
-*/
-inline vector <double> Interaction::force (const Atom *a1, const Atom *a2, const vector <double> *box) {
-	// compute min image distance
-	double xyz[3];
-	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	return my_force_ (d2, xyz, force_args_);
-}
-
-/*!
- \param [in] \*a1 Pointer to atom 1
- \param [in] \*a2 Pointer to atom 2
- \param [in] \*box Pointer to vector of cartesian box size
- */
-inline double Interaction::energy(const Atom *a1, const Atom *a2, const vector <double> *box) {
-	// compute min image distance
-	double xyz[3];
-	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	return my_energy_ (d2, xyz, energy_args_);
-}
 
 
 #endif

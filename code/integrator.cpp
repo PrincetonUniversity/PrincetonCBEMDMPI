@@ -15,7 +15,7 @@
 using namespace atom;
 using namespace std;
 using namespace misc;
-using namespace system;
+using namespace sim_system;
 
 namespace integrator {
   //! NVE, Verlet
