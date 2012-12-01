@@ -13,7 +13,7 @@ using namespace misc;
 
 //! Namespace containing pertinent Bond information
 namespace bond {
-	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+        extern char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	const double LJ_CUT = pow(2.0, 1/6.0);
 	
 	class Bond {

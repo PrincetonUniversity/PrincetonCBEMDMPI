@@ -12,7 +12,7 @@
 using namespace sim_system; 
 
 namespace integrator {
-  char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+  extern char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	
   //!< Abstract base class for integrators
   /*!

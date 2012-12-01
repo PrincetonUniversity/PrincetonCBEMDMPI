@@ -28,7 +28,7 @@ using namespace misc;
 
 //! Namespace containing all system variable and quantities
 namespace sim_system {
-	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+  extern char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	
 	class System {
 	public:
