@@ -4,11 +4,15 @@
 **/
 
 #include "integrator.h"
+#include "misc.h"
 
 using namespace integrator;
+using namespace misc;
+
+Integrator::Integrator() {}
 
 //! NVE, Verlet
-Verlet::Verlet(double deltat) {
+Verlet::Verlet (double deltat) {
   timestep_ = 0;
   dt_ = deltat;
   dt2_ = dt_ * dt_;
@@ -69,7 +73,7 @@ int run (System *sys, Integrator *integrator, const int timeteps) {
     check = integrator->step(sys);
     if (check != 0) {
       sprintf(err_msg, "Error encountered during integration after step %d", i+1);
-      flag_error (err_msg, __FILE__, __LINE__);
+      //flag_error (err_msg, __FILE__, __LINE__);
       return check;
     }
     MPI_Barrier(MPI_COMM_WORLD);

@@ -7,7 +7,33 @@ MD System Information
 
 using namespace sim_system;
 
- // Must fill in these function definitions
+
+	// declare system before MPI Init
+	// then after initialization each proc has a copy of an empty System
+	// then read from file from proc1 and SEND data to each as it is read in!
+	// i.e. things like T/P are set for all, but atoms only need to be sent to the necessary dest but with global id's
+	// collect and create atoms before hand so that bonds can be assigned before being sent out
+	
+	// bonding -- store global index of atoms each is bonded to on the Atom class so bonds for atoms on each each proc can be cycled quickly
+	
+	// for now do simple force compute on each proc
+	// will need to establish r_cut,max for this
+	// at the beginning of this routine check for atoms close to boundary and send an array as necessary to neighbors
+	// then loop atoms that belong ON that proc with others on same proc and those received to compute their forces
+	
+	/*!
+	 Upon initialization, resize vectors as necessary.  
+	 */
+	System::System() {
+		try {
+			box_.resize(3,-1);
+		}
+		catch (bad_alloc& ba) {
+			sprintf(err_msg, "Could not allocate space for system's box size vector");
+			flag_error (err_msg, __FILE__, __LINE__);
+			exit(BAD_MEM);
+		}
+	}
 
 /*!
  \param [in] \*filename Name of file to initialize from

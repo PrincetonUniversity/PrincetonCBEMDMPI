@@ -33,12 +33,12 @@ namespace integrator {
     double getTime();
     double getdt();
     int step(System *sys);
-	private:
-	  int timestep_;
-	  double dt_;
-	  double dt2_;
-	  vector <array <double, 3> > prev_pos_;
-	};
+  private:
+    int timestep_;
+    double dt_;
+    double dt2_;
+    vector <array <double, 3> > prev_pos_;
+  };
 	
   //! NVE, Velocity Verlet
   class Velocity_verlet : public Integrator {
