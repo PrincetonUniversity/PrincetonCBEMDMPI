@@ -7,56 +7,54 @@
 #define INTEGRATOR_H_
 
 #include "system.h"
+#include <array>
 
 using namespace sim_system; 
 
 namespace integrator {
-	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+  char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	
-	//!< Abstract base class for integrators
-	/*!
-	 The step function should return 0 if successfully executed, integer error flag otherwise.
-	 */
-	class Integrator {
-	public:
-		Integrator();
-		~Integrator();
-		virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
-	};
+  //!< Abstract base class for integrators
+  /*!
+    The step function should return 0 if successfully executed, integer error flag otherwise.
+  */
+  class Integrator {
+  public:
+    Integrator();
+    ~Integrator();
+    virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
+  };
 	
-	//! Default constructor sets parallel implementation flags to 0 (false) by default
-	Integrator::Integrator () {}
-	
-	//! NVE, Verlet
-	class Verlet : public Integrator {
-	public:
-	  Verlet(double deltat);
-	  ~Verlet();
-	  double getTime();
-	  double getdt();
-	  int step(System *sys);
+  //! NVE, Verlet
+  class Verlet : public Integrator {
+  public:
+    Verlet(double deltat);
+    ~Verlet();
+    double getTime();
+    double getdt();
+    int step(System *sys);
 	private:
 	  int timestep_;
 	  double dt_;
 	  double dt2_;
-	  vector <double[3]> prev_pos_;
+	  vector <array <double, 3> > prev_pos_;
 	};
 	
-	//! NVE, Velocity Verlet
-	class Velocity_verlet : public Integrator {
-	public:
-	private:
-	};
-	
-	//! NVT, Andersen thermostat
-	class Andersen : public Integrator {
-	public:
-	private:
-	};
-	
-	//! NVT, Nose-Hooser thermostat
-	class NoseHoover : public Integrator {
-	public:
+  //! NVE, Velocity Verlet
+  class Velocity_verlet : public Integrator {
+  public:
+  private:
+  };
+  
+  //! NVT, Andersen thermostat
+  class Andersen : public Integrator {
+  public:
+  private:
+  };
+  
+  //! NVT, Nose-Hooser thermostat
+  class NoseHoover : public Integrator {
+  public:
 	private:
 	};
 	

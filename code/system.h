@@ -19,6 +19,7 @@
 #include "interaction.h"
 #include <list>
 #include <algorithm>
+#include <unordered_map>
 
 using namespace std;
 using namespace atom;
