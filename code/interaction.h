@@ -70,3 +70,5 @@ inline double Interaction::energy(const Atom *a1, const Atom *a2, const vector <
 
 
 #endif
+
+
