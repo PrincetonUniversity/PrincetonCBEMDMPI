@@ -39,15 +39,16 @@ namespace integrator {
 	//! NVE, Verlet
 	class Verlet : public Integrator {
 	public:
+	  Verlet(double deltat);
+	  ~Verlet();
+	  double getTime();
+	  double getdt();
+	  int step(System *sys);
 	private:
+	  int timestep_;
+	  double dt_;
+	  vector <double[3]> prev_pos_;
 	};
-	
-	// example:
-	int Verlet::step (System *sys) {
-		// write the code to update positions, etc. here
-		// you can plan on being able to call a calc_force routine that calculates and stores the instantaneous force in
-		// the cartesian directions
-	}
 	
 	//! NVE, Velocity Verlet
 	class Velocity_verlet : public Integrator {
@@ -81,24 +82,8 @@ namespace integrator {
 	 \param [in] \*sys Pointer to Integrator to use
 	 \param [in] timesteps Number of timesteps to integrate over
 	 */
-	int run (System *sys, const Integrator *integrator, const int timeteps) {
-		// The way this function is written it can be easily interpreted by SWIG with python!
-		int check = 0;
-		
-		// before starting, need to check that all requisite variables are set
-		
-		// execute loops
-		MPI_Barrier(MPI_COMM_WORLD);
-		for (int i = 0; i < timeteps; ++i) {
-			check = integrator->step(sys);
-			if (check != 0) {
-				sprintf(err_msg, "Error encountered during integration after step %d", i+1);
-				flag_error (err_msg, __FILE__, __LINE__);
-				return check;
-			}
-			MPI_Barrier(MPI_COMM_WORLD);
-		}
-	}
+	int run (System *sys, const Integrator *integrator, const int timeteps) ;
+
 }
 
 
