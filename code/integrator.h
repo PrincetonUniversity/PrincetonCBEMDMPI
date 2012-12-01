@@ -6,18 +6,9 @@
 #ifndef INTEGRATOR_H_
 #define INTEGRATOR_H_
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "misc.h"
-#include "atom.h"
 #include "system.h"
 
-using namespace atom;
-using namespace std;
-using namespace misc;
-using namespace sim_system;
+using namespace sim_system; 
 
 namespace integrator {
 	char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace

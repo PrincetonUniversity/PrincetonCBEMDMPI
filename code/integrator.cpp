@@ -3,21 +3,8 @@
    \authors{George Khoury, Carmeline Dsilva}
 **/
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include "misc.h"
-#include "atom.h"
-#include "system.h"
 #include "integrator.h"
 
-using namespace atom;
-using namespace std;
-using namespace misc;
-using namespace sim_system;
-
-namespace integrator {
   //! NVE, Verlet
   Verlet::Verlet(double deltat) {
     timestep = 0;
@@ -85,6 +72,5 @@ namespace integrator {
       MPI_Barrier(MPI_COMM_WORLD);
     }
   }
-}
 
 
