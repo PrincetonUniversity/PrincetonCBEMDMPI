@@ -47,6 +47,7 @@ namespace integrator {
 	private:
 	  int timestep_;
 	  double dt_;
+	  double dt2_;
 	  vector <double[3]> prev_pos_;
 	};
 	

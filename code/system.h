@@ -45,6 +45,7 @@ namespace system {
 		vector <double> box() const {return box_;}		//!< Report system size
 		int add_atoms (Atom *new_atoms);				//!< Add atom(s) to the system 
 		int delete_atoms (const vector <int> indices);	//!< Pop atoms with local indices from local storage
+		Atom *get_atom(int index) {return &atoms_[index];}
 		
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
