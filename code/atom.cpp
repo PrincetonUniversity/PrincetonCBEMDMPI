@@ -5,7 +5,7 @@ MD Atom Information
 
 #include "atom.h"
 
-using namespace atom;
+namespace atom {
 
 //! MPI version of Atom
 //MPI_Datatype MPI_ATOM; George its in the header file. maybe move to main
@@ -45,3 +45,4 @@ void delete_MPI_atom() {
 	MPI_Type_free (&MPI_ATOM);
 }
 
+}

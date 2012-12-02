@@ -5,36 +5,43 @@ MD System Information
 
 #include "system.h"
 
-using namespace sim_system;
+//using namespace sim_system;
+
+namespace sim_system {
 
 
-	// declare system before MPI Init
-	// then after initialization each proc has a copy of an empty System
-	// then read from file from proc1 and SEND data to each as it is read in!
-	// i.e. things like T/P are set for all, but atoms only need to be sent to the necessary dest but with global id's
-	// collect and create atoms before hand so that bonds can be assigned before being sent out
+// declare system before MPI Init
+// then after initialization each proc has a copy of an empty System
+// then read from file from proc1 and SEND data to each as it is read in!
+// i.e. things like T/P are set for all, but atoms only need to be sent to the necessary dest but with global id's
+// collect and create atoms before hand so that bonds can be assigned before being sent out
 	
-	// bonding -- store global index of atoms each is bonded to on the Atom class so bonds for atoms on each each proc can be cycled quickly
-	
-	// for now do simple force compute on each proc
-	// will need to establish r_cut,max for this
-	// at the beginning of this routine check for atoms close to boundary and send an array as necessary to neighbors
-	// then loop atoms that belong ON that proc with others on same proc and those received to compute their forces
-	
-	/*!
-	 Upon initialization, resize vectors as necessary.  
-	 */
-	System::System() {
-		try {
-			box_.resize(3,-1);
-		}
-		catch (bad_alloc& ba) {
-			sprintf(err_msg, "Could not allocate space for system's box size vector");
-			flag_error (err_msg, __FILE__, __LINE__);
-			exit(BAD_MEM);
-		}
-	}
+// bonding -- store global index of atoms each is bonded to on the Atom class so bonds for atoms on each each proc can be cycled quickly
 
+// for now do simple force compute on each proc
+// will need to establish r_cut,max for this
+// at the beginning of this routine check for atoms close to boundary and send an array as necessary to neighbors
+// then loop atoms that belong ON that proc with others on same proc and those received to compute their forces
+	
+/*!
+  Upon initialization, resize vectors as necessary.  
+*/
+System::System() {
+  try {
+    box_.resize(3,-1);
+  }
+  catch (bad_alloc& ba) {
+    char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+    sprintf(err_msg, "Could not allocate space for system's box size vector");
+    flag_error (err_msg, __FILE__, __LINE__);
+    exit(BAD_MEM);
+  }
+}
+
+  //FIX: do we need a deconstructor??
+  System::~System() {
+
+  }
 /*!
  \param [in] \*filename Name of file to initialize from
  \param [in[ rank Rank of processor this is.  Rank 0 reads, other wait to recieve information
@@ -42,7 +49,7 @@ using namespace sim_system;
  */
 int initialize (const char *filename, int *rank, int *nprocs, System *sys) {
 	int argc, rc;
-	char *argv[];
+	char **argv;
 	
 	// set up MPI
 	rc = MPI_Init(&argc, &argv);
@@ -61,19 +68,21 @@ int initialize (const char *filename, int *rank, int *nprocs, System *sys) {
 	// check that interactions are such that ONLY neighboring procs need to interact
 	
 	// handle domain decomp --> look at MPI_graph?
-	
+	//FILL THIS IN
+	/*
 	if (rank == 0) {
 		int check = read_xml(	...	);
 	} else {
 		int check = worker_recv_sys(	...	);
 	}
-	
+	*/
 	return 0;
 }
 
 int finalize () {
 	// free atom type after we are done running
-	delete_MPI_atom();
+  int flag = 0;
+  delete_MPI_atom();
 	MPI_Finalize();
 	return flag;
 }
@@ -103,29 +112,30 @@ int domain_decomposition (const vector <double> box, const int nprocs, vector < 
  Remove atoms from the system.  Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index.
  Returns the number of atoms deleted.
  */
-int delete_atoms (const vector <int> indices) {
-	vector <Atom>::iterator it = atoms_.begin();
-	
-	// sort indices from lowest to highest
-	sort (indices.begin(), indices.end());
-	
-	// pop in this order
-	int shift = 0;
-	for (int i = 0; i < indices.size(); ++i) {
-		// update glob_to_loc for all atoms following the erased atoms
-		if (i < indices.size()-1) {
-			upper = indices[i+1]-shift;
-		} else {
-			upper = atoms_.size();
-		}
-		for (int j = indices[i]+1-shift; j < upper; ++j) {
-			glob_to_loc[atoms_[j].sys_index] -= (shift+1);
-		}
-
-		atoms_.erase(it-shift+indices[i]);
-		++shift;
-	}
-	return shift;
+int System::delete_atoms (vector <int> indices) {
+  vector <Atom>::iterator it = atoms_.begin();
+  
+  // sort indices from lowest to highest
+  sort (indices.begin(), indices.end());
+  
+  // pop in this order
+  int shift = 0;
+  int upper;
+  for (int i = 0; i < indices.size(); ++i) {
+    // update glob_to_loc for all atoms following the erased atoms
+    if (i < indices.size()-1) {
+      upper = indices[i+1]-shift;
+    } else {
+      upper = atoms_.size();
+    }
+    for (int j = indices[i]+1-shift; j < upper; ++j) {
+      glob_to_loc_id_[atoms_[j].sys_index] -= (shift+1);
+    }
+    
+    atoms_.erase(it-shift+indices[i]);
+    ++shift;
+  }
+  return shift;
 }
 			 
 /*!
@@ -137,15 +147,19 @@ int delete_atoms (const vector <int> indices) {
  */
 int* System::add_atoms (const int natoms, Atom *new_atoms) {
 	int index = atoms_.size(), *update_proc = new int [natoms];
+	//NEED TO FIX 
+	/*
 	if (natoms < 1) {
 		return natoms;
 	}
-	
+	*/
 	for (int i = 0; i < natoms; ++i) {
 		try {
 			atoms_.push_back(new_atoms[i]);
 		}
 		catch (bad_alloc& ba) {
+		  char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+
 			sprintf(err_msg, "Could not allocate space for new atoms in the system");
 			flag_error (err_msg, __FILE__, __LINE__);
 			finalize();
@@ -196,7 +210,7 @@ int System::add_atom_type (const string atom_name) {
  */
 int System::add_bond_type (const string bond_name) {
 	if (bond_name.size() == 0) return -1;
-	if (bond_name.find(bond_name) == bond_type_.end()) {
+	if (bond_type_.find(bond_name) == bond_type_.end()) {
 		int size = bond_name.size();
 		bond_type_[bond_name] = size;
 		return 0;
@@ -219,7 +233,7 @@ int System::add_bond_type (const string bond_name) {
  */
 int System::add_ppot_type (const string ppot_name) {
 	if (ppot_name.size() == 0) return -1;
-	if (ppot_name.find(ppot_name) == ppot_type_.end()) {
+	if (ppot_type_.find(ppot_name) == ppot_type_.end()) {
 		int size = ppot_name.size();
 		ppot_type_[ppot_name] = size;
 		return 0;
@@ -232,3 +246,4 @@ int System::add_ppot_type (const string ppot_name) {
 
 
 
+}

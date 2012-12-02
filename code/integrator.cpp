@@ -4,10 +4,8 @@
 **/
 
 #include "integrator.h"
-#include "misc.h"
 
-using namespace integrator;
-using namespace misc;
+namespace integrator {
 
 Integrator::Integrator() {}
 
@@ -81,3 +79,4 @@ int run (System *sys, Integrator *integrator, const int timeteps) {
 }
 
 
+}

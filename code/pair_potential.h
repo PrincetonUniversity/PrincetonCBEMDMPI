@@ -16,6 +16,7 @@
 #include "misc.h"
 
 using namespace std;
+using namespace misc;
 
 namespace pair_potential {
 	class Potential {

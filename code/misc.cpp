@@ -6,6 +6,7 @@ Miscellaneous Routines
 
 #include "misc.h"
 
+namespace misc {
 //! Report an error message
 /*!
  Error messages are piped to stderr not stdout.
@@ -131,3 +132,4 @@ inline double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <dou
 
 
 
+}

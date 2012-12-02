@@ -5,9 +5,7 @@
 
 #include "pair_potential.h"
 
-using namespace std;
-using namespace misc;
-using namespace pair_potential;
+namespace pair_potential {
 
 /*!
   Set the cutoff values for the potential
@@ -68,3 +66,4 @@ inline vector<double> slj::force (const double r2, const double *xyz) {
   return force_vec;
 }
 
+}

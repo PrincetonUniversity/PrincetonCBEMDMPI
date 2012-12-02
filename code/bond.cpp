@@ -5,7 +5,7 @@ MD Bond Information
 
 #include "bond.h"
 
-using namespace bond;
+namespace bond {
  // George and Arun .. its in the header. not sure if that means it will be autoinitialized? 11/30/12 11:36PM
 //char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 //const double LJ_CUT = pow(2.0, 1/6.0);
@@ -66,4 +66,5 @@ void Harmonic::set_coeff (const vector <double> coeffs) {
 	assert (coeffs.size() == 2);
 	r0_ = coeffs[0];
 	k_ = coeffs[1];
+}
 }

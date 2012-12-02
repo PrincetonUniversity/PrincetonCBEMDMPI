@@ -7,9 +7,11 @@
 #define INTEGRATOR_H_
 
 #include "system.h"
+#include "misc.h"
 #include <array>
 
 using namespace sim_system; 
+using namespace misc;
 
 namespace integrator {
   extern char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
@@ -21,7 +23,7 @@ namespace integrator {
   class Integrator {
   public:
     Integrator();
-    ~Integrator();
+    ~Integrator(){};
     virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
   };
 	
@@ -29,7 +31,7 @@ namespace integrator {
   class Verlet : public Integrator {
   public:
     Verlet(double deltat);
-    ~Verlet();
+    ~Verlet(){};
     double getTime();
     double getdt();
     int step(System *sys);
