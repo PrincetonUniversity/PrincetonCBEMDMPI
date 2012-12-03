@@ -1,5 +1,6 @@
 #include "domain_decomp.h"
 
+//!< Given the box size and factors of nprocs, checks which combination generates the most cubic domains
 int gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add) {
 
     int status;
@@ -43,11 +44,11 @@ int gen_sets (const vector<int>& factors, const double box[], const int level, d
     }
 } //gen_sets ends
 
+//!< Given a number returns the prime factors (does not count 1 as a prime factor)
 vector <int> factorize (const int nprocs) {
+
     vector <int> factors;
     int unfactored=nprocs;
-    factors.push_back(1);
-    factors.push_back(1);
     int i=2;
     while (i<=unfactored) {
 	if ((unfactored%i) == 0) {
@@ -61,6 +62,7 @@ vector <int> factorize (const int nprocs) {
     return factors;
 } // factorize ends
 
+//!< Decomposes the box into domains for each processor to handle
 int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup) {
 
     int status;
@@ -77,8 +79,12 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
     }
 
     factors = factorize (nprocs);
-    status = gen_sets(factors, box_dims, 0, final_diff, final_breakup, 0);
+    // Two 1's added to the factors to ensure deompositions like 1,1,6 are found
+    factors.push_back(1);
+    factors.push_back(1);
 
+    // gen_sets is a recursive function, initial call must have level=0 and add=0
+    status = gen_sets(factors, box_dims, 0, final_diff, final_breakup, 0);
     for (int i=0; i<3; i++) {
 	widths[i] = box_dims[i] / final_breakup[i];
     }
@@ -86,11 +92,30 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
     return 0;
 } //init_domain_decomp ends
 
-int get_processor (const vector<double> pos, const double widths[], vector<int> final_breakup) {
-    int rank, x_id, y_id, z_id;
+//!< Given the co-ordinates of a point, determines within which domain the point lies
+int get_processor (const vector<double> pos, const double widths[], const vector<int>& final_breakup) {
+
+    int domain_id, x_id, y_id, z_id;
     x_id = floor(pos.at(0)/widths[0]);
     y_id = floor(pos.at(1)/widths[1]);
     z_id = floor(pos.at(2)/widths[2]);
-    rank = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
-    return rank;
+    domain_id = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
+    return domain_id;
 } //get_processor ends
+
+//!< Generates a mapping of processor id to the x, y, z ids of the domain
+int gen_domain_info (const double widths[], const vector<int>& final_breakup, int proc_map[][3]) {
+
+    int domain_id;
+    for (int x_id=0; x_id<final_breakup[0]; x_id++) {
+	for (int y_id=0; y_id<final_breakup[1]; y_id++) {
+	    for (int z_id=0; z_id<final_breakup[2]; z_id++) {
+		domain_id = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
+		proc_map[domain_id][0] = x_id;
+		proc_map[domain_id][1] = y_id;
+		proc_map[domain_id][2] = z_id;
+	    }
+	}
+    }
+    return 0;
+} // gen_domain_info ends
