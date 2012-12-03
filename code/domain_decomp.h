@@ -10,6 +10,6 @@ int gen_sets (const vector<int>& factors, const double box[], const int level, d
 
 vector<int> factorize (const int nprocs);
 
-int init_domain_decomp (const vector<double> box, const int nprocs, double widths[]);
+int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup);
 
-int get_processor ();
+int get_processor (const vector<double> pos, const double widths[], vector<int> final_breakup);

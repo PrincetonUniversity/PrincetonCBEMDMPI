@@ -41,7 +41,6 @@ int gen_sets (const vector<int>& factors, const double box[], const int level, d
 	    status = gen_sets(factors, box, level+1, final_diff, final_breakup, k);
 	}
     }
-
 } //gen_sets ends
 
 vector <int> factorize (const int nprocs) {
@@ -62,12 +61,11 @@ vector <int> factorize (const int nprocs) {
     return factors;
 } // factorize ends
 
-int init_domain_decomp (const vector<double> box, const int nprocs, double widths[]) {
+int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup) {
 
     int status;
     double box_dims[3];
     double final_diff=10000;
-    vector<int> final_breakup;
     vector<int> factors;
 
     final_breakup.reserve(3);
@@ -88,7 +86,11 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
     return 0;
 } //init_domain_decomp ends
 
-int get_processor () {
-
-    return 0;
+int get_processor (const vector<double> pos, const double widths[], vector<int> final_breakup) {
+    int rank, x_id, y_id, z_id;
+    x_id = floor(pos.at(0)/widths[0]);
+    y_id = floor(pos.at(1)/widths[1]);
+    z_id = floor(pos.at(2)/widths[2]);
+    rank = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
+    return rank;
 } //get_processor ends

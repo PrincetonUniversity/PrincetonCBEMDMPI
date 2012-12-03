@@ -8,7 +8,8 @@ TEST (DomainDecompTest, Test1) {
     box.push_back(2.0);
     double widths[3];
     int nprocs=24, status;
-    status = init_domain_decomp (box, nprocs, widths);
+    vector<int> final_breakup;
+    status = init_domain_decomp (box, nprocs, widths, final_breakup);
     ASSERT_EQ (1.0, widths[0]);
     ASSERT_EQ (1.0, widths[1]);
     ASSERT_EQ (1.0, widths[2]);
