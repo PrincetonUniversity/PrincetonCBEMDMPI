@@ -1,6 +1,7 @@
 atom = atom.o
 bond = bond.o
 misc = misc.o
+main = main.o
 
 # pull
 # git merge origin/master
@@ -10,31 +11,39 @@ CXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
 LDFLAGS = -lm 
 
 MPICPP=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpic++
+MPICC=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpicc
 OMPFLAGS = -fopenmp
 
 MPICXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
-all: atom bond misc
+all: driver
 
-%.o : %.c
-	$(MPICPP) $(CXXFLAGS) -c $<
+%.o : %.cpp
+	$(MPICC) $(CXXFLAGS) -c $< -o $*.o
 
-atom.o : atom.cpp
-	$(MPICPP) $(CXXFLAGS) -c atom.cpp
+#atom.o : atom.cpp
+#	$(MPICC) $(CXXFLAGS) -c atom.cpp
 
-atom: $(atom)
-	$(MPICPP) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
+#atom: $(atom)
+#	$(MPICC) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
-bond.o : bond.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+#bond.o : bond.cpp
+#	$(MPICC) $(CXXFLAGS) -c $<
 
-bond: $(bond)
-	$(CXX) $(CXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
+#bond: $(bond)
+#	$(MPICC) $(CXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
-misc.o : misc.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+#misc.o : misc.cpp
+#	$(MPICC) $(CXXFLAGS) -c $<
 
-misc: $(misc)
-	$(CXX) $(CXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
+#misc: $(misc)
+#	$(MPICC) $(CXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
+
+
+#main.o : main.cpp 
+#	$(MPICPP) $(CXXFLAGS) -c $< 
+
+driver : $(main) $(atom) $(bond) $(misc)
+	 $(MPICC) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
 clean:
 	$(RM) *.o
