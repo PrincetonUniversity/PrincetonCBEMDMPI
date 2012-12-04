@@ -10,15 +10,17 @@ CXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
 
 LDFLAGS = -lm 
 
-MPICPP=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpic++
-MPICC=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpicc
+#MPICPP=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpic++
+#MPICC=/usr/local/openmpi/1.4.3/intel111/x86_64/bin/mpicc
+MPICC=mpicc
+MPICPP=mpic++
 OMPFLAGS = -fopenmp
 
 MPICXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
 all: driver
 
 %.o : %.cpp
-	$(MPICC) $(CXXFLAGS) -c $< -o $*.o
+	$(MPICPP) $(MPICXXFLAGS) -c $< -o $*.o
 
 #atom.o : atom.cpp
 #	$(MPICC) $(CXXFLAGS) -c atom.cpp
@@ -43,7 +45,7 @@ all: driver
 #	$(MPICPP) $(CXXFLAGS) -c $< 
 
 driver : $(main) $(atom) $(bond) $(misc)
-	 $(MPICC) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
+	 $(MPICPP) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
 clean:
 	$(RM) *.o
