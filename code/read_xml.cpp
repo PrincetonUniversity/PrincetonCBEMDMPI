@@ -5,11 +5,12 @@
 
 #include "read_xml.h"
 #include "global.h"
+#include "domain_decomp.h"
 
 /*!
  Parse an XML file to obtain atom information. Returns 0 if successful, -1 if failure. Operates in 
  a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the
- file in order. Returns 0 if successful, else integer flag for failure.
+ file in order. Returns 0 if successful, else integer flag for failure.  Does domain decomposition.
  \param [in] filename Name of file to open and read.
  \param [in] nprocs Number of processors total.
  \param [in] rank Rank of this process.
@@ -18,6 +19,9 @@
 int initialize_from_xml (const string filename, const int nprocs, const int rank, System *sys) {
 	int iread = 1, isignal, check;
 	MPI_Status Stat;
+	
+	// do domain decomposition before initialization
+	check = init_domain_decomp (sys->box(), nprocs, sys->widths, &sys->final_breakup);
 	
 	MPI_Barrier (MPI_WORLD_COMM);
 	

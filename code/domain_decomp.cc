@@ -70,10 +70,12 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
     double final_diff=10000;
     vector<int> factors;
 
-    final_breakup.reserve(3);
+    /*final_breakup.reserve(3);
     for (vector<int>::size_type it=0; it!=final_breakup.capacity(); it++) {
 	final_breakup.push_back(-1);
-    }
+    }*/
+	final_breakup.resize(3, -1);
+	
     for (int i=0; i<3; i++) {
 	box_dims[i] = box[i];
     }

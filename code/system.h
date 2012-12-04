@@ -57,7 +57,9 @@ namespace sim_system {
 	  int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
 	  int delete_atoms (vector <int> indices);					//!< Pop atoms with local indices from local storage
 	  Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
-	
+	  
+	  double proc_widths[3];									//!< Width for domain decomposition
+	  vector<int> final_proc_breakup;							//!< Final domain decomposition
 
   private:
 	  double Temp_;										//!< System temperature in reduced units (kT)
@@ -71,9 +73,6 @@ namespace sim_system {
 	  unordered_map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
 	  unordered_map <string, int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
 	  unordered_map <int, int> glob_to_loc_id_;			//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
-	  vector <int> on_proc_;							//!< Stores processor each atom (by global sys_index) "lives" on
-	  int num_neighbor_procs;							//!< Number of neighboring processors this system must communicate with
-	  int *neighbor_procs_;								//!< Array of ranks of neighboring processors this system must communicate with
 	  vector <vector <Interaction> > interact_;			//!< Interaction matrix between atoms indexed by global id's (symetric)
   };
 	
