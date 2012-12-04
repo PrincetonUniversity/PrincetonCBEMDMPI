@@ -123,9 +123,6 @@ namespace sim_system {
   //!< Finalizes a system by performing any last minute tasks that must be done before the simulation finishes.
   int finalize();
   
-  //!< Decomposes a box into domains for each processor to handle
-  int domain_decomposition (const vector <double> box, const int nprocs, vector < vector <int> > *neighbors);
-	
   //! Read atom coordinates and properties from a file (xml)
   int read_xml (const string filename, const int nprocs, System *new_systems);			
 }
