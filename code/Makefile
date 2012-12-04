@@ -1,12 +1,13 @@
 atom = atom.o
 bond = bond.o
 misc = misc.o
+system = system.o
 main = main.o
 
 # pull
 # git merge origin/master
 # push
-CXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
+CXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated -std=c++0x
 
 LDFLAGS = -lm 
 
@@ -16,7 +17,7 @@ MPICC=mpicc
 MPICPP=mpic++
 OMPFLAGS = -fopenmp
 
-MPICXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated
+MPICXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated -std=c++0x
 all: driver
 
 %.o : %.cpp
@@ -44,7 +45,7 @@ all: driver
 #main.o : main.cpp 
 #	$(MPICPP) $(CXXFLAGS) -c $< 
 
-driver : $(main) $(atom) $(bond) $(misc)
+driver : $(main) $(atom) $(bond) $(misc) $(system)
 	 $(MPICPP) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
 clean:
