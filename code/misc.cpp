@@ -88,6 +88,28 @@ vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	
 	return in_box;
 }
+	
+	//! Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries.
+	/*!
+	 Recall that the simulation box is defined such that, regardless of the input file, it is normalized to 
+	 have a corner at (0,0,0).  If this routine fails, it returns an empty vector (size = 0).
+	 \param [in] coords Array of cartesian coordinates.
+	 \param [in] box Vector of box dimensions (L_x, L_y, L_z).
+	 */
+	inline vector <double> pbc (const double *coords, const vector <double> box) {
+		vector <double> in_box(3, 0.0), bad;
+		for (int i = 0; i < 3; ++i) {
+			in_box[i] = coords[i];
+			while (in_box[i] < 0.0) {
+				in_box[i] += box[i];
+			}
+			while (in_box[i] >= box[i]) {
+				in_box[i] -= box[i];
+			}
+		}
+		
+		return in_box;
+	}
 
 //! Return the square of the minimum image distance between 2 coordinate vectors
 /*!
