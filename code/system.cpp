@@ -4,6 +4,7 @@ MD System Information
 **/
 
 #include "system.h"
+#include "global.h"
 
 //using namespace sim_system;
 
@@ -31,7 +32,7 @@ System::System() {
     box_.resize(3,-1);
   }
   catch (bad_alloc& ba) {
-    char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+    char err_msg[ERR_FLAG_SIZE]; 
     sprintf(err_msg, "Could not allocate space for system's box size vector");
     flag_error (err_msg, __FILE__, __LINE__);
     exit(BAD_MEM);
@@ -40,7 +41,7 @@ System::System() {
 
   //FIX: do we need a deconstructor??
   System::~System() {
-
+	  ;
   }
 /*!
  \param [in] \*filename Name of file to initialize from
@@ -88,7 +89,7 @@ int finalize () {
 }
 
 //!< Decomposes a box into domains for each processor to handle
-int domain_decomposition (const vector <double> box, const int nprocs, vector < vector <int> > *neighbors);			
+//int domain_decomposition (const vector <double> box, const int nprocs, vector < vector <int> > *neighbors);			
 
 // declare system before MPI Init
 // then after initialization each proc has a copy of an empty System
@@ -145,105 +146,156 @@ int System::delete_atoms (vector <int> indices) {
  \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
  \param [out] \*update_proc Array of global indices that have just been added to this proc to be used for updating on_proc_ list.
  */
-int* System::add_atoms (const int natoms, Atom *new_atoms) {
-	int index = atoms_.size(), *update_proc = new int [natoms];
-	//NEED TO FIX 
-	/*
-	if (natoms < 1) {
-		return natoms;
+	int* System::add_atoms (const int natoms, Atom *new_atoms) {
+		int index = atoms_.size(), *update_proc = new int [natoms];
+		for (int i = 0; i < natoms; ++i) {
+			try {
+				atoms_.push_back(new_atoms[i]);
+			}
+			catch (bad_alloc& ba) {
+				char err_msg[ERR_FLAG_SIZE]; 
+				sprintf(err_msg, "Could not allocate space for new atoms in the system");
+				flag_error (err_msg, __FILE__, __LINE__);
+				finalize();
+				exit(BAD_MEM);
+			}
+			glob_to_loc_id_[new_atoms[i].sys_index] = index;
+			update_proc[i] = new_atoms[i].sys_index;
+			index++;
+		}
+
+		return update_proc;
 	}
+
+	/*!
+	Tries to add an atom type to the system, associating a user specified name with an internal index to reference this type in the future.
+	This can return 3 different values:
+	\par
+	Returns 0 if, atom_name was new and was successfully indexed.
+	\par
+	Returns -1 if, atom_name was bad (i.e. empty string).
+	\par
+	Returns +1 if, atom_name already exists in the system and could not be indexed again.
+	\par
+	\param [in] atom_name User specified name to index
 	*/
-	for (int i = 0; i < natoms; ++i) {
-		try {
-			atoms_.push_back(new_atoms[i]);
+	int System::add_atom_type (const string atom_name) {
+		if (atom_name.size() == 0) return -1;
+		if (atom_type_.find(atom_name) == atom_type_.end()) {
+			int size = atom_type_.size();
+			atom_type_[atom_name] = size;
+			return 0;
+		} else {
+			return 1;
 		}
-		catch (bad_alloc& ba) {
-		  char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+	}
 
-			sprintf(err_msg, "Could not allocate space for new atoms in the system");
+	/*!
+	 Tries to add a bond type to the system, associating a user specified name with an internal index to reference this type in the future.
+	 This can return 3 different values:
+	 \par
+	 Returns 0 if, bond_name was new and was successfully indexed.
+	 \par
+	 Returns -1 if, bond_name was bad (i.e. empty string).
+	 \par
+	 Returns +1 if, bond_name already exists in the system and could not be indexed again.
+	 \par
+	 \param [in] bond_name User specified name to index
+	 */
+	int System::add_bond_type (const string bond_name) {
+		if (bond_name.size() == 0) return -1;
+		if (bond_type_.find(bond_name) == bond_type_.end()) {
+			int size = bond_name.size();
+			bond_type_[bond_name] = size;
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
+	
+	/*!
+	 Returns the internal index associated with this atom name; returns -1 if not found.
+	 \param [in] name User defined name of atom type.
+	 */
+	inline int System::atom_type (const string name) {
+		if (name.size() == 0) return -1;
+		if (atom_type_.find(name) == atom_type_.end()) {
+			return -1;
+		} else {
+			return atom_type_.find(name)->second;
+		}
+	}
+	
+	/*!
+	 Returns the internal index associated with this bond name; returns -1 if not found.
+	 \param [in] name User defined name of bond type.
+	 */
+	inline int System::bond_type (const string name) {
+		if (name.size() == 0) return -1;
+		if (bond_type_.find(name) == bond_type_.end()) {
+			return -1;
+		} else {
+			return bond_type_.find(name)->second;
+		}
+	}
+
+	/*!
+	 Adds a new bond and associated information to the System object.
+	 \param [in] atom1 Global index of atom1 in the bond.
+	 \param [in] atom1 Global index of atom2 in the bond.
+	 \param [in] type Internal index associated with this bond type.
+	 */
+	inline void System::add_bond (const int atom1, const int atom2, const int type) {
+		pair <int, int> new_bond = make_pair (atom1, atom2);
+		bonded_.push_back(new_bond);
+		bonded_type_.push_back(type);
+	}
+	
+	/*!
+	 Returns the string "NULL" if failed, else user defined name of atom.
+	 \param [in] index Internal index to locate and return the name associated.
+	 */
+	inline string System::atom_name (const int index) {
+		string name = "NULL";
+		if (index >= atom_type_.size()) {
+			sprintf(err_msg, "Index %d out of range", index);
 			flag_error (err_msg, __FILE__, __LINE__);
-			finalize();
-			exit(BAD_MEM);
+			return name;
+		} else {
+			typedef std::unordered_map<std::string, int>::iterator it_type;
+			for	(it_type iterator = atom_type_.begin(); iterator != atom_type_.end(); iterator++) {
+				if (iterator->second == index) {
+					return iterator->first;
+				}
+			}
+			sprintf(err_msg, "Could not locate index %d in indexed atom types", index);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return name;
 		}
-		glob_to_loc_id_[new_atoms[i].sys_index] = index;
-		update_proc[i] = new_atoms[i].sys_index;
-		index++;
 	}
-
-	return update_proc;
-}
-
-/*!
- Tries to add an atom type to the system, associating a user specified name with an internal index to reference this type in the future.
- This can return 3 different values:
- \par
- Returns 0 if, atom_name was new and was successfully indexed.
- \par
- Returns -1 if, atom_name was bad (i.e. empty string).
- \par
- Returns +1 if, atom_name already exists in the system and could not be indexed again.
- \par
- \param [in] atom_name User specified name to index
- */
-int System::add_atom_type (const string atom_name) {
-	if (atom_name.size() == 0) return -1;
-	if (atom_type_.find(atom_name) == atom_type_.end()) {
-		int size = atom_type_.size();
-		atom_type_[atom_name] = size;
-		return 0;
-	} else {
-		return 1;
+	
+	/*!
+	 Returns the string "NULL" if failed, else user defined name of bond.
+	 \param [in] index Internal index to locate and return the name associated.
+	 */
+	inline string System::bond_name (const int index) {
+		string name = "NULL";
+		if (index >= bond_type_.size()) {
+			sprintf(err_msg, "Index %d out of range", index);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return name;
+		} else {
+			typedef std::unordered_map<std::string, int>::iterator it_type;
+			for	(it_type iterator = bond_type_.begin(); iterator != bond_type_.end(); iterator++) {
+				if (iterator->second == index) {
+					return iterator->first;
+				}
+			}
+			sprintf(err_msg, "Could not locate index %d in indexed bond types", index);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return name;
+		}
 	}
-}
-
-/*!
- Tries to add a bond type to the system, associating a user specified name with an internal index to reference this type in the future.
- This can return 3 different values:
- \par
- Returns 0 if, bond_name was new and was successfully indexed.
- \par
- Returns -1 if, bond_name was bad (i.e. empty string).
- \par
- Returns +1 if, bond_name already exists in the system and could not be indexed again.
- \par
- \param [in] bond_name User specified name to index
- */
-int System::add_bond_type (const string bond_name) {
-	if (bond_name.size() == 0) return -1;
-	if (bond_type_.find(bond_name) == bond_type_.end()) {
-		int size = bond_name.size();
-		bond_type_[bond_name] = size;
-		return 0;
-	} else {
-		return 1;
-	}
-}
-
-/*!
- Tries to add a pair potential type to the system, associating a user specified name with an internal index to reference this type in the future.
- This can return 3 different values:
- \par
- Returns 0 if, ppot_name was new and was successfully indexed.
- \par
- Returns -1 if, ppot_name was bad (i.e. empty string).
- \par
- Returns +1 if, ppot_name already exists in the system and could not be indexed again.
- \par
- \param [in] ppot_name User specified name to index
- */
-int System::add_ppot_type (const string ppot_name) {
-	if (ppot_name.size() == 0) return -1;
-	if (ppot_type_.find(ppot_name) == ppot_type_.end()) {
-		int size = ppot_name.size();
-		ppot_type_[ppot_name] = size;
-		return 0;
-	} else {
-		return 1;
-	}
-}
-
-// Can define addition "system-relevant" functions, classes, etc. below...
-
-
 
 }
