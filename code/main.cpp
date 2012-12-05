@@ -8,6 +8,9 @@ inline void force_calc(System *sys, void (*force)(Atom *a1, Atom *a2, const vect
 		for (int j=i+1; j!=sys->natoms(); ++j) {
 			//(*force)(sys->get_atom(i), sys->get_atom(j), &sys->box());
 			(*force)(sys->get_atom(i), sys->get_atom(j), &box);
+			//cout << sys->natoms() << endl;
+			//cout << sys->get_atom(0)->force[0] << " " << sys->get_atom(0)->force[1] << " " <<sys->get_atom(0)->force[2] << endl;
+			
 		}
 	}
 }
@@ -18,7 +21,7 @@ int main(int argc, char** argv) {
 	System sys1;
 
 	// set system box
-	vector<double> box(3,5.0);
+	vector<double> box(3,10.0);
 	sys1.set_box(box);
 	
 	Interaction interaction1;
