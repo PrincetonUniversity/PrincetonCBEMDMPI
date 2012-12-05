@@ -19,7 +19,6 @@
 #include "interaction.h"
 #include <list>
 #include <algorithm>
-#include <unordered_map>
 
 using namespace std;
 using namespace atom;
@@ -32,8 +31,8 @@ namespace sim_system {
   class System {
   public:
     System();
-    ~System();
-    int set_box (const vector<double> new_box);			//!< Set the global system box size
+    //~System();
+    int set_box (const vector<double> new_box) {box_ = new_box;}			//!< Set the global system box size
     void set_T (const double T) {Temp_ = T;}		//!< Set the system temperature
     void set_P (const double P) {Press_ = P;}		//!< Set the system pressure
     int natoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor)
@@ -51,14 +50,14 @@ namespace sim_system {
     double Temp_;									//!< System temperature in reduced units (kT)
     double Press_;									//!< System pressure in reduced units
     double KE_, U_;									//!< Total internal kinetic energy and potential energy
-    vector <double> box_;							//!< Global system cartesian dimensions
     vector <Atom> atoms_;							//!< Vector of Atoms in the system
+    vector <double> box_;							//!< Global system cartesian dimensions
     vector <Bond> bond_;							//!< Vector of bond types in the system
     vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
-    unordered_map <string, int> atom_type_;			//!< Maps user specified name of atom type to internal index
-    unordered_map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
-    unordered_map <string, int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
-    unordered_map <int, int> glob_to_loc_id_;		//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
+    map <string, int> atom_type_;			//!< Maps user specified name of atom type to internal index
+    map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
+    map <string, int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
+    map <int, int> glob_to_loc_id_;		//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
     vector <int> on_proc_;							//!< Stores processor each atom (by global sys_index) "lives" on
     int num_neighbor_procs;							//!< Number of neighboring processors this system must communicate with
     int *neighbor_procs_;							//!< Array of ranks of neighboring processors this system must communicate with

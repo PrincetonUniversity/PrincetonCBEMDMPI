@@ -39,9 +39,9 @@ System::System() {
 }
 
   //FIX: do we need a deconstructor??
-  System::~System() {
-
-  }
+	//  System::~System() {
+	//
+	//}
 /*!
  \param [in] \*filename Name of file to initialize from
  \param [in[ rank Rank of processor this is.  Rank 0 reads, other wait to recieve information
