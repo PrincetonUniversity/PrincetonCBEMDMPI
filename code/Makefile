@@ -1,5 +1,5 @@
 atom = atom.o
-bond = bond.o
+//bond = bond.o
 misc = misc.o
 system = system.o
 main = main.o
@@ -45,7 +45,7 @@ all: driver
 #main.o : main.cpp 
 #	$(MPICPP) $(CXXFLAGS) -c $< 
 
-driver : $(main) $(atom) $(bond) $(misc) $(system)
+driver : $(main) $(atom) $(misc) $(system)
 	 $(MPICPP) $(MPICXXFLAGS) -o $@ $(LDFLAGS) $(CXXFLAGS) $^
 
 clean:
