@@ -19,9 +19,10 @@
 int initialize_from_xml (const string filename, const int nprocs, const int rank, System *sys) {
 	int iread = 1, isignal, check;
 	MPI_Status Stat;
+	vector <double> box = sys->box();
 	
 	// do domain decomposition before initialization
-	check = init_domain_decomp (sys->box(), nprocs, sys->widths, &sys->final_breakup);
+	check = init_domain_decomp (box, nprocs, sys->widths, &sys->final_breakup);
 	
 	MPI_Barrier (MPI_WORLD_COMM);
 	
@@ -105,8 +106,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	}
 	vector<Atom> new_atoms(natoms);
 	
-	rewind(fp1);
 	// read box
+	rewind(fp1);
 	check = 0;
 	vector <double> box(3);
 	while (fgets(buff, buffsize, fp1) != NULL) {
@@ -148,8 +149,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	}
 	sys->set_box(box);
 	
-	rewind(fp1);
 	// also read bonds now
+	rewind(fp1);
 	check = 0;
 	int nbonds = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
@@ -186,9 +187,12 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	vector <int> lbond (nbonds, -1);
 	vector <int> rbond (nbonds, -1);
 	
-	rewind(fp1);
 	// read in positions, remember that by default this program normalizes the box corner to 0,0,0 and hoomd is shifted
+	rewind(fp1);
 	check = 0;
+	vector <int> atom_belongs;
+	vector <double> tmp_pos(3);
+	int processor;
 	while (fgets(buff, buffsize, fp1) != NULL) {
 		if (strstr(buff, "position") != NULL) {
 			check = 1;
@@ -204,7 +208,15 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 					// hoomd format places box at origin, we normalize corner to 0,0,0
 					atom_coords[j] += box[j]/2.0;
 					new_atoms[i].pos[j] = atom_coords[j];
+					tmp_pos[j] = atom_coords[j];
 				}
+				
+				// see if this atom belongs on this processor
+				processor = get_processor (tmp_pos, sys->widths, &sys->final_breakup);
+				if (processor == rank) {
+					atom_belongs.push_back(i);
+				}
+				
 				new_atoms[i].sys_index = i;
 			}
 			break;
@@ -217,8 +229,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		return FILE_ERROR;
 	}
 	
-	rewind(fp1);
 	// read velocities
+	rewind(fp1);
 	check = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
 		if (strstr(buff, "velocity") != NULL) {
@@ -242,8 +254,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		return FILE_ERROR;
 	}
 	
+	// read mass
 	rewind(fp1);
-	// read in masses
 	check = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
 		if (strstr(buff, "mass") != NULL) {
@@ -275,9 +287,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	sprintf(err_msg, "Read atom masses from %s on rank %d", filename, rank);
 	flag_notify (err_msg, __FILE__, __LINE__);
 	
-	
+	// read sizes (diameters)
 	rewind(fp1);
-	// must have size (diameters)
 	check = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
 		if (strstr(buff, "diameter") != NULL) {
@@ -307,8 +318,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		return FILE_ERROR;
 	}
 
+	// read types
 	rewind(fp1);
-	// must have types
 	char aname[ATOM_NAME_LENGTH];
 	check = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
@@ -342,8 +353,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		return FILE_ERROR;
 	}
 
+	// read bonds
 	rewind(fp1);
-	// must get bonds
 	char bname[BOND_NAME_LENGTH];
 	check = 0;
 	while (fgets(buff, buffsize, fp1) != NULL) {
@@ -389,21 +400,14 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	}
 
 	// now add the atoms that belong to this domain to the System object
+	Atom atom_array[(const int)atom_belongs.size()];
+	for (int i = 0; i < atom_belongs.size(); ++i) {
+		atom_array[i] = new_atoms[atom_belongs[i]];
+	}
+	sys->add_atoms(atom_belongs.size(), atom_array);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	return 0;
 }
-
-
 
 /*!
  Print atom information to an xml file. Returns 0 if successful, -1 if failure. This only operates on the node it was called from when MPI is used, 
