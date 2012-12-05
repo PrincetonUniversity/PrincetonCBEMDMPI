@@ -26,7 +26,15 @@ namespace integrator {
 		// write the code to update positions, etc. here
 		// you can plan on being able to call a calc_force routine that calculates and stores the instantaneous force in
 		// the cartesian directions
+		/* Arun Prabhu: The next four lines allocate the appropriate ammount of memory
+		   for the variable prev_pos which is a vector of vectors but must represent
+		   a matrix of size m x n where m = number of atoms in system,
+		   and n = 3 (number of spatial dimensions;
+		   This comment may be removed later once everyone is aware of the issue and the fix */
 		prev_pos_.resize(sys->natoms());
+		for (int i=0; i<sys->natoms(); i++) {
+		  prev_pos_[i].reserve(3);
+		}
 		double prev_prev_pos;
 		if (timestep_ == 0) {
 			for (int i = 0; i < sys->natoms(); ++i) {

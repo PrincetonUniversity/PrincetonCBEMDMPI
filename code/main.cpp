@@ -28,9 +28,9 @@ int main(int argc, char** argv) {
 
 	// add atoms
 	Atom atom1;
-	atom1.pos[0] = 0.0;
-	atom1.pos[1] = 0.0;
-	atom1.pos[2] = 0.0;
+	atom1.pos[0] = 2.0;
+	atom1.pos[1] = 3.0;
+	atom1.pos[2] = 4.0;
 	atom1.vel[0] = 1.0;
 	atom1.vel[1] = 2.0;
 	atom1.vel[2] = 3.0;
