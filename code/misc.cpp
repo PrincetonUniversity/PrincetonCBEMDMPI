@@ -117,7 +117,7 @@ vector <double> pbc (const vector <double> coords, const vector <double> box) {
  \param [in] coords2 Vector of cartesian coordinates of the other atom
  \param [in] box Vector of cartesian coordinates of the box
  */
-inline double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
+double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box) {
 	/*assert (coords1.size() == 3);
 	 assert (coords2.size() == 3);
 	 assert (box.size() == 3);*/
@@ -139,7 +139,7 @@ inline double min_image_dist2 (const vector <double> coords1, const vector <doub
  \param [in] box Vector of cartesian coordinates of the box
  \param [in,out] \*xyz Array of xyz displacements to be returned to the user (length 3)
  */
-inline double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz) {
+double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz) {
 	double ans = 0.0;
 	for (int i = 0; i < 3; ++i) {
 		xyz[i] = a2->pos[i] - a1->pos[i];

@@ -6,11 +6,11 @@
 #include "interaction.h"
 
 // define new slj etc. functions here
-inline void Interaction::force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
+void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 	double delta_=1., rcut=1., sigma_=0.1, epsilon_=0.1;
 	// compute min image distance
 	double xyz[3];
-	double d2 = min_image_dist2 (atom1, atom2, box, xyz);
+	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
 	
 	double r = sqrt(d2), x = r - delta_;
 	vector <double> force_vec(3,0.0);

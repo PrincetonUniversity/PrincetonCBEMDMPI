@@ -70,7 +70,7 @@ namespace misc {
 	 \param [in] coords2 Vector of cartesian coordinates of the other atom
 	 \param [in] box Vector of cartesian coordinates of the box
 	 */
-	inline double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box); 
+	double min_image_dist2 (const vector <double> coords1, const vector <double> coords2, const vector <double> box); 
 	
 	//! Returns the square of the minimum image distance between 2 atoms, also returns the minimum image distance vector xyz that points from atom1 to atom2
 	/*!
@@ -79,7 +79,7 @@ namespace misc {
 	 \param [in] box Vector of cartesian coordinates of the box
 	 \param [in,out] \*xyz Array of xyz displacements to be returned to the user (length 3)
 	 */
-	inline double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz);
+	double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz);
 	
 }
 
