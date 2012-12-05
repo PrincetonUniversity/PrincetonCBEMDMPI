@@ -25,12 +25,12 @@ int main(int argc, char** argv) {
 
 	// add atoms
 	Atom atom1;
-	atom1.pos[0] = 0.0;
-	atom1.pos[1] = 0.0;
-	atom1.pos[2] = 0.0;
-	atom1.vel[0] = 10.;
-	atom1.vel[1] = 10.;
-	atom1.vel[2] = 10.;
+	atom1.pos[0] = 2.0;
+	atom1.pos[1] = 3.0;
+	atom1.pos[2] = 4.0;
+	atom1.vel[0] = 1.0;
+	atom1.vel[1] = 2.0;
+	atom1.vel[2] = 3.0;
 	atom1.mass = 1.0;
 	atom1.type = 1;
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 	
 	double dt = 0.01;
 	Verlet integrator1 (dt);
-	int nsteps = 100;
+	int nsteps = 10;
 	for (int i = 0; i < nsteps; ++i) {
 		force_calc(&sys1, force_serial);
 		integrator1.step(&sys1);
