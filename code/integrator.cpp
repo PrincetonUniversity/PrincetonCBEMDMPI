@@ -28,7 +28,7 @@ namespace integrator {
 		// the cartesian directions
 		prev_pos_.resize(sys->natoms());
 		double prev_prev_pos;
-		if (time == 0) {
+		if (timestep_ == 0) {
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < 3; ++j) {
 					prev_pos_[i][j] = sys->get_atom(i)->pos[j];

@@ -8,6 +8,9 @@ inline void force_calc(System *sys, void (*force)(Atom *a1, Atom *a2, const vect
 		for (int j=i+1; j!=sys->natoms(); ++j) {
 			//(*force)(sys->get_atom(i), sys->get_atom(j), &sys->box());
 			(*force)(sys->get_atom(i), sys->get_atom(j), &box);
+			//cout << sys->natoms() << endl;
+			//cout << sys->get_atom(0)->force[0] << " " << sys->get_atom(0)->force[1] << " " <<sys->get_atom(0)->force[2] << endl;
+			
 		}
 	}
 }
@@ -18,7 +21,7 @@ int main(int argc, char** argv) {
 	System sys1;
 
 	// set system box
-	vector<double> box(3,5.0);
+	vector<double> box(3,10.0);
 	sys1.set_box(box);
 	
 	Interaction interaction1;
@@ -28,9 +31,9 @@ int main(int argc, char** argv) {
 	atom1.pos[0] = 0.0;
 	atom1.pos[1] = 0.0;
 	atom1.pos[2] = 0.0;
-	atom1.vel[0] = 10.;
-	atom1.vel[1] = 10.;
-	atom1.vel[2] = 10.;
+	atom1.vel[0] = 1.0;
+	atom1.vel[1] = 2.0;
+	atom1.vel[2] = 3.0;
 	atom1.mass = 1.0;
 	atom1.type = 1;
 
@@ -49,7 +52,7 @@ int main(int argc, char** argv) {
 	
 	double dt = 0.01;
 	Verlet integrator1 (dt);
-	int nsteps = 100;
+	int nsteps = 10;
 	for (int i = 0; i < nsteps; ++i) {
 		force_calc(&sys1, force_serial);
 		integrator1.step(&sys1);
