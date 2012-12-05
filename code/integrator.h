@@ -8,7 +8,7 @@
 
 #include "system.h"
 #include "misc.h"
-#include <array>
+//#include <array>
 
 using namespace sim_system; 
 using namespace misc;
@@ -39,7 +39,7 @@ namespace integrator {
     int timestep_;
     double dt_;
     double dt2_;
-    vector <array <double, 3> > prev_pos_;
+    vector <vector <double> > prev_pos_;
   };
 	
   //! NVE, Velocity Verlet
