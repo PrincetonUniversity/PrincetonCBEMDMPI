@@ -14,7 +14,6 @@
 #include <string>
 #include <map>
 #include "atom.h"
-#include "bond.h"
 #include "misc.h"
 #include "interaction.h"
 #include <list>
@@ -22,7 +21,6 @@
 
 using namespace std;
 using namespace atom;
-using namespace bond;
 using namespace misc;
 
 //! Namespace containing all system variable and quantities
@@ -52,7 +50,6 @@ namespace sim_system {
     double KE_, U_;									//!< Total internal kinetic energy and potential energy
     vector <Atom> atoms_;							//!< Vector of Atoms in the system
     vector <double> box_;							//!< Global system cartesian dimensions
-    vector <Bond> bond_;							//!< Vector of bond types in the system
     vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
     map <string, int> atom_type_;			//!< Maps user specified name of atom type to internal index
     map <string, int> bond_type_;			//!< Maps user specified name of bond type to internal index
