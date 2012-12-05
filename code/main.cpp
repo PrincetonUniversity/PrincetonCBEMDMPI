@@ -44,8 +44,8 @@ int main(int argc, char** argv) {
 	atom2.mass = 1.0;
 	atom2.type = 1;
 	
-	sys1.add_atoms(1, &atom1);
-	sys1.add_atoms(1, &atom2);
+	Atom atom_array [] = {atom1, atom2};
+	sys1.add_atoms(2, atom_array);
 	
 	double dt = 0.01;
 	Verlet integrator1 (dt);

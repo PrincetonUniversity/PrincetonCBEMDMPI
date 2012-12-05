@@ -42,7 +42,7 @@ namespace sim_system {
     double T() const {return Temp_;}				//!< Report the temperature of the system
     double P() const {return Press_;}				//!< Report the pressure of the system
     vector <double> box() const {return box_;}		//!< Report system size
-    int* add_atoms (const int natoms, Atom *new_atoms);			//!< Add atom(s) to the system 
+    int* add_atoms (const int natoms, Atom new_atoms[]);			//!< Add atom(s) to the system 
     int delete_atoms (vector <int> indices);	//!< Pop atoms with local indices from local storage
     Atom *get_atom(int index) {return &atoms_[index];}
     
