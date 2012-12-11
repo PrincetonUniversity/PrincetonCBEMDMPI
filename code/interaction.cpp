@@ -25,6 +25,67 @@ void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 	}
 }
 
+//! Shifted Lennard-Jones Force
+/*!
+ This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
+ \f{eqnarray*}{
+ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift}
+ \f}
+ Returns 
+ \f[
+ F_i = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r}
+ \f]
+ The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
+ \param [in] r2 Minimum image distance squared between atoms
+ \param [in] \*xyz The minimum image vector from a1 to a2
+ \param [in] \*args Vector of arguments <epsilon, sigma, delta>
+ */
+//! Shifted Lennard-Jones Energy
+/*!
+ This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
+ \f{eqnarray*}{
+ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} 
+ \f}
+ \param [in] r2 Minimum image distance squared between atoms
+ \param [in] \*xyz The minimum image vector from a1 to a2
+ \param [in] \*args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut2_>
+ */
+double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <double> *args) {
+	// compute min image distance
+	double xyz[3];
+	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
+	if (d2 < args->at(4)) {
+		double delta_=args->at(2), sigma_=args->at(1), epsilon_=args->at(0);
+		double r = sqrt(d2), x = r - delta_;
+		vector <double> force_vec(3,0.0);
+	
+		double b = 1.0/x, a = sigma_*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
+		factor = 24.0*epsilon_*a6*(2.0*a6-1.0)*b/r;
+		for (int i = 0; i < 3; ++i) {
+			val = xyz[i]*factor;
+			atom1->force[i] -= val;
+			atom2->force[i] += val;
+		}
+		return 4.0*epsilon_*(a6*a6-a6)+args->at(3);
+	} else {
+		return 0.0;
+	}
+}
+
+double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
+	
+	
+}
+
+double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
+	
+	
+}
+
+double Interaction::force_energy (Atom *atom1, Atom *atom2, const vector <double> *box) {
+	return my_force_energy_ (atom1, atom2, box, &energy_args_);
+}
+
 /*!
  \param [in] \*a1 Pointer to atom 1
  \param [in] \*a2 Pointer to atom 2
