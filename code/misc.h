@@ -5,7 +5,6 @@
 
 #ifndef MISC_H_
 #define MISC_H_
-#define ERR_FLAG_SIZE 1000
 
 #include <iostream>
 #include <stdio.h>
@@ -16,6 +15,7 @@
 #include <map>
 #include <assert.h>
 #include "atom.h"
+#include "global.h"
 
 using namespace std;
 using namespace atom;

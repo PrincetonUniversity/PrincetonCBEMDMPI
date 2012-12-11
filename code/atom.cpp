@@ -7,9 +7,6 @@ MD Atom Information
 
 namespace atom {
 
-//! MPI version of Atom
-//MPI_Datatype MPI_ATOM; George its in the header file. maybe move to main
-
 //! Creates the MPI_Atom class so it can be passed over MPI
 /*
  \sa initialize
@@ -20,7 +17,7 @@ void create_MPI_ATOM () {
 	MPI_Datatype oldtypes[num_types];
 	MPI_Aint offsets[num_types], extent;
 	int blockcounts[num_types];
-	MPI_Datatype MPI_ATOM;
+	//extern MPI_Datatype MPI_ATOM;
 
 	MPI_Type_extent (MPI_DOUBLE, &extent);
 	
@@ -41,7 +38,6 @@ void create_MPI_ATOM () {
  \sa finalize
  */
 void delete_MPI_atom() {
-  MPI_Datatype MPI_ATOM;
 	MPI_Type_free (&MPI_ATOM);
 }
 

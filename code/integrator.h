@@ -8,12 +8,17 @@
 
 #include "system.h"
 #include "misc.h"
+#include "mpi.h"
+#include "domain_decomp.h"
+#include "atom.h"
+#include "global.h"
 
 using namespace sim_system; 
 using namespace misc;
+using namespace atom;
 
 namespace integrator {
-	extern char err_msg[ERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+	extern char err_msg[MYERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
 	
 	//!< Abstract base class for integrators
 	/*!
@@ -21,9 +26,12 @@ namespace integrator {
 	 */
 	class Integrator {
 	public:
-		Integrator();
+		Integrator(){};
 		~Integrator(){};
+		void set_dt (const double dt) {dt_ = dt;}
 		virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
+	protected:
+		double dt_;
 	};
 	
 	//! NVE, Verlet
@@ -36,7 +44,6 @@ namespace integrator {
 		int step(System *sys);
 	private:
 		int timestep_;
-		double dt_;
 		double dt2_;
 		vector <vector <double> > prev_pos_;
 	};
@@ -73,8 +80,7 @@ namespace integrator {
 	 \param [in] \*sys Pointer to Integrator to use
 	 \param [in] timesteps Number of timesteps to integrate over
 	 */
-	int run (System *sys, const Integrator *integrator, const int timeteps) ;
-
+	int run (System *sys, Integrator *integrator, const int timesteps);
 }
 
 

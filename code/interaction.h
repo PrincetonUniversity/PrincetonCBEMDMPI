@@ -28,13 +28,14 @@ void force_serial (Atom *a1, Atom *a2, const vector <double> *box);				//!< Does
  */
 class Interaction {
 public:
+	Interaction() {rcut2_ = 0.0;}
 	vector <double> force (const Atom *a1, const Atom *a2, const vector <double> *box);	//!< Computes the cartesian force vector a1 experiences because of a2
 	double energy (const Atom *a1, const Atom *a2, const vector <double> *box);			//!< Computes the energy between a1 and a2
 	void set_force (force_ptr iforce) {my_force_ = iforce;}										//!< Assign the force calculator
 	void set_energy (energy_ptr iener) {my_energy_ = iener;}									//!< Assign the potential calculator
 	void set_args (const vector <double> args) {energy_args_ = args;}
 	void set_force_args (const vector <double> args) {force_args_ = args;}
-	void set_rcut (const double rcut) {rcut2_ = rcut_*rcut_;}
+	void set_rcut (const double rcut) {rcut2_ = rcut*rcut;}
 						  
 private:
 	double rcut2_;							//!< Note that rcut is stored as a square so that checking will be faster
@@ -43,13 +44,6 @@ private:
 	vector <double> force_args_;			//!< Force arguments
 	vector <double> energy_args_;			//!< Energy arguments
 };
-
-//! Cosntructor sets U_{shift} and r_{cut} to 0.0 to will not compute anything until user sets these values.
-Interaction::Interaction () {
-	Ushift_ = 0.0;
-	rcut_ = 0.0;
-}
-
 
 #endif
 

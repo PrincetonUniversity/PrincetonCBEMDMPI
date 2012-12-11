@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "mpi.h"
+#include "global.h"
 
 //! Namespace containing pertinent Atom information
 namespace atom {
@@ -25,7 +26,7 @@ namespace atom {
 	} Atom;
 	
 	//! MPI version of Atom
-	extern MPI_Datatype MPI_ATOM; // George : is this global? Maybe we should put in driver. 11/30 11:51PM
+	//extern MPI_Datatype MPI_ATOM; // George : is this global? Maybe we should put in driver. 11/30 11:51PM
 	
 	//! Creates the MPI_Atom class so it can be passed over MPI
 	/*

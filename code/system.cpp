@@ -6,20 +6,7 @@ MD System Information
 #include "system.h"
 #include "global.h"
 
-namespace sim_system {
-// declare system before MPI Init
-// then after initialization each proc has a copy of an empty System
-// then read from file from proc1 and SEND data to each as it is read in!
-// i.e. things like T/P are set for all, but atoms only need to be sent to the necessary dest but with global id's
-// collect and create atoms before hand so that bonds can be assigned before being sent out
-	
-// bonding -- store global index of atoms each is bonded to on the Atom class so bonds for atoms on each each proc can be cycled quickly
-
-// for now do simple force compute on each proc
-// will need to establish r_cut,max for this
-// at the beginning of this routine check for atoms close to boundary and send an array as necessary to neighbors
-// then loop atoms that belong ON that proc with others on same proc and those received to compute their forces
-	
+namespace sim_system {	
 	/*!
 	 Upon initialization, resize vectors as necessary.  
 	 */
@@ -28,7 +15,7 @@ namespace sim_system {
 			box_.resize(3,-1);
 		}
 		catch (bad_alloc& ba) {
-			char err_msg[ERR_FLAG_SIZE]; 
+			char err_msg[MYERR_FLAG_SIZE]; 
 			sprintf(err_msg, "Could not allocate space for system's box size vector");
 			flag_error (err_msg, __FILE__, __LINE__);
 			exit(BAD_MEM);
@@ -40,51 +27,6 @@ namespace sim_system {
 		;
 	}
 
-	// THIS SHOULD GO INTO THE MAIN.CPP FILE FOR PARALLEL VERSION AND NOT BE A SUBROUTINE
-	/*!
-	 \param [in] \*filename Name of file to initialize from
-	 \param [in[ rank Rank of processor this is.  Rank 0 reads, other wait to recieve information
-	 \param [in,out] \*sys System object to store information this processor is responsible for
-	 */
-	int initialize (const char *filename, int *rank, int *nprocs, System *sys) {
-		int argc, rc;
-		char **argv;
-	
-		// set up MPI
-		rc = MPI_Init(&argc, &argv);
-		if (rc != MPI_SUCCESS) {
-			printf ("Error starting MPI. Terminating.\n");
-			MPI_Abort(MPI_COMM_WORLD, rc);
-			return MPI_FAIL;
-		}
-	
-		MPI_Comm_size(MPI_COMM_WORLD,nprocs);
-		MPI_Comm_rank(MPI_COMM_WORLD,rank);
-	
-		// Create MPI_ATOM datatype
-		create_MPI_ATOM();
-	
-		// check that interactions are such that ONLY neighboring procs need to interact
-	
-		// handle domain decomp --> look at MPI_graph?
-		//FILL THIS IN
-		/*
-		 if (rank == 0) {
-		 int check = read_xml(	...	);
-		 } else {
-		 int check = worker_recv_sys(	...	);
-		 }
-		 */
-		return 0;
-	}
-
-	int finalize () {
-		// free atom type after we are done running
-		int flag = 0;
-		delete_MPI_atom();
-		MPI_Finalize();
-		return flag;
-	}
 
 	/*!
 	 Remove atoms from the system.  Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index.
@@ -121,7 +63,7 @@ namespace sim_system {
 	 This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
 	 \param [in] natoms Length of the array of atoms to add to the system.
 	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
-	 \param [out] \*update_proc Array of global indices that have just been added to this proc to be used for updating on_proc_ list.
+	 \param [out] \*update_proc Array of global indices that have just been added to this proc.
 	 */
 	int* System::add_atoms (const int natoms, Atom *new_atoms) {
 		int index = atoms_.size(), *update_proc = new int [natoms];
@@ -130,10 +72,10 @@ namespace sim_system {
 				atoms_.push_back(new_atoms[i]);
 			}
 			catch (bad_alloc& ba) {
-				char err_msg[ERR_FLAG_SIZE]; 
+				char err_msg[MYERR_FLAG_SIZE]; 
 				sprintf(err_msg, "Could not allocate space for new atoms in the system");
 				flag_error (err_msg, __FILE__, __LINE__);
-				finalize();
+				//finalize();
 				exit(BAD_MEM);
 			}
 			glob_to_loc_id_[new_atoms[i].sys_index] = index;
@@ -235,12 +177,13 @@ namespace sim_system {
 	 */
 	inline string System::atom_name (const int index) {
 		string name = "NULL";
+		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= atom_type_.size()) {
 			sprintf(err_msg, "Index %d out of range", index);
 			flag_error (err_msg, __FILE__, __LINE__);
 			return name;
 		} else {
-			typedef std::unordered_map<std::string, int>::iterator it_type;
+			typedef std::map<std::string, int>::iterator it_type;
 			for	(it_type iterator = atom_type_.begin(); iterator != atom_type_.end(); iterator++) {
 				if (iterator->second == index) {
 					return iterator->first;
@@ -258,12 +201,13 @@ namespace sim_system {
 	 */
 	inline string System::bond_name (const int index) {
 		string name = "NULL";
+		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= bond_type_.size()) {
 			sprintf(err_msg, "Index %d out of range", index);
 			flag_error (err_msg, __FILE__, __LINE__);
 			return name;
 		} else {
-			typedef std::unordered_map<std::string, int>::iterator it_type;
+			typedef std::map<std::string, int>::iterator it_type;
 			for	(it_type iterator = bond_type_.begin(); iterator != bond_type_.end(); iterator++) {
 				if (iterator->second == index) {
 					return iterator->first;

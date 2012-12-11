@@ -1,0 +1,17 @@
+LDFLAGS = -lm 
+
+MPICXX=mpic++
+
+MPICXXFLAGS = -O3 -lstdc++ -Wno-deprecated
+
+all: main
+
+%.o : %.cpp
+	$(MPICXX) $(MPICXXFLAGS) -c $< 
+
+main : main_mpi.o system.o atom.o misc.o domain_decomp.o  integrator.o interaction.o   
+	$(MPICXX) -o $@ $^ $(GTESTFLAGS) $(MPICXXFLAGS) 
+
+clean:
+	$(RM) *.o
+	$(RM) .depend

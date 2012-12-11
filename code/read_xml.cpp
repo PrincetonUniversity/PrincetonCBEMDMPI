@@ -415,10 +415,9 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
  \param [in] filename Name of file to open and read.
  \param [in] nprocs Number of processors total
  \param [in] rank Rank of process calling the routine
- \param [in] \*MCOMM MPI Communicator
  \param [in,out] \*sys System object for the main node to stores its information at.
  */
-int print_xml (const string filename, const int nprocs, const int rank, System *sys) {
+int print_xml (const string filename, const int nprocs, const int rank, const System *sys) {
 	MPI_Status Stat;
 	Atom *atom_vec;
 	MPI_Barrier (MPI_WORLD_COMM);
