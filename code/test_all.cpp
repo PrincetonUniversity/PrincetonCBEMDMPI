@@ -45,37 +45,6 @@ protected:
     System sys;
 };
 
-TEST_F (TwoBodyTest, ForceSerial) {
-    vector<double> box=sys.box();
-    /* Moves particle 0 within the cutoff distance of particle 1 so that a force will be calculate */
-    sys.get_atom(0)->pos[0] = 3.0;
-    sys.get_atom(0)->pos[1] = 2.0;
-    sys.get_atom(0)->pos[2] = 3.0;
-    force_serial(sys.get_atom(0), sys.get_atom(1), &box);
-    /* Checks if the forces are correct if the particles are within the cutoff */
-    EXPECT_FLOAT_EQ (-2.3999952e-6, sys.get_atom(0)->force[0]);
-    EXPECT_FLOAT_EQ (0.0, sys.get_atom(0)->force[1]);
-    EXPECT_FLOAT_EQ (0.0, sys.get_atom(0)->force[2]);
-    EXPECT_FLOAT_EQ (2.3999952e-6, sys.get_atom(1)->force[0]);
-    EXPECT_FLOAT_EQ (0.0, sys.get_atom(1)->force[1]);
-    EXPECT_FLOAT_EQ (0.0, sys.get_atom(1)->force[2]);
-    /* Resets the forces to zero for the next part of the test */
-    sys.get_atom(0)->force[0] = 0.0;
-    sys.get_atom(1)->force[0] = 0.0;
-    /* Moves particle 0 outside the cutoff distance from particle 1 so that a force should not be calculated */
-    sys.get_atom(0)->pos[0] = 5.0;
-    sys.get_atom(0)->pos[1] = 2.0;
-    sys.get_atom(0)->pos[2] = 3.0;
-    force_serial(sys.get_atom(0), sys.get_atom(1), &box);
-    /* Checks if the forces are correct if the particles are outside the cutoff */
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(0)->force[0]);
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(0)->force[1]);
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(0)->force[2]);
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(1)->force[0]);
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(1)->force[1]);
-    EXPECT_DOUBLE_EQ (0.0, sys.get_atom(1)->force[2]);
-}
-
 TEST_F (TwoBodyTest, VerletNoForces) {
     Verlet integ_obj (0.1);
     for (int i=0; i<10; i++) {

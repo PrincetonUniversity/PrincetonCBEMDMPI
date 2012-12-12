@@ -15,3 +15,4 @@ main : main_mpi.o system.o atom.o misc.o domain_decomp.o  integrator.o interacti
 clean:
 	$(RM) *.o
 	$(RM) .depend
+	$(RM) ./main

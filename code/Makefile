@@ -7,7 +7,7 @@ main = main.o
 # pull
 # git merge origin/master
 # push
-CXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated -std=c++0x
+CXXFLAGS = -Wall -O3 -lstdc++ -Wno-deprecated -std=c++0x
 
 LDFLAGS = -lm 
 
@@ -17,7 +17,7 @@ MPICC=mpicc
 MPICPP=mpic++
 OMPFLAGS = -fopenmp
 
-MPICXXFLAGS = -Wall -O3 -lstdc++ -limf -Wno-deprecated -std=c++0x
+MPICXXFLAGS = -Wall -O3 -lstdc++ -Wno-deprecated -std=c++0x
 all: driver
 
 %.o : %.cpp

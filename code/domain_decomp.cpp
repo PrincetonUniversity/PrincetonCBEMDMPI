@@ -93,7 +93,7 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
 } // init_domain_decomp ends
 
 //! Given the co-ordinates of a point, determines within which domain the point lies
-inline int get_processor (const vector<double> pos, const double widths[], const vector<int>& final_breakup) {
+int get_processor (const vector<double> pos, const double widths[], const vector<int>& final_breakup) {
 
     int domain_id, x_id, y_id, z_id;
     x_id = floor(pos.at(0)/widths[0]);
@@ -103,7 +103,7 @@ inline int get_processor (const vector<double> pos, const double widths[], const
     return domain_id;
 }
 
-inline int get_processor (const int x_id, const int y_id, const int z_id, const vector<int>& final_breakup) {
+int get_processor (const int x_id, const int y_id, const int z_id, const vector<int>& final_breakup) {
 
     int domain_id = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
     return domain_id;

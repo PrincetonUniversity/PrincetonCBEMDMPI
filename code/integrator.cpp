@@ -85,7 +85,7 @@ namespace integrator {
 			for (int j = 0; j < 3; ++j) {
 				pos[j] = sys->get_atom(i)->pos[j];
 			}
-			//iproc = get_processor (pos, sys->proc_widths, sys->final_proc_breakup);
+			iproc = get_processor (pos, sys->proc_widths, sys->final_proc_breakup);
 			if (iproc != rank) {
 				nsend_atoms[iproc]++;
 				tot_send++;
