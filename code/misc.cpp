@@ -38,7 +38,7 @@ void flag_notify (const char *msg, const char *file, const int line) {
  */
 FILE *mfopen(const char *filename, const char *opt) {
 	FILE *fp1;
-	char err_msg[ERR_FLAG_SIZE]; 
+	char err_msg[MYERR_FLAG_SIZE]; 
 	if (!(fp1 = fopen(filename, opt))) {
 		sprintf(err_msg, "Could not open %s with %s permissions", filename, opt);
 		flag_error(err_msg, __FILE__, __LINE__);
@@ -57,7 +57,7 @@ FILE *mfopen(const char *filename, const char *opt) {
  */
 vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	vector <double> in_box(3, 0.0), bad;
-	char err_msg[ERR_FLAG_SIZE]; 
+	char err_msg[MYERR_FLAG_SIZE]; 
 	
 	if (coords.size() != 3) {
 		sprintf(err_msg, "Number of coordinate dimensions incorrect, cannnot compute pbc");

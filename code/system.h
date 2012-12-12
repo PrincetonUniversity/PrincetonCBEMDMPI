@@ -18,6 +18,7 @@
 #include "interaction.h"
 #include <list>
 #include <algorithm>
+#include "global.h"
 
 using namespace std;
 using namespace atom;
@@ -25,7 +26,6 @@ using namespace misc;
 
 //! Namespace containing all system variable and quantities
 namespace sim_system {
-  	
 	class System {
 	public:
 		System();
@@ -54,6 +54,7 @@ namespace sim_system {
 		int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
+		Atom copy_atom (int index) {return atoms_[index];}
 		
 		double proc_widths[3];									//!< Width for domain decomposition
 		vector<int> final_proc_breakup;							//!< Final domain decomposition
@@ -70,10 +71,9 @@ namespace sim_system {
 		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
 		map <int, int> glob_to_loc_id_;					//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
 		vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
+		vector < pair <int, int> > bonded_;
+		vector <int> bonded_type_;
 	};
-	
-	//! Finalizes a system by performing any last minute tasks that must be done before the simulation finishes.
-	int finalize();
 	
 	//! Read atom coordinates and properties from a file (xml)
 	int read_xml (const string filename, const int nprocs, System *new_systems);			
