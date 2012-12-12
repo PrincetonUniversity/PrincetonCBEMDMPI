@@ -38,6 +38,7 @@ void create_MPI_ATOM () {
  \sa finalize
  */
 void delete_MPI_atom() {
+    //    extern MPI_Datatype MPI_ATOM;
 	MPI_Type_free (&MPI_ATOM);
 }
 

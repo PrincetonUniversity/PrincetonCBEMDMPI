@@ -1,4 +1,5 @@
 #include "domain_decomp.h"
+#include "mpiatom.h"
 
 //! Given the box size and factors of nprocs, checks which combination generates the most cubic domains
 int gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add) {

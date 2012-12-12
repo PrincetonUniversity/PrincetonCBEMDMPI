@@ -59,6 +59,7 @@ namespace integrator {
 	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain.
 	int move_atoms (System *sys, const int rank, const int nprocs) {
 	    char err_msg[MYERR_FLAG_SIZE];
+	    //	    extern MPI_Datatype MPI_ATOM;
 		int *nsend_atoms = (int *) calloc (nprocs, sizeof(int));
 		int *nrecv_atoms = (int *) calloc (nprocs, sizeof(int));
 		int iproc;

@@ -11,7 +11,7 @@ GTESTFLAGS = -I../gtest-1.6.0/include -lpthread
 
 all : test_all
 
-test_all : test_all.o system.o domain_decomp.o misc.o integrator.o interaction.o atom.o ../gtest-1.6.0/make/gtest_main.a
+test_all : test_all.o system.o domain_decomp.o misc.o integrator.o interaction.o atom.o interaction.o integrator.o misc.o domain_decomp.o system.o ../gtest-1.6.0/make/gtest_main.a
 	$(MPICXX) $(MPICXXFLAGS) $(GTESTFLAGS) -o $@ $^
 
 test_all.o : test_all.cpp $(GTEST_HEADERS)
