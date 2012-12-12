@@ -58,6 +58,9 @@ namespace sim_system {
 		
 		double proc_widths[3];									//!< Width for domain decomposition
 		vector<int> final_proc_breakup;							//!< Final domain decomposition
+		int xyz_id[3];
+		double xyz_limits[3][2];
+		int send_table [26];
 		
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)

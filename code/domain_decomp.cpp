@@ -201,7 +201,7 @@ int gen_send_table (System *sys) {
 	    for (int k=-1; k<=1; k++) {
 		/* Need to include final_breakup and check that
 		   if we go greater than final_breakup or less than 0 to wrap around */
-		domain_id = i+xyz_id[0] + (j+xyz_id[1])*sys->final_breakup[0] + (k+xyz_id[2])*sys->final_breakup[0]*sys->final_breakup[1];
+		domain_id = i+xyz_id[0] + (j+xyz_id[1])*sys->final_proc_breakup[0] + (k+xyz_id[2])*sys->final_proc_breakup[0]*sys->final_proc_breakup[1];
 		if (i*j*k != 0) {
 		    value = (1.5*abs(i)+0.5*i)+(1.5*abs(j)+0.5*j)*nvals+(1.5*abs(k)+0.5*k)*nvals*nvals - 1;
 		    sys->send_table[value] = domain_id;

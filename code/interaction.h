@@ -34,7 +34,7 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box);					//!< Compu
 class Interaction { //!< write set_ushift??
 public:
 	Interaction() {rcut2_ = 0.0;}
-	~Interaction();
+	~Interaction() {};
 	vector <double> force (const Atom *a1, const Atom *a2, const vector <double> *box);	//!< Computes the cartesian force vector a1 experiences because of a2
 	double energy (const Atom *a1, const Atom *a2, const vector <double> *box);			//!< Computes the energy between a1 and a2
 	double force_energy (Atom *a1, Atom *a2, const vector <double> *box);					//!< Computes force and energy
@@ -54,12 +54,6 @@ private:
 	vector <double> energy_args_;			//!< Energy arguments
 };
 
-
-Interaction::~Interaction() {
-
-}
-
->>>>>>> 74acdfbd183643b9838b19bdf75af7893b4745f6
 #endif
 
 

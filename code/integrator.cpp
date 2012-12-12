@@ -58,6 +58,7 @@ namespace integrator {
 	
 	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain.
 	int move_atoms (System *sys, const int rank, const int nprocs) {
+	    char err_msg[MYERR_FLAG_SIZE];
 		int *nsend_atoms = (int *) calloc (nprocs, sizeof(int));
 		int *nrecv_atoms = (int *) calloc (nprocs, sizeof(int));
 		int iproc;
@@ -83,7 +84,7 @@ namespace integrator {
 			for (int j = 0; j < 3; ++j) {
 				pos[j] = sys->get_atom(i)->pos[j];
 			}
-			iproc = get_processor (pos, sys->proc_widths, sys->final_proc_breakup);
+			//iproc = get_processor (pos, sys->proc_widths, sys->final_proc_breakup);
 			if (iproc != rank) {
 				nsend_atoms[iproc]++;
 				tot_send++;

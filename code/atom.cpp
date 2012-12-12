@@ -17,7 +17,7 @@ void create_MPI_ATOM () {
 	MPI_Datatype oldtypes[num_types];
 	MPI_Aint offsets[num_types], extent;
 	int blockcounts[num_types];
-	//extern MPI_Datatype MPI_ATOM;
+	//	extern MPI_Datatype MPI_ATOM;
 
 	MPI_Type_extent (MPI_DOUBLE, &extent);
 	
