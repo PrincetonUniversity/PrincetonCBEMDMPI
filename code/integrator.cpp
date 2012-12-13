@@ -4,6 +4,7 @@
 **/
 
 #include "integrator.h"
+#include "force_calc.h"
 
 namespace integrator {
 	//! NVE, Verlet
@@ -196,6 +197,12 @@ namespace integrator {
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
 			// calc_force
+                        check = force_calc(sys);
+                        if (check != 0) {
+                                sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
+                                flag_error (err_msg, __FILE__, __LINE__);
+                                return check;
+                        }
 			
 			
 			MPI_Barrier(MPI_COMM_WORLD);

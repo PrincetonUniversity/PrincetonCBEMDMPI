@@ -60,6 +60,9 @@ namespace sim_system {
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		
 		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
+                vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
+
+
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
@@ -70,7 +73,7 @@ namespace sim_system {
 		map <string, int> bond_type_;					//!< Maps user specified name of bond type to internal index
 		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
 		map <int, int> glob_to_loc_id_;					//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
-		vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
+	//	vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;
 	};
