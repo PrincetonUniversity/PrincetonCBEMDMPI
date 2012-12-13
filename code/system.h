@@ -6,12 +6,7 @@
 #ifndef SYSTEM_H_
 #define SYSTEM_H_
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <vector>
-#include <string>
+#include "common.h"
 #include <map>
 #include "atom.h"
 #include "misc.h"

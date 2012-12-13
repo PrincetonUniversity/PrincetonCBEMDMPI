@@ -4,8 +4,6 @@
  **/
 
 #include "read_xml.h"
-#include "global.h"
-#include "domain_decomp.h"
 
 /*!
  Parse an XML file to obtain atom information. Returns 0 if successful, -1 if failure. Operates in 

@@ -6,13 +6,15 @@
 #ifndef READ_XML_H_
 #define READ_XML_H_
 
-#include "system.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include "mpi.h"
 #include "misc.h"
 #include "atom.h"
+#include "system.h"
+#include "global.h"
+#include "domain_decomp.h"
 
 using namespace std;
 using namespace sim_system;

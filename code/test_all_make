@@ -21,5 +21,5 @@ test_all.o : test_all.cpp $(GTEST_HEADERS)
 	$(MPICXX) $(MPICXXFLAGS) -c $<
 
 clean :
-	rm *.o test_all
-	rm .depend
+	$(RM) *.o test_all
+	$(RM) .depend

@@ -6,9 +6,7 @@
 #ifndef ATOM_H_
 #define ATOM_H_
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+#include "common.h"
 #include "mpi.h"
 #include "global.h"
 

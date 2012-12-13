@@ -1,8 +1,4 @@
-#include <cstdio>
-#include <cstdlib>
-#include <iostream>
-#include <math.h>
-#include <vector>
+#include "common.h"
 #include "system.h"
 
 using namespace std;

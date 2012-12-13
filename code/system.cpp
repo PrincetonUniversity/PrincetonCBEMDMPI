@@ -4,7 +4,6 @@ MD System Information
 **/
 
 #include "system.h"
-#include "global.h"
 
 namespace sim_system {	
 	/*!

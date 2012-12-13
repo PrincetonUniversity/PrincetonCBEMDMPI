@@ -2,6 +2,7 @@
 #include "domain_decomp.h"
 #include "system.h"
 #include "integrator.h"
+#include "mpiatom.h"
 
 using namespace std;
 using namespace sim_system;

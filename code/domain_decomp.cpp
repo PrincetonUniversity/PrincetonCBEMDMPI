@@ -1,5 +1,4 @@
 #include "domain_decomp.h"
-#include "mpiatom.h"
 
 //! Given the box size and factors of nprocs, checks which combination generates the most cubic domains
 int gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add) {
@@ -193,17 +192,25 @@ int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
 int gen_send_table (System *sys) {
 
     const int nvals=3;
-    int xyz_id[3], domain_id, value;
+    int xyz_id[3], ngh_xyz_id[3], domain_id, value;
     for (int i=0; i<3; i++) {
 	xyz_id[i] = sys->xyz_id[i];
     }
     for (int i=-1; i<=1; i++) {
 	for (int j=-1; j<=1; j++) {
 	    for (int k=-1; k<=1; k++) {
-		/* Need to include final_breakup and check that
-		   if we go greater than final_breakup or less than 0 to wrap around */
-		domain_id = i+xyz_id[0] + (j+xyz_id[1])*sys->final_proc_breakup[0] + (k+xyz_id[2])*sys->final_proc_breakup[0]*sys->final_proc_breakup[1];
-		if (i*j*k != 0) {
+		ngh_xyz_id[0] = i + xyz_id[0];
+		ngh_xyz_id[1] = j + xyz_id[1];
+		ngh_xyz_id[2] = k + xyz_id[2];
+		for (int m=0; m<3; m++) {
+		    if (ngh_xyz_id[m] < 0) {
+			ngh_xyz_id[m] = sys->final_proc_breakup[m]-1;
+		    } else if (ngh_xyz_id[m] == sys->final_proc_breakup[m]) {
+			ngh_xyz_id[m] = 0;
+		    }
+		}
+		domain_id = ngh_xyz_id[0] + ngh_xyz_id[1]*sys->final_proc_breakup[0] + ngh_xyz_id[2]*sys->final_proc_breakup[0]*sys->final_proc_breakup[1];
+		if (abs(i)+abs(j)+abs(k) != 0) {
 		    value = (1.5*abs(i)+0.5*i)+(1.5*abs(j)+0.5*j)*nvals+(1.5*abs(k)+0.5*k)*nvals*nvals - 1;
 		    sys->send_table[value] = domain_id;
 		}
