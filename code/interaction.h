@@ -22,9 +22,9 @@ typedef double (*force_energy_ptr) (Atom *a1, Atom *a2, const vector <double> *b
 
 void force_serial (Atom *a1, Atom *a2, const vector <double> *box);				//!< Does what inline vector <double> force () does, and apply the force to a1 and a2
 
-double slj (Atom *a1, Atom *a2, const vector <double> *box);						//!< Computes force and energy
-double fene (Atom *a1, Atom *a2, const vector <double> *box);						//!< Computes force and energy
-double harmonic (Atom *a1, Atom *a2, const vector <double> *box);					//!< Computes force and energy
+double slj (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args);						//!< Computes force and energy
+double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args);						//!< Computes force and energy
+double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args);					//!< Computes force and energy
 	
 
 //! This class stores how a pair of particles interacts

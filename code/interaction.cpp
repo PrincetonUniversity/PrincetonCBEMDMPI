@@ -73,12 +73,12 @@ double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <
 }
 
 double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
-	
+	return 0.0;
 	
 }
 
 double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
-	
+	return 0.0;
 	
 }
 
