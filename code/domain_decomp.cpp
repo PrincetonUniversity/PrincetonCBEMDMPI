@@ -183,7 +183,7 @@ int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
 	    /* Add current atom to those rows given by the values of goes_to
 	       send_lists would have to be a vecor of vectors in class System with first dimension 26
 	    */
-	    //	    sys->send_lists[*iter].push_back(sys->atoms_[i]);
+	    //sys->send_lists[*iter].push_back(sys->atoms_[i]);
 	    sys->send_lists[*iter].push_back(*(sys->get_atom(i)));
 	}
     }
@@ -267,4 +267,9 @@ int power (int base, int exponent) {
 	result *= base;
     }
     return result;
+}
+
+int communicate_skin_atoms (System *sys) {
+
+    return 0;
 }
