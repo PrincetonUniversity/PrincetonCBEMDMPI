@@ -56,6 +56,7 @@ namespace sim_system {
 		int xyz_id[3];
 		double xyz_limits[3][2];
 		int send_table [26];
+		vector< vector<Atoms> > send_lists;
 		
 		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
 	private:

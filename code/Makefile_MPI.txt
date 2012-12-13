@@ -9,7 +9,7 @@ all: main
 %.o : %.cpp
 	$(MPICXX) $(MPICXXFLAGS) -c $< 
 
-main : main_mpi.o system.o atom.o misc.o domain_decomp.o  integrator.o interaction.o   
+main : main_mpi.o system.o atom.o misc.o domain_decomp.o integrator.o interaction.o read_xml.o  
 	$(MPICXX) -o $@ $^ $(GTESTFLAGS) $(MPICXXFLAGS) 
 
 clean:

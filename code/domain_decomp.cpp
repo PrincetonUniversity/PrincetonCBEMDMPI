@@ -182,6 +182,7 @@ int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
 	    /* Add current atom to those rows given by the values of goes_to
 	       send_lists would have to be a vecor of vectors in class System with first dimension 26
 	    */
+	    send_lists[*iter].push_back();
 	}
     }
     return 0;
@@ -222,7 +223,7 @@ int gen_send_table (System *sys) {
 
 //! Generates the skin cutoff distance based on the largest cutoff in the system
 double gen_skin_cutoff (/*Need a list of all the cutoffs for the different interactions*/ ) {
-    double skin_cutoff;
+    double skin_cutoff=0.5;
 
     return skin_cutoff;
 }

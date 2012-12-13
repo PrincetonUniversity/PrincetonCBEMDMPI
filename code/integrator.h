@@ -18,8 +18,6 @@ using namespace misc;
 using namespace atom;
 
 namespace integrator {
-	extern char err_msg[MYERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
-	
 	//!< Abstract base class for integrators
 	/*!
 	 The step function should return 0 if successfully executed, integer error flag otherwise.

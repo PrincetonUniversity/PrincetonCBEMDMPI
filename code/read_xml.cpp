@@ -6,7 +6,7 @@
 #include "read_xml.h"
 
 /*!
- Parse an XML file to obtain atom information. Returns 0 if successful, -1 if failure. Operates in 
+ Parse an XML file to obtain atom information. Returns 0 if successful, non-zero if failure. Operates in 
  a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the
  file in order. Returns 0 if successful, else integer flag for failure.  Does domain decomposition.
  \param [in] filename Name of file to open and read.
@@ -20,9 +20,9 @@ int initialize_from_xml (const string filename, const int nprocs, const int rank
 	vector <double> box = sys->box();
 	
 	// do domain decomposition before initialization
-	check = init_domain_decomp (box, nprocs, sys->widths, &sys->final_breakup);
+	check = init_domain_decomp (box, nprocs, sys->proc_widths, sys->final_proc_breakup);
 	
-	MPI_Barrier (MPI_WORLD_COMM);
+	MPI_Barrier (MPI_COMM_WORLD);
 	
 	// Cascade of reading statements
 	if (rank == 0) {
@@ -30,59 +30,64 @@ int initialize_from_xml (const string filename, const int nprocs, const int rank
 		check = read_xml (filename, nprocs, rank, sys);
 		
 		if (nprocs > 1) {
-			MPI_Send (&check, 1, MPI_INT, 1, 0, MPI_WORLD_COMM);
+			MPI_Send (&check, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
 		}
 	} else {
 		// wait mode for signal from rank-1
-		MPI_Recv (&isignal, 1, MPI_INT, rank-1, rank-1, MPI_WORLD_COMM, &Stat);
+		MPI_Recv (&isignal, 1, MPI_INT, rank-1, rank-1, MPI_COMM_WORLD, &Stat);
 		if (isignal == 0) {
 			// recieved signal, read
 			check = read_xml (filename, nprocs, rank, sys);
 			
 			// signal finished to next processor in line
 			if (rank+1 < nprocs) {
-				MPI_Send (&check, 1, MPI_INT, rank+1, rank, MPI_WORLD_COMM);
+				MPI_Send (&check, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
 			}
 		} else {
 			check = isignal;
-			if (rank < nprocs-1) {
-				MPI_Send (&isignal, 1, MPI_INT, rank+1, rank, MPI_WORLD_COMM);
+			if (rank+1 < nprocs) {
+				MPI_Send (&isignal, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
 			}
 		}
 	}
 	
-	MPI_Barrier (MPI_WORLD_COMM);
+	MPI_Barrier (MPI_COMM_WORLD);
 	return check;
 }
 
 /*!
  Parse an XML file to obtain atom information. Initializes a System object but only stores
  information that belongs to this processor rank according to domain decomposition.
+ If a value is specified multiple times, only the first occurence of the same will be used
  \param [in] filename Name of file to open and read.
  \param [in] nprocs Number of processors total.
  \param [in] rank Rank of this process.
  \param [in,out] \*sys System object to store its information at.
  */
 int read_xml (const string filename, const int nprocs, const int rank, System *sys) {
-	FILE *input = mfopen(filename, "r");
+    const char *filename_cstr=filename.c_str();
+    char err_msg[MYERR_FLAG_SIZE];
+	FILE *input = mfopen(filename_cstr, "r");
 	if (input == NULL) {
-		sprintf(err_msg, "Could not initialize from %s on rank %d", filename, rank);
+		sprintf(err_msg, "Could not initialize from %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
 		return FILE_ERROR;
 	}
 	
 	// header
-	check = 0;
+	int check = 0;
 	int natoms = -1;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	const int buffsize=1000;
+	char buff[buffsize];
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "natoms") != NULL) {
-			check = 1;
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
 			for (int i = 0; i < fields.size(); ++i) {
 				if (fields[i] == "natoms") {
 					if (i+1 < fields.size()) {
 						natoms = atoi(fields[i+1].c_str());
+						check = 1;
 					}
 					break;
 				}
@@ -91,24 +96,24 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}
 	if (check != 1) {
-		sprintf(err_msg, "Could not locate natoms in %s on rank %d", filename, rank);
+		sprintf(err_msg, "Could not locate natoms in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
-	if (natoms < 0) {
-		sprintf(err_msg, "Number of atoms < 0 in %s on rank %d", filename, rank);
+	if (natoms <= 0) {
+		sprintf(err_msg, "Number of atoms < 0 in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return ILLEGAL_VALUE;
 	}
 	vector<Atom> new_atoms(natoms);
 	
 	// read box
-	rewind(fp1);
+	rewind(input);
 	check = 0;
-	vector <double> box(3);
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	vector<double> box(3, -1);
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "box") != NULL) {
 			check = 1;
 			vector <string> fields;
@@ -134,32 +139,34 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}
 	if (check != 1) {
-		sprintf(err_msg, "Could not locate box specification in %s on rank %d", filename, rank);
+		sprintf(err_msg, "Could not locate box specification in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
+		fclose(input);
 		return FILE_ERROR;
 	}
 	for (int i = 0; i < 3; ++i) {
 		if (box[i] <= 0.0) {
-			sprintf(err_msg, "Could not read box dimensions (%g,%g,%g) properly from %s on rank %d", box[0], box[1], box[2], filename, rank);
+			sprintf(err_msg, "Could not read box dimensions (%g,%g,%g) properly from %s on rank %d", box[0], box[1], box[2], filename_cstr, rank);
 			flag_error (err_msg, __FILE__, __LINE__);
+			fclose (input);
 			return ILLEGAL_VALUE;
 		}
 	}
 	sys->set_box(box);
 	
 	// also read bonds now
-	rewind(fp1);
+	rewind(input);
 	check = 0;
 	int nbonds = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "bond") != NULL) {
-			check = 1;
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
 			for (int i = 0; i < fields.size(); ++i) {
 				if (fields[i] == "num") {
 					if (i+1 < fields.size()) {
 						nbonds = atoi(fields[i+1].c_str());
+						check = 1;
 					}
 					break;
 				}
@@ -168,15 +175,15 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}
 	if (check != 1) {
-		sprintf(err_msg, "Could not locate bond information in %s on rank %d", filename, rank);
+		sprintf(err_msg, "Could not locate bond information in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 	if (nbonds < 0) {
-		sprintf(err_msg, "Number of bonds < 0 in %s on rank %d", filename, rank);
+		sprintf(err_msg, "Number of bonds < 0 in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return ILLEGAL_VALUE;
 	}
 	
@@ -186,25 +193,24 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	vector <int> rbond (nbonds, -1);
 	
 	// read in positions, remember that by default this program normalizes the box corner to 0,0,0 and hoomd is shifted
-	rewind(fp1);
+	rewind(input);
 	check = 0;
 	vector <int> atom_belongs;
 	vector <double> tmp_pos(3);
 	int processor;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "position") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, fp1);
+				fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf %lf %lf", &atom_coords[0], &atom_coords[1], &atom_coords[2]) != 3) {
-					sprintf(err_msg, "Could not read atom index %d coordinates from %s on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not read atom index %d coordinates from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return FILE_ERROR;
 				}
 				for (int j = 0; j < 3; ++j) {
 					// hoomd format places box at origin, we normalize corner to 0,0,0
-					atom_coords[j] += box[j]/2.0;
 					new_atoms[i].pos[j] = atom_coords[j];
 					tmp_pos[j] = atom_coords[j];
 				}
@@ -221,120 +227,120 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}	
 	if (check != 1) {
-		sprintf(err_msg, "Could not find atom coordinates properly from %s on rank %d", filename, rank);
+		sprintf(err_msg, "Could not find atom coordinates properly from %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 	
 	// read velocities
-	rewind(fp1);
+	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "velocity") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, fp1);
-				if (sscanf(buff, "%lf %lf %lf", &new_atom[i].vel[0], &new_atom[i].vel[1], &new_atom[i].vel[2]) != 3) {
-					sprintf(err_msg, "Could not read atom index %d velocity from %s on rank %d", i, filename, rank);
+				fgets(buff, buffsize, input);
+				if (sscanf(buff, "%lf %lf %lf", &new_atoms[i].vel[0], &new_atoms[i].vel[1], &new_atoms[i].vel[2]) != 3) {
+					sprintf(err_msg, "Could not read atom index %d velocity from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return FILE_ERROR;
 				}
 			}
 			break;
 		}
 	}
-	if (check == 0) {
-		sprintf(err_msg, "No velocities found in %s on rank %d", filename, rank);
+	if (check != 1) {
+		sprintf(err_msg, "No velocities found in %s on rank %d", filename_cstr, rank);
 		flag_notify (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 	
 	// read mass
-	rewind(fp1);
+	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "mass") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, fp1);
+				fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf", &new_atoms[i].mass) != 1) {
-					sprintf(err_msg, "Could not read atom index %d mass from %s on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not read atom index %d mass from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 				if (new_atoms[i].mass < 0.0) {
-					sprintf(err_msg, "Atom index %d mass = %g < 0.0 in %s on rank %d", i, new_atoms[i].mass, filename, rank);
+					sprintf(err_msg, "Atom index %d mass = %g < 0.0 in %s on rank %d", i, new_atoms[i].mass, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 			}
 			break;
 		}
 	}
-	if (check == 0) {
-		sprintf(err_msg, "No masses found in %s on rank %d", filename, rank);
+	if (check != 1) {
+		sprintf(err_msg, "No masses found in %s on rank %d", filename_cstr, rank);
 		flag_notify (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
-	sprintf(err_msg, "Read atom masses from %s on rank %d", filename, rank);
+	sprintf(err_msg, "Read atom masses from %s on rank %d", filename_cstr, rank);
 	flag_notify (err_msg, __FILE__, __LINE__);
 	
 	// read sizes (diameters)
-	rewind(fp1);
+	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "diameter") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, fp1);
+				fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf", &new_atoms[i].diam) != 1) {
-					sprintf(err_msg, "Could not read atom index %d diameter from %s on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not read atom index %d diameter from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return FILE_ERROR;
 				}
 				if (new_atoms[i].diam < 0.0) {
-					sprintf(err_msg, "Atom index %d diameter = %g < 0.0 in %s on rank %d", i, new_atoms[i].diam, filename, rank);
+					sprintf(err_msg, "Atom index %d diameter = %g < 0.0 in %s on rank %d", i, new_atoms[i].diam, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 			}
 			break;
 		}
 	}
-	if (check == 0) {
-		sprintf(err_msg, "No atom diameters found in %s on rank %d", filename, rank);
+	if (check != 1) {
+		sprintf(err_msg, "No atom diameters found in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 
 	// read types
-	rewind(fp1);
+	rewind(input);
 	char aname[ATOM_NAME_LENGTH];
 	check = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "type") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, fp1);
+				fgets(buff, buffsize, input);
 				if (sscanf(buff, "%s", aname) != 1) {
-					sprintf(err_msg, "Could not read atom index %d type name from %s on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not read atom index %d type name from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return FILE_ERROR;
 				}
 				if (sys->add_atom_type(aname) == -1) {
-					sprintf(err_msg, "Could not convert atom index %d type name from %s to an internal index on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not convert atom index %d type name from %s to an internal index on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 				else {
@@ -344,56 +350,56 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 			break;
 		}
 	}
-	if (check == 0) {
-		sprintf(err_msg, "No atom types found in %s on rank %d", filename, rank);
+	if (check != 1) {
+		sprintf(err_msg, "No atom types found in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 
 	// read bonds
-	rewind(fp1);
+	rewind(input);
 	char bname[BOND_NAME_LENGTH];
 	check = 0;
-	while (fgets(buff, buffsize, fp1) != NULL) {
+	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "bond") != NULL) {
 			check = 1;
 			for (int i = 0; i < nbonds; ++i) {
-				fgets(buff, buffsize, fp1);
+				fgets(buff, buffsize, input);
 				if (sscanf(buff, "%s %d %d", bname, &lbond[i], &rbond[i]) != 3) {
-					sprintf(err_msg, "Could not read bond number %d from %s on rank %d", i+1, filename, rank);
+					sprintf(err_msg, "Could not read bond number %d from %s on rank %d", i+1, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return FILE_ERROR;
 				}
 				if (lbond[i] < 0 || rbond[i] < 0) {
-					sprintf(err_msg, "Bond number %d is between illegal values for atoms (%d,%d) in %s on rank %d", i+1, lbond[i], rbond[i], filename, rank);
+					sprintf(err_msg, "Bond number %d is between illegal values for atoms (%d,%d) in %s on rank %d", i+1, lbond[i], rbond[i], filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 				if (lbond[i] == rbond[i]) {
-					sprintf(err_msg, "Atom number %d appears bonded to itself in %s on rank %d", i+1, filename, rank);
+					sprintf(err_msg, "Atom number %d appears bonded to itself in %s on rank %d", i+1, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				}
 				if (sys->add_bond_type(bname) == -1) {
-					sprintf(err_msg, "Could not convert bond index %d type name from %s to an internal index on rank %d", i, filename, rank);
+					sprintf(err_msg, "Could not convert bond index %d type name from %s to an internal index on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
-					fclose(fp1);
+					fclose(input);
 					return ILLEGAL_VALUE;
 				} else {
-					sys->add_bond(lbond, rbond, sys->bond_type(bname));
+					sys->add_bond(lbond[i], rbond[i], sys->bond_type(bname));
 				}	
 			}
 			break;
 		}
 	}
-	if (check == 0) {
-		sprintf(err_msg, "No bonds found in %s on rank %d", filename, rank);
+	if (check != 1) {
+		sprintf(err_msg, "No bonds found in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
-		fclose(fp1);
+		fclose(input);
 		return FILE_ERROR;
 	}
 
@@ -416,9 +422,10 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
  \param [in,out] \*sys System object for the main node to stores its information at.
  */
 int print_xml (const string filename, const int nprocs, const int rank, const System *sys) {
+    char err_msg[MYERR_FLAG_SIZE];
 	MPI_Status Stat;
 	Atom *atom_vec;
-	MPI_Barrier (MPI_WORLD_COMM);
+	MPI_Barrier (MPI_COMM_WORLD);
 	int status = 0;
 	
 	if (rank == 0) {
@@ -429,41 +436,44 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		int i_need_to_print = 0, i_finished;
 		if (fp1 == NULL) {
 			for (int i = 1; i < nprocs; ++i) {
-				MPI_Send(&i_need_to_print, 1, MPI_INT, i, 0, MPI_WORLD_COMM);
+				MPI_Send(&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
 			}
 			return -1;
 		}
 		
 		// get atoms from workers
-		int worker_atoms[nprocs-1] = {0};
+		int worker_atoms[nprocs-1];
+		for (int i=0; i<nprocs-1; i++) {
+		    worker_atoms[i] = 0;
+		}
 		i_need_to_print = 1;
 		MPI_Request send_reqs[nprocs-1], recv_reqs[nprocs-1], recv_reqs2[nprocs-1];
 		MPI_Status worker_stats[nprocs-1], worker_stats2[nprocs-1];
 		
 		for (int i = 1; i < nprocs; ++i) {
-			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_WORLD_COMM, &send_reqs[i-1]);
-			MPI_Irecv (&worker_atoms[i-1], 1, MPI_INT, i, i, MPI_WORLD_COMM, &recv_reqs[i-1]);
+			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &send_reqs[i-1]);
+			MPI_Irecv (&worker_atoms[i-1], 1, MPI_INT, i, i, MPI_COMM_WORLD, &recv_reqs[i-1]);
 		}
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs, worker_stats);
 		}
 		
-		int tot_atoms = sys->num_atoms();
+		int tot_atoms = sys->natoms();
 		Atom** system_atoms;
 		if (nprocs > 1) {
-			system_atoms = new (Atom*) [nprocs-1];
+		    system_atoms = new Atom* [nprocs-1];
 			for (int i = 0; i < nprocs-1; ++i) {
-				system_atoms[i] = new (Atom) [worker_atoms[i]];
+			    system_atoms[i] = new Atom [worker_atoms[i]];
 			}
 		}
 		
 		for (int i = 0; i < nprocs-1; ++i) {
 			tot_atoms += worker_atoms[i];
-			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_WORLD_COMM, &send_reqs[i]);
+			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
 		}
 		
 		for (int i = 1; i < nprocs; ++i) {
-			MPI_Irecv(&system_atoms[i-1], worker_atoms[i-1], MPI_ATOM, i, i, MPI_WORLD_COMM, &recv_reqs2[i-1]);
+			MPI_Irecv(&system_atoms[i-1], worker_atoms[i-1], MPI_ATOM, i, i, MPI_COMM_WORLD, &recv_reqs2[i-1]);
 		}
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
@@ -471,8 +481,8 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		
 		// Now main node has all atoms, use pointers to print atoms in order
 		Atom *atom_ptr[tot_atoms];
-		for (int i = 0; i < sys->num_atoms(); ++i) {
-			atom_ptr[sys->get_atom(i)->sys_index] = sys->get_atom(i);
+		for (int i = 0; i < sys->natoms(); ++i) {
+		    atom_ptr[sys->get_atom(i)->sys_index] = sys->get_atom(i);
 		}
 		for (int i = 1; i < nprocs; ++i) {
 			for (int j = 0; j < worker_atoms[i-1]; ++j) {
@@ -547,22 +557,22 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		}
 	} else {
 		int print_flag, dummy, natoms = sys->natoms();
-		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_WORLD_COMM, &Stat);
+		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 		if (print_flag == 1) {
-			MPI_Send (&natoms, 1, MPI_INT, rank, 0, MPI_WORLD_COMM);
-			MPI_Recv (&dummy, 1, MPI_INT, 0, 0, MPI_WORLD_COMM, &Stat);
+			MPI_Send (&natoms, 1, MPI_INT, rank, 0, MPI_COMM_WORLD);
+			MPI_Recv (&dummy, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 			atom_vec = new Atom[natoms]; 
-			MPI_Send (atom_vec, natoms, MPI_ATOM, rank, 0, MPI_WORLD_COMM);
+			MPI_Send (atom_vec, natoms, MPI_ATOM, rank, 0, MPI_COMM_WORLD);
 		} else {
 			status = -1;
 		}
 	}
 				  
-    MPI_Barrier (MPI_WORLD_COMM);
+    MPI_Barrier (MPI_COMM_WORLD);
 	if (rank > 0 && status == 0) {
 		delete [] atom_vec;
 	}
-	MPI_Barrier (MPI_WORLD_COMM);
+	MPI_Barrier (MPI_COMM_WORLD);
 	return status;
 }
 

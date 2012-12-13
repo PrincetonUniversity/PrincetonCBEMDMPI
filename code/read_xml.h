@@ -20,9 +20,10 @@ using namespace std;
 using namespace sim_system;
 using namespace misc;
 using namespace atom;
+using namespace boost::algorithm;
 
 int initialize_from_xml (const string filename, const int nprocs, const int rank, System *sys);
-int read_xml (const string filename, const int nprocs, System *sys);
+int read_xml (const string filename, const int nprocs, const int rank, System *sys);
 int print_xml (const string filename, const int nprocs, const int rank, const System *sys);
 
 #endif
