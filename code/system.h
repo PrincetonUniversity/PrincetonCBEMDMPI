@@ -57,6 +57,7 @@ namespace sim_system {
 		double xyz_limits[3][2];
 		int send_table [26];
 		
+		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
