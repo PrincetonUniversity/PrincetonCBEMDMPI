@@ -166,6 +166,7 @@ int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
     int is_near_border[ndims];
     vector<int> goes_to;
 
+    sys->send_lists.clear();
     for (int i=0; i < sys->natoms(); i++) {
 	goes_to.clear();
 	for (int j=0; j<ndims; j++) {
@@ -182,7 +183,8 @@ int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
 	    /* Add current atom to those rows given by the values of goes_to
 	       send_lists would have to be a vecor of vectors in class System with first dimension 26
 	    */
-	    send_lists[*iter].push_back();
+	    //	    sys->send_lists[*iter].push_back(sys->atoms_[i]);
+	    sys->send_lists[*iter].push_back(*(sys->get_atom(i)));
 	}
     }
     return 0;
@@ -194,6 +196,8 @@ int gen_send_table (System *sys) {
 
     const int nvals=3;
     int xyz_id[3], ngh_xyz_id[3], domain_id, value;
+    sys->send_lists.reserve(26);
+
     for (int i=0; i<3; i++) {
 	xyz_id[i] = sys->xyz_id[i];
     }

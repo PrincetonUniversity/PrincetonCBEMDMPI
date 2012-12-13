@@ -216,7 +216,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 				}
 				
 				// see if this atom belongs on this processor
-				processor = get_processor (tmp_pos, sys->widths, &sys->final_breakup);
+				processor = get_processor (tmp_pos, sys->proc_widths, &sys->final_proc_breakup);
 				if (processor == rank) {
 					atom_belongs.push_back(i);
 				}
