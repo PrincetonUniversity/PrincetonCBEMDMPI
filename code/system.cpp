@@ -220,6 +220,16 @@ namespace sim_system {
 		}
 	}
 	
+
+    //! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
+    void System::clear_ghost_atoms () {
+	cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+	atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
+	cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+	return;
+    }
+
+
 	/*! Build interaction matrix for system
 	  Right now, if two atoms are not bonded, then their interaction defaults to standard Lennard-Jones interaction
 	*/

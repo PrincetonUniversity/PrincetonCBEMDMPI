@@ -2,7 +2,7 @@ LDFLAGS = -lm
 
 MPICXX=mpic++
 
-MPICXXFLAGS = -O3 -lstdc++ -Wno-deprecated -Wall
+MPICXXFLAGS = -O3 -lstdc++ -Wno-deprecated
 
 all: main
 

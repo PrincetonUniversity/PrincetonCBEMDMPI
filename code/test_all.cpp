@@ -50,11 +50,22 @@ protected:
     System sys;
 };
 
-TEST_F (TwoBodyTest, SendTableTest) {
+class TwoBodyTest : public ::testing::Test {
+protected:
+    /* Generates a 2 atom system */
+    virtual void SetUp () {
+	double box[3]={3.0, 4.0, 5.0};
+	vector<double> box(3);
+	box.assign(
+	sys.set_box(box);
+	
+    }
+};
+
+TEST_F (ManyBodyTest, SendTableTest) {
     int status;
     status = gen_send_table (&sys);
     ASSERT_EQ (1.0, status);
-    EXPECT_EQ (
 }
 
 TEST_F (TwoBodyTest, VerletNoForces) {
