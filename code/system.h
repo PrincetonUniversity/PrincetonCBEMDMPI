@@ -33,19 +33,19 @@ namespace sim_system {
 		double T() const {return Temp_;}						//!< Report the temperature of the system
 		double P() const {return Press_;}						//!< Report the pressure of the system
 		
-		int total_atoms () const {return atoms_.size();}				//!< Return the number of atoms currently in this system (processor)
+		int total_atoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor)
 		int natoms () const {return num_atoms_;}				//!< Return the number of atoms this system (processor) is responsible for
 		int add_atom_type (const string atom_name);				//!< Index an atom name
-		inline int atom_type (const string atom_name);			//!< Return the internal index associated with an atom name
-		inline string atom_name (const int index);				//!< Return the name associated with an index for atom type
+		int atom_type (const string atom_name);					//!< Return the internal index associated with an atom name
+		string atom_name (const int index);						//!< Return the name associated with an index for atom type
 
 		int add_bond_type (const string bond_name);				//!< Index a bond name
-		inline int bond_type (const string bond_name);			//!< Return the internal index associated with a bond name
-		string bond_name (const int index);				//!< Return the name associated with an index for bond type
+		int bond_type (const string bond_name);					//!< Return the internal index associated with a bond name
+		string bond_name (const int index);						//!< Return the name associated with an index for bond type
 		const pair <int, int> get_bond (const int nbond) {return bonded_[nbond];}	//!< Return a specific bonded pair indices
 		int get_bond_type (const int nbond) {return bonded_type_[nbond];}	//!< Return the internal index of a bond
-		int nbonds () {return bonded_.size();}			//!< Return the number of bonds in the system
-		inline void add_bond (const int atom1, const int atom2, const int type);
+		int nbonds () {return bonded_.size();}					//!< Return the number of bonds in the system
+		void add_bond (const int atom1, const int atom2, const int type);
 		
 		int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
@@ -63,9 +63,9 @@ namespace sim_system {
 		int send_list_size[26], get_list_size[26];
 		vector< vector<Atom> > get_lists;
 		
-                vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
+		vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
 
-		vector <string> global_atom_types;                 //!< Keeps a record of every atom's type
+		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
@@ -78,10 +78,9 @@ namespace sim_system {
 		map <string, int> bond_type_;					//!< Maps user specified name of bond type to internal index
 		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
 		map <int, int> glob_to_loc_id_;					//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
-	//	vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;
-		int num_atoms_; //!< The number of atoms the processor is responsible for
+		int num_atoms_;									//!< The number of atoms the processor is responsible for
 	};
 	
 	//! Read atom coordinates and properties from a file (xml)

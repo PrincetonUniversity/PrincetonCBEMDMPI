@@ -6,16 +6,17 @@
 #include "read_xml.h"
 
 /*!
- Parse an XML file to obtain atom information. Returns 0 if successful, non-zero if failure. Operates in 
+ Parse an XML and energy file to obtain atom and interaction information. Returns 0 if successful, non-zero if failure. Operates in 
  a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the
  file in order. Returns 0 if successful, else integer flag for failure.  Does domain decomposition.
- \param [in] filename Name of file to open and read.
+ \param [in] xml_filename Name of coordinate file to open and read.
+ \param [in] energy_filename Name of file containing bonds, pair potential parameters, etc.
  \param [in] nprocs Number of processors total.
  \param [in] rank Rank of this process.
  \param [in,out] \*sys System object to store its information at.
  */
-int initialize_from_xml (const string filename, const int nprocs, const int rank, System *sys) {
-	int iread = 1, isignal, check;
+int initialize_from_files (const string xml_filename, const string energy_filename, const int nprocs, const int rank, System *sys) {
+	int iread = 1, isignal, check, check2, check_sum;
 	MPI_Status Stat;
 	vector <double> box = sys->box();
 	
@@ -27,24 +28,28 @@ int initialize_from_xml (const string filename, const int nprocs, const int rank
 	// Cascade of reading statements
 	if (rank == 0) {
 		// read first, then signal next
-		check = read_xml (filename, nprocs, rank, sys);
+		check = read_xml (xml_filename, nprocs, rank, sys);
+		check2 = read_interactions (energy_filename, sys);
+		check_sum = check+check2;
 		
 		if (nprocs > 1) {
-			MPI_Send (&check, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
+			MPI_Send (&check_sum, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
 		}
 	} else {
 		// wait mode for signal from rank-1
 		MPI_Recv (&isignal, 1, MPI_INT, rank-1, rank-1, MPI_COMM_WORLD, &Stat);
 		if (isignal == 0) {
 			// recieved signal, read
-			check = read_xml (filename, nprocs, rank, sys);
+			check = read_xml (xml_filename, nprocs, rank, sys);
+			check2 = read_interactions (energy_filename, sys);
+			check_sum = check+check2;
 			
 			// signal finished to next processor in line
 			if (rank+1 < nprocs) {
-				MPI_Send (&check, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
+				MPI_Send (&check_sum, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
 			}
 		} else {
-			check = isignal;
+			check_sum = isignal;
 			if (rank+1 < nprocs) {
 				MPI_Send (&isignal, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
 			}
@@ -52,7 +57,7 @@ int initialize_from_xml (const string filename, const int nprocs, const int rank
 	}
 	
 	MPI_Barrier (MPI_COMM_WORLD);
-	return check;
+	return check_sum;
 }
 
 /*!
@@ -110,7 +115,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	vector<Atom> new_atoms(natoms);
 	
 	try {
-		global_atom_types.resize(natoms);
+		sys->global_atom_types.resize(natoms);
 	}
 	catch (bad_alloc& ba) {
 		sprintf(err_msg, "Out of memory");
@@ -226,7 +231,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 				}
 				
 				// see if this atom belongs on this processor
-				processor = get_processor (tmp_pos, sys->proc_widths, &sys->final_proc_breakup);
+				processor = get_processor (tmp_pos, sys->proc_widths, sys->final_proc_breakup);
 				if (processor == rank) {
 					atom_belongs.push_back(i);
 				}
@@ -494,7 +499,7 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		// Now main node has all atoms, use pointers to print atoms in order
 		Atom *atom_ptr[tot_atoms];
 		for (int i = 0; i < sys->natoms(); ++i) {
-		    atom_ptr[sys->get_atom(i)->sys_index] = sys->get_atom(i);
+		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
 		}
 		for (int i = 1; i < nprocs; ++i) {
 			for (int j = 0; j < worker_atoms[i-1]; ++j) {
@@ -547,16 +552,16 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		}	
 		fprintf(fp1, "</diameter>\n");
 		
-		fprintf(fp1, "<type num=\"%d\">\n", natoms);
+		fprintf(fp1, "<type num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
-			fprintf(fp1, "%s\n", sys->atom_name[atom_ptr[i]->type].c_str());
+			fprintf(fp1, "%s\n", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
 		}	
 		
-		fprintf(fp1, "<bond num=\"%d\">\n", nbonds);
+		fprintf(fp1, "<bond num=\"%d\">\n", ((System *)sys)->nbonds());
 		pair <int, int> ibond;
-		for (int i = 0; i < sys->nbonds(); ++i) {
-			ibond = sys->get_bond(i);
-			fprintf(fp1, "%s\t%d\t%d\n", sys->bond_name(sys->get_bond_type(i)).c_str(), ibond.first, ibond.second);
+		for (int i = 0; i < ((System *)sys)->nbonds(); ++i) {
+			ibond = ((System *)sys)->get_bond(i);
+			fprintf(fp1, "%s\t%d\t%d\n", ((System *)sys)->bond_name(((System *)sys)->get_bond_type(i)).c_str(), ibond.first, ibond.second);
 		}
 		fprintf(fp1, "</bond>\n");
 		fprintf(fp1, "</configuration>\n</hoomd_xml>");
@@ -587,5 +592,4 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 	MPI_Barrier (MPI_COMM_WORLD);
 	return status;
 }
-
 

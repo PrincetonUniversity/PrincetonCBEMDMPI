@@ -138,7 +138,7 @@ namespace sim_system {
 	 Returns the internal index associated with this atom name; returns -1 if not found.
 	 \param [in] name User defined name of atom type.
 	 */
-	inline int System::atom_type (const string name) {
+	int System::atom_type (const string name) {
 		if (name.size() == 0) return -1;
 		if (atom_type_.find(name) == atom_type_.end()) {
 			return -1;
@@ -151,7 +151,7 @@ namespace sim_system {
 	 Returns the internal index associated with this bond name; returns -1 if not found.
 	 \param [in] name User defined name of bond type.
 	 */
-	inline int System::bond_type (const string name) {
+	int System::bond_type (const string name) {
 		if (name.size() == 0) return -1;
 		if (bond_type_.find(name) == bond_type_.end()) {
 			return -1;
@@ -166,7 +166,7 @@ namespace sim_system {
 	 \param [in] atom1 Global index of atom2 in the bond.
 	 \param [in] type Internal index associated with this bond type.
 	 */
-	inline void System::add_bond (const int atom1, const int atom2, const int type) {
+	void System::add_bond (const int atom1, const int atom2, const int type) {
 		pair <int, int> new_bond = make_pair (atom1, atom2);
 		bonded_.push_back(new_bond);
 		bonded_type_.push_back(type);
@@ -176,7 +176,7 @@ namespace sim_system {
 	 Returns the string "NULL" if failed, else user defined name of atom.
 	 \param [in] index Internal index to locate and return the name associated.
 	 */
-	inline string System::atom_name (const int index) {
+	string System::atom_name (const int index) {
 		string name = "NULL";
 		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= atom_type_.size()) {

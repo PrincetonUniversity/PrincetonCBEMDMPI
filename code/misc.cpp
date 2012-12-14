@@ -96,7 +96,7 @@ vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	 \param [in] coords Array of cartesian coordinates.
 	 \param [in] box Vector of box dimensions (L_x, L_y, L_z).
 	 */
-	inline vector <double> pbc (const double *coords, const vector <double> box) {
+	vector <double> pbc (const double *coords, const vector <double> box) {
 		vector <double> in_box(3, 0.0), bad;
 		for (int i = 0; i < 3; ++i) {
 			in_box[i] = coords[i];

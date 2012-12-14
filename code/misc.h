@@ -58,6 +58,14 @@ namespace misc {
 	 */
 	vector <double> pbc (const vector <double> coords, const vector <double> box);
 	
+	//! Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries.
+	/*!
+	 Recall that the simulation box is defined such that, regardless of the input file, it is normalized to 
+	 have a corner at (0,0,0).  If this routine fails, it returns an empty vector (size = 0).
+	 \param [in] coords Vector of cartesian coordinates.
+	 \param [in] box Pointer to array of box dimensions (L_x, L_y, L_z).
+	 */
+	vector <double> pbc (const double *coords, const vector <double> box);
 	
 	//! Return the square of the minimum image distance between 2 coordinate vectors
 	/*!

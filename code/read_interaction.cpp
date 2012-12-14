@@ -1,6 +1,6 @@
 #include "read_interaction.h"
 
-int read_interactions(const string filename, System *sys) {
+int read_interactions (const string filename, System *sys) {
 	const int buffsize = 1000;
 	char buff[buffsize];
 	

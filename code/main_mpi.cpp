@@ -11,10 +11,9 @@ int main (int argc, char *argv[]) {
 	long int nsteps;
 	double dt;
 	System mysys;
-	//Integrator *myint;
 	
 	if (argc != 5) {
-		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file bond_file");
+		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file\n");
 		return ILLEGAL_VALUE;
 	}
 	
@@ -41,6 +40,7 @@ int main (int argc, char *argv[]) {
 		return ILLEGAL_VALUE;
 	}
 	
+	// in the future "initialize_from_files" will take care of this line too
 	Integrator *myint = new Verlet (dt);
 
 	// set up MPI
@@ -58,7 +58,7 @@ int main (int argc, char *argv[]) {
 	create_MPI_ATOM();
 	
 	// initialize coordinates
-	//initialize_from_xml (argv[3], nprocs, rank, &mysys);
+	initialize_from_files (argv[3], argv[4], nprocs, rank, &mysys);
 						 
 	// initialize bonds/ppot
 	//read_bond_file (argv[4], nprocs, rank, &mysys, myint);
@@ -69,8 +69,8 @@ int main (int argc, char *argv[]) {
 	// run
 	run (&mysys, myint, nsteps);
 	
-	// print?
-	//print_xml("outfile.xml", nprocs, rank, &mysys);
+	// print
+	print_xml("outfile.xml", nprocs, rank, &mysys);
 			  
 	// finish
 	delete_MPI_atom();
