@@ -195,7 +195,7 @@ namespace sim_system {
 			return name;
 		}
 	}
-	
+
 	/*!
 	 Returns the string "NULL" if failed, else user defined name of bond.
 	 \param [in] index Internal index to locate and return the name associated.

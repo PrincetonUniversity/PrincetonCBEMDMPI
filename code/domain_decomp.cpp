@@ -296,3 +296,9 @@ int communicate_skin_atoms (System *sys) {
 
     return 0;
 }
+
+//! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
+int clear_ghost_atoms (System *sys) {
+
+    return 0;
+}

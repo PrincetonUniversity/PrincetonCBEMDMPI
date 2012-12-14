@@ -50,6 +50,7 @@ namespace sim_system {
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
+		void set_num_atoms (int size) {num_atoms = size;}
 		
 		double proc_widths[3];									//!< Width for domain decomposition
 		vector<int> final_proc_breakup;							//!< Final domain decomposition
@@ -78,6 +79,7 @@ namespace sim_system {
 	//	vector <vector <Interaction> > interact_;		//!< Interaction matrix between atoms indexed by global id's (symetric)
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;
+		int num_atoms; //!< The number of atoms the processor is responsible for
 	};
 	
 	//! Read atom coordinates and properties from a file (xml)

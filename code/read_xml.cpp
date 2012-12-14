@@ -420,6 +420,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
 	sys->add_atoms(atom_belongs.size(), atom_array);
+	sys->set_num_atoms(atom_belongs.size());
 	
 	return 0;
 }

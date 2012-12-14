@@ -1,12 +1,14 @@
 #include "CBEMD.h"
 #include "mpi.h"
+#include <limits>
 
 //! Driver for mpi version
 /*!
  \param \*argv[] ./cbemd nsteps dt xml_file bond_file
  */
 int main (int argc, char *argv[]) {
-	int rank, nprocs, nsteps, rc;
+	int rank, nprocs, rc;
+	long int nsteps;
 	double dt;
 	System mysys;
 	//Integrator *myint;
@@ -17,7 +19,18 @@ int main (int argc, char *argv[]) {
 	}
 	
 	// read nsteps and dt
-	nsteps = atoi(argv[1]);
+	char* str_ptr;
+	//	nsteps = atoi(argv[1]);
+	nsteps = strtol(argv[1], &str_ptr, 10);
+	if (str_ptr == argv[1]) {
+	    fprintf(stderr, "No value was found for the number of steps. \n");
+	    return ILLEGAL_VALUE;
+	}
+	if (*str_ptr != '\0') {
+	    fprintf(stdout, "Number of steps taken as %ld ,", nsteps);
+	    fprintf(stdout, " Ignored characters : %s\n", str_ptr);
+	}
+
 	dt = atof(argv[2]);
 	if (nsteps < 0) {
 		fprintf (stderr, "Error nsteps < 0\n");
