@@ -91,6 +91,7 @@ double Interaction::force_energy (Atom *atom1, Atom *atom2, const vector <double
  \param [in] \*a2 Pointer to atom 2
  \param [in] \*box Pointer to vector of cartesian box size
 */
+/*
 vector <double> Interaction::force (const Atom *a1, const Atom *a2, const vector <double> *box) {
 	// compute min image distance
 	double xyz[3];
@@ -102,12 +103,14 @@ vector <double> Interaction::force (const Atom *a1, const Atom *a2, const vector
 		return noforce;
 	}
 }
+*/
 
 /*!
  \param [in] \*a1 Pointer to atom 1
  \param [in] \*a2 Pointer to atom 2
  \param [in] \*box Pointer to vector of cartesian box size
  */
+/*
 double Interaction::energy (const Atom *a1, const Atom *a2, const vector <double> *box) {
 	// compute min image distance
 	double xyz[3];
@@ -118,6 +121,7 @@ double Interaction::energy (const Atom *a1, const Atom *a2, const vector <double
 		return 0.0;
 	}
 }
+*/
 
 //! Shifted Lennard-Jones Force
 /*!
