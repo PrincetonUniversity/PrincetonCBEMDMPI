@@ -65,8 +65,8 @@ int initialize_from_xml (const string filename, const int nprocs, const int rank
  \param [in,out] \*sys System object to store its information at.
  */
 int read_xml (const string filename, const int nprocs, const int rank, System *sys) {
-    const char *filename_cstr=filename.c_str();
-    char err_msg[MYERR_FLAG_SIZE];
+	const char *filename_cstr=filename.c_str();
+	char err_msg[MYERR_FLAG_SIZE];
 	FILE *input = mfopen(filename_cstr, "r");
 	if (input == NULL) {
 		sprintf(err_msg, "Could not initialize from %s on rank %d", filename_cstr, rank);
@@ -109,6 +109,16 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	}
 	vector<Atom> new_atoms(natoms);
 	
+	try {
+		global_atom_types.resize(natoms);
+	}
+	catch (bad_alloc& ba) {
+		sprintf(err_msg, "Out of memory");
+		flag_error (err_msg, __FILE__, __LINE__);
+		fclose(input);
+		return BAD_MEM;
+	}
+
 	// read box
 	rewind(input);
 	check = 0;
@@ -345,6 +355,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 				}
 				else {
 					new_atoms[i].type = sys->atom_type(aname);
+					sys->global_atom_types[i] = aname;
 				}
 			}
 			break;

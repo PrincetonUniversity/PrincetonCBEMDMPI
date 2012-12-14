@@ -62,6 +62,7 @@ namespace sim_system {
 		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
                 vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
 
+		vector <string> global_atom_types;                 //!< Keeps a record of every atom's type
 
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
