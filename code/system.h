@@ -25,7 +25,7 @@ namespace sim_system {
 	public:
 		System();
 		~System();
-		int set_box (const vector<double> new_box) {box_ = new_box;}	//!< Set the global system box size
+		void set_box (const vector<double> new_box) {box_ = new_box;}	//!< Set the global system box size
 		vector <double> box() const {return box_;}				//!< Report system size
 		
 		void set_T (const double T) {Temp_ = T;}				//!< Set the system temperature
@@ -42,8 +42,8 @@ namespace sim_system {
 		inline int bond_type (const string bond_name);			//!< Return the internal index associated with a bond name
 		inline string bond_name (const int index);				//!< Return the name associated with an index for bond type
 		const pair <int, int> get_bond (const int nbond) {return bonded_[nbond];}	//!< Return a specific bonded pair indices
-		const int get_bond_type (const int nbond) {return bonded_type_[nbond];}	//!< Return the internal index of a bond
-		const int nbonds () {return bonded_.size();}			//!< Return the number of bonds in the system
+		int get_bond_type (const int nbond) {return bonded_type_[nbond];}	//!< Return the internal index of a bond
+		int nbonds () {return bonded_.size();}			//!< Return the number of bonds in the system
 		inline void add_bond (const int atom1, const int atom2, const int type);
 		
 		int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 

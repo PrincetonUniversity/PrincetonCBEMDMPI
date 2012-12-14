@@ -9,7 +9,7 @@ int main (int argc, char *argv[]) {
 	int rank, nprocs, nsteps, rc;
 	double dt;
 	System mysys;
-	Integrator *myint;
+	Integrator *myint = new Verlet;
 	
 	if (argc != 5) {
 		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file bond_file");

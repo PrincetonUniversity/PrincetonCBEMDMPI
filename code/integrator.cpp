@@ -220,6 +220,7 @@ namespace integrator {
 			
 			MPI_Barrier(MPI_COMM_WORLD);
 		}
+	return 0;
 	}
 
 
