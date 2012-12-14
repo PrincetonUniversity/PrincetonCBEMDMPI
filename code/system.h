@@ -40,7 +40,7 @@ namespace sim_system {
 
 		int add_bond_type (const string bond_name);				//!< Index a bond name
 		inline int bond_type (const string bond_name);			//!< Return the internal index associated with a bond name
-		inline string bond_name (const int index);				//!< Return the name associated with an index for bond type
+		string bond_name (const int index);				//!< Return the name associated with an index for bond type
 		const pair <int, int> get_bond (const int nbond) {return bonded_[nbond];}	//!< Return a specific bonded pair indices
 		int get_bond_type (const int nbond) {return bonded_type_[nbond];}	//!< Return the internal index of a bond
 		int nbonds () {return bonded_.size();}			//!< Return the number of bonds in the system
@@ -59,7 +59,6 @@ namespace sim_system {
 		vector< vector<Atom> > send_lists;
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		
-		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
                 vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
 
 		vector <string> global_atom_types;                 //!< Keeps a record of every atom's type

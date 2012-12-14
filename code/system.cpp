@@ -198,7 +198,7 @@ namespace sim_system {
 	 Returns the string "NULL" if failed, else user defined name of bond.
 	 \param [in] index Internal index to locate and return the name associated.
 	 */
-	inline string System::bond_name (const int index) {
+	string System::bond_name (const int index) {
 		string name = "NULL";
 		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= bond_type_.size()) {
@@ -221,77 +221,5 @@ namespace sim_system {
 	/*! Build interaction matrix for system
 	  Right now, if two atoms are not bonded, then their interaction defaults to standard Lennard-Jones interaction
 	*/
-	void System::build_interactions() {
-		string name = "NULL";
-		char err_msg[MYERR_FLAG_SIZE];
-
-		// find total number of atoms
-		int total_atoms;
-		int proc_atoms = atoms_.size();
-		MPI_Allreduce (&proc_atoms, &total_atoms, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-
-		interact_.resize(total_atoms);
-		for (int i = 0; i < total_atoms; ++i) {
-			interact_[i].resize(total_atoms);
-		}
-		
-		for (int i = 0; i < total_atoms; ++i) {
-			for (int j = 0; j < i; ++j) {
-				Interaction interaction;
-
-				// define arguments for slj
-				vector <double> args(4);
-				//args[0] = epsilon
-				args[0] = 1.0;
-				//args[1] = sigma
-				args[1] = 1.0;
-				//args[2] = delta
-				args[2] = 0.0;
-				//args[3] = rcut
-				args[3] = 2.5;
-				
-				//set parameters for LJ interaction
-				interaction.set_force_energy((force_energy_ptr)(&slj));
-				interaction.set_force_args(args);
-				interaction.set_args(args);
-				interaction.set_rcut(args[3]);
-				
-				// add interaction to interact_ matrix
-				interact_[i][j] = interaction;
-				interact_[j][i] = interaction;
-			}
-		}
-			
-		// go thorugh bonded atoms and change their interaction in interact_
-		for (int i = 0; i < bonded_.size(); ++i) {
-			Interaction interaction;
-			
-			// find bond type
-			string bond_type = this->bond_name(bonded_type_[i]);
-			if (bond_type == "fene") {
-				interaction.set_force_energy((force_energy_ptr)(&fene));
-				// FIX THIS
-				// need force arguments for fene bond
-				//interaction.set_force_args(...);
-			}
-			else if (bond_type == "harmonic") {
-				interaction.set_force_energy((force_energy_ptr)(&harmonic));
-				// FIX THIS
-				// need force arguments for harmonic bond
-				//interaction.set_force_args(...);
-			}
-			else {
-				sprintf(err_msg, "Could not locate bond type %s in force types", bond_type.c_str());
-				flag_error (err_msg, __FILE__, __LINE__);
-				return;
-
-			}
-			
-			// add interaction to interact_
-			// symmetric
-			interact_[bonded_[i].first][bonded_[i].second] = interaction;
-			interact_[bonded_[i].second][bonded_[i].first] = interaction;
-		}
-	}
 }		      
 
