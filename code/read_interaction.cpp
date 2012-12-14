@@ -1,12 +1,11 @@
 #include "read_interaction.h"
 
 int read_interactions(const string filename, System *sys) {
-	int buffsize = 1000;
+	const int buffsize = 1000;
 	char buff[buffsize];
 	
-
-	const char *filename_cstr=filename.c_str();
 	char err_msg[MYERR_FLAG_SIZE];
+	const char *filename_cstr=filename.c_str();
 	FILE *input = mfopen(filename_cstr, "r");
 	if (input == NULL) {
 		sprintf(err_msg, "Could not initialize from %s", filename_cstr);
@@ -16,7 +15,7 @@ int read_interactions(const string filename, System *sys) {
 	
 	vector <pair <string, string> > atom_pairs;
 	vector <Interaction> inters_PPOT, inters_BOND;
-	vector <string> bond_type;
+	vector <string> bond_list;
 
 	while (fgets(buff, buffsize, input) != NULL) {
 		vector <string> fields;
@@ -47,7 +46,7 @@ int read_interactions(const string filename, System *sys) {
 			
 			vector <double> force_args;
 			for (int i = 4; i < fields.size(); ++i) {
-				force_args.push_back(atof(fields[i]));
+				force_args.push_back(atof(fields[i].c_str()));
 			}
 			interaction.set_args(force_args);
 			
@@ -61,7 +60,7 @@ int read_interactions(const string filename, System *sys) {
 			}
 			Interaction interaction;
 			
-			bond_type.push_back(fields[1]);
+			bond_list.push_back(fields[1]);
 			force_energy_ptr fn = get_fn(fields[2]);
 			if (fn == NULL) {
 				sprintf(err_msg, "Invalid function.");
@@ -72,7 +71,7 @@ int read_interactions(const string filename, System *sys) {
 			
 			vector <double> force_args;
 			for (int i = 3; i < fields.size(); ++i) {
-				force_args.push_back(atof(fields[i]));
+				force_args.push_back(atof(fields[i].c_str()));
 			}
 			interaction.set_args(force_args);
 			
@@ -88,11 +87,11 @@ int read_interactions(const string filename, System *sys) {
 
 	
 	// find total number of atoms
-	int total_atoms = global_atom_types.size();
+	int total_atoms = sys->global_atom_types.size();
 
 	// resize interact_
 	try {
-		interact_.resize(total_atoms);
+		sys->interact_.resize(total_atoms);
 	}
 	catch (bad_alloc& ba) {
 		sprintf(err_msg, "ZOMG no more memory");
@@ -101,7 +100,7 @@ int read_interactions(const string filename, System *sys) {
 	}
 	for (int i = 0; i < total_atoms; ++i) {
 		try {
-			interact_[i].resize(total_atoms);
+			sys->interact_[i].resize(total_atoms);
 		}
 		catch (bad_alloc& ba) {
 			sprintf(err_msg, "ZOMG no more memory");
@@ -135,10 +134,10 @@ int read_interactions(const string filename, System *sys) {
 	}
 	
 	// go thorugh bonded atoms and change their interaction in interact_
-	for (int i = 0; i < sys->bonded_.size(); ++i) {
+	for (int i = 0; i < sys->nbonds(); ++i) {
 		
-		string b_type = sys->bond_name(bonded_type_[i]);
-		int index = distance(bond_type.begin(), find(bond_type.begin(), bond_type.end(), b_type));
+		string b_type = sys->bond_name(i);
+		int index = distance(bond_list.begin(), find(bond_list.begin(), bond_list.end(), b_type));
 		
 		if (index == atom_pairs.size()) {
 			sprintf(err_msg, "Not a valid pair");
@@ -149,13 +148,16 @@ int read_interactions(const string filename, System *sys) {
 		
 		// add interaction to interact_
 		// symmetric
-		sys->interact_[sys->bonded_[i].first][sys->bonded_[i].second] = inters_BOND[index];
-		sys->interact_[sys->bonded_[i].second][sys->bonded_[i].first] = inters_BOND[index];
+		const pair <int, int> b_pair = sys->get_bond(i);
+		sys->interact_[b_pair.first][b_pair.second] = inters_BOND[index];
+		sys->interact_[b_pair.second][b_pair.first] = inters_BOND[index];
 	}
 	return 0;
 }
 
 force_energy_ptr get_fn(const string name) {
+	char err_msg[MYERR_FLAG_SIZE];
+
 	if (name == "fene" || name == "FENE") {
 		return &fene;
 	}
