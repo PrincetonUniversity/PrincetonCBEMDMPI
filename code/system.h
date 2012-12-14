@@ -57,7 +57,8 @@ namespace sim_system {
 		double xyz_limits[3][2];
 		int send_table [26];
 		vector< vector<Atom> > send_lists;
-		vector <Atom> atoms_;							//!< Vector of Atoms in the system
+		int send_list_size[26], get_list_size[26];
+		vector< vector<Atom> > get_lists;
 		
 		void build_interactions();                                          //!< builds interaction matrix interact_ from list of bonds; must be called AFTER bonds are read in from xml file
                 vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
@@ -67,6 +68,7 @@ namespace sim_system {
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
 		double KE_, U_;									//!< Total internal kinetic energy and potential energy
+		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		vector <double> box_;							//!< Global system cartesian dimensions
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
 		map <string, int> atom_type_;					//!< Maps user specified name of atom type to internal index

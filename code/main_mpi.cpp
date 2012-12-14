@@ -9,7 +9,7 @@ int main (int argc, char *argv[]) {
 	int rank, nprocs, nsteps, rc;
 	double dt;
 	System mysys;
-	Integrator *myint = new Verlet;
+	//Integrator *myint;
 	
 	if (argc != 5) {
 		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file bond_file");
@@ -28,6 +28,8 @@ int main (int argc, char *argv[]) {
 		return ILLEGAL_VALUE;
 	}
 	
+	Integrator *myint = new Verlet (dt);
+
 	// set up MPI
 	rc = MPI_Init(&argc, &argv);
 	if (rc != MPI_SUCCESS) {

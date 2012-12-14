@@ -41,10 +41,21 @@ protected:
         atom1.type = 1;
         Atom atom_array [] = {atom0, atom1};
         sys.add_atoms(2, atom_array);
+	for (int i=0; i<3; i++) {
+	    sys.proc_widths[i] = 1;
+	    sys.final_proc_breakup[i] = i+3;
+	}
     }
 
     System sys;
 };
+
+TEST_F (TwoBodyTest, SendTableTest) {
+    int status;
+    status = gen_send_table (&sys);
+    ASSERT_EQ (1.0, status);
+    EXPECT_EQ (
+}
 
 TEST_F (TwoBodyTest, VerletNoForces) {
     Verlet integ_obj (0.1);

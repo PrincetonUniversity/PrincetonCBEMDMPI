@@ -10,6 +10,8 @@ namespace sim_system {
 	 Upon initialization, resize vectors as necessary.  
 	 */
 	System::System() {
+	    send_lists.reserve(26);
+	    get_lists.reserve(26);
 		try {
 			box_.resize(3,-1);
 		}

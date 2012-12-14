@@ -1,11 +1,12 @@
 #include "common.h"
 #include "system.h"
+#include "mpi.h"
 
 using namespace std;
 using namespace sim_system;
 
 //! Given the box size and factors of nprocs, checks which combination generates the most cubic domains
-int gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add);
+void gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add);
 
 //! Given a number returns the prime factors (does not count 1 as a prime factor)
 vector<int> factorize (const int nprocs);
@@ -39,3 +40,6 @@ void gen_goes_to (const int is_near_border[], vector<int>& goes_to, const int nd
 
 //! Computes the exponentiation of an integer by an integral power
 int power (int base, int exponent);
+
+//! Communicates the atoms in the skin regions of the processors to the appropriate neighbours
+int communicate_skin_atoms (System *sys);
