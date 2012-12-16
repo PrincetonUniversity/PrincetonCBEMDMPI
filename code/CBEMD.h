@@ -6,6 +6,9 @@
 #include "read_xml.h"
 #include "interaction.h"
 #include "mpiatom.h"
+#include "initialize.h"
+#include "mpi.h"
+#include <limits>
 
 using namespace std;
 using namespace atom;

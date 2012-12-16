@@ -9,7 +9,7 @@ all: cbemd
 %.o : %.cpp
 	$(MPICXX) $(MPICXXFLAGS) -c $< 
 
-cbemd : main_mpi.o force_calc.o read_xml.o read_interaction.o system.o atom.o misc.o domain_decomp.o integrator.o interaction.o  
+cbemd : main_mpi.o force_calc.o initialize.o read_xml.o read_interaction.o system.o atom.o misc.o domain_decomp.o integrator.o interaction.o  
 	$(MPICXX) -o $@ $^ $(GTESTFLAGS) $(MPICXXFLAGS) 
 
 clean:

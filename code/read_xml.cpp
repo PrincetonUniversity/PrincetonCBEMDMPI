@@ -6,61 +6,6 @@
 #include "read_xml.h"
 
 /*!
- Parse an XML and energy file to obtain atom and interaction information. Returns 0 if successful, non-zero if failure. Operates in 
- a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the
- file in order. Returns 0 if successful, else integer flag for failure.  Does domain decomposition.
- \param [in] xml_filename Name of coordinate file to open and read.
- \param [in] energy_filename Name of file containing bonds, pair potential parameters, etc.
- \param [in] nprocs Number of processors total.
- \param [in] rank Rank of this process.
- \param [in,out] \*sys System object to store its information at.
- */
-int initialize_from_files (const string xml_filename, const string energy_filename, const int nprocs, const int rank, System *sys) {
-	int iread = 1, isignal, check, check2, check_sum;
-	MPI_Status Stat;
-	vector <double> box = sys->box();
-	
-	// do domain decomposition before initialization
-	check = init_domain_decomp (box, nprocs, sys->proc_widths, sys->final_proc_breakup);
-	
-	MPI_Barrier (MPI_COMM_WORLD);
-	
-	// Cascade of reading statements
-	if (rank == 0) {
-		// read first, then signal next
-		check = read_xml (xml_filename, nprocs, rank, sys);
-		check2 = read_interactions (energy_filename, sys);
-		check_sum = check+check2;
-		
-		if (nprocs > 1) {
-			MPI_Send (&check_sum, 1, MPI_INT, 1, 0, MPI_COMM_WORLD);
-		}
-	} else {
-		// wait mode for signal from rank-1
-		MPI_Recv (&isignal, 1, MPI_INT, rank-1, rank-1, MPI_COMM_WORLD, &Stat);
-		if (isignal == 0) {
-			// recieved signal, read
-			check = read_xml (xml_filename, nprocs, rank, sys);
-			check2 = read_interactions (energy_filename, sys);
-			check_sum = check+check2;
-			
-			// signal finished to next processor in line
-			if (rank+1 < nprocs) {
-				MPI_Send (&check_sum, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
-			}
-		} else {
-			check_sum = isignal;
-			if (rank+1 < nprocs) {
-				MPI_Send (&isignal, 1, MPI_INT, rank+1, rank, MPI_COMM_WORLD);
-			}
-		}
-	}
-	
-	MPI_Barrier (MPI_COMM_WORLD);
-	return check_sum;
-}
-
-/*!
  Parse an XML file to obtain atom information. Initializes a System object but only stores
  information that belongs to this processor rank according to domain decomposition.
  If a value is specified multiple times, only the first occurence of the same will be used
