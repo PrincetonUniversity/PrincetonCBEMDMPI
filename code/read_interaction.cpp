@@ -92,9 +92,9 @@ int read_interactions (const string filename, System *sys) {
 	// find total number of atoms
 	int total_atoms = sys->global_atom_types.size();
 
-	// resize interact_
+	// resize interact
 	try {
-		sys->interact_.resize(total_atoms);
+		sys->interact.resize(total_atoms);
 	}
 	catch (bad_alloc& ba) {
 		sprintf(err_msg, "Out of memory");
@@ -103,7 +103,7 @@ int read_interactions (const string filename, System *sys) {
 	}
 	for (int i = 0; i < total_atoms; ++i) {
 		try {
-			sys->interact_[i].resize(total_atoms);
+			sys->interact[i].resize(total_atoms);
 		}
 		catch (bad_alloc& ba) {
 			sprintf(err_msg, "Out of memory");
@@ -112,7 +112,7 @@ int read_interactions (const string filename, System *sys) {
 		}
 	}
 	
-	// initialize interact_ with specified pair potentials
+	// initialize interact with specified pair potentials
 	for (int i = 0; i < total_atoms; ++i) {
 		for (int j = 0; j < i; ++j) {
 			pair <string, string> a_pair;
@@ -131,12 +131,12 @@ int read_interactions (const string filename, System *sys) {
 				}		
 			}
 					     
-			sys->interact_[i][j] = inters_PPOT[index];
-			sys->interact_[j][i] = inters_PPOT[index];
+			sys->interact[i][j] = inters_PPOT[index];
+			sys->interact[j][i] = inters_PPOT[index];
 		}
 	}
 
-	// go through bonded atoms and change their interaction in interact_
+	// go through bonded atoms and change their interaction in interact
 	for (int i = 0; i < sys->nbonds(); ++i) {
 		string b_type = sys->bond_name(sys->get_bond_type(i));
 		int b_index = sys->bond_type(b_type);
@@ -153,11 +153,11 @@ int read_interactions (const string filename, System *sys) {
 			return FILE_ERROR;
 		}
 		
-		// add interaction to interact_
+		// add interaction to interact
 		// symmetric
 		const pair <int, int> b_pair = sys->get_bond(i);
-		sys->interact_[b_pair.first][b_pair.second] = inters_BOND[index];
-		sys->interact_[b_pair.second][b_pair.first] = inters_BOND[index];
+		sys->interact[b_pair.first][b_pair.second] = inters_BOND[index];
+		sys->interact[b_pair.second][b_pair.first] = inters_BOND[index];
 	}
 
 	sprintf(err_msg, "Successfully read energy parameters from %s on rank %d", filename_cstr, rank);

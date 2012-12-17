@@ -185,26 +185,32 @@ namespace integrator {
 	int run (System *sys, Integrator *integrator, const int timesteps) {
 		// The way this function is written it can be easily interpreted by SWIG with python!
 		int check = 0, nprocs, rank;
-		char err_msg[MYERR_FLAG_SIZE]; //!< Error message buffer commonly used in routines in this namespace
+		char err_msg[MYERR_FLAG_SIZE];
   
 		MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
 		MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 		
 		// before starting, need to check that all requisite variables are set
-  
-		
+		/*for (int i = 0; i < sys->total_atoms(); ++i) {
+			for (int j = 0; j < sys->total_atoms(); ++j) {
+				if (sys->interact[i][j] == NULL) {
+					sprintf(err_msg, "Interaction not set between atoms (%d, %d)", i+1, j+1);
+					flag_error (err_msg, __FILE__, __LINE__);
+					return ILLEGAL_VALUE;
+				}
+			}
+		}*/
+
 		// execute loops
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
 			// calc_force
-                        check = force_calc(sys);
-                        if (check != 0) {
-                                sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
-                                flag_error (err_msg, __FILE__, __LINE__);
-                                return check;
-                        }
-			
-			
+			check = force_calc(sys);
+			if (check != 0) {
+				sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
+				flag_error (err_msg, __FILE__, __LINE__);
+				return check;
+			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			
 			// step forward
@@ -220,6 +226,7 @@ namespace integrator {
 			
 			MPI_Barrier(MPI_COMM_WORLD);
 		}
+		
 	return 0;
 	}
 
