@@ -6,7 +6,7 @@
 #include "interaction.h"
 
 // define new slj etc. functions here
-void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
+/*void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 	double delta_=1., rcut=1., sigma_=0.1, epsilon_=0.1;
 	// compute min image distance
 	double xyz[3];
@@ -23,150 +23,105 @@ void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 			atom2->force[i] += val;
 		}
 	}
-}
+}*/
 
 //! Shifted Lennard-Jones Force
 /*!
- This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
+ This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries. The energy U(r) is returned:
  \f{eqnarray*}{
  U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift}
  \f}
- Returns 
+ Forces are stored on atoms: 
  \f[
  F_i = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r}
  \f]
- The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
- \param [in] r2 Minimum image distance squared between atoms
- \param [in] \*xyz The minimum image vector from a1 to a2
- \param [in] \*args Vector of arguments <epsilon, sigma, delta>
- */
-//! Shifted Lennard-Jones Energy
-/*!
- This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
- \f{eqnarray*}{
- U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} 
- \f}
- \param [in] r2 Minimum image distance squared between atoms
- \param [in] \*xyz The minimum image vector from a1 to a2
- \param [in] \*args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut2_>
+ \param [in,out] \*atom1 Pointer to first atom
+ \param [in,out] \*atom2 Pointer to second atom
+ \param [in] \*box Pointer to vector of box size
+ \param [in] \*args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut^2>
  */
 double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <double> *args) {
 	// compute min image distance
 	double xyz[3];
 	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
 	if (d2 < args->at(4)) {
-		double delta_=args->at(2), sigma_=args->at(1), epsilon_=args->at(0);
-		double r = sqrt(d2), x = r - delta_;
-		vector <double> force_vec(3,0.0);
-	
-		double b = 1.0/x, a = sigma_*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
-		factor = 24.0*epsilon_*a6*(2.0*a6-1.0)*b/r;
+		double delta=args->at(2), sigma=args->at(1), epsilon=args->at(0);
+		double r = sqrt(d2), x = r - delta;	
+		double b = 1.0/x, a = sigma*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
+		factor = 24.0*epsilon*a6*(2.0*a6-1.0)*b/r;
+		// The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
 		for (int i = 0; i < 3; ++i) {
 			val = xyz[i]*factor;
 			atom1->force[i] -= val;
 			atom2->force[i] += val;
 		}
-		return 4.0*epsilon_*(a6*a6-a6)+args->at(3);
+		return 4.0*epsilon*(a6*a6-a6)+args->at(3);
 	} else {
 		return 0.0;
 	}
 }
 
-double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
-	return 0.0;
-	
-}
-
-double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
-	return 0.0;
-	
-}
-
-double Interaction::force_energy (Atom *atom1, Atom *atom2, const vector <double> *box) {
-	return my_force_energy_ (atom1, atom2, box, &energy_args_);
-}
-
+//! Harmonic Bond
 /*!
- \param [in] \*a1 Pointer to atom 1
- \param [in] \*a2 Pointer to atom 2
- \param [in] \*box Pointer to vector of cartesian box size
-*/
-/*
-vector <double> Interaction::force (const Atom *a1, const Atom *a2, const vector <double> *box) {
-	// compute min image distance
-	double xyz[3];
-	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	if (d2 < rcut2_) {
-		return my_force_ (d2, xyz, &force_args_);
-	} else {
-		vector <double> noforce(3,0.0);
-		return noforce;
-	}
-}
-*/
-
-/*!
- \param [in] \*a1 Pointer to atom 1
- \param [in] \*a2 Pointer to atom 2
- \param [in] \*box Pointer to vector of cartesian box size
- */
-/*
-double Interaction::energy (const Atom *a1, const Atom *a2, const vector <double> *box) {
-	// compute min image distance
-	double xyz[3];
-	double d2 = min_image_dist2 (a1, a2, box, xyz);
-	if (d2 < rcut2_) {
-		return my_energy_ (d2, xyz, &energy_args_);
-	} else {
-		return 0.0;
-	}
-}
-*/
-
-//! Shifted Lennard-Jones Force
-/*!
- This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
- \f{eqnarray*}{
- U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift}
- \f}
- Returns 
+ The Harmonic bond potential is given by:
  \f[
- F_i = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r}
+ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2
  \f]
- The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
- \param [in] r2 Minimum image distance squared between atoms
- \param [in] \*xyz The minimum image vector from a1 to a2
- \param [in] \*args Vector of arguments <epsilon, sigma, delta>
+ \param [in,out] \*atom1 Pointer to first atom
+ \param [in,out] \*atom2 Pointer to second atom
+ \param [in] \*box Pointer to vector of box size
+ \param [in] \*args Vector of arguments <k, r0>
  */
-vector<double> slj_force (const double r2, const double *xyz, const vector <double> *args) {
-	double r = sqrt(r2), x = r - args->at(2);
-	vector <double> force_vec(3,0.0);
-	
-	// checking if r < rcut is done beforehand so do not need it here
-	double b = 1.0/x, a = args->at(1)*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
-	factor = 24.0*args->at(0)*a6*(2.0*a6-1.0)*b/r;
+double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
+	double xyz[3];
+	double d2 = min_image_dist2 ((const Atom *) a1, (const Atom *) a2, box, xyz);
+	double d1 = sqrt(d2), factor = args->at(0)*(args->at(1)/d1-1.0);
 	for (int i = 0; i < 3; ++i) {
-		force_vec[i] = xyz[i]*factor;
+		a1->force[i] -= xyz[i]*factor;
+		a2->force[i] += xyz[i]*factor;
 	}
-	return force_vec;
+	return 0.5*args->at(1)*(d1-args->at(0))*(d1-args->at(0));
 }
 
-//! Shifted Lennard-Jones Energy
+//! Finitely Extensible Non-linear Elastic Bond
 /*!
- This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries.
+ The Fene bond potential is given by:
+ \f[
+ U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA}
+ \f]
+ Where the short range repulsion is provided by the WCA potential:
  \f{eqnarray*}{
- U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} 
+ U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) & r < 2^{1/6}\sigma+\Delta \\
+ &=& 0 &r \ge 2^{1/6}\sigma+\Delta
  \f}
- \param [in] r2 Minimum image distance squared between atoms
- \param [in] \*xyz The minimum image vector from a1 to a2
- \param [in] \*args Vector of arguments <epsilon, sigma, delta, U_{shift}>
+ \param [in,out] \*atom1 Pointer to first atom
+ \param [in,out] \*atom2 Pointer to second atom
+ \param [in] \*box Pointer to vector of box size
+ \param [in] \*args Vector of arguments <epsilon, sigma, delta, k, r0>
  */
-double slj_energy (const double r2, const double *xyz, const vector <double> *args) {
-	double r = sqrt(r2), x = r - args->at(2);
+double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
+	double xyz[3];
+	double d2 = min_image_dist2 ((const Atom *) a1, (const Atom *) a2, box, xyz);
+	double d1 = sqrt(d2), d1shift = d1 - args->at(2);
+	double factor = d1shift/(d1shift/args->at(4)*d1shift/args->at(4)-1.0)/d1, energy = 0.0;
 	
-	// checking if r < rcut is done beforehand so do not need it here
-	double a = args->at(1)/x, a2 = a*a, a6 = a2*a2*a2;
-	return 4.0*args->at(0)*(a6*a6-a6)+args->at(3);
+	// compute logarithmic portion
+	for (int i = 0; i < 3; ++i) {
+		a1->force[i] -= xyz[i]*factor;
+		a2->force[i] += xyz[i]*factor;
+	}
+	energy = -0.5*args->at(3)*args->at(4)*args->at(4)*log(1.0-d1shift/args->at(4)*d1shift/args->at(4));
+	
+	if (d1shift < WCA_CUTOFF*args->at(1)) {
+		// use WCA portion of the potential
+		double factor1 = (args->at(1)/d1shift), d2 = factor1*factor1, d6 = d2*d2*d2;
+		double factor2 = 24.0/d1shift*args->at(0)*d6*(2.0*d6-1.0)/d1;
+		for (int i = 0; i < 3; ++i) {
+			a1->force[i] -= xyz[i]*factor;
+			a2->force[i] += xyz[i]*factor;
+		}
+		energy += (4.0*args->at(0)*d6*(d6-1.0)+args->at(0));
+	} 
+	
+	return energy;
 }
-
-

@@ -79,7 +79,7 @@ int read_interactions (const string filename, System *sys) {
 			interaction.set_args(force_args);
 			
 			inters_BOND.push_back(interaction);
-		}
+		} 
 		else {
 			sprintf(err_msg, "Unrecognized keyword %s", fields[0].c_str());
 			flag_error (err_msg, __FILE__, __LINE__);

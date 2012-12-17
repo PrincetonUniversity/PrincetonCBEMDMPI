@@ -37,10 +37,8 @@ int main (int argc, char *argv[]) {
 		return ILLEGAL_VALUE;
 	}
 	
-	// in the future "initialize_from_files" will take care of this line too
+	// set integrator
 	Integrator *myint = new Verlet (dt);
-
-	// set time step
 	myint->set_dt(dt);
 	
 	check = start_mpi (argc, argv);
