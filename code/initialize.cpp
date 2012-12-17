@@ -67,7 +67,7 @@ int start_mpi (int argc, char *argv[]) {
 	// set up MPI
 	int rc = MPI_Init(&argc, &argv);
 	if (rc != MPI_SUCCESS) {
-		printf ("Error starting MPI. Terminating.\n");
+		fprintf (stderr, "Error starting MPI. Terminating.\n");
 		MPI_Abort(MPI_COMM_WORLD, rc);
 		return MPI_FAIL;
 	}
