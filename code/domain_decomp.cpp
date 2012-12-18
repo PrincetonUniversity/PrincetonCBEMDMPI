@@ -59,6 +59,9 @@ vector <int> factorize (const int nprocs) {
 	    i++;
 	}
     }
+    if (factors.size() == 0) {
+	factors.push_back(1);
+    }
     return factors;
 } // factorize ends
 
