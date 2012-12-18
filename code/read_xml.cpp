@@ -248,8 +248,6 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		fclose(input);
 		return FILE_ERROR;
 	}
-	sprintf(err_msg, "Read atom masses from %s on rank %d", filename_cstr, rank);
-	flag_notify (err_msg, __FILE__, __LINE__);
 	
 	// read sizes (diameters)
 	rewind(input);
@@ -358,7 +356,7 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}
 	if (check != 1) {
-		sprintf(err_msg, "No bonds found in %s on rank %d", filename_cstr, rank);
+		sprintf(err_msg, "No bond information found in %s on rank %d", filename_cstr, rank);
 		flag_error (err_msg, __FILE__, __LINE__);
 		fclose(input);
 		return FILE_ERROR;
@@ -372,6 +370,8 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	sys->add_atoms(atom_belongs.size(), atom_array);
 	sys->set_num_atoms(atom_belongs.size());
 	
+	sprintf(err_msg, "Successfully read coordinates from %s on rank %d", filename_cstr, rank);
+	flag_notify (err_msg, __FILE__, __LINE__);
 	return 0;
 }
 

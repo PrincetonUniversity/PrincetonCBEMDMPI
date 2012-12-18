@@ -127,7 +127,7 @@ namespace sim_system {
 	int System::add_bond_type (const string bond_name) {
 		if (bond_name.size() == 0) return -1;
 		if (bond_type_.find(bond_name) == bond_type_.end()) {
-			int size = bond_name.size();
+			int size = bond_type_.size();
 			bond_type_[bond_name] = size;
 			return 0;
 		} else {

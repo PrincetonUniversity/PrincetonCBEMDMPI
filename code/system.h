@@ -64,7 +64,7 @@ namespace sim_system {
 		int send_list_size[26], get_list_size[26];
 		vector< vector<Atom> > get_lists;
 		
-		vector <vector <Interaction> > interact_;               //!< Interaction matrix between atoms indexed by global id's (symetric)
+		vector <vector <Interaction> > interact;               //!< Interaction matrix between atoms indexed by global id's (symetric)
 
 		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
@@ -86,7 +86,7 @@ namespace sim_system {
 	};
 	
 	//! Read atom coordinates and properties from a file (xml)
-	int read_xml (const string filename, const int nprocs, System *new_systems);			
+	//int read_xml (const string filename, const int nprocs, System *new_systems);			
 }
 
 #endif
