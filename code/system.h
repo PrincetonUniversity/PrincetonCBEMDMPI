@@ -64,9 +64,11 @@ namespace sim_system {
 		vector< vector<Atom> > get_lists;
 		
 		vector <vector <Interaction> > interact;               //!< Interaction matrix between atoms indexed by global id's (symetric)
-
 		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
+		double set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
+		double max_rcut () const {return max_rcut_;}
+		
 	private:
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
@@ -81,6 +83,7 @@ namespace sim_system {
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;
 		int num_atoms_;									//!< The number of atoms the processor is responsible for
+		double max_rcut_;								//!< Max cutoff radius for all interactions used in the system
 	};
 	
 	//! Read atom coordinates and properties from a file (xml)

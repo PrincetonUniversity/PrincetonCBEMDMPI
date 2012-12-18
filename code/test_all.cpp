@@ -250,6 +250,8 @@ TEST (DomainDecompTest, ThreeFactorLongBox3) {
     EXPECT_EQ (1, final_breakup[1]);
     EXPECT_EQ (3, final_breakup[2]);    
 }
+			   			   
+
 
 int main (int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
