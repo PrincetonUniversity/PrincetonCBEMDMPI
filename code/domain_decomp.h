@@ -20,9 +20,6 @@ int get_processor (const vector<double> pos, const double widths[], const vector
 //! Given the x, y, z ids of a domain, determines the domain id (useful for locating neighbouring domains)
 int get_processor_id (const int x_id, const int y_id, const int z_id, const vector<int>& final_breakup);
 
-//! Generates the x,y,z ids for each processor and the absolute extents of the domain
-int gen_domain_info (System *sys, const double widths[], const vector<int>& final_breakup, const int rank);
-
 //! Given a domain_id specifies the x, y, z ids of the domain
 int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_id[]);
 

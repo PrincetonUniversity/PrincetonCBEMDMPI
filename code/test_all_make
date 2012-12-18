@@ -2,7 +2,7 @@ LDFLAGS = -lm
 
 MPICXX=mpic++
 
-MPICXXFLAGS = -O3 -lstdc++ -Wno-deprecated -g
+MPICXXFLAGS = -O3 -Wno-deprecated -g
 
 GTEST_HEADERS = ../gtest-1.6.0/include/gtest/*.h \
 	      ../gtest-1.6.0/include/gtest/internal/*.h
@@ -11,7 +11,7 @@ GTESTFLAGS = -I../gtest-1.6.0/include -lpthread
 
 all : test_all
 
-test_all : test_all.o system.o integrator.o domain_decomp.o misc.o interaction.o atom.o ../gtest-1.6.0/make/gtest_main.a
+test_all : test_all.o force_calc.o system.o integrator.o domain_decomp.o misc.o interaction.o atom.o ../gtest-1.6.0/make/gtest_main.a
 	$(MPICXX) $(MPICXXFLAGS) $(GTESTFLAGS) -o $@ $^
 
 test_all.o : test_all.cpp $(GTEST_HEADERS)

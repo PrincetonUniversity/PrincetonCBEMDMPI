@@ -51,7 +51,9 @@ namespace sim_system {
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
+		void set_rank (int rank) {rank_ = rank;}
 		void set_num_atoms (int size) {num_atoms_ = size;}
+		int gen_domain_info ();
 		void clear_ghost_atoms ();
 		
 		double proc_widths[3];									//!< Width for domain decomposition
@@ -70,6 +72,7 @@ namespace sim_system {
 		double max_rcut () const {return max_rcut_;}
 		
 	private:
+		int rank_; //!< rank of the processor this domain is on
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
 		double KE_, U_;									//!< Total internal kinetic energy and potential energy

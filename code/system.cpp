@@ -12,6 +12,7 @@ namespace sim_system {
 	System::System() {
 	    send_lists.reserve(26);
 	    get_lists.reserve(26);
+	    num_atoms_ = 0;
 		try {
 			box_.resize(3,-1);
 		}
@@ -83,6 +84,7 @@ namespace sim_system {
 			update_proc[i] = new_atoms[i].sys_index;
 			index++;
 		}
+		num_atoms_ += natoms; 
 
 		return update_proc;
 	}
@@ -228,5 +230,32 @@ namespace sim_system {
 		cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
 		return;
     }
+	
+    //! Generates the x,y,z ids for each processor and the absolute extents of the domain
+    int System::gen_domain_info () {
+
+	int domain_id;
+	for (int x_id=0; x_id<final_proc_breakup[0]; x_id++) {
+	    for (int y_id=0; y_id<final_proc_breakup[1]; y_id++) {
+		for (int z_id=0; z_id<final_proc_breakup[2]; z_id++) {
+		    domain_id = x_id + y_id*final_proc_breakup[0] + z_id*final_proc_breakup[0]*final_proc_breakup[1];
+		    if (domain_id == rank_) {
+			xyz_id[0] = x_id;
+			xyz_id[1] = y_id;
+			xyz_id[2] = z_id;
+			xyz_limits[0][0] = x_id*proc_widths[0];
+			xyz_limits[0][1] = (x_id+1)*proc_widths[0];
+			xyz_limits[1][0] = y_id*proc_widths[1];
+			xyz_limits[1][1] = (y_id+1)*proc_widths[1];
+			xyz_limits[2][0] = z_id*proc_widths[2];
+			xyz_limits[2][1] = (z_id+1)*proc_widths[2];
+			return 0;
+		    }
+		}
+	    }
+	}
+	return 1;
+    } // gen_domain_info ends
+
 }		      
 
