@@ -14,7 +14,11 @@
  \param [in] rank Rank of this process.
  \param [in,out] \*sys System object to store its information at.
  */
-int read_xml (const string filename, const int nprocs, const int rank, System *sys) {
+int read_xml (const string filename, System *sys) {
+	int nprocs, rank;
+	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
+	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
+	
 	const char *filename_cstr=filename.c_str();
 	char err_msg[MYERR_FLAG_SIZE];
 	FILE *input = mfopen(filename_cstr, "r");
@@ -113,6 +117,13 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 		}
 	}
 	sys->set_box(box);
+	check = init_domain_decomp (box, nprocs, sys->proc_widths, sys->final_proc_breakup);
+	if (check != 0) {
+		sprintf(err_msg, "Failed to initialize domain decomposition");
+		flag_error (err_msg, __FILE__, __LINE__);
+		fclose (input);
+		return ILLEGAL_VALUE;
+	}
 	
 	// also read bonds now
 	rewind(input);
