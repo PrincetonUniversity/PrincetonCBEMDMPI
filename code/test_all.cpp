@@ -41,6 +41,8 @@ protected:
         atom1.type = 1;
         Atom atom_array [] = {atom0, atom1};
         sys.add_atoms(2, atom_array);
+	sys.set_num_atoms(2);
+	sys.final_proc_breakup.reserve(3);
 	for (int i=0; i<3; i++) {
 	    sys.proc_widths[i] = 1;
 	    sys.final_proc_breakup[i] = i+3;
@@ -50,29 +52,61 @@ protected:
     System sys;
 };
 
-class TwoBodyTest : public ::testing::Test {
+class ManyBodyTest : public ::testing::Test {
 protected:
-    /* Generates a 2 atom system */
+    /* Generates a many atom system */
     virtual void SetUp () {
-	double box[3]={3.0, 4.0, 5.0};
+	double box_dims[3]={3.0, 4.0, 5.0};
 	vector<double> box(3);
-	box.assign(
+	box.assign(box_dims, box_dims+3);
 	sys.set_box(box);
-	
+	// Add a bunch of random atoms
+	for (int i=0; i<3; i++) {
+	    for (int j=0; j<4; j++) {
+		for (int k=0; k<5; k++) {
+		    Atom* atom_ptr = new Atom;
+		    int vals[3]={i, j, k};
+		    for (int m=0; m<3; m++) {
+			atom_ptr->pos[m] = (vals[m]+0.5)*box[m]/6.0;
+			atom_ptr->vel[m] = 0.0;
+			atom_ptr->force[m] = 0.0;
+			atom_ptr->mass = 1.0;
+			atom_ptr->type = 1.0;
+		    }
+		    int* temp = sys.add_atoms(1, atom_ptr);
+		    delete atom_ptr;
+		}
+	    }
+	}
+	sys.final_proc_breakup.reserve(3);
+	for (int i=0; i<3; i++) {
+	    sys.proc_widths[i] = 1.0;
+	    sys.final_proc_breakup[i] = i+3.0;
+	}
+	sys.set_num_atoms(3*4*5);
     }
+
+    System sys;
 };
 
 TEST_F (ManyBodyTest, SendTableTest) {
-    int status;
+    int status=3;
+    status = gen_domain_info (&sys, sys.proc_widths, sys.final_proc_breakup, 7);
+    ASSERT_EQ (0.0, status);
+    EXPECT_EQ (1.0, sys.xyz_id[0]);
+    EXPECT_EQ (2.0, sys.xyz_id[1]);
+    EXPECT_EQ (0.0, sys.xyz_id[2]);
     status = gen_send_table (&sys);
-    ASSERT_EQ (1.0, status);
+    ASSERT_EQ (0.0, status);
 }
 
 TEST_F (TwoBodyTest, VerletNoForces) {
     Verlet integ_obj (0.1);
+    int status;
     for (int i=0; i<10; i++) {
-	integ_obj.step(&sys);
+	status = integ_obj.step(&sys);
     }
+    ASSERT_EQ (0.0, status);
     EXPECT_DOUBLE_EQ (3.0, sys.get_atom(0)->pos[0]);
     EXPECT_DOUBLE_EQ (5.0, sys.get_atom(0)->pos[1]);
     EXPECT_DOUBLE_EQ (7.0, sys.get_atom(0)->pos[2]);
