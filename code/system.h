@@ -51,6 +51,7 @@ namespace sim_system {
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
+		void set_rank (int rank) {rank_ = rank;}
 		void set_num_atoms (int size) {num_atoms_ = size;}
 		int gen_domain_info ();
 		void clear_ghost_atoms ();
@@ -65,9 +66,11 @@ namespace sim_system {
 		vector< vector<Atom> > get_lists;
 		
 		vector <vector <Interaction> > interact;               //!< Interaction matrix between atoms indexed by global id's (symetric)
-
 		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
+		double set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
+		double max_rcut () const {return max_rcut_;}
+		
 	private:
 		int rank_; //!< rank of the processor this domain is on
 		double Temp_;									//!< System temperature in reduced units (kT)
@@ -83,6 +86,7 @@ namespace sim_system {
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;
 		int num_atoms_;									//!< The number of atoms the processor is responsible for
+		double max_rcut_;								//!< Max cutoff radius for all interactions used in the system
 	};
 	
 	//! Read atom coordinates and properties from a file (xml)

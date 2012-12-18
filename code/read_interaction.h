@@ -18,7 +18,6 @@ using namespace atom;
 using namespace boost::algorithm;
 
 int read_interactions(const string filename, System *sys);
-
-force_energy_ptr get_fn(const string name);
+force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_max);
 
 #endif

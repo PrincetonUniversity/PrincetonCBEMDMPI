@@ -47,9 +47,11 @@ protected:
 	sys.set_num_atoms(2);
 	sys.final_proc_breakup.reserve(3);
 	for (int i=0; i<3; i++) {
-	    sys.proc_widths[i] = 1;
 	    sys.final_proc_breakup[i] = i+3;
 	}
+	sys.proc_widths[0] = 10.0/3;
+	sys.proc_widths[1] = 2.5;
+	sys.proc_widths[2] = 2.0;
     }
 
     System sys;
@@ -87,6 +89,7 @@ protected:
 	    sys.final_proc_breakup[i] = i+3.0;
 	}
 	sys.set_num_atoms(3*4*5);
+	sys.set_rank(7);
     }
 
     System sys;
@@ -94,7 +97,7 @@ protected:
 
 TEST_F (ManyBodyTest, SendTableTest) {
     int status=3;
-    status = gen_domain_info (&sys, sys.proc_widths, sys.final_proc_breakup, 7);
+    status = sys.gen_domain_info ();
     ASSERT_EQ (0.0, status);
     EXPECT_EQ (1.0, sys.xyz_id[0]);
     EXPECT_EQ (2.0, sys.xyz_id[1]);
@@ -116,6 +119,23 @@ TEST_F (TwoBodyTest, VerletNoForces) {
     EXPECT_DOUBLE_EQ (1.1, sys.get_atom(1)->pos[0]);
     EXPECT_DOUBLE_EQ (2.2, sys.get_atom(1)->pos[1]);
     EXPECT_DOUBLE_EQ (3.3, sys.get_atom(1)->pos[2]);
+}
+
+TEST_F (TwoBodyTest, GetProcessorTest) {
+    vector<double> pos;
+    int proc;
+    for (int i=1; i<=3; i++) {
+	for (int j=1; j<=4; j++) {
+	    for (int k=1; k<=5; k++) {
+		pos.clear();
+		pos.push_back(1+(i-1)*3.33);
+		pos.push_back(1+(j-1)*2.5);
+		pos.push_back(1+(k-1)*2);
+		proc = get_processor (pos, sys.proc_widths, sys.final_proc_breakup);
+		EXPECT_EQ ((i-1)+3*(j-1)+12*(k-1), proc);
+	    }
+	}
+    }
 }
 
 TEST_F (TwoBodyTest, VerletNoInitVelocity) {
@@ -287,6 +307,8 @@ TEST (DomainDecompTest, ThreeFactorLongBox3) {
     EXPECT_EQ (1, final_breakup[1]);
     EXPECT_EQ (3, final_breakup[2]);    
 }
+			   			   
+
 
 // the following use mpi in the tests
 TEST (ReadXMLTest, AtomPositions) {

@@ -225,12 +225,12 @@ namespace sim_system {
 
     //! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
     void System::clear_ghost_atoms () {
-	cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-	atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
-	cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-	return;
+		cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+		atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
+		cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+		return;
     }
-
+	
     //! Generates the x,y,z ids for each processor and the absolute extents of the domain
     int System::gen_domain_info () {
 

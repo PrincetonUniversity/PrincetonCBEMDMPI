@@ -18,20 +18,15 @@
 int initialize_from_files (const string xml_filename, const string energy_filename, System *sys) {
 	int iread = 1, isignal, check, check2, check_sum, nprocs, rank;
 	MPI_Status Stat;
-	vector <double> box = sys->box();
-	
+
 	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
-	
-	// do domain decomposition before initialization
-	check = init_domain_decomp (box, nprocs, sys->proc_widths, sys->final_proc_breakup);
-	
 	MPI_Barrier (MPI_COMM_WORLD);
 	
 	// Cascade of reading statements
 	if (rank == 0) {
 		// read first, then signal next
-		check = read_xml (xml_filename, nprocs, rank, sys);
+		check = read_xml (xml_filename, sys);
 		check2 = read_interactions (energy_filename, sys);
 		check_sum = check+check2;
 		
@@ -43,7 +38,7 @@ int initialize_from_files (const string xml_filename, const string energy_filena
 		MPI_Recv (&isignal, 1, MPI_INT, rank-1, rank-1, MPI_COMM_WORLD, &Stat);
 		if (isignal == 0) {
 			// recieved signal, read
-			check = read_xml (xml_filename, nprocs, rank, sys);
+			check = read_xml (xml_filename, sys);
 			check2 = read_interactions (energy_filename, sys);
 			check_sum = check+check2;
 			
