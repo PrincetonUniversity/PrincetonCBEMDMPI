@@ -52,6 +52,7 @@ namespace sim_system {
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
 		void set_num_atoms (int size) {num_atoms_ = size;}
+		int gen_domain_info ();
 		void clear_ghost_atoms ();
 		
 		double proc_widths[3];									//!< Width for domain decomposition
@@ -68,6 +69,7 @@ namespace sim_system {
 		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
 	private:
+		int rank_; //!< rank of the processor this domain is on
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
 		double KE_, U_;									//!< Total internal kinetic energy and potential energy
