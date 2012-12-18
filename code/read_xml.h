@@ -24,6 +24,6 @@ using namespace atom;
 using namespace boost::algorithm;
 
 int read_xml (const string filename, const int nprocs, const int rank, System *sys);
-int print_xml (const string filename, const int nprocs, const int rank, const System *sys);
+int print_xml (const string filename, const System *sys);
 
 #endif

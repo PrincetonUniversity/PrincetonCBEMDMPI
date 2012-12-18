@@ -58,7 +58,7 @@ int main (int argc, char *argv[]) {
 	run (&mysys, myint, nsteps);
 	
 	// print
-	print_xml("outfile.xml", nprocs, rank, &mysys);*/
+	print_xml("outfile.xml", &mysys);*/
 			  
 	// finish
 finalize:

@@ -156,7 +156,6 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 	rewind(input);
 	check = 0;
 	vector <int> atom_belongs;
-	vector <double> tmp_pos(3);
 	int processor;
 	while (fgets(buff, buffsize, input) != NULL) {
 		if (strstr(buff, "position") != NULL) {
@@ -170,13 +169,16 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
 					return FILE_ERROR;
 				}
 				for (int j = 0; j < 3; ++j) {
-					// hoomd format places box at origin, we normalize corner to 0,0,0
+					if (atom_coords[j] < 0.0 || atom_coords[j] >= box[j]) {
+						sprintf(err_msg, "Atom index %d coordinates (%g,%g,%g) out of range", i, atom_coords[0], atom_coords[1], atom_coords[2]);
+						flag_error (err_msg, __FILE__, __LINE__);
+						return ILLEGAL_VALUE;
+					}
 					new_atoms[i].pos[j] = atom_coords[j];
-					tmp_pos[j] = atom_coords[j];
 				}
 				
 				// see if this atom belongs on this processor
-				processor = get_processor (tmp_pos, sys->proc_widths, sys->final_proc_breakup);
+				processor = get_processor (atom_coords, sys->proc_widths, sys->final_proc_breakup);
 				if (processor == rank) {
 					atom_belongs.push_back(i);
 				}
@@ -379,16 +381,17 @@ int read_xml (const string filename, const int nprocs, const int rank, System *s
  Print atom information to an xml file. Returns 0 if successful, -1 if failure. This only operates on the node it was called from when MPI is used, 
  the rest pause and are sequentially informed to send information as needed.
  \param [in] filename Name of file to open and read.
- \param [in] nprocs Number of processors total
- \param [in] rank Rank of process calling the routine
  \param [in,out] \*sys System object for the main node to stores its information at.
  */
-int print_xml (const string filename, const int nprocs, const int rank, const System *sys) {
+int print_xml (const string filename, const System *sys) {
     char err_msg[MYERR_FLAG_SIZE];
 	MPI_Status Stat;
 	Atom *atom_vec;
+	int status = 0, rank, nprocs;
+	
+	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
+	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 	MPI_Barrier (MPI_COMM_WORLD);
-	int status = 0;
 	
 	if (rank == 0) {
 		sprintf(err_msg, "Printing configuration to %s", filename.c_str());
@@ -411,7 +414,7 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		i_need_to_print = 1;
 		MPI_Request send_reqs[nprocs-1], recv_reqs[nprocs-1], recv_reqs2[nprocs-1];
 		MPI_Status worker_stats[nprocs-1], worker_stats2[nprocs-1];
-		
+
 		for (int i = 1; i < nprocs; ++i) {
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &send_reqs[i-1]);
 			MPI_Irecv (&worker_atoms[i-1], 1, MPI_INT, i, i, MPI_COMM_WORLD, &recv_reqs[i-1]);
@@ -419,7 +422,7 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs, worker_stats);
 		}
-		
+
 		int tot_atoms = sys->natoms();
 		Atom** system_atoms;
 		if (nprocs > 1) {
@@ -437,12 +440,13 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		for (int i = 1; i < nprocs; ++i) {
 			MPI_Irecv(&system_atoms[i-1], worker_atoms[i-1], MPI_ATOM, i, i, MPI_COMM_WORLD, &recv_reqs2[i-1]);
 		}
+
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
 		}
-		
+
 		// Now main node has all atoms, use pointers to print atoms in order
-		Atom *atom_ptr[tot_atoms];
+		vector <Atom *> atom_ptr(tot_atoms);
 		for (int i = 0; i < sys->natoms(); ++i) {
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
 		}
@@ -451,7 +455,7 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 				atom_ptr[system_atoms[i-1][j].sys_index] = &system_atoms[i-1][j];
 			}
 		}
-		
+
 		// print header
 		vector <double> box = sys->box(), npos(3);
 		fprintf(fp1, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<hoomd_xml version=\"1.4\">\n");
@@ -521,15 +525,16 @@ int print_xml (const string filename, const int nprocs, const int rank, const Sy
 		int print_flag, dummy, natoms = sys->natoms();
 		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 		if (print_flag == 1) {
-			MPI_Send (&natoms, 1, MPI_INT, rank, 0, MPI_COMM_WORLD);
+			MPI_Send (&natoms, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
 			MPI_Recv (&dummy, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 			atom_vec = new Atom[natoms]; 
-			MPI_Send (atom_vec, natoms, MPI_ATOM, rank, 0, MPI_COMM_WORLD);
+			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
 		} else {
 			status = -1;
 		}
 	}
-				  
+				 
+	printf("rank %d is ready to finish\n", rank);
     MPI_Barrier (MPI_COMM_WORLD);
 	if (rank > 0 && status == 0) {
 		delete [] atom_vec;
