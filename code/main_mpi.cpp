@@ -53,7 +53,7 @@ int main (int argc, char *argv[]) {
 	}
 	
 	// run
-	run (&mysys, myint, nsteps);
+	//run (&mysys, myint, nsteps);
 	
 	// print
 	print_xml("outfile.xml", &mysys);

@@ -187,7 +187,7 @@ int read_xml (const string filename, System *sys) {
 					}
 					new_atoms[i].pos[j] = atom_coords[j];
 				}
-				
+
 				// see if this atom belongs on this processor
 				processor = get_processor (atom_coords, sys->proc_widths, sys->final_proc_breakup);
 				if (processor == rank) {
@@ -377,6 +377,7 @@ int read_xml (const string filename, System *sys) {
 
 	// now add the atoms that belong to this domain to the System object
 	Atom atom_array[(const int)atom_belongs.size()];
+	printf("bs = %d\n", atom_belongs.size());
 	for (int i = 0; i < atom_belongs.size(); ++i) {
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
@@ -455,6 +456,10 @@ int print_xml (const string filename, const System *sys) {
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
 		}
+		
+		for (int i = 1; i < nprocs; ++i) {
+			printf("%d = %d\n", i, worker_atoms[i-1]);
+		}
 
 		// Now main node has all atoms, use pointers to print atoms in order
 		vector <Atom *> atom_ptr(tot_atoms);
@@ -474,9 +479,8 @@ int print_xml (const string filename, const System *sys) {
 		fprintf(fp1, "<position num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
 			npos = pbc (&atom_ptr[i]->pos[0], box);
-			// now shift for xml convention to have origin at center of box
 			for (int m = 0; m < 3; ++m) {
-				fprintf(fp1, "%12.12g\t", npos[m]-box[m]/2.0);
+				fprintf(fp1, "%12.12g\t", npos[m]);
 			}
 			fprintf(fp1, "\n");
 		}	
