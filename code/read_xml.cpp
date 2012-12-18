@@ -377,7 +377,6 @@ int read_xml (const string filename, System *sys) {
 
 	// now add the atoms that belong to this domain to the System object
 	Atom atom_array[(const int)atom_belongs.size()];
-	printf("bs = %d\n", atom_belongs.size());
 	for (int i = 0; i < atom_belongs.size(); ++i) {
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
@@ -390,7 +389,7 @@ int read_xml (const string filename, System *sys) {
 }
 
 /*!
- Print atom information to an xml file. Returns 0 if successful, -1 if failure. This only operates on the node it was called from when MPI is used, 
+ Print atom information to an xml file. Returns 0 if successful, non-zero if failure. This only operates on the master node when multiple processors are used, 
  the rest pause and are sequentially informed to send information as needed.
  \param [in] filename Name of file to open and read.
  \param [in,out] \*sys System object for the main node to stores its information at.
@@ -418,7 +417,7 @@ int print_xml (const string filename, const System *sys) {
 			return -1;
 		}
 		
-		// get atoms from workers
+		// get number of incoming atoms from workers
 		int worker_atoms[nprocs-1];
 		for (int i=0; i<nprocs-1; i++) {
 		    worker_atoms[i] = 0;
@@ -436,42 +435,41 @@ int print_xml (const string filename, const System *sys) {
 		}
 
 		int tot_atoms = sys->natoms();
-		Atom** system_atoms;
-		if (nprocs > 1) {
-		    system_atoms = new Atom* [nprocs-1];
-			for (int i = 0; i < nprocs-1; ++i) {
-			    system_atoms[i] = new Atom [worker_atoms[i]];
-			}
-		}
-		
+
+		// get memory "offsets" so we know where to store incoming atoms
+		vector <int> offsets (nprocs-1);
 		for (int i = 0; i < nprocs-1; ++i) {
 			tot_atoms += worker_atoms[i];
+			if (i > 0) {
+				offsets[i] = worker_atoms[i-1]+offsets[i-1];
+			} else {
+				offsets[i] = 0;
+			}
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
 		}
 		
-		for (int i = 1; i < nprocs; ++i) {
-			MPI_Irecv(&system_atoms[i-1], worker_atoms[i-1], MPI_ATOM, i, i, MPI_COMM_WORLD, &recv_reqs2[i-1]);
+		// allocate room for incoming atoms
+		Atom *system_atoms = new Atom[tot_atoms-sys->natoms()];
+		
+		for (int i = 0; i < nprocs-1; ++i) {
+			MPI_Irecv(&system_atoms[offsets[i]], worker_atoms[i], MPI_ATOM, i+1, i+1, MPI_COMM_WORLD, &recv_reqs2[i]);
 		}
 
 		if (nprocs > 1) {
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
 		}
-		
-		for (int i = 1; i < nprocs; ++i) {
-			printf("%d = %d\n", i, worker_atoms[i-1]);
-		}
 
-		// Now main node has all atoms, use pointers to print atoms in order
+		// now main node has all atoms, use pointers to print atoms in order
 		vector <Atom *> atom_ptr(tot_atoms);
 		for (int i = 0; i < sys->natoms(); ++i) {
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
 		}
-		for (int i = 1; i < nprocs; ++i) {
-			for (int j = 0; j < worker_atoms[i-1]; ++j) {
-				atom_ptr[system_atoms[i-1][j].sys_index] = &system_atoms[i-1][j];
-			}
-		}
 
+		int check = 0;
+		for (int i = 0; i < tot_atoms-sys->natoms(); ++i) {
+			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
+		}
+		
 		// print header
 		vector <double> box = sys->box(), npos(3);
 		fprintf(fp1, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<hoomd_xml version=\"1.4\">\n");
@@ -531,9 +529,6 @@ int print_xml (const string filename, const System *sys) {
 		fprintf(fp1, "</configuration>\n</hoomd_xml>");
 
 		if (nprocs > 1) {
-			for (int i = 0; i < nprocs-1; ++i) {
-				delete [] system_atoms[i];
-			}
 			delete [] system_atoms;
 		}
 	} else {
@@ -543,13 +538,17 @@ int print_xml (const string filename, const System *sys) {
 			MPI_Send (&natoms, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
 			MPI_Recv (&dummy, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 			atom_vec = new Atom[natoms]; 
+			for (int i = 0; i < natoms; ++i) {
+				atom_vec[i] = ((System *)sys)->copy_atom(i);
+			}
 			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
 		} else {
-			status = -1;
+			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			status = FILE_ERROR;
 		}
 	}
-				 
-	printf("rank %d is ready to finish\n", rank);
+
     MPI_Barrier (MPI_COMM_WORLD);
 	if (rank > 0 && status == 0) {
 		delete [] atom_vec;
