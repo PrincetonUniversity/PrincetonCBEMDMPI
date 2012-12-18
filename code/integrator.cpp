@@ -57,7 +57,7 @@ namespace integrator {
 		return 0;
 	}
 	
-	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain.
+	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.
 	int move_atoms (System *sys, const int rank, const int nprocs) {
 	    char err_msg[MYERR_FLAG_SIZE];
 	    //	    extern MPI_Datatype MPI_ATOM;
@@ -77,7 +77,7 @@ namespace integrator {
 		catch (bad_alloc& ba) {
 			sprintf(err_msg, "Couldn't allocate space for atom send list");
 			flag_error (err_msg, __FILE__, __LINE__);
-			return -1;
+			return BAD_MEM;
 		}
 		
 		// collect and enumerate number atoms that go to each processor
@@ -86,7 +86,12 @@ namespace integrator {
 			for (int j = 0; j < 3; ++j) {
 				pos[j] = sys->get_atom(i)->pos[j];
 			}
-			iproc = get_processor (pos, sys->proc_widths, sys->final_proc_breakup);
+			iproc = get_processor (pos, sys);
+			if (iproc < 0 || iproc >= nprocs) {
+				sprintf(err_msg, "Processor out of bounds for atom %d, coordinates = (%g, %g, %g)", sys->get_atom(i)->sys_index, pos[0], pos[1], pos[2]);
+				flag_error (err_msg, __FILE__, __LINE__);
+				return ILLEGAL_VALUE;
+			}
 			if (iproc != rank) {
 				nsend_atoms[iproc]++;
 				tot_send++;
@@ -190,22 +195,63 @@ namespace integrator {
 		MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
 		MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 		
-		// before starting, need to check that all requisite variables are set
-		/*for (int i = 0; i < sys->total_atoms(); ++i) {
-			for (int j = 0; j < sys->total_atoms(); ++j) {
-				if (sys->interact[i][j] == NULL) {
-					sprintf(err_msg, "Interaction not set between atoms (%d, %d)", i+1, j+1);
+		/* before starting, need to check that all requisite variables are set */
+		// check interactions have been properly set
+		if (sys->interact.size() == 0) {
+			sprintf(err_msg, "Interactions have not been set on rank", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE;
+		} else {
+			for (int i = 0; i < sys->interact.size(); ++i) {
+				if (sys->interact[i].size() != sys->interact.size()) {
+					sprintf(err_msg, "Interactions have not been fully set on rank", rank);
 					flag_error (err_msg, __FILE__, __LINE__);
 					return ILLEGAL_VALUE;
 				}
+				for (int j = 0; j < sys->interact.size(); ++j) {
+					if (sys->interact[i][j].check_force_energy_function() == NULL && i != j) {
+						sprintf(err_msg, "Interactions have not been fully set on rank", rank);
+						flag_error (err_msg, __FILE__, __LINE__);
+						return ILLEGAL_VALUE;
+					}
+				}
 			}
-		}*/
-
+		}
+		
+		// check their are some atoms in the system
+		if (sys->global_atom_types.size() < 1) {
+			sprintf(err_msg, "No atoms found in system");
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE;
+		}
+		
+		// check integrator has been set
+		if (integrator == NULL) {
+			sprintf(err_msg, "No integrator set on rank %d", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE;
+		}
+		
+		// check timesteps, dt > 0
+		if (integrator->dt() <= 0.0) {
+			sprintf(err_msg, "dt < 0 on rank %d", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE;
+		}
+		if (timesteps < 0) {
+			sprintf(err_msg, "Timsteps < 0 on rank %d", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE;
+		}
+		
 		// execute loops
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
 			// calc_force
 			check = force_calc(sys);
+			
+			printf("finished force_calc\n");
+			
 			if (check != 0) {
 				sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
 				flag_error (err_msg, __FILE__, __LINE__);
@@ -220,15 +266,23 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
+			printf("finished step\n");
 			
-			// move atoms as necessary
-			move_atoms (sys, rank, nprocs);
+			// check to move atoms if necessary
+			if (nprocs > 1) {
+				check = move_atoms (sys, rank, nprocs);
+				if (check != 0) {
+					sprintf(err_msg, "Couldn't move atoms from rank %d on step %d", rank, i+1);
+					flag_error (err_msg, __FILE__, __LINE__);
+					return check;
+				}
+			}
+			
+			printf("finished move_atoms\n");
 			
 			MPI_Barrier(MPI_COMM_WORLD);
 		}
 		
 	return 0;
 	}
-
-
 }

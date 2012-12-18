@@ -138,7 +138,7 @@ int read_interactions (const string filename, System *sys) {
 		}
 	}
 
-	// go through bonded atoms and change their interaction in interact
+	// go through bonded atoms and change their interaction to bonding potentials in interact
 	for (int i = 0; i < sys->nbonds(); ++i) {
 		string b_type = sys->bond_name(sys->get_bond_type(i));
 		int b_index = sys->bond_type(b_type);

@@ -93,13 +93,14 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
 } // init_domain_decomp ends
 
 //! Given the co-ordinates of a point, determines within which domain the point lies
-int get_processor (const vector<double> pos, const double widths[], const vector<int>& final_breakup) {
+int get_processor (const vector<double> pos, const System *sys) {
 
+	vector <double> inbox = pbc (pos, sys->box());
     int domain_id, x_id, y_id, z_id;
-    x_id = floor(pos.at(0)/widths[0]);
-    y_id = floor(pos.at(1)/widths[1]);
-    z_id = floor(pos.at(2)/widths[2]);
-    domain_id = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
+    x_id = floor(inbox[0]/sys->proc_widths[0]);
+    y_id = floor(inbox[1]/sys->proc_widths[1]);
+    z_id = floor(inbox[2]/sys->proc_widths[2]);
+    domain_id = x_id + y_id*sys->final_proc_breakup[0] + z_id*sys->final_proc_breakup[0]*sys->final_proc_breakup[1];
     return domain_id;
 }
 

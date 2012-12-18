@@ -18,6 +18,7 @@ int main (int argc, char *argv[]) {
 	// read nsteps and dt
 	char* str_ptr;
 	nsteps = strtol(argv[1], &str_ptr, 10);
+	dt = atof(argv[2]);
 	if (str_ptr == argv[1]) {
 	    fprintf(stderr, "No value was found for the number of steps. \n");
 	    return ILLEGAL_VALUE;
@@ -27,20 +28,10 @@ int main (int argc, char *argv[]) {
 	    fprintf(stdout, " Ignored characters : %s\n", str_ptr);
 	}
 
-	dt = atof(argv[2]);
-	if (nsteps < 0) {
-		fprintf (stderr, "Error nsteps < 0\n");
-		return ILLEGAL_VALUE;
-	}
-	if (dt < 0.0) {
-		fprintf (stderr, "Error dt < 0.0\n");
-		return ILLEGAL_VALUE;
-	}
-	
 	// set integrator
 	Integrator *myint = new Verlet (dt);
 	myint->set_dt(dt);
-	
+
 	check = start_mpi (argc, argv);
 	if (check != 0) {
 		goto finalize;
@@ -53,13 +44,19 @@ int main (int argc, char *argv[]) {
 	}
 	
 	// run
-	//run (&mysys, myint, nsteps);
+	check = run (&mysys, myint, nsteps);
+	if (check != 0) {
+		goto finalize;
+	}
 	
 	// print
 	print_xml("outfile.xml", &mysys);
 		  
 	// finish
-finalize:
 	end_mpi();
 	return SAFE_EXIT;
+	
+finalize:
+	abort_mpi();
+	return BAD_EXIT;
 }

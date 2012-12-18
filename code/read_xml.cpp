@@ -189,7 +189,7 @@ int read_xml (const string filename, System *sys) {
 				}
 
 				// see if this atom belongs on this processor
-				processor = get_processor (atom_coords, sys->proc_widths, sys->final_proc_breakup);
+				processor = get_processor (atom_coords, sys);
 				if (processor == rank) {
 					atom_belongs.push_back(i);
 				}
@@ -447,7 +447,7 @@ int print_xml (const string filename, const System *sys) {
 			}
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
 		}
-		
+
 		// allocate room for incoming atoms
 		Atom *system_atoms = new Atom[tot_atoms-sys->natoms()];
 		
@@ -469,7 +469,7 @@ int print_xml (const string filename, const System *sys) {
 		for (int i = 0; i < tot_atoms-sys->natoms(); ++i) {
 			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
 		}
-		
+
 		// print header
 		vector <double> box = sys->box(), npos(3);
 		fprintf(fp1, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<hoomd_xml version=\"1.4\">\n");
@@ -478,6 +478,11 @@ int print_xml (const string filename, const System *sys) {
 		for (int i = 0; i < tot_atoms; ++i) {
 			npos = pbc (&atom_ptr[i]->pos[0], box);
 			for (int m = 0; m < 3; ++m) {
+				if (npos[m] != npos[m]) {
+					sprintf(err_msg, "Atom %d has nan for its coordinates, cannot print", i);
+					flag_error (err_msg, __FILE__, __LINE__);
+					return ILLEGAL_VALUE;
+				}
 				fprintf(fp1, "%12.12g\t", npos[m]);
 			}
 			fprintf(fp1, "\n");

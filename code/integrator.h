@@ -28,6 +28,7 @@ namespace integrator {
 		Integrator(){};
 		~Integrator(){};
 		void set_dt (const double dt) {dt_ = dt;}
+		double dt () const {return dt_;}
 		virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
 	protected:
 		double dt_;

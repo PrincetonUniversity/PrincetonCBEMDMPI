@@ -7,7 +7,7 @@ MD System Information
 
 namespace sim_system {	
 	/*!
-	 Upon initialization, resize vectors as necessary.  
+	 Upon initialization, resize vectors as necessary.  Set T < 0.
 	 */
 	System::System() {
 	    send_lists.reserve(26);
@@ -22,11 +22,12 @@ namespace sim_system {
 			flag_error (err_msg, __FILE__, __LINE__);
 			exit(BAD_MEM);
 		}
+		Temp_ = -1.0;
 	}
 
 	//! Default destructor
 	System::~System() {
-		;
+		Temp_ = -1.0;
 	}
 
 

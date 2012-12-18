@@ -15,7 +15,7 @@ vector<int> factorize (const int nprocs);
 int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup);
 
 //! Given the co-ordinates of a point, determines within which domain the point lies
-int get_processor (const vector<double> pos, const double widths[], const vector<int>& final_breakup);
+int get_processor (const vector<double> pos, const System *sys);
 
 //! Given the x, y, z ids of a domain, determines the domain id (useful for locating neighbouring domains)
 int get_processor_id (const int x_id, const int y_id, const int z_id, const vector<int>& final_breakup);

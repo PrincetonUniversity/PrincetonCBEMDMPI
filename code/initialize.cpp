@@ -75,4 +75,11 @@ int start_mpi (int argc, char *argv[]) {
 int end_mpi () {
 	delete_MPI_atom();
 	MPI_Finalize();
+	return SAFE_EXIT;
+}
+
+int abort_mpi () {
+	delete_MPI_atom;
+	MPI_Abort(MPI_COMM_WORLD, MPI_FAIL);
+	return BAD_EXIT;
 }

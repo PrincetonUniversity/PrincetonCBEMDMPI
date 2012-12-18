@@ -33,7 +33,7 @@ namespace sim_system {
 		double T() const {return Temp_;}						//!< Report the temperature of the system
 		double P() const {return Press_;}						//!< Report the pressure of the system
 		
-		int total_atoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor)
+		int total_atoms () const {return atoms_.size();}		//!< Return the number of atoms currently in this system (processor) including current ghosts
 		int natoms () const {return num_atoms_;}				//!< Return the number of atoms this system (processor) is responsible for
 		int add_atom_type (const string atom_name);				//!< Index an atom name
 		int atom_type (const string atom_name);					//!< Return the internal index associated with an atom name

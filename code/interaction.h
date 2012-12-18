@@ -27,11 +27,12 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  */
 class Interaction { 
 public:
-	Interaction() {} 
+	Interaction() {my_force_energy_ = NULL;} 
 	~Interaction() {};
 	double force_energy (Atom *a1, Atom *a2, const vector <double> *box) {return my_force_energy_ (a1, a2, box, &energy_args_);}					//!< Computes force (stored on atoms) and energy (returned)
 	void set_force_energy (force_energy_ptr ife) {my_force_energy_ = ife;}									//!< Assign the potential calculator
 	void set_args (const vector <double> args) {energy_args_ = args;}
+	force_energy_ptr check_force_energy_function () const {return my_force_energy_;}						//!< Return the function for force and energy calculations
 						  
 private:
 	force_energy_ptr my_force_energy_;
