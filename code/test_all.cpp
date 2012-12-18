@@ -320,9 +320,9 @@ TEST (ReadXMLTest, AtomPositions) {
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
     //status = read_xml("sample.xml", 4, 0, &sys1);
     //cout << status << endl;
-    cout << sys1.total_atoms() << " " << sys1.natoms() << endl;
-    cout << sys1.get_atom(0)->pos[0] << " " << sys1.get_atom(0)->pos[1] << " " << sys1.get_atom(0)->pos[2] << endl;
-    ASSERT_EQ(-5,sys1.get_atom(0)->pos[0]);
+    cout << "Total Atoms " << sys1.total_atoms() << " " << sys1.natoms() << endl;
+    cout << "x,y,z coords of atom 1 " << sys1.get_atom(0)->pos[0] << " " << sys1.get_atom(0)->pos[1] << " " << sys1.get_atom(0)->pos[2] << endl;
+    ASSERT_EQ(5,sys1.get_atom(0)->pos[0]);
 }
 
 TEST (ReadXMLTest, AtomVelocities) { 
@@ -334,29 +334,29 @@ TEST (ReadXMLTest, AtomVelocities) {
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
     //status = read_xml("sample.xml", 4, 0, &sys1);
     //cout << status << endl;
-    cout << sys1.total_atoms() << " " << sys1.natoms() << endl;
-    cout << sys1.get_atom(0)->vel[0] << " " << sys1.get_atom(0)->vel[1] << " " << sys1.get_atom(0)->vel[2] << endl;
+    cout << "Total Atoms " << sys1.total_atoms() << " " << sys1.natoms() << endl;
+    cout << "x,y,z, velocities of atom 1 " << sys1.get_atom(0)->vel[0] << " " << sys1.get_atom(0)->vel[1] << " " << sys1.get_atom(0)->vel[2] << endl;
     ASSERT_EQ(0,sys1.get_atom(0)->vel[0]);
 }
 
-
-/*
 TEST (ReadXMLTest, BoxVolume) {
     int argc = 5;
     char *argv[] = {"dummy"};
-    int check = start_mpi (argc, argv);
+    //int check = start_mpi (argc, argv);
     System sys1;
     int status;
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
     //status = read_xml("sample.xml", 4, 0, &sys1);
     //cout << status << endl;
+    for (int i = 0; i < 3; i++) {
+        cout<<sys1.box()[i] << " " ;
+    }
+    cout << endl;
     ASSERT_EQ(1000,sys1.box()[0]*sys1.box()[1]*sys1.box()[2]);
     MPI_Finalize();
 }
 
 // probably check that each error works
-
-*/
 
 int main (int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
