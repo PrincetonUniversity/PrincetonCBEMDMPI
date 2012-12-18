@@ -161,6 +161,24 @@ TEST_F (TwoBodyTest, VerletNoInitVelocity) {
     EXPECT_DOUBLE_EQ (3.2, sys.get_atom(1)->pos[2]);
 }
 
+TEST (DomainDecompTest, OneProcessorTest) {
+    vector<double> box;
+    box.push_back(10.0);
+    box.push_back(10.0);
+    box.push_back(10.0);
+    double widths[3];
+    int nprocs=1, status;
+    vector<int> final_breakup;
+    status = init_domain_decomp (box, nprocs, widths, final_breakup);
+    ASSERT_EQ (0, status);    
+    EXPECT_EQ (10.0, widths[0]);
+    EXPECT_EQ (10.0, widths[1]);
+    EXPECT_EQ (10.0, widths[2]);
+    EXPECT_EQ (1, final_breakup[0]);
+    EXPECT_EQ (1, final_breakup[1]);
+    EXPECT_EQ (1, final_breakup[2]);
+}
+
 TEST (DomainDecompTest, RptFactor) {
     vector<double> box;
     box.push_back(3.0);
