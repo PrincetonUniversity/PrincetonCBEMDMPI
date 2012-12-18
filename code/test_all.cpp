@@ -3,11 +3,14 @@
 #include "system.h"
 #include "integrator.h"
 #include "mpiatom.h"
+#include "initialize.h"
+#include "read_xml.h"
 
 using namespace std;
 using namespace sim_system;
 using namespace atom;
 using namespace integrator;
+
 
 class TwoBodyTest : public ::testing::Test {
 protected:
@@ -284,6 +287,28 @@ TEST (DomainDecompTest, ThreeFactorLongBox3) {
     EXPECT_EQ (1, final_breakup[1]);
     EXPECT_EQ (3, final_breakup[2]);    
 }
+
+TEST (ReadXMLTest, AtomPositions) {
+    int argc = 5;
+    char *argv[] = {"dummy"};
+    int check = start_mpi (argc, argv);
+    System sys1;
+    int status;
+    status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
+    //status = read_xml("sample.xml", 4, 0, &sys1);
+    //cout << status << endl;
+    cout << sys1.total_atoms() << endl;
+    cout << sys1.get_atom(0)->pos[0] << " " << sys1.get_atom(0)->pos[1] << " " << sys1.get_atom(0)->pos[2] << endl;
+    ASSERT_EQ(-5,sys1.get_atom(0)->pos[0]);
+}
+
+//TEST (ReadXMLTest, AtomVelocities) {
+//}
+
+//TEST (ReadXMLTest, BoxVolume) {
+//}
+
+// probably check that each error works
 
 int main (int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);
