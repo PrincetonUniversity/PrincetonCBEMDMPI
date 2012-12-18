@@ -51,6 +51,7 @@ namespace sim_system {
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
+		void set_rank (int rank) {rank_ = rank;}
 		void set_num_atoms (int size) {num_atoms_ = size;}
 		int gen_domain_info ();
 		void clear_ghost_atoms ();

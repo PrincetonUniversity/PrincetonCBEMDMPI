@@ -106,32 +106,6 @@ int get_processor (const int x_id, const int y_id, const int z_id, const vector<
     return domain_id;
 }
 
-//! Generates the x,y,z ids for each processor and the absolute extents of the domain
-int gen_domain_info (System *sys, const double widths[], const vector<int>& final_breakup, const int rank) {
-
-    int domain_id;
-    for (int x_id=0; x_id<final_breakup[0]; x_id++) {
-	for (int y_id=0; y_id<final_breakup[1]; y_id++) {
-	    for (int z_id=0; z_id<final_breakup[2]; z_id++) {
-		domain_id = x_id + y_id*final_breakup[0] + z_id*final_breakup[0]*final_breakup[1];
-		if (domain_id == rank) {
-		    sys->xyz_id[0] = x_id;
-		    sys->xyz_id[1] = y_id;
-		    sys->xyz_id[2] = z_id;
-		    sys->xyz_limits[0][0] = x_id*widths[0];
-		    sys->xyz_limits[0][1] = (x_id+1)*widths[0];
-		    sys->xyz_limits[1][0] = y_id*widths[1];
-		    sys->xyz_limits[1][1] = (y_id+1)*widths[1];
-		    sys->xyz_limits[2][0] = z_id*widths[2];
-		    sys->xyz_limits[2][1] = (z_id+1)*widths[2];
-		    return 0;
-		}
-	    }
-	}
-    }
-    return 1;
-} // gen_domain_info ends
-
 //! Given a domain_id specifies the x, y, z ids of the domain
 int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_id[]) {
 
