@@ -562,6 +562,17 @@ int print_xml (const string filename, const System *sys) {
 	return status;
 }
 
+/*!
+ Write an xyz file that stores the coordinates of all the atoms in the simulation
+ If timestep=0, then the file is created, or overwritten if it exists already
+ If timestep>0, then the current information is appended to the existing file 
+ (or the file is created if it does not exist)
+ This file can then be read by vbd to produce animations
+ \param [in] filename Name of file to open and write to.
+ \param [in] \*sys System object where the atoms are stored
+ \param [in] timestep Current timestep of the simulation
+ \param [in] wrap_pos Annotates whether the positions should be written in unwrapped (wrap_pos=false) or wrapped (wrap_pos=true) coordinates
+ */
 int write_xyz (const string filename, const System *sys, const int timestep, const bool wrap_pos) {
 	char err_msg[MYERR_FLAG_SIZE];
 	MPI_Status Stat;
