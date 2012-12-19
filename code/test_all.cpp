@@ -131,7 +131,7 @@ TEST_F (TwoBodyTest, GetProcessorTest) {
 		pos.push_back(1+(i-1)*3.33);
 		pos.push_back(1+(j-1)*2.5);
 		pos.push_back(1+(k-1)*2);
-		proc = get_processor (pos, sys.proc_widths, sys.final_proc_breakup);
+		proc = get_processor (pos, &sys);
 		EXPECT_EQ ((i-1)+3*(j-1)+12*(k-1), proc);
 	    }
 	}

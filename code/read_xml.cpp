@@ -416,7 +416,7 @@ int print_xml (const string filename, const System *sys) {
 			}
 			return -1;
 		}
-		
+
 		// get number of incoming atoms from workers
 		int worker_atoms[nprocs-1];
 		for (int i=0; i<nprocs-1; i++) {
@@ -488,7 +488,7 @@ int print_xml (const string filename, const System *sys) {
 			fprintf(fp1, "\n");
 		}	
 		fprintf(fp1, "</position>\n");
-		
+
 		fprintf(fp1, "<velocity num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
 			for (int m = 0; m < 3; ++m) {
