@@ -380,7 +380,7 @@ int read_xml (const string filename, System *sys) {
 	for (int i = 0; i < atom_belongs.size(); ++i) {
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
-	sys->add_atoms(atom_belongs.size(), atom_array);
+	vector <int> dummy_vec = sys->add_atoms(atom_belongs.size(), atom_array);
 	sys->set_num_atoms(atom_belongs.size());
 	
 	sprintf(err_msg, "Successfully read coordinates from %s on rank %d", filename_cstr, rank);

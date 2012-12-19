@@ -75,7 +75,7 @@ namespace integrator {
 		MPI_Request reqs_nsend[nprocs], reqs_nrecv[nprocs], reqs_nrecv2[nprocs];
 		MPI_Status stat_recv[nprocs];
 		vector < vector <int> > atom_goes;
-		vector <int> atom_goes_loc;
+		vector <int> atom_goes_loc, dummy_catch;
 		Atom **leaving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *)), **arriving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *));
 
 		try {
@@ -156,7 +156,7 @@ namespace integrator {
 			if (i == rank || nrecv_atoms[i] == 0) {
 				continue;
 			} else {
-				sys->add_atoms(nrecv_atoms[i], &arriving_atoms[i][0]);
+				dummy_catch = sys->add_atoms(nrecv_atoms[i], &arriving_atoms[i][0]);
 			}
 		}
 

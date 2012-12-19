@@ -30,7 +30,6 @@ namespace sim_system {
 		Temp_ = -1.0;
 	}
 
-
 	/*!
 	 Remove atoms from the system.  Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index.
 	 Returns the number of atoms deleted.
@@ -70,10 +69,11 @@ namespace sim_system {
 	 This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
 	 \param [in] natoms Length of the array of atoms to add to the system.
 	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
-	 \param [out] \*update_proc Array of global indices that have just been added to this proc.
+	 \param [out] update_proc Array of global indices that have just been added to this proc.
 	 */
-	int* System::add_atoms (const int natoms, Atom *new_atoms) {
-		int index = atoms_.size(), *update_proc = new int [natoms];
+	vector <int> System::add_atoms (const int natoms, Atom *new_atoms) {
+		int index = atoms_.size();
+		vector <int> update_proc(natoms);
 		for (int i = 0; i < natoms; ++i) {
 			try {
 				atoms_.push_back(new_atoms[i]);
@@ -97,10 +97,11 @@ namespace sim_system {
 	 This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
 	 \param [in] natoms Length of the array of atoms to add to the system.
 	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
-	 \param [out] \*update_proc Array of global indices that have just been added to this proc.
+	 \param [out] update_proc Array of global indices that have just been added to this proc.
 	 */
-	int* System::add_atoms (vector <Atom> *new_atoms) {
-		int index = atoms_.size(), natoms = new_atoms->size(), *update_proc = new int [natoms];
+	vector <int> System::add_atoms (vector <Atom> *new_atoms) {
+		int index = atoms_.size(), natoms = new_atoms->size();
+		vector <int> update_proc(natoms);
 		for (int i = 0; i < natoms; ++i) {
 			try {
 				atoms_.push_back(new_atoms->at(i));
