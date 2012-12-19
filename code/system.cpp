@@ -128,7 +128,6 @@ namespace sim_system {
 	 \param [out] \*update_proc Array of global indices that have just been added to this proc.
 	 */
 	void System::add_ghost_atoms (const int natoms, Atom *new_atoms) {
-		int index = atoms_.size();
 		for (int i = 0; i < natoms; ++i) {
 			try {
 				atoms_.push_back(new_atoms[i]);
@@ -140,13 +139,17 @@ namespace sim_system {
 				//finalize();
 				exit(BAD_MEM);
 			}
-			glob_to_loc_id_[new_atoms[i].sys_index] = index;
-			index++;
 		}
 
 		return;
 	}
 
+    //! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
+    void System::clear_ghost_atoms () {
+	atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
+	return;
+    }
+	
 	/*!
 	 Tries to add an atom type to the system, associating a user specified name with an internal index to reference this type in the future.
 	 This can return 3 different values:
@@ -279,21 +282,7 @@ namespace sim_system {
 			return name;
 		}
 	}
-	
 
-    //! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
-    void System::clear_ghost_atoms () {
-	map <int, int>::iterator map_it;
-	for (vector<Atom>::iterator it=atoms_.begin()+num_atoms_; it!=atoms_.end(); it++) {
-			map_it = glob_to_loc_id_.find(it->sys_index);
-			glob_to_loc_id_.erase(map_it);
-	}	    
-	cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-	atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
-	cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-	return;
-    }
-	
     //! Generates the x,y,z ids for each processor and the absolute extents of the domain
     int System::gen_domain_info () {
 

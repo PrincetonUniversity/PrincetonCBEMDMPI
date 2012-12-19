@@ -269,7 +269,7 @@ namespace integrator {
 				return check;
 			}
 			// Delete the atoms the processor is not responsible for
-			//			sys->clear_ghost_atoms ();
+			sys->clear_ghost_atoms ();
 
 			// step forward
 			check = integrator->step(sys);
