@@ -233,9 +233,33 @@ namespace integrator {
 			return ILLEGAL_VALUE;
 		}
 		
+		// setup neighbouring domain info on each processor
+		sys->set_rank (rank);
+		if (sys->gen_domain_info()) {
+		    sprintf(err_msg, "Problem generating basic info for processor rank %d", rank);
+		    flag_error (err_msg, __FILE__, __LINE__);
+		    return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+		}
+		if (gen_send_table(sys)) {
+		    sprintf(err_msg, "Problem generating table of neighbouring processors on rank %d", rank);
+		    flag_error (err_msg, __FILE__, __LINE__);
+		    return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+		}
 		// execute loops
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
+		    // generate lists of atoms to be sent to neighbouring cells
+		    if (gen_send_lists(sys)) {
+			sprintf(err_msg, "Problem generating lists to send out on rank %d", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+		    }
+		    // communicate the above atoms (ghost atoms) to the appropriate processor
+		    if (communicate_skin_atoms(sys)) {
+			sprintf(err_msg, "Problem communicating lists on rank %d", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+		    }
 			// calc_force
 			check = force_calc(sys);
 			
@@ -244,6 +268,8 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
+			// Delete the atoms the processor is not responsible for
+			sys->clear_ghost_atoms ();
 
 			// step forward
 			check = integrator->step(sys);

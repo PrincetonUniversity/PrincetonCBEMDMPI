@@ -24,7 +24,7 @@ int get_processor_id (const int x_id, const int y_id, const int z_id, const vect
 int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_id[]);
 
 //! Generates the lists of molecules that need to be passed to other processors
-int gen_send_lists (System *sys, const int rank, const double skin_cutoff);
+int gen_send_lists (System *sys);
 
 //! Given the rank, generates the list of its neighbours
 int gen_send_table (System *sys);

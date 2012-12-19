@@ -131,9 +131,10 @@ int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_
 }
 
 //! Generates the lists of molecules that need to be passed to other processors
-int gen_send_lists (System *sys, const int rank, const double skin_cutoff) {
+int gen_send_lists (System *sys) {
 
     const int ndims=3;
+    const double skin_cutoff=sys->max_rcut();
     /* Since a particle can have only 3 realtionships to a dimension of the box, we define
        0 = in the middle (itm),
        1 = near lower bound (nlb)
@@ -210,11 +211,10 @@ double gen_skin_cutoff (/*Need a list of all the cutoffs for the different inter
 //! Generates the list of neighbours a particle should be sent to based on the borders its near
 void gen_goes_to (const int is_near_border[], vector<int>& goes_to, const int ndims) {
 
-    int remaining[ndims], value;
+    int remaining[ndims], value=0;
     /* Since a particle can have only 3 realtionships to a dimension
        near lower bound, near upper bound or in the middle. Hence the variable nvals */
     const static int nvals=3;
-
     for (int i=0; i<ndims; i++) {
 	remaining[i] = is_near_border[i];
 	value += is_near_border[i]*power(nvals, i);
@@ -248,29 +248,27 @@ int power (int base, int exponent) {
 int communicate_skin_atoms (System *sys) {
 
     MPI_Barrier (MPI_COMM_WORLD);
-    MPI_Request req[26], req2[26];
-    MPI_Status stat[26];
-    int rank;
-    MPI_Comm_size (MPI_COMM_WORLD, &rank);
+    MPI_Request req[52], req2[52];
+    MPI_Status stat[52];
     // 26 is here because in 3D each domain has 26 nearest neighbours
     for (int i=0; i<26; i++) {
-	MPI_Isend (&sys->send_list_size[i], 1, MPI_INT, sys->send_table[i], rank, MPI_COMM_WORLD, &req[i]);
-	MPI_Irecv (&sys->get_list_size[i], 1, MPI_INT, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req2[i]);
+	MPI_Isend (&sys->send_list_size[i], 1, MPI_INT, sys->send_table[i], sys->rank(), MPI_COMM_WORLD, &req[i]);
+	MPI_Irecv (&sys->get_list_size[i], 1, MPI_INT, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req[26+i]);
     }
-    MPI_Waitall (26, req, stat);
+    MPI_Waitall (52, req, stat);
     
     for(int i=0; i<26; i++) {
 	sys->get_lists[i].reserve(sys->get_list_size[i]);
     }
-    for (int i=0; i<26; i++) {
-	MPI_Isend (&sys->send_lists[i].front(), sys->send_list_size[i], MPI_ATOM, sys->send_table[i], rank, MPI_COMM_WORLD, &req[i]);
-	MPI_Irecv (&sys->get_lists[i].front(), sys->get_list_size[i], MPI_ATOM, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req2[i]);
-    }
-    MPI_Waitall (26, req, stat);
 
     for (int i=0; i<26; i++) {
-	sys->add_atoms(sys->get_list_size[i], &(sys->get_lists[i].front()));
+	MPI_Isend (&sys->send_lists[i].front(), sys->send_list_size[i], MPI_ATOM, sys->send_table[i], sys->rank(), MPI_COMM_WORLD, &req2[i]);
+	MPI_Irecv (&sys->get_lists[i].front(), sys->get_list_size[i], MPI_ATOM, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req2[26+i]);
     }
+    MPI_Waitall (52, req2, stat);
 
+    for (int i=0; i<26; i++) {
+	sys->add_ghost_atoms(sys->get_list_size[i], &(sys->get_lists[i].front()));
+    }
     return 0;
 }

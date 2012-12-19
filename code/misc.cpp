@@ -57,6 +57,7 @@ FILE *mfopen(const char *filename, const char *opt) {
 vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	vector <double> in_box(3, 0.0); 
 	for (int i = 0; i < 3; ++i) {
+	    in_box[i] = coords[i];
 		// because box is defined with corner at (0,0,0) ceil/floor when used appropriately puts back in box with one operation
 		in_box[i] = coords[i];
 		if (coords[i] < 0.0) {
