@@ -408,7 +408,7 @@ int print_xml (const string filename, const System *sys) {
 		sprintf(err_msg, "Printing configuration to %s", filename.c_str());
 		flag_notify (err_msg, __FILE__, __LINE__);
 		
-		FILE *fp1 = mfopen (filename.c_str(), "w");
+		FILE *fp1 = fopen (filename.c_str(), "w");
 		int i_need_to_print = 0, i_finished;
 		if (fp1 == NULL) {
 			for (int i = 1; i < nprocs; ++i) {
@@ -562,3 +562,135 @@ int print_xml (const string filename, const System *sys) {
 	return status;
 }
 
+int write_xyz (const string filename, const System *sys, const int timestep, const bool wrap_pos) {
+	char err_msg[MYERR_FLAG_SIZE];
+	MPI_Status Stat;
+	Atom *atom_vec;
+	int status = 0, rank, nprocs;
+	
+	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
+	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
+	MPI_Barrier (MPI_COMM_WORLD);
+	
+	if (rank == 0) {
+		FILE *fp1;
+		if (timestep == 0) {
+			fp1 = mfopen (filename.c_str(), "w");
+		}
+		else {
+			fp1 = mfopen (filename.c_str(), "a");
+		}
+		int i_need_to_print = 0, i_finished;
+		if (fp1 == NULL) {
+			for (int i = 1; i < nprocs; ++i) {
+				MPI_Send(&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
+			}
+			fclose(fp1);
+			return -1;
+		}
+
+		// get number of incoming atoms from workers
+		int worker_atoms[nprocs-1];
+		for (int i=0; i<nprocs-1; i++) {
+		    worker_atoms[i] = 0;
+		}
+		i_need_to_print = 1;
+		MPI_Request send_reqs[nprocs-1], recv_reqs[nprocs-1], recv_reqs2[nprocs-1];
+		MPI_Status worker_stats[nprocs-1], worker_stats2[nprocs-1];
+
+		for (int i = 1; i < nprocs; ++i) {
+			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &send_reqs[i-1]);
+			MPI_Irecv (&worker_atoms[i-1], 1, MPI_INT, i, i, MPI_COMM_WORLD, &recv_reqs[i-1]);
+		}
+		if (nprocs > 1) {
+			MPI_Waitall (nprocs-1, recv_reqs, worker_stats);
+		}
+
+		int tot_atoms = sys->natoms();
+
+		// get memory "offsets" so we know where to store incoming atoms
+		vector <int> offsets (nprocs-1);
+		for (int i = 0; i < nprocs-1; ++i) {
+			tot_atoms += worker_atoms[i];
+			if (i > 0) {
+				offsets[i] = worker_atoms[i-1]+offsets[i-1];
+			} else {
+				offsets[i] = 0;
+			}
+			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
+		}
+
+		// allocate room for incoming atoms
+		Atom *system_atoms = new Atom[tot_atoms-sys->natoms()];
+		
+		for (int i = 0; i < nprocs-1; ++i) {
+			MPI_Irecv(&system_atoms[offsets[i]], worker_atoms[i], MPI_ATOM, i+1, i+1, MPI_COMM_WORLD, &recv_reqs2[i]);
+		}
+
+		if (nprocs > 1) {
+			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
+		}
+
+		// now main node has all atoms, use pointers to print atoms in order
+		vector <Atom *> atom_ptr(tot_atoms);
+		for (int i = 0; i < sys->natoms(); ++i) {
+		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
+		}
+
+		int check = 0;
+		for (int i = 0; i < tot_atoms-sys->natoms(); ++i) {
+			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
+		}
+
+		// print header
+		vector <double> box = sys->box(), npos(3);
+		fprintf(fp1, "%d \n", tot_atoms);
+		fprintf(fp1, "timestep = %d \n", timestep);
+		for (int i = 0; i < tot_atoms; ++i) {
+			fprintf(fp1, "%s \t", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
+			if (wrap_pos) {
+				npos = pbc (&atom_ptr[i]->pos[0], box);
+			} else {
+				npos.assign (atom_ptr[i]->pos, atom_ptr[i]->pos + sizeof(atom_ptr[i]->pos) / sizeof(double)); 
+			}
+			for (int m = 0; m < 3; ++m) {
+				if (npos[m] != npos[m]) {
+					sprintf(err_msg, "Atom %d has nan for its coordinates, cannot print", i);
+					flag_error (err_msg, __FILE__, __LINE__);
+					fclose(fp1);
+					return ILLEGAL_VALUE;
+				}
+				fprintf(fp1, "%8.8g\t", npos[m]);
+			}
+			fprintf(fp1, "\n");
+		}	
+		if (nprocs > 1) {
+			delete [] system_atoms;
+		}
+		fclose(fp1);
+
+	} else {
+		int print_flag, dummy, natoms = sys->natoms();
+		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
+		if (print_flag == 1) {
+			MPI_Send (&natoms, 1, MPI_INT, 0, rank, MPI_COMM_WORLD);
+			MPI_Recv (&dummy, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
+			atom_vec = new Atom[natoms]; 
+			for (int i = 0; i < natoms; ++i) {
+				atom_vec[i] = ((System *)sys)->copy_atom(i);
+			}
+			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
+		} else {
+			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
+			flag_error (err_msg, __FILE__, __LINE__);
+			status = FILE_ERROR;
+		}
+	}
+
+	MPI_Barrier (MPI_COMM_WORLD);
+	if (rank > 0 && status == 0) {
+		delete [] atom_vec;
+	}
+	MPI_Barrier (MPI_COMM_WORLD);
+	return status;
+}
