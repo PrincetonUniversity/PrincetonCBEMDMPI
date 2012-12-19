@@ -14,31 +14,32 @@ namespace integrator {
 		dt2_ = dt_ * dt_;
 	}
 
-	// example:
 	/*! 
 	  This function integrates.
 	  Call it to make a step.
 	  Will update atom positions and velocities
+	 Maintains atom positions in the box if atoms cross boundaries.
 	*/
 	int Verlet::step (System *sys) {
-		// write the code to update positions, etc. here
-		// you can plan on being able to call a calc_force routine that calculates and stores the instantaneous force in
-		// the cartesian directions
-		/* Arun Prabhu: The next four lines allocate the appropriate ammount of memory
-		   for the variable prev_pos which is a vector of vectors but must represent
-		   a matrix of size m x n where m = number of atoms in system,
-		   and n = 3 (number of spatial dimensions;
-		   This comment may be removed later once everyone is aware of the issue and the fix */
 		prev_pos_.resize(sys->natoms());
 		for (int i=0; i<sys->natoms(); i++) {
 		  prev_pos_[i].reserve(3);
 		}
 		double prev_prev_pos;
+		vector <double> box = sys->box();
 		if (timestep_ == 0) {
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < 3; ++j) {
 					prev_pos_[i][j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					// maintain atom position in the box
+					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
+					while (sys->get_atom(i)->pos[j] < 0.0) {
+						sys->get_atom(i)->pos[j] += box[j];
+					}
+					while (sys->get_atom(i)->pos[j] > box[j]) {
+						sys->get_atom(i)->pos[j] -= box[j];
+					}
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_pos_[i][j]) / dt_;
 				}
 			}
@@ -49,6 +50,14 @@ namespace integrator {
 					prev_prev_pos = prev_pos_[i][j];
 					prev_pos_[i][j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] = 2.0 *  prev_pos_[i][j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					// maintain atom position in the box
+					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
+					while (sys->get_atom(i)->pos[j] < 0.0) {
+						sys->get_atom(i)->pos[j] += box[j];
+					}
+					while (sys->get_atom(i)->pos[j] > box[j]) {
+						sys->get_atom(i)->pos[j] -= box[j];
+					}
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
 				}
 			}
@@ -235,8 +244,7 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
-			MPI_Barrier(MPI_COMM_WORLD);
-			
+
 			// step forward
 			check = integrator->step(sys);
 			if (check != 0) {
@@ -244,8 +252,7 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
-			MPI_Barrier(MPI_COMM_WORLD);
-			
+
 			// check to move atoms if necessary
 			if (nprocs > 1) {
 				check = move_atoms (sys, rank, nprocs);

@@ -47,7 +47,6 @@ FILE *mfopen(const char *filename, const char *opt) {
 	return fp1;
 }
 
-
 //! Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries.
 /*!
  Recall that the simulation box is defined such that, regardless of the input file, it is normalized to 
@@ -56,33 +55,14 @@ FILE *mfopen(const char *filename, const char *opt) {
  \param [in] box Vector of box dimensions (L_x, L_y, L_z).
  */
 vector <double> pbc (const vector <double> coords, const vector <double> box) {
-	vector <double> in_box(3, 0.0), bad;
-	char err_msg[MYERR_FLAG_SIZE]; 
-	
-	if (coords.size() != 3) {
-		sprintf(err_msg, "Number of coordinate dimensions incorrect, cannnot compute pbc");
-		flag_error(err_msg, __FILE__, __LINE__);
-		return bad;
-	}
-	if (box.size() != 3) {
-		sprintf(err_msg, "Number of box dimensions incorrect, cannnot compute pbc");
-		flag_error(err_msg, __FILE__, __LINE__);
-		return bad;
-	}
-	
+	vector <double> in_box(3, 0.0); 
 	for (int i = 0; i < 3; ++i) {
-		if (box[i] < 0.0) {
-			sprintf(err_msg, "Box dimension %d = %g < 0.0, cannnot compute pbc", i+1, box[i]);
-			flag_error(err_msg, __FILE__, __LINE__);
-			return bad;
+		// because box is defined with corner at (0,0,0) ceil/floor when used appropriately puts back in box with one operation
+		if (coords[i] < 0) {
+			in_box[i] = coords[i] + ceil(-coords[i]/box[i])*box[i];
 		}
-		
-		in_box[i] = coords[i];
-		while (in_box[i] < 0.0) {
-			in_box[i] += box[i];
-		}
-		while (in_box[i] >= box[i]) {
-			in_box[i] -= box[i];
+		if (coords[i] > box[i]) {
+			in_box[i] = coords[i] - floor(coords[i]/box[i])*box[i];
 		}
 	}
 	
@@ -97,17 +77,15 @@ vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	 \param [in] box Vector of box dimensions (L_x, L_y, L_z).
 	 */
 	vector <double> pbc (const double *coords, const vector <double> box) {
-		vector <double> in_box(3, 0.0), bad;
+		vector <double> in_box(3, 0.0);
 		for (int i = 0; i < 3; ++i) {
-			in_box[i] = coords[i];
-			while (in_box[i] < 0.0) {
-				in_box[i] += box[i];
+			if (coords[i] < 0) {
+				in_box[i] = coords[i] + ceil(-coords[i]/box[i])*box[i];
 			}
-			while (in_box[i] >= box[i]) {
-				in_box[i] -= box[i];
+			if (coords[i] > box[i]) {
+				in_box[i] = coords[i] - floor(coords[i]/box[i])*box[i];
 			}
 		}
-		
 		return in_box;
 	}
 

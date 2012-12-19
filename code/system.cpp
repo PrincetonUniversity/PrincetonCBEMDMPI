@@ -115,15 +115,6 @@ namespace sim_system {
 		num_atoms_ += natoms; 
 		return update_proc;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/*!
 	 Tries to add an atom type to the system, associating a user specified name with an internal index to reference this type in the future.
