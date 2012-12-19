@@ -2,7 +2,7 @@ LDFLAGS = -lm
 
 MPICXX=mpic++
 
-MPICXXFLAGS = -O3 -Wno-deprecated -g 
+MPICXXFLAGS = -O3 -g -Wall -pedantic
 
 all: cbemd
 

@@ -44,7 +44,7 @@ namespace sim_system {
 		// pop in this order
 		int shift = 0;
 		int upper;
-		for (int i = 0; i < indices.size(); ++i) {
+		for (unsigned int i = 0; i < indices.size(); ++i) {
 			// update glob_to_loc for all atoms following the erased atoms
 			if (i < indices.size()-1) {
 				upper = indices[i+1]-shift;
@@ -240,7 +240,7 @@ namespace sim_system {
 	 Returns the string "NULL" if failed, else user defined name of atom.
 	 \param [in] index Internal index to locate and return the name associated.
 	 */
-	string System::atom_name (const int index) {
+	string System::atom_name (const unsigned int index) {
 		string name = "NULL";
 		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= atom_type_.size()) {

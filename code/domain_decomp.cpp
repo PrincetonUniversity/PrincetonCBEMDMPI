@@ -20,7 +20,7 @@ void gen_sets (const vector<int>& factors, const double box[], const int level, 
 	}
 	return;
     } else if (level != 0 && add != 0) {
-	for (int j=0; j<factors.size(); j++) {
+	for (unsigned int j=0; j<factors.size(); j++) {
 	    breakup[level-1] *= factors[j];
 	    remaining = factors;
 	    remaining.erase (remaining.begin()+j);
@@ -44,7 +44,7 @@ void gen_sets (const vector<int>& factors, const double box[], const int level, 
     return;
 } //gen_sets ends
 
-//! Given a number returns the prime factors (does not count 1 as a prime factor)
+//! Given a number returns the prime factors (does not count 1 as a prime factor) It returns the number 1 if unable to find any prime factors
 vector <int> factorize (const int nprocs) {
 
     vector <int> factors;

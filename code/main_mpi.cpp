@@ -5,7 +5,7 @@
  \param \*argv[] ./cbemd nsteps dt xml_file bond_file
  */
 int main (int argc, char *argv[]) {
-	int rank, nprocs, rc, check;
+	int check;
 	long int nsteps;
 	double dt;
 	System mysys;

@@ -37,7 +37,7 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "natoms") != NULL) {
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
-			for (int i = 0; i < fields.size(); ++i) {
+			for (unsigned int i = 0; i < fields.size(); ++i) {
 				if (fields[i] == "natoms") {
 					if (i+1 < fields.size()) {
 						natoms = atoi(fields[i+1].c_str());
@@ -82,7 +82,7 @@ int read_xml (const string filename, System *sys) {
 			check = 1;
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
-			for (int i = 0; i < fields.size(); ++i) {
+			for (unsigned int i = 0; i < fields.size(); ++i) {
 				if (fields[i] == "lx") {
 					if (i+1 < fields.size()) {
 						box[0] = atof(fields[i+1].c_str());
@@ -133,7 +133,7 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "bond") != NULL) {
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
-			for (int i = 0; i < fields.size(); ++i) {
+			for (unsigned int i = 0; i < fields.size(); ++i) {
 				if (fields[i] == "num") {
 					if (i+1 < fields.size()) {
 						nbonds = atoi(fields[i+1].c_str());
@@ -377,7 +377,7 @@ int read_xml (const string filename, System *sys) {
 
 	// now add the atoms that belong to this domain to the System object
 	Atom atom_array[(const int)atom_belongs.size()];
-	for (int i = 0; i < atom_belongs.size(); ++i) {
+	for (unsigned int i = 0; i < atom_belongs.size(); ++i) {
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
 	vector <int> dummy_vec = sys->add_atoms(atom_belongs.size(), atom_array);
@@ -409,7 +409,7 @@ int print_xml (const string filename, const System *sys) {
 		flag_notify (err_msg, __FILE__, __LINE__);
 		
 		FILE *fp1 = mfopen (filename.c_str(), "w");
-		int i_need_to_print = 0, i_finished;
+		int i_need_to_print = 0;
 		if (fp1 == NULL) {
 			for (int i = 1; i < nprocs; ++i) {
 				MPI_Send(&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -465,7 +465,6 @@ int print_xml (const string filename, const System *sys) {
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
 		}
 
-		int check = 0;
 		for (int i = 0; i < tot_atoms-sys->natoms(); ++i) {
 			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
 		}

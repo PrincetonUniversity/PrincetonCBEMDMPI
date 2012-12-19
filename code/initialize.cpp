@@ -16,7 +16,7 @@
  \param [in,out] \*sys System object to store its information at.
  */
 int initialize_from_files (const string xml_filename, const string energy_filename, System *sys) {
-	int iread = 1, isignal, check, check2, check_sum, nprocs, rank;
+	int isignal, check, check2, check_sum, nprocs, rank;
 	MPI_Status Stat;
 
 	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
@@ -79,7 +79,7 @@ int end_mpi () {
 }
 
 int abort_mpi () {
-	delete_MPI_atom;
+    delete_MPI_atom();
 	MPI_Abort(MPI_COMM_WORLD, MPI_FAIL);
 	return BAD_EXIT;
 }

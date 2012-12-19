@@ -40,7 +40,7 @@ int read_interactions (const string filename, System *sys) {
 			Interaction interaction;
 			
 			vector <double> force_args;
-			for (int i = 4; i < fields.size(); ++i) {
+			for (unsigned int i = 4; i < fields.size(); ++i) {
 				force_args.push_back(atof(fields[i].c_str()));
 			}
 			
@@ -67,7 +67,7 @@ int read_interactions (const string filename, System *sys) {
 			
 			// get and check force arguments
 			vector <double> force_args;
-			for (int i = 3; i < fields.size(); ++i) {
+			for (unsigned int i = 3; i < fields.size(); ++i) {
 				force_args.push_back(atof(fields[i].c_str()));
 			}
 			
@@ -121,7 +121,7 @@ int read_interactions (const string filename, System *sys) {
 			a_pair.first = sys->global_atom_types[i];
 			a_pair.second = sys->global_atom_types[j];
 			
-			int index = distance(atom_pairs.begin(),find(atom_pairs.begin(), atom_pairs.end(), a_pair));
+			unsigned int index = distance(atom_pairs.begin(),find(atom_pairs.begin(), atom_pairs.end(), a_pair));
 			if (index == atom_pairs.size()) {
 				a_pair.second = sys->global_atom_types[i];
 				a_pair.first = sys->global_atom_types[j];
@@ -148,7 +148,7 @@ int read_interactions (const string filename, System *sys) {
 			return ILLEGAL_VALUE;
 		}
 
-		int index = distance(bond_list.begin(), find(bond_list.begin(), bond_list.end(), b_type));
+		unsigned int index = distance(bond_list.begin(), find(bond_list.begin(), bond_list.end(), b_type));
 		if (index >= inters_BOND.size()) {
 			sprintf(err_msg, "Bond type %s was found in input coordinates but not in %s", b_type.c_str(), filename_cstr);
 			flag_error (err_msg, __FILE__, __LINE__);

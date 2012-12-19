@@ -82,7 +82,7 @@ namespace integrator {
 	int move_atoms (System *sys, const int rank, const int nprocs) {
 	    char err_msg[MYERR_FLAG_SIZE];
 		vector <int> nsend_atoms(nprocs,0), nrecv_atoms(nprocs,0);
-		int iproc, index;
+		int iproc;
 		vector <double> pos(3);
 		MPI_Request reqs_nsend[nprocs], reqs_nrecv[nprocs], reqs_nrecv2[nprocs];
 		MPI_Status stat_recv[nprocs];
@@ -199,19 +199,19 @@ namespace integrator {
 		/* before starting, need to check that all requisite variables are set */
 		// check interactions have been properly set
 		if (sys->interact.size() == 0) {
-			sprintf(err_msg, "Interactions have not been set on rank", rank);
+			sprintf(err_msg, "Interactions have not been set on rank %d", rank);
 			flag_error (err_msg, __FILE__, __LINE__);
 			return ILLEGAL_VALUE;
 		} else {
-			for (int i = 0; i < sys->interact.size(); ++i) {
+			for (unsigned int i = 0; i < sys->interact.size(); ++i) {
 				if (sys->interact[i].size() != sys->interact.size()) {
-					sprintf(err_msg, "Interactions have not been fully set on rank", rank);
+					sprintf(err_msg, "Interactions have not been fully set on rank %d", rank);
 					flag_error (err_msg, __FILE__, __LINE__);
 					return ILLEGAL_VALUE;
 				}
-				for (int j = 0; j < sys->interact.size(); ++j) {
+				for (unsigned int j = 0; j < sys->interact.size(); ++j) {
 					if (sys->interact[i][j].check_force_energy_function() == NULL && i != j) {
-						sprintf(err_msg, "Interactions have not been fully set on rank", rank);
+						sprintf(err_msg, "Interactions have not been fully set on rank %d", rank);
 						flag_error (err_msg, __FILE__, __LINE__);
 						return ILLEGAL_VALUE;
 					}

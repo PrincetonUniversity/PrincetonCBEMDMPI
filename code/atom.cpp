@@ -13,7 +13,7 @@ namespace atom {
  */
 // (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
 void create_MPI_ATOM () {
-	int num_types = 2;
+	const int num_types = 2;
 	MPI_Datatype oldtypes[num_types];
 	MPI_Aint offsets[num_types], extent;
 	int blockcounts[num_types];

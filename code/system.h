@@ -37,7 +37,7 @@ namespace sim_system {
 		int natoms () const {return num_atoms_;}				//!< Return the number of atoms this system (processor) is responsible for
 		int add_atom_type (const string atom_name);				//!< Index an atom name
 		int atom_type (const string atom_name);					//!< Return the internal index associated with an atom name
-		string atom_name (const int index);						//!< Return the name associated with an index for atom type
+		string atom_name (const unsigned int index);						//!< Return the name associated with an index for atom type
 
 		int add_bond_type (const string bond_name);				//!< Index a bond name
 		int bond_type (const string bond_name);					//!< Return the internal index associated with a bond name
@@ -71,7 +71,7 @@ namespace sim_system {
 		vector <vector <Interaction> > interact;               //!< Interaction matrix between atoms indexed by global id's (symetric)
 		vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
-		double set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
+		void set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
 		double max_rcut () const {return max_rcut_;}
 		
 	private:
