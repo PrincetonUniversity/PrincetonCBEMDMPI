@@ -60,17 +60,15 @@ namespace integrator {
 	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.
 	int move_atoms (System *sys, const int rank, const int nprocs) {
 	    char err_msg[MYERR_FLAG_SIZE];
-	    //	    extern MPI_Datatype MPI_ATOM;
-		int *nsend_atoms = (int *) calloc (nprocs, sizeof(int));
-		int *nrecv_atoms = (int *) calloc (nprocs, sizeof(int));
-		int iproc;
+		vector <int> nsend_atoms(nprocs,0), nrecv_atoms(nprocs,0);
+		int iproc, index;
 		vector <double> pos(3);
-		MPI_Request *reqs_nsend = (MPI_Request *) malloc(nprocs*sizeof(MPI_Request)), *reqs_nrecv = (MPI_Request *) malloc(nprocs*sizeof(MPI_Request));
-		MPI_Status *stat_recv = (MPI_Status *) malloc(nprocs*sizeof(MPI_Status));
-		Atom *leaving_atoms[nprocs], *arriving_atoms[nprocs];
+		MPI_Request reqs_nsend[nprocs], reqs_nrecv[nprocs], reqs_nrecv2[nprocs];
+		MPI_Status stat_recv[nprocs];
 		vector < vector <int> > atom_goes;
 		vector <int> atom_goes_loc;
-		
+		Atom **leaving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *)), **arriving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *));
+
 		try {
 			atom_goes.resize(nprocs);
 		}
@@ -79,7 +77,7 @@ namespace integrator {
 			flag_error (err_msg, __FILE__, __LINE__);
 			return BAD_MEM;
 		}
-		
+
 		// collect and enumerate number atoms that go to each processor
 		int tot_send = 0;
 		for (int i = 0; i < sys->natoms(); ++i) {
@@ -88,7 +86,7 @@ namespace integrator {
 			}
 			iproc = get_processor (pos, sys);
 			if (iproc < 0 || iproc >= nprocs) {
-				sprintf(err_msg, "Processor out of bounds for atom %d, coordinates = (%g, %g, %g)", sys->get_atom(i)->sys_index, pos[0], pos[1], pos[2]);
+				sprintf(err_msg, "Processor %d out of bounds for atom %d, coordinates = (%g, %g, %g)", iproc, sys->get_atom(i)->sys_index, pos[0], pos[1], pos[2]);
 				flag_error (err_msg, __FILE__, __LINE__);
 				return ILLEGAL_VALUE;
 			}
@@ -98,85 +96,67 @@ namespace integrator {
 				atom_goes[iproc].push_back(i);
 				// might be faster to allocate after this look and assign later since no reallocation every time, but this way atoms are ordered...
 				atom_goes_loc.push_back(i);
+			} else {
+				// don't bother sending/recv atoms from yourself
+				nsend_atoms[iproc] = 0;
 			}
 		}
 
-		// send/recv how many are going to/coming from each domain
+		// send/recv how many are going to/coming from each domain (including self technically, but overhead is very low)
 		for (int i = 0; i < nprocs; ++i) {
-			if (i == rank) {
-				continue;
-			}
 			MPI_Isend (&nsend_atoms[i], 1, MPI_INT, i, rank, MPI_COMM_WORLD, &reqs_nsend[i]);
 			MPI_Irecv (&nrecv_atoms[i], 1, MPI_INT, i, i, MPI_COMM_WORLD, &reqs_nrecv[i]);
 		}
 		MPI_Waitall (nprocs, reqs_nrecv, stat_recv);
-		
+
 		// allocate atoms
 		for (int i = 0; i < nprocs; ++i) {
-			if (i == rank) {
-				continue;
+			if (nsend_atoms[i] > 0) {
+				leaving_atoms[i] = (Atom *)malloc(nsend_atoms[i]*sizeof(Atom));
+			} else {
+				leaving_atoms[i] = (Atom *)malloc(1*sizeof(Atom));
 			}
-			leaving_atoms[i] = new Atom[nsend_atoms[i]];
-			arriving_atoms[i] = new Atom[nrecv_atoms[i]];
+			if (nrecv_atoms[i] > 0) {
+				arriving_atoms[i] = (Atom *)malloc(nrecv_atoms[i]*sizeof(Atom));
+			} else {
+				arriving_atoms[i] = (Atom *)malloc(1*sizeof(Atom));
+			}
 		}
-		
-		// assign leaving atoms ??
+
+		// assign leaving atoms
 		for (int i = 0; i < nprocs; ++i) {
 			if (i != rank) {
 				for (int j = 0; j < nsend_atoms[i]; ++j) {
-					// create copy to send to new processor
 					leaving_atoms[i][j] = sys->copy_atom(atom_goes[i][j]);
 				}
 			}
 		}
-		
-		// delete originals from here
+
+		// delete originals from the local system
 		sys->delete_atoms(atom_goes_loc);
 		
 		// send/receive atoms themselves from all domains
 		for (int i = 0; i < nprocs; ++i) {
-			if (i == rank) {
-				continue;
-			} 
-			if (nrecv_atoms[i] > 0) {
-				MPI_Irecv (&arriving_atoms[i], nrecv_atoms[i], MPI_ATOM, i, i, MPI_COMM_WORLD, &reqs_nrecv[i]);
-			} else {
-				reqs_nrecv[i] = MPI_SUCCESS;
-			}
-
-			if (nsend_atoms[i] > 0) {
-				MPI_Isend (&leaving_atoms[i], nsend_atoms[i], MPI_ATOM, i, rank, MPI_COMM_WORLD, &reqs_nsend[i]);
-			} else {
-				// this is probably superfluous
-				reqs_nsend[i] = MPI_SUCCESS;
-			}
+			MPI_Irecv (&arriving_atoms[i][0], nrecv_atoms[i], MPI_ATOM, i, i, MPI_COMM_WORLD, &reqs_nrecv2[i]);
+			MPI_Isend (&leaving_atoms[i][0], nsend_atoms[i], MPI_ATOM, i, rank, MPI_COMM_WORLD, &reqs_nsend[i]);
 		}
-		MPI_Waitall (nprocs, reqs_nrecv, stat_recv);
-		
+		MPI_Waitall (nprocs, reqs_nrecv2, stat_recv);
+
 		// add ones that arrived
 		for (int i = 0; i < nprocs; ++i) {
 			if (i == rank || nrecv_atoms[i] == 0) {
 				continue;
 			} else {
-				sys->add_atoms(nrecv_atoms[i], arriving_atoms[i]);
+				sys->add_atoms(nrecv_atoms[i], &arriving_atoms[i][0]);
 			}
 		}
-		
+
 		for (int i = 0; i < nprocs; ++i) {
-			if (i == rank) {
-				continue;
-			}
-			delete [] leaving_atoms[i]; 
-			delete [] arriving_atoms[i];
+			free (leaving_atoms[i]);
+			free (arriving_atoms[i]);
 		}
-		
-		// other deallocs
-		free (reqs_nsend);
-		free (reqs_nrecv);
-		free (stat_recv);
-		free (nsend_atoms);
-		free (nrecv_atoms);
-		
+		free (leaving_atoms);
+		free (arriving_atoms);
 		return SAFE_EXIT;
 	}
 	
@@ -250,8 +230,6 @@ namespace integrator {
 			// calc_force
 			check = force_calc(sys);
 			
-			printf("finished force_calc\n");
-			
 			if (check != 0) {
 				sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
 				flag_error (err_msg, __FILE__, __LINE__);
@@ -266,7 +244,7 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
-			printf("finished step\n");
+			MPI_Barrier(MPI_COMM_WORLD);
 			
 			// check to move atoms if necessary
 			if (nprocs > 1) {
@@ -277,8 +255,6 @@ namespace integrator {
 					return check;
 				}
 			}
-			
-			printf("finished move_atoms\n");
 			
 			MPI_Barrier(MPI_COMM_WORLD);
 		}

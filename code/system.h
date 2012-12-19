@@ -48,6 +48,7 @@ namespace sim_system {
 		void add_bond (const int atom1, const int atom2, const int type);
 		
 		int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
+		int* add_atoms (vector <Atom> *new_atoms);
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
