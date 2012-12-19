@@ -32,8 +32,8 @@ int read_xml (const string filename, System *sys) {
 	int check = 0;
 	int natoms = -1;
 	const int buffsize=1000;
-	char buff[buffsize];
-	while (fgets(buff, buffsize, input) != NULL) {
+	char buff[buffsize], *dummy_char, *dummy_char2;
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "natoms") != NULL) {
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
@@ -77,7 +77,7 @@ int read_xml (const string filename, System *sys) {
 	rewind(input);
 	check = 0;
 	vector<double> box(3, -1);
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "box") != NULL) {
 			check = 1;
 			vector <string> fields;
@@ -129,7 +129,7 @@ int read_xml (const string filename, System *sys) {
 	rewind(input);
 	check = 0;
 	int nbonds = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "bond") != NULL) {
 			vector <string> fields;
 			split(fields, buff, is_any_of("=,\", "), token_compress_on);
@@ -168,11 +168,11 @@ int read_xml (const string filename, System *sys) {
 	check = 0;
 	vector <int> atom_belongs;
 	int processor;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "position") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf %lf %lf", &atom_coords[0], &atom_coords[1], &atom_coords[2]) != 3) {
 					sprintf(err_msg, "Could not read atom index %d coordinates from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -209,11 +209,11 @@ int read_xml (const string filename, System *sys) {
 	// read velocities
 	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "velocity") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf %lf %lf", &new_atoms[i].vel[0], &new_atoms[i].vel[1], &new_atoms[i].vel[2]) != 3) {
 					sprintf(err_msg, "Could not read atom index %d velocity from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -234,11 +234,11 @@ int read_xml (const string filename, System *sys) {
 	// read mass
 	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "mass") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf", &new_atoms[i].mass) != 1) {
 					sprintf(err_msg, "Could not read atom index %d mass from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -265,11 +265,11 @@ int read_xml (const string filename, System *sys) {
 	// read sizes (diameters)
 	rewind(input);
 	check = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "diameter") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%lf", &new_atoms[i].diam) != 1) {
 					sprintf(err_msg, "Could not read atom index %d diameter from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -297,11 +297,11 @@ int read_xml (const string filename, System *sys) {
 	rewind(input);
 	char aname[ATOM_NAME_LENGTH];
 	check = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "type") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%s", aname) != 1) {
 					sprintf(err_msg, "Could not read atom index %d type name from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -333,11 +333,11 @@ int read_xml (const string filename, System *sys) {
 	rewind(input);
 	char bname[BOND_NAME_LENGTH];
 	check = 0;
-	while (fgets(buff, buffsize, input) != NULL) {
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "bond") != NULL) {
 			check = 1;
 			for (int i = 0; i < nbonds; ++i) {
-				fgets(buff, buffsize, input);
+				dummy_char2 = fgets(buff, buffsize, input);
 				if (sscanf(buff, "%s %d %d", bname, &lbond[i], &rbond[i]) != 3) {
 					sprintf(err_msg, "Could not read bond number %d from %s on rank %d", i+1, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -590,7 +590,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		else {
 			fp1 = mfopen (filename.c_str(), "a");
 		}
-		int i_need_to_print = 0, i_finished;
+		int i_need_to_print = 0;
 		if (fp1 == NULL) {
 			for (int i = 1; i < nprocs; ++i) {
 				MPI_Send(&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD);
@@ -647,7 +647,6 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
 		}
 
-		int check = 0;
 		for (int i = 0; i < tot_atoms-sys->natoms(); ++i) {
 			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
 		}

@@ -21,7 +21,8 @@ int read_interactions (const string filename, System *sys) {
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	while (fgets(buff, buffsize, input) != NULL) {
+	char *dummy_char;
+	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		vector <string> fields;
 		split(fields, buff, is_any_of("=,\", "), token_compress_on);
 		
@@ -184,10 +185,15 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 			flag_error (err_msg, __FILE__, __LINE__);
 			return NULL;
 		}
-		char* names[] = {"epsilon", "sigma", "delta", "k", "r0"};
+		vector <string> names(5);
+		names[0] = "epsilon";
+		names[1] = "sigma";
+		names[2] = "delta";
+		names[3] = "k";
+		names[4] = "r0";
 		for (int i = 0; i < 5; ++i) {
 			if (args->at(i) < 0.0) {
-				sprintf(err_msg, "Fene bond type %s argument %s = %g, must be > 0", name.c_str(), names[i], (double) args->at(i));
+				sprintf(err_msg, "Fene bond type %s argument %s = %g, must be > 0", name.c_str(), names[i].c_str(), (double) args->at(i));
 				flag_error (err_msg, __FILE__, __LINE__);
 				return NULL;
 			}
@@ -205,10 +211,12 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 			flag_error (err_msg, __FILE__, __LINE__);
 			return NULL;
 		}
-		char* names[] = {"k", "r0"};
+		vector <string> names(2);
+		names[0] = "k";
+		names[1] = "r0";
 		for (int i = 0; i < 2; ++i) {
 			if (args->at(i) < 0.0) {
-				sprintf(err_msg, "Harmonic bond type %s argument %s = %g, must be > 0", name.c_str(), names[i], (double) args->at(i));
+				sprintf(err_msg, "Harmonic bond type %s argument %s = %g, must be > 0", name.c_str(), names[i].c_str(), (double) args->at(i));
 				flag_error (err_msg, __FILE__, __LINE__);
 				return NULL;
 			}
@@ -221,14 +229,19 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 			flag_error (err_msg, __FILE__, __LINE__);
 			return NULL;
 		}
-		char* names[] = {"epsilon", "sigma", "delta", "U_shift", "r_cut"};
+		vector <string> names(5);
+		names[0] = "epsilon";
+		names[1] = "sigma";
+		names[2] = "delta";
+		names[3] = "U_shift";
+		names[4] = "r_cut";
 		for (int i = 0; i < 5; ++i) {
 			// skip U_shift test which can be < 0 if we want
 			if (i == 3) {
 				continue;
 			}
 			if (args->at(i) < 0.0) {
-				sprintf(err_msg, "Shifted Lennard-Jones interaction type %s argument %s = %g, must be > 0", name.c_str(), names[i], (double) args->at(i));
+				sprintf(err_msg, "Shifted Lennard-Jones interaction type %s argument %s = %g, must be > 0", name.c_str(), names[i].c_str(), (double) args->at(i));
 				flag_error (err_msg, __FILE__, __LINE__);
 				return NULL;
 			}
