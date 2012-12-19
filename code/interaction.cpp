@@ -117,8 +117,8 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
 		double factor1 = (args->at(1)/d1shift), d2 = factor1*factor1, d6 = d2*d2*d2;
 		double factor2 = 24.0/d1shift*args->at(0)*d6*(2.0*d6-1.0)/d1;
 		for (int i = 0; i < 3; ++i) {
-			a1->force[i] -= xyz[i]*factor;
-			a2->force[i] += xyz[i]*factor;
+			a1->force[i] -= xyz[i]*factor2;
+			a2->force[i] += xyz[i]*factor2;
 		}
 		energy += (4.0*args->at(0)*d6*(d6-1.0)+args->at(0));
 	} 

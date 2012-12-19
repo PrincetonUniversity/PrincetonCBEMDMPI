@@ -84,11 +84,12 @@ namespace integrator {
 		vector <int> nsend_atoms(nprocs,0), nrecv_atoms(nprocs,0);
 		int iproc;
 		vector <double> pos(3);
-		MPI_Request reqs_nsend[nprocs], reqs_nrecv[nprocs], reqs_nrecv2[nprocs];
-		MPI_Status stat_recv[nprocs];
 		vector < vector <int> > atom_goes;
 		vector <int> atom_goes_loc, dummy_catch;
 		Atom **leaving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *)), **arriving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *));
+		const int num_procs=nprocs;
+		MPI_Request reqs_nsend[num_procs], reqs_nrecv[num_procs], reqs_nrecv2[num_procs];
+		MPI_Status stat_recv[num_procs];
 
 		try {
 			atom_goes.resize(nprocs);

@@ -140,7 +140,8 @@ int gen_send_lists (System *sys) {
        1 = near lower bound (nlb)
        2 = near upper bound (nub) */
     const int itm=0, nlb=1, nub=2;
-    int is_near_border[ndims];
+    vector<int> is_near_border;
+    is_near_border.resize(ndims);
     vector<int> goes_to;
 
     sys->send_lists.clear();
@@ -209,9 +210,11 @@ double gen_skin_cutoff (/*Need a list of all the cutoffs for the different inter
 }
 
 //! Generates the list of neighbours a particle should be sent to based on the borders its near
-void gen_goes_to (const int is_near_border[], vector<int>& goes_to, const int ndims) {
+void gen_goes_to (const vector<int>& is_near_border, vector<int>& goes_to, const int ndims) {
 
-    int remaining[ndims], value=0;
+    int value=0;
+    vector<int> remaining;
+    remaining.resize(ndims);
     /* Since a particle can have only 3 realtionships to a dimension
        near lower bound, near upper bound or in the middle. Hence the variable nvals */
     const static int nvals=3;

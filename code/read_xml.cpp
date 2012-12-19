@@ -376,11 +376,12 @@ int read_xml (const string filename, System *sys) {
 	}
 
 	// now add the atoms that belong to this domain to the System object
-	Atom atom_array[(const int)atom_belongs.size()];
+	vector<Atom> atom_array;
+	atom_array.resize(atom_belongs.size());
 	for (unsigned int i = 0; i < atom_belongs.size(); ++i) {
 		atom_array[i] = new_atoms[atom_belongs[i]];
 	}
-	vector <int> dummy_vec = sys->add_atoms(atom_belongs.size(), atom_array);
+	vector <int> dummy_vec = sys->add_atoms(&atom_array);
 	sys->set_num_atoms(atom_belongs.size());
 	
 	sprintf(err_msg, "Successfully read coordinates from %s on rank %d", filename_cstr, rank);
@@ -418,13 +419,14 @@ int print_xml (const string filename, const System *sys) {
 		}
 
 		// get number of incoming atoms from workers
-		int worker_atoms[nprocs-1];
+		const int nprocs_less_one = nprocs-1;
+		int worker_atoms[nprocs_less_one];
 		for (int i=0; i<nprocs-1; i++) {
 		    worker_atoms[i] = 0;
 		}
 		i_need_to_print = 1;
-		MPI_Request send_reqs[nprocs-1], recv_reqs[nprocs-1], recv_reqs2[nprocs-1];
-		MPI_Status worker_stats[nprocs-1], worker_stats2[nprocs-1];
+		MPI_Request send_reqs[nprocs_less_one], recv_reqs[nprocs_less_one], recv_reqs2[nprocs_less_one];
+		MPI_Status worker_stats[nprocs_less_one], worker_stats2[nprocs_less_one];
 
 		for (int i = 1; i < nprocs; ++i) {
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &send_reqs[i-1]);
@@ -600,13 +602,14 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		}
 
 		// get number of incoming atoms from workers
-		int worker_atoms[nprocs-1];
+		const int nprocs_less_one = nprocs-1;
+		int worker_atoms[nprocs_less_one];
 		for (int i=0; i<nprocs-1; i++) {
 		    worker_atoms[i] = 0;
 		}
 		i_need_to_print = 1;
-		MPI_Request send_reqs[nprocs-1], recv_reqs[nprocs-1], recv_reqs2[nprocs-1];
-		MPI_Status worker_stats[nprocs-1], worker_stats2[nprocs-1];
+		MPI_Request send_reqs[nprocs_less_one], recv_reqs[nprocs_less_one], recv_reqs2[nprocs_less_one];
+		MPI_Status worker_stats[nprocs_less_one], worker_stats2[nprocs_less_one];
 
 		for (int i = 1; i < nprocs; ++i) {
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i, 0, MPI_COMM_WORLD, &send_reqs[i-1]);
@@ -690,6 +693,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 				atom_vec[i] = ((System *)sys)->copy_atom(i);
 			}
 			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
+			delete [] atom_vec;
 		} else {
 			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
 			flag_error (err_msg, __FILE__, __LINE__);
@@ -697,10 +701,6 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		}
 	}
 
-	MPI_Barrier (MPI_COMM_WORLD);
-	if (rank > 0 && status == 0) {
-		delete [] atom_vec;
-	}
 	MPI_Barrier (MPI_COMM_WORLD);
 	return status;
 }

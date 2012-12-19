@@ -82,9 +82,9 @@ namespace sim_system {
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		vector <double> box_;							//!< Global system cartesian dimensions
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system
-		map <string, int> atom_type_;					//!< Maps user specified name of atom type to internal index
-		map <string, int> bond_type_;					//!< Maps user specified name of bond type to internal index
-		map <string, int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
+		map <string, unsigned int> atom_type_;					//!< Maps user specified name of atom type to internal index
+		map <string, unsigned int> bond_type_;					//!< Maps user specified name of bond type to internal index
+		map <string, unsigned int> ppot_type_;					//!< Maps user specified name of pair potential type to an internal index
 		map <int, int> glob_to_loc_id_;					//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
 		vector < pair <int, int> > bonded_;
 		vector <int> bonded_type_;

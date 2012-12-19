@@ -248,7 +248,7 @@ namespace sim_system {
 			flag_error (err_msg, __FILE__, __LINE__);
 			return name;
 		} else {
-			typedef std::map<std::string, int>::iterator it_type;
+			typedef std::map<std::string, unsigned int>::iterator it_type;
 			for	(it_type iterator = atom_type_.begin(); iterator != atom_type_.end(); iterator++) {
 				if (iterator->second == index) {
 					return iterator->first;
@@ -264,7 +264,7 @@ namespace sim_system {
 	 Returns the string "NULL" if failed, else user defined name of bond.
 	 \param [in] index Internal index to locate and return the name associated.
 	 */
-	string System::bond_name (const int index) {
+	string System::bond_name (const unsigned int index) {
 		string name = "NULL";
 		char err_msg[MYERR_FLAG_SIZE];
 		if (index >= bond_type_.size()) {
@@ -272,7 +272,7 @@ namespace sim_system {
 			flag_error (err_msg, __FILE__, __LINE__);
 			return name;
 		} else {
-			typedef std::map<std::string, int>::iterator it_type;
+			typedef std::map<std::string, unsigned int>::iterator it_type;
 			for	(it_type iterator = bond_type_.begin(); iterator != bond_type_.end(); iterator++) {
 				if (iterator->second == index) {
 					return iterator->first;

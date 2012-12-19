@@ -33,7 +33,7 @@ int gen_send_table (System *sys);
 double gen_skin_cutoff ( ... /*Need a list of all the cutoffs for the different interactions*/ );
 
 //! Generates the list of neighbours a particle should be sent to based on the borders its near
-void gen_goes_to (const int is_near_border[], vector<int>& goes_to, const int ndims);
+void gen_goes_to (const vector<int>& is_near_border, vector<int>& goes_to, const int ndims);
 
 //! Computes the exponentiation of an integer by an integral power
 int power (int base, int exponent);
