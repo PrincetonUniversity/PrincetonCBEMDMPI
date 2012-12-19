@@ -48,10 +48,12 @@ namespace sim_system {
 		void add_bond (const int atom1, const int atom2, const int type);
 		
 		int* add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
+		void add_ghost_atoms (const int natoms, Atom *new_atoms);		//!< Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for
 		int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 		Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 		Atom copy_atom (int index) {return atoms_[index];}
 		void set_rank (int rank) {rank_ = rank;}
+		int rank () {return rank_;}
 		void set_num_atoms (int size) {num_atoms_ = size;}
 		int gen_domain_info ();
 		void clear_ghost_atoms ();

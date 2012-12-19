@@ -37,6 +37,7 @@ namespace sim_system {
 	 */
 	int System::delete_atoms (vector <int> indices) {
 		vector <Atom>::iterator it = atoms_.begin();
+		map <int, int>::iterator map_it;
   
 		// sort indices from lowest to highest
 		sort (indices.begin(), indices.end());
@@ -55,7 +56,9 @@ namespace sim_system {
 				glob_to_loc_id_[atoms_[j].sys_index] -= (shift+1);
 			}
     
+			map_it = glob_to_loc_id_.find(atoms_[indices[i]-shift].sys_index);
 			atoms_.erase(it-shift+indices[i]);
+			glob_to_loc_id_.erase(map_it);
 			++shift;
 		}
 		return shift;
@@ -88,6 +91,34 @@ namespace sim_system {
 		num_atoms_ += natoms; 
 
 		return update_proc;
+	}
+
+	/*!
+	 Attempt to push ghost atom(s) into the system.  This assigns the map automatically to link the atoms global index to the local storage location.
+	 This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits.
+	 Does not change num_atoms_ (the number of atoms a processor is responsible for)
+	 \param [in] natoms Length of the array of atoms to add to the system.
+	 \param [in] \*new_atoms Pointer to an array of atoms the user has created elsewhere.
+	 \param [out] \*update_proc Array of global indices that have just been added to this proc.
+	 */
+	void System::add_ghost_atoms (const int natoms, Atom *new_atoms) {
+		int index = atoms_.size();
+		for (int i = 0; i < natoms; ++i) {
+			try {
+				atoms_.push_back(new_atoms[i]);
+			}
+			catch (bad_alloc& ba) {
+				char err_msg[MYERR_FLAG_SIZE]; 
+				sprintf(err_msg, "Could not allocate space for new atoms in the system");
+				flag_error (err_msg, __FILE__, __LINE__);
+				//finalize();
+				exit(BAD_MEM);
+			}
+			glob_to_loc_id_[new_atoms[i].sys_index] = index;
+			index++;
+		}
+
+		return;
 	}
 
 	/*!
@@ -226,10 +257,15 @@ namespace sim_system {
 
     //! Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for
     void System::clear_ghost_atoms () {
-		cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-		atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
-		cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
-		return;
+	map <int, int>::iterator map_it;
+	for (vector<Atom>::iterator it=atoms_.begin()+num_atoms_; it!=atoms_.end(); it++) {
+			map_it = glob_to_loc_id_.find(it->sys_index);
+			glob_to_loc_id_.erase(map_it);
+	}	    
+	cout<<"before erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+	atoms_.erase(atoms_.begin()+num_atoms_, atoms_.end());
+	cout<<"after erase : capacity,size = "<<atoms_.capacity()<<atoms_.size()<<endl;
+	return;
     }
 	
     //! Generates the x,y,z ids for each processor and the absolute extents of the domain
