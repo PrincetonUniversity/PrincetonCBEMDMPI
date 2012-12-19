@@ -304,6 +304,8 @@ namespace integrator {
 			}
 			
 			MPI_Barrier(MPI_COMM_WORLD);
+			write_xyz ("output.xyz", sys, i, false);
+
 		}
 		
 	return 0;

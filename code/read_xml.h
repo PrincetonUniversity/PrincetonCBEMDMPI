@@ -25,5 +25,6 @@ using namespace boost::algorithm;
 
 int read_xml (const string filename, System *sys);
 int print_xml (const string filename, const System *sys);
+int write_xyz (const string filename, const System *sys, const int timestep, const bool wrap_pos);
 
 #endif
