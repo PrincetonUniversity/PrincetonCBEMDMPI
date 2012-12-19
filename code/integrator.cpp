@@ -34,11 +34,17 @@ namespace integrator {
 					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
 					// maintain atom position in the box
 					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
-					while (sys->get_atom(i)->pos[j] < 0.0) {
+					/*while (sys->get_atom(i)->pos[j] < 0.0) {
 						sys->get_atom(i)->pos[j] += box[j];
 					}
 					while (sys->get_atom(i)->pos[j] > box[j]) {
 						sys->get_atom(i)->pos[j] -= box[j];
+					}*/
+					if (sys->get_atom(i)->pos[j] < 0.0) {
+						sys->get_atom(i)->pos[j] += ceil(-sys->get_atom(i)->pos[j]/box[j])*box[j];
+					}
+					if (sys->get_atom(i)->pos[j] >= box[j]) {
+						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
 					}
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_pos_[i][j]) / dt_;
 				}
@@ -52,11 +58,17 @@ namespace integrator {
 					sys->get_atom(i)->pos[j] = 2.0 *  prev_pos_[i][j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
 					// maintain atom position in the box
 					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
-					while (sys->get_atom(i)->pos[j] < 0.0) {
+					/*while (sys->get_atom(i)->pos[j] < 0.0) {
 						sys->get_atom(i)->pos[j] += box[j];
 					}
 					while (sys->get_atom(i)->pos[j] > box[j]) {
 						sys->get_atom(i)->pos[j] -= box[j];
+					}*/
+					if (sys->get_atom(i)->pos[j] < 0.0) {
+						sys->get_atom(i)->pos[j] += ceil(-sys->get_atom(i)->pos[j]/box[j])*box[j];
+					}
+					if (sys->get_atom(i)->pos[j] >= box[j]) {
+						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
 					}
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
 				}
@@ -250,16 +262,18 @@ namespace integrator {
 		for (int i = 0; i < timesteps; ++i) {
 		    // generate lists of atoms to be sent to neighbouring cells
 		    if (gen_send_lists(sys)) {
-			sprintf(err_msg, "Problem generating lists to send out on rank %d", rank);
-			flag_error (err_msg, __FILE__, __LINE__);
-			return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+				sprintf(err_msg, "Problem generating lists to send out on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
 		    }
+			
 		    // communicate the above atoms (ghost atoms) to the appropriate processor
 		    if (communicate_skin_atoms(sys)) {
-			sprintf(err_msg, "Problem communicating lists on rank %d", rank);
-			flag_error (err_msg, __FILE__, __LINE__);
-			return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
+				sprintf(err_msg, "Problem communicating lists on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
 		    }
+			
 			// calc_force
 			check = force_calc(sys);
 			
