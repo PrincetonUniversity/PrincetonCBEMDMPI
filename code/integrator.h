@@ -13,6 +13,7 @@
 #include "atom.h"
 #include "global.h"
 #include "force_calc.h"
+#include "read_xml.h"
 
 using namespace sim_system; 
 using namespace misc;
