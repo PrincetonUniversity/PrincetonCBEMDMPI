@@ -2,7 +2,7 @@ LDFLAGS = -lm
 
 MPICXX=mpic++
 
-MPICXXFLAGS = -O3 -Wno-deprecated -g
+MPICXXFLAGS = -O3 -g
 
 GTEST_HEADERS = ../gtest-1.6.0/include/gtest/*.h \
 	      ../gtest-1.6.0/include/gtest/internal/*.h
