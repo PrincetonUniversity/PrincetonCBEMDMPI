@@ -112,7 +112,8 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
         if ( d1 > args->at(4) ) {
                 sprintf(err_msg,"Distance between atoms is %4.4f greater than r0 and fene bonded. Exiting Gracefully", d1);
                 flag_error ( err_msg, __FILE__, __LINE__);
-                return NULL;
+		MPI_Abort(MPI_COMM_WORLD, MPI_FAIL);
+		exit(ILLEGAL_VALUE);
         }
 	
 	// compute logarithmic portion
