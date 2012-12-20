@@ -39,6 +39,34 @@ private:
 	vector <double> energy_args_;			//!< Energy (and force) arguments
 };
 
+//! Fene exception class is thrown if there is an error
+class FeneException : public exception {
+public:
+	FeneException (const int ind1, const int ind2, const double dist, const double r0) {ind1_=ind1; ind2_=ind2; dist_=dist, r0_=r0;}
+	virtual const char* what() const throw() {
+		char err_msg[1000];
+		sprintf(err_msg, "Fene distance for atoms (%d,%d) = %g > %g, out of bounds (r > r0)", ind1_, ind2_, dist_, r0_);
+		return err_msg;
+	}
+protected:
+	int ind1_, ind2_;
+	double dist_, r0_;
+};
+
+//! SLJ exception class is thrown if there is an error
+class SljException : public exception {
+public:
+	SljException (const int ind1, const int ind2, const double dist, const double delta) {ind1_=ind1; ind2_=ind2; dist_=dist, delta_=delta;}
+	virtual const char* what() const throw() {
+		char err_msg[1000];
+		sprintf(err_msg, "Shifted Lennard-Jones for atoms (%d,%d) has separation of %g < %g out of bounds (r < delta)", ind1_, ind2_, dist_, delta_);
+		return err_msg;
+	}
+protected:
+	int ind1_, ind2_;
+	double dist_, delta_;
+};
+
 #endif
 
 

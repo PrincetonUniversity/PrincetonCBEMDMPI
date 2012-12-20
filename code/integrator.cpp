@@ -258,6 +258,14 @@ namespace integrator {
 		    flag_error (err_msg, __FILE__, __LINE__);
 		    return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
 		}
+		
+		int print_step;
+		if (timesteps < 100) {
+			print_step = 1;
+		} else {
+			print_step = (int) floor(timesteps/100.0);
+		}
+
 		// execute loops
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
@@ -305,8 +313,17 @@ namespace integrator {
 			}
 			
 			MPI_Barrier(MPI_COMM_WORLD);
-			write_xyz ("output.xyz", sys, i, false);
+			
+			// report progress
+			if (rank == 0) {
+				if (i%print_step == 0) {
+					sprintf(err_msg, "Finished %d of %d total steps", i, timesteps);
+					flag_notify (err_msg, __FILE__, __LINE__);
+				}
+			}
 
+			// create animation
+			write_xyz ("output.xyz", sys, i, false);
 		}
 		
 	return 0;

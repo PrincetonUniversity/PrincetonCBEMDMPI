@@ -8,38 +8,38 @@ void gen_sets (const vector<int>& factors, const double box[], const int level, 
     static int breakup[3]={1,1,1};
 
     if (factors.size() == 0) {
-	for (int m=0; m<3; m++) {
-	    widths[m] = box[m] / breakup[m];
-	}
-	double diff = (widths[1]-widths[0])*(widths[1]-widths[0]) + (widths[2]-widths[1])*(widths[2]-widths[1]) + (widths[0]-widths[2])*(widths[0]-widths[2]);
-	if (diff <= final_diff) {
-	    for (vector<int>::size_type m=0; m!=final_breakup.capacity(); m++) {
-		final_breakup.at(m) = breakup[m];
-	    }
-	    final_diff = diff;
-	}
-	return;
+		for (int m=0; m<3; m++) {
+			widths[m] = box[m] / breakup[m];
+		}
+		double diff = (widths[1]-widths[0])*(widths[1]-widths[0]) + (widths[2]-widths[1])*(widths[2]-widths[1]) + (widths[0]-widths[2])*(widths[0]-widths[2]);
+		if (diff <= final_diff) {
+			for (vector<int>::size_type m=0; m!=final_breakup.capacity(); m++) {
+				final_breakup.at(m) = breakup[m];
+			}
+			final_diff = diff;
+		}
+		return;
     } else if (level != 0 && add != 0) {
-	for (unsigned int j=0; j<factors.size(); j++) {
-	    breakup[level-1] *= factors[j];
-	    remaining = factors;
-	    remaining.erase (remaining.begin()+j);
-	    gen_sets(remaining, box, level, final_diff, final_breakup, add-1);
-	    breakup[level-1] /= factors[j];
-	}
+		for (unsigned int j=0; j<factors.size(); j++) {
+			breakup[level-1] *= factors[j];
+			remaining = factors;
+			remaining.erase (remaining.begin()+j);
+			gen_sets(remaining, box, level, final_diff, final_breakup, add-1);
+			breakup[level-1] /= factors[j];
+		}
     } else if (level == 0 && add == 0) {
-	for (int m=0; m<3; m++) {
-	    breakup[m] = 1;
-	}
-	for (int i=1; i<=((int)factors.size()-2); i++) {
-	    gen_sets(factors, box, 1, final_diff, final_breakup, i);
-	}
+		for (int m=0; m<3; m++) {
+			breakup[m] = 1;
+		}
+		for (int i=1; i<=((int)factors.size()-2); i++) {
+			gen_sets(factors, box, 1, final_diff, final_breakup, i);
+		}
     } else if (level == 2 && add == 0) {
-	gen_sets(factors, box, level+1, final_diff, final_breakup, factors.size());
+		gen_sets(factors, box, level+1, final_diff, final_breakup, factors.size());
     } else if (level != 0 && add == 0) {
-	for (int k=1; k<=((int)factors.size()+level-2); k++) {
-	    gen_sets(factors, box, level+1, final_diff, final_breakup, k);
-	}
+		for (int k=1; k<=((int)factors.size()+level-2); k++) {
+			gen_sets(factors, box, level+1, final_diff, final_breakup, k);
+		}
     }
     return;
 } //gen_sets ends
@@ -132,7 +132,6 @@ int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_
 
 //! Generates the lists of molecules that need to be passed to other processors
 int gen_send_lists (System *sys) {
-
     const int ndims=3;
     const double skin_cutoff=sys->max_rcut();
     /* Since a particle can have only 3 realtionships to a dimension of the box, we define
@@ -146,24 +145,24 @@ int gen_send_lists (System *sys) {
 
     sys->send_lists.clear();
     for (int i=0; i<26; i++) {
-	sys->send_list_size[i] = 0;
+		sys->send_list_size[i] = 0;
     }
     for (int i=0; i < sys->natoms(); i++) {
-	goes_to.clear();
-	for (int j=0; j<ndims; j++) {
-	    if (sys->get_atom(i)->pos[j] < (sys->xyz_limits[j][0]+skin_cutoff)) {
-		is_near_border[j] = nlb;
-	    } else if  (sys->get_atom(i)->pos[j] > (sys->xyz_limits[j][1]-skin_cutoff)) {
-		is_near_border[j] = nub;
-	    } else {
-		is_near_border[j] = itm;
-	    }
-	}
-	gen_goes_to(is_near_border, goes_to, ndims);
-	for (vector<int>::iterator iter=goes_to.begin(); iter!=goes_to.end(); iter++) {
-	    sys->send_lists[*iter].push_back(*(sys->get_atom(i)));
-	    sys->send_list_size[*iter]++;
-	}
+		goes_to.clear();
+		for (int j=0; j<ndims; j++) {
+			if (sys->get_atom(i)->pos[j] < (sys->xyz_limits[j][0]+skin_cutoff)) {
+				is_near_border[j] = nlb;
+			} else if  (sys->get_atom(i)->pos[j] > (sys->xyz_limits[j][1]-skin_cutoff)) {
+				is_near_border[j] = nub;
+			} else {
+				is_near_border[j] = itm;
+			}
+		}
+		gen_goes_to(is_near_border, goes_to, ndims);
+		for (vector<int>::iterator iter=goes_to.begin(); iter!=goes_to.end(); iter++) {
+			sys->send_lists[*iter].push_back(*(sys->get_atom(i)));
+			sys->send_list_size[*iter]++;
+		}
     }
     return 0;
 }

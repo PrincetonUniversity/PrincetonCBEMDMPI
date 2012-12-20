@@ -5,12 +5,6 @@
 
 #include "interaction.h"
 
-class NewException : public exception {
-	virtual const char* what() const throw() {
-		return "Fene distance out of bounds (r > r0)";
-	}
-} fene_bounds_error;
-
 // define new slj etc. functions here
 /*void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 	double delta_=1., rcut=1., sigma_=0.1, epsilon_=0.1;
@@ -51,6 +45,14 @@ double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <
 	double xyz[3];
 	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
 	if (d2 < args->at(4)) {
+		
+		// check that r > delta, else error has occurred
+		if (d2 < args->at(2)) {
+			SljException slj_bounds_error (atom1->sys_index, atom2->sys_index, d2, args->at(2));
+			throw(slj_bounds_error);
+			return 0.0;
+		}
+		
 		double delta=args->at(2), sigma=args->at(1), epsilon=args->at(0);
 		double r = sqrt(d2), x = r - delta;	
 		double b = 1.0/x, a = sigma*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
@@ -106,19 +108,19 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  \param [in] \*args Vector of arguments <epsilon, sigma, delta, k, r0>
  */
 double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
-	char err_msg[MYERR_FLAG_SIZE];
 	double xyz[3];
 	double d2 = min_image_dist2 ((const Atom *) a1, (const Atom *) a2, box, xyz);
 	double d1 = sqrt(d2), d1shift = d1 - args->at(2);
 	double factor = d1shift/(d1shift/args->at(4)*d1shift/args->at(4)-1.0)/d1, energy = 0.0;
 
-        // check_fene
-        // check if atom coordinates in a fene bond are further than r0 apart
-        // this can cause a singularity so we want to guard against this
-        if ( d1 > args->at(4) ) {
-			throw(fene_bounds_error);
-			return 0.0;
-        }
+	// check_fene
+	// check if atom coordinates in a fene bond are further than r0 apart
+	// this can cause a singularity so we want to guard against this
+	if ( d1 > args->at(4) ) {
+		FeneException fene_bounds_error (a1->sys_index, a2->sys_index, d1, args->at(4));
+		throw(fene_bounds_error);
+		return 0.0;
+	}
 	
 	// compute logarithmic portion
 	for (int i = 0; i < 3; ++i) {
