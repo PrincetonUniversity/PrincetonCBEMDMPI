@@ -31,13 +31,13 @@ void gen_sets (const vector<int>& factors, const double box[], const int level, 
 	for (int m=0; m<3; m++) {
 	    breakup[m] = 1;
 	}
-	for (int i=1; i<=(factors.size()-2); i++) {
+	for (int i=1; i<=((int)factors.size()-2); i++) {
 	    gen_sets(factors, box, 1, final_diff, final_breakup, i);
 	}
     } else if (level == 2 && add == 0) {
 	gen_sets(factors, box, level+1, final_diff, final_breakup, factors.size());
     } else if (level != 0 && add == 0) {
-	for (int k=1; k<=(factors.size()+level-2); k++) {
+	for (int k=1; k<=((int)factors.size()+level-2); k++) {
 	    gen_sets(factors, box, level+1, final_diff, final_breakup, k);
 	}
     }

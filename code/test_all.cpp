@@ -11,13 +11,12 @@ using namespace sim_system;
 using namespace atom;
 using namespace integrator;
 
-
 class TwoBodyTest : public ::testing::Test {
 protected:
     /* Generates a 2 atom system */
     virtual void SetUp () {
-	vector<double> box (3, 10.0);
-	sys.set_box(box);
+		vector<double> box (3, 10.0);
+		sys.set_box(box);
         Atom atom0;
         atom0.pos[0] = 2.0;
         atom0.pos[1] = 3.0;
@@ -25,33 +24,33 @@ protected:
         atom0.vel[0] = 1.0;
         atom0.vel[1] = 2.0;
         atom0.vel[2] = 3.0;
-	atom0.force[0] = 0.0;
-	atom0.force[1] = 0.0;
-	atom0.force[2] = 0.0;
+		atom0.force[0] = 0.0;
+		atom0.force[1] = 0.0;
+		atom0.force[2] = 0.0;
         atom0.mass = 1.0;
         atom0.type = 1;
-	atom::Atom atom1;
+		atom::Atom atom1;
         atom1.pos[0] = 1.0;
         atom1.pos[1] = 2.0;
         atom1.pos[2] = 3.0;
         atom1.vel[0] = 0.1;
         atom1.vel[1] = 0.2;
         atom1.vel[2] = 0.3;
-	atom1.force[0] = 0.0;
-	atom1.force[1] = 0.0;
-	atom1.force[2] = 0.0;
+		atom1.force[0] = 0.0;
+		atom1.force[1] = 0.0;
+		atom1.force[2] = 0.0;
         atom1.mass = 1.0;
         atom1.type = 1;
         Atom atom_array [] = {atom0, atom1};
         sys.add_atoms(2, atom_array);
-	sys.set_num_atoms(2);
-	sys.final_proc_breakup.reserve(3);
-	for (int i=0; i<3; i++) {
-	    sys.final_proc_breakup[i] = i+3;
-	}
-	sys.proc_widths[0] = 10.0/3;
-	sys.proc_widths[1] = 2.5;
-	sys.proc_widths[2] = 2.0;
+		sys.set_num_atoms(2);
+		sys.final_proc_breakup.reserve(3);
+		for (int i=0; i<3; i++) {
+			sys.final_proc_breakup[i] = i+3;
+		}
+		sys.proc_widths[0] = 10.0/3;
+		sys.proc_widths[1] = 2.5;
+		sys.proc_widths[2] = 2.0;
     }
 
     System sys;
@@ -68,19 +67,19 @@ protected:
 	// Add a bunch of random atoms
 	for (int i=0; i<3; i++) {
 	    for (int j=0; j<4; j++) {
-		for (int k=0; k<5; k++) {
-		    Atom* atom_ptr = new Atom;
-		    int vals[3]={i, j, k};
-		    for (int m=0; m<3; m++) {
-			atom_ptr->pos[m] = (vals[m]+0.5)*box[m]/6.0;
-			atom_ptr->vel[m] = 0.0;
-			atom_ptr->force[m] = 0.0;
-			atom_ptr->mass = 1.0;
-			atom_ptr->type = 1.0;
-		    }
-		    int* temp = sys.add_atoms(1, atom_ptr);
-		    delete atom_ptr;
-		}
+			for (int k=0; k<5; k++) {
+				Atom* atom_ptr = new Atom;
+				int vals[3]={i, j, k};
+				for (int m=0; m<3; m++) {
+					atom_ptr->pos[m] = (vals[m]+0.5)*box[m]/6.0;
+					atom_ptr->vel[m] = 0.0;
+					atom_ptr->force[m] = 0.0;
+					atom_ptr->mass = 1.0;
+					atom_ptr->type = 1.0;
+				}
+				vector <int> temp = sys.add_atoms(1, atom_ptr);
+				delete atom_ptr;
+			}
 	    }
 	}
 	sys.final_proc_breakup.reserve(3);
@@ -125,26 +124,26 @@ TEST_F (TwoBodyTest, GetProcessorTest) {
     vector<double> pos;
     int proc;
     for (int i=1; i<=3; i++) {
-	for (int j=1; j<=4; j++) {
-	    for (int k=1; k<=5; k++) {
-		pos.clear();
-		pos.push_back(1+(i-1)*3.33);
-		pos.push_back(1+(j-1)*2.5);
-		pos.push_back(1+(k-1)*2);
-		proc = get_processor (pos, &sys);
-		EXPECT_EQ ((i-1)+3*(j-1)+12*(k-1), proc);
-	    }
-	}
+		for (int j=1; j<=4; j++) {
+			for (int k=1; k<=5; k++) {
+				pos.clear();
+				pos.push_back(1+(i-1)*3.33);
+				pos.push_back(1+(j-1)*2.5);
+				pos.push_back(1+(k-1)*2);
+				proc = get_processor (pos, &sys);
+				EXPECT_EQ ((i-1)+3*(j-1)+12*(k-1), proc);
+			}
+		}
     }
 }
 
 TEST_F (TwoBodyTest, VerletNoInitVelocity) {
     Verlet integ_obj (0.1);
     for (int i=0; i<3; i++) {
-	sys.get_atom(0)->force[i] = i;
-	sys.get_atom(1)->force[i] = i*10;
-	sys.get_atom(0)->vel[i] = 0.0;
-	sys.get_atom(1)->vel[i] = 0.0;
+		sys.get_atom(0)->force[i] = i;
+		sys.get_atom(1)->force[i] = i*10;
+		sys.get_atom(0)->vel[i] = 0.0;
+		sys.get_atom(1)->vel[i] = 0.0;
     }
     sys.get_atom(1)->mass = 2.0;
     integ_obj.step(&sys);
@@ -326,8 +325,6 @@ TEST (DomainDecompTest, ThreeFactorLongBox3) {
     EXPECT_EQ (3, final_breakup[2]);    
 }
 			   			   
-
-
 // the following use mpi in the tests
 TEST (ReadXMLTest, AtomPositions) {
     int argc = 5;
