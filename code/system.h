@@ -74,11 +74,16 @@ namespace sim_system {
 		void set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
 		double max_rcut () const {return max_rcut_;}
 		
+		void set_total_KE (const double ke) {KE_ = ke;}			//!< Set the global kinetic energy record
+		void set_total_PE (const double pe) {U_ = pe;}			//!< Set the global potential energy record
+		double KE () const {return KE_;}
+		double U () const {return U_;}
+		
 	private:
 		int rank_; //!< rank of the processor this domain is on
 		double Temp_;									//!< System temperature in reduced units (kT)
 		double Press_;									//!< System pressure in reduced units
-		double KE_, U_;									//!< Total internal kinetic energy and potential energy
+		double KE_, U_;									//!< Total internal kinetic energy and potential energy of the global system
 		vector <Atom> atoms_;							//!< Vector of Atoms in the system
 		vector <double> box_;							//!< Global system cartesian dimensions
 		vector <double> masses_;						//!< Vector containing masses of each type of Atom in the system

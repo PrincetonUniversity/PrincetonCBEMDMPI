@@ -5,36 +5,18 @@
 
 #include "interaction.h"
 
-// define new slj etc. functions here
-/*void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
-	double delta_=1., rcut=1., sigma_=0.1, epsilon_=0.1;
-	// compute min image distance
-	double xyz[3];
-	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
-	
-	double r = sqrt(d2), x = r - delta_;
-	vector <double> force_vec(3,0.0);
-	if (x < rcut) {
-		double b = 1.0/x, a = sigma_*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
-		factor = 24.0*epsilon_*a6*(2.0*a6-1.0)*b/r;
-		for (int i = 0; i < 3; ++i) {
-			val = xyz[i]*factor;
-			atom1->force[i] -= val;
-			atom2->force[i] += val;
-		}
-	}
-}*/
-
 //! Shifted Lennard-Jones Force
 /*!
  This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries. The energy U(r) is returned:
  \f{eqnarray*}{
- U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift}
+ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\
+ &=& 0 & r - \Delta \ge r_{cut}
  \f}
  Forces are added to atoms: 
- \f[
- F_i = -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r}
- \f]
+ \f{eqnarray*}{
+ F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\
+ &=& 0 & r - \Delta \ge r_{cut}
+ \f}
  \param [in,out] \*atom1 Pointer to first atom
  \param [in,out] \*atom2 Pointer to second atom
  \param [in] \*box Pointer to vector of box size
@@ -101,8 +83,9 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  Where the short range repulsion is provided by the WCA potential:
  \f{eqnarray*}{
  U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) & r < 2^{1/6}\sigma+\Delta \\
- &=& 0 &r \ge 2^{1/6}\sigma+\Delta
+ &=& 0 &r-\Delta \ge 2^{1/6}\sigma
  \f}
+ \Delta is usually set such that $\Delta = (d_i+d_j)/2-1$ where $d_i$ is the diameter of species i, but the user may decide on other parameters.
  \param [in,out] \*atom1 Pointer to first atom
  \param [in,out] \*atom2 Pointer to second atom
  \param [in] \*box Pointer to vector of box size

@@ -290,6 +290,8 @@ namespace integrator {
 				return ILLEGAL_VALUE; //This needs to be corrected, illegal value is here temporarily
 		    }
 			
+			MPI_Barrier(MPI_COMM_WORLD);
+			
 			// calc_force
 			check = force_calc(sys);
 			
@@ -310,8 +312,6 @@ namespace integrator {
 				return check;
 			}
 			
-			
-
 			// check to move atoms if necessary
 			if (nprocs > 1) {
 				check = move_atoms (sys, rank, nprocs);
