@@ -114,8 +114,9 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
 	
 	if (d1shift < WCA_CUTOFF*args->at(1)) {
 		// use WCA portion of the potential
-		double factor1 = (args->at(1)/d1shift), d2 = factor1*factor1, d6 = d2*d2*d2;
+		double factor1 = (args->at(1)/d1shift), d2_wca = factor1*factor1, d6 = d2_wca*d2_wca*d2_wca;
 		double factor2 = 24.0/d1shift*args->at(0)*d6*(2.0*d6-1.0)/d1;
+		//		cout<<"d1 = "<<d1<<" , f = "<<factor<<" , f2 = "<<factor2<<endl;
 		for (int i = 0; i < 3; ++i) {
 			a1->force[i] -= xyz[i]*factor2;
 			a2->force[i] += xyz[i]*factor2;

@@ -172,7 +172,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "position") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%lf %lf %lf", &atom_coords[0], &atom_coords[1], &atom_coords[2]) != 3) {
 					sprintf(err_msg, "Could not read atom index %d coordinates from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -213,7 +218,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "velocity") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%lf %lf %lf", &new_atoms[i].vel[0], &new_atoms[i].vel[1], &new_atoms[i].vel[2]) != 3) {
 					sprintf(err_msg, "Could not read atom index %d velocity from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -238,7 +248,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "mass") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%lf", &new_atoms[i].mass) != 1) {
 					sprintf(err_msg, "Could not read atom index %d mass from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -269,7 +284,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "diameter") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%lf", &new_atoms[i].diam) != 1) {
 					sprintf(err_msg, "Could not read atom index %d diameter from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -301,7 +321,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "type") != NULL) {
 			check = 1;
 			for (int i = 0; i < natoms; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%s", aname) != 1) {
 					sprintf(err_msg, "Could not read atom index %d type name from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -337,7 +362,12 @@ int read_xml (const string filename, System *sys) {
 		if (strstr(buff, "bond") != NULL) {
 			check = 1;
 			for (int i = 0; i < nbonds; ++i) {
-				dummy_char2 = fgets(buff, buffsize, input);
+			    if ((dummy_char2 = fgets(buff, buffsize, input)) == NULL) {
+				sprintf(err_msg, "Unexpected read error on rank %d", rank);
+				flag_error (err_msg, __FILE__, __LINE__);
+				fclose(input);
+				return FILE_ERROR;
+			    }				
 				if (sscanf(buff, "%s %d %d", bname, &lbond[i], &rbond[i]) != 3) {
 					sprintf(err_msg, "Could not read bond number %d from %s on rank %d", i+1, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -548,16 +578,12 @@ int print_xml (const string filename, const System *sys) {
 				atom_vec[i] = ((System *)sys)->copy_atom(i);
 			}
 			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
+			delete [] atom_vec;
 		} else {
 			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
 			flag_error (err_msg, __FILE__, __LINE__);
 			status = FILE_ERROR;
 		}
-	}
-
-    MPI_Barrier (MPI_COMM_WORLD);
-	if (rank > 0 && status == 0) {
-		delete [] atom_vec;
 	}
 	MPI_Barrier (MPI_COMM_WORLD);
 	return status;

@@ -41,7 +41,7 @@ namespace sim_system {
 
 		int add_bond_type (const string bond_name);				//!< Index a bond name
 		int bond_type (const string bond_name);					//!< Return the internal index associated with a bond name
-		string bond_name (const int index);						//!< Return the name associated with an index for bond type
+		string bond_name (const unsigned int index);						//!< Return the name associated with an index for bond type
 		const pair <int, int> get_bond (const int nbond) {return bonded_[nbond];}	//!< Return a specific bonded pair indices
 		int get_bond_type (const int nbond) {return bonded_type_[nbond];}	//!< Return the internal index of a bond
 		int nbonds () {return bonded_.size();}					//!< Return the number of bonds in the system

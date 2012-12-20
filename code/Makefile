@@ -2,7 +2,7 @@ LDFLAGS = -lm
 
 MPICXX=mpic++
 
-MPICXXFLAGS = -O3 -g -Wall
+MPICXXFLAGS = -O0 -g -Wall
 
 all: cbemd
 
