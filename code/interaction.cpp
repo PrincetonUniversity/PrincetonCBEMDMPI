@@ -1,6 +1,6 @@
 /**
  Interaction Information
- \author Nathan A. Mahynski
+ \authors{Nathan A. Mahynski, George A. Khoury}
  **/
 
 #include "interaction.h"
@@ -100,10 +100,20 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  \param [in] \*args Vector of arguments <epsilon, sigma, delta, k, r0>
  */
 double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args) {
+	char err_msg[MYERR_FLAG_SIZE];
 	double xyz[3];
 	double d2 = min_image_dist2 ((const Atom *) a1, (const Atom *) a2, box, xyz);
 	double d1 = sqrt(d2), d1shift = d1 - args->at(2);
 	double factor = d1shift/(d1shift/args->at(4)*d1shift/args->at(4)-1.0)/d1, energy = 0.0;
+
+        // check_fene
+        // check if atom coordinates in a fene bond are further than r0 apart
+        // this can cause a singularity so we want to guard against this
+        if ( d1 > args->at(4) ) {
+                sprintf(err_msg,"Distance between atoms is %4.4f greater than r0 and fene bonded. Exiting Gracefully", d1);
+                flag_error ( err_msg, __FILE__, __LINE__);
+                return NULL;
+        }
 	
 	// compute logarithmic portion
 	for (int i = 0; i < 3; ++i) {
