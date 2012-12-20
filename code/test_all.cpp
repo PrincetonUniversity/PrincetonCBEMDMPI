@@ -333,45 +333,257 @@ TEST (ReadXMLTest, AtomPositions) {
     System sys1;
     int status;
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
-    //status = read_xml("sample.xml", 4, 0, &sys1);
-    //cout << status << endl;
-    cout << "Total Atoms " << sys1.total_atoms() << " " << sys1.natoms() << endl;
-    cout << "x,y,z coords of atom 1 " << sys1.get_atom(0)->pos[0] << " " << sys1.get_atom(0)->pos[1] << " " << sys1.get_atom(0)->pos[2] << endl;
-    ASSERT_EQ(5,sys1.get_atom(0)->pos[0]);
+	EXPECT_EQ(sys1.total_atoms(), 15);
+    EXPECT_EQ(5,sys1.get_atom(0)->pos[0]);
+	EXPECT_EQ(5,sys1.get_atom(0)->pos[1]);
+	EXPECT_EQ(5,sys1.get_atom(0)->pos[2]);
 }
 
 TEST (ReadXMLTest, AtomVelocities) { 
     int argc = 5;
     char *argv[] = {"dummy"};
-    //int check = start_mpi (argc, argv);
     System sys1;
     int status;
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
-    //status = read_xml("sample.xml", 4, 0, &sys1);
-    //cout << status << endl;
-    cout << "Total Atoms " << sys1.total_atoms() << " " << sys1.natoms() << endl;
-    cout << "x,y,z, velocities of atom 1 " << sys1.get_atom(0)->vel[0] << " " << sys1.get_atom(0)->vel[1] << " " << sys1.get_atom(0)->vel[2] << endl;
-    ASSERT_EQ(0,sys1.get_atom(0)->vel[0]);
+	EXPECT_EQ(sys1.total_atoms(), 15);
+    EXPECT_EQ(0,sys1.get_atom(0)->vel[0]);
+	EXPECT_EQ(0,sys1.get_atom(0)->vel[1]);
+	EXPECT_EQ(0,sys1.get_atom(0)->vel[2]);
 }
 
 TEST (ReadXMLTest, BoxVolume) {
     int argc = 5;
     char *argv[] = {"dummy"};
-    //int check = start_mpi (argc, argv);
     System sys1;
     int status;
     status = initialize_from_files ("sample.xml", "energy_params.dat",&sys1);
-    //status = read_xml("sample.xml", 4, 0, &sys1);
-    //cout << status << endl;
-    for (int i = 0; i < 3; i++) {
-        cout<<sys1.box()[i] << " " ;
-    }
-    cout << endl;
-    ASSERT_EQ(1000,sys1.box()[0]*sys1.box()[1]*sys1.box()[2]);
+    EXPECT_EQ(1000,sys1.box()[0]*sys1.box()[1]*sys1.box()[2]);
     MPI_Finalize();
 }
 
-// probably check that each error works
+/* Energy equation checks */
+class AtomEnergy : public ::testing::Test {
+protected:
+	virtual void SetUp() {
+		for (int i = 0; i < 3; ++i) {
+			box.push_back(10.0);
+		}
+	}
+
+	Atom a1, a2;
+	double eps, sig, delta, u_shift, rcut2, r0, k, ans, ans2, dx;
+	int caught;
+	vector <double> args, box;
+};
+
+// FENE
+TEST_F (AtomEnergy, FeneBondsEnergy) {
+}
+
+TEST_F (AtomEnergy, FeneBondsForce) {
+	int icatch;
+	double x, r;
+	
+	a1.pos[0] = 1.0;
+	a1.pos[1] = 0;
+	a1.pos[2] = 0;
+	a2.pos[1] = 0;
+	a2.pos[2] = 0;
+	
+	eps = 1.0;
+	sig = 1.0;
+	delta = 0.0;
+	r0 = 3.0;
+	k = 30.0;
+	args.push_back(eps);
+	args.push_back(sig);
+	args.push_back(delta);
+	args.push_back(k);
+	args.push_back(r0);
+	
+	// test forces
+	for (int i = 0; i < 12; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			a1.force[j] = 0.0;
+			a2.force[j] = 0.0;
+		}
+		
+		a2.pos[0] = 0.75+i*0.5;
+		x = a2.pos[0]-a1.pos[0];
+		r = fabs(x);
+		icatch = 0;
+		try {
+			ans2 = fene(&a1, &a2, &box, &args);
+		}
+		catch (exception& e) {
+			icatch = 1;
+		}
+		
+		if (r > r0 || r - delta < 0) {
+			EXPECT_EQ (icatch, 1);
+		} else {
+			EXPECT_EQ (icatch, 0);
+			ans = -k*(r-delta)/(1.0-pow((r-delta)/r0,2))*x/r;
+			
+			if (r-delta < pow(2,1.0/6.0)*sig) {
+				ans += 24.0*eps*(2.0*pow(sig/(r-delta),12)-pow(sig/(r-delta),6))*x/r/(r-delta);
+			}
+			EXPECT_TRUE (fabs(a1.force[0]+ans) < 1.0e-6);
+			EXPECT_TRUE (fabs(a2.force[0]-ans) < 1.0e-6);
+		}
+	}
+}
+
+// HARMONIC Energy
+TEST_F (AtomEnergy, HarmonicBondsEnergy) {
+	k = 330.0;
+	r0 = 1.5;
+	args.clear();
+	args.push_back(k);
+	args.push_back(r0);				 
+	
+	a1.pos[0] = 1.0;
+	a1.pos[1] = 0;
+	a1.pos[2] = 0;
+	a2.pos[0] = 0.5;
+	a2.pos[1] = 0;
+	a2.pos[2] = 0;
+	
+	for (int i = 0; i < 11; ++i) {
+		ans = harmonic (&a1, &a2, &box, &args);
+		ans2 = 0.5*k*(fabs(a2.pos[0]-a1.pos[0])-r0)*(fabs(a2.pos[0]-a1.pos[0])-r0);
+		EXPECT_TRUE (fabs(ans-ans2) < 1.0e-6);
+		a2.pos[0] += 0.1;
+	}
+}
+
+// HARMONIC Force
+TEST_F (AtomEnergy, HarmonicBondsForce) {
+	k = 330.0;
+	r0 = 1.5;
+	args.clear();
+	args.push_back(k);
+	args.push_back(r0);				 
+	
+	a1.pos[0] = 1.0;
+	a1.pos[1] = 0;
+	a1.pos[2] = 0;
+	a2.pos[0] = 0.5;
+	a2.pos[1] = 0;
+	a2.pos[2] = 0;
+	
+	for (int i = 0; i < 11; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			a1.force[j] = 0.0;
+			a2.force[j] = 0.0;
+		}
+		ans = harmonic (&a1, &a2, &box, &args);
+		ans2 = -k*(a2.pos[0]-a1.pos[0])*(r0/fabs(a2.pos[0]-a1.pos[0])-1);		
+		EXPECT_TRUE (fabs(a2.force[0]-ans2) < 1.0e-6);
+		EXPECT_TRUE (fabs(a1.force[0]+ans2) < 1.0e-6);
+		a2.pos[0] += 0.1;
+	}
+}
+
+// SLJ Energy
+TEST_F (AtomEnergy, SljEnergy) {
+	a1.pos[0] = 1.0;
+	a1.pos[1] = 0;
+	a1.pos[2] = 0;
+	a2.pos[0] = 2.0;
+	a2.pos[1] = 0;
+	a2.pos[2] = 0;
+	
+	eps = 1.0;
+	sig = 1.0;
+	delta = 0.5;
+	u_shift = 0.0;
+	rcut2 = 2.5*2.5;
+	args.push_back(eps);
+	args.push_back(sig);
+	args.push_back(delta);
+	args.push_back(u_shift);
+	args.push_back(rcut2);
+	
+	// test energy
+	for (int i = 0; i < 32; ++i) {
+		a2.pos[0] = 2.0+i*0.25;
+		if (a2.pos[0]-1 < delta) {
+			// try to catch exception that r < delta is illegal
+			caught = 0;
+			try {
+				ans2 = slj(&a1, &a2, &box, &args);
+			}
+			catch (exception& e) {
+				caught = 1;
+			}
+			EXPECT_EQ (caught, 1);
+		} else {
+			// "normal" calculation
+			if (a2.pos[0]-a1.pos[0] < box[0]/2) {
+				dx = a2.pos[0]-a1.pos[0];
+			} else {
+				dx = sqrt(pow(a2.pos[0]-a1.pos[0]-box[0],2));
+			}
+			if (dx-delta < sqrt(rcut2)) {
+				ans = 4.0*eps*(pow(sig/(dx-delta),12)-pow(sig/(dx-delta),6))+u_shift;
+			} else {
+				ans = 0.0;
+			}
+			
+			ans2 = slj(&a1, &a2, &box, &args);
+			EXPECT_TRUE (fabs(ans-ans2) < 1.0e-6);
+		}
+	}
+}
+
+// SLJ Forces
+TEST_F (AtomEnergy, SljForces) {
+	a1.pos[0] = 1.0;
+	a1.pos[1] = 0;
+	a1.pos[2] = 0;
+	a2.pos[0] = 2.0;
+	a2.pos[1] = 0;
+	a2.pos[2] = 0;
+	
+	eps = 1.0;
+	sig = 1.0;
+	delta = 0.5;
+	u_shift = 0.0;
+	rcut2 = 2.5*2.5;
+	args.push_back(eps);
+	args.push_back(sig);
+	args.push_back(delta);
+	args.push_back(u_shift);
+	args.push_back(rcut2);
+
+	// test forces
+	for (int i = 1; i < 12; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			a1.force[j] = 0.0;
+			a2.force[j] = 0.0;
+		}
+	 
+		a2.pos[0] = 2.0+i*0.25;
+		ans2 = slj(&a1, &a2, &box, &args);
+		
+		if (a2.pos[0]-a1.pos[0] < box[0]/2.0) {
+			dx = a2.pos[0]-a1.pos[0];
+		} else {
+			dx = sqrt(pow(a2.pos[0]-a1.pos[0]-box[0],2));
+		}
+		if (dx-delta < sqrt(rcut2)) {
+			ans = 24.0*eps*(2.0*pow(sig/(dx-delta),12)-pow(sig/(dx-delta),6))*dx/dx/(dx-delta);
+			EXPECT_TRUE (fabs(ans+a1.force[0]) < 1.0e-6);
+			EXPECT_TRUE (fabs(ans-a2.force[0]) < 1.0e-6);
+		} else {
+			ans = 0.0;
+			EXPECT_TRUE (fabs(ans-a1.force[0]) < 1.0e-6);
+			EXPECT_TRUE (fabs(ans-a2.force[0]) < 1.0e-6);
+		}
+		
+	 }
+}
 
 int main (int argc, char* argv[]) {
     testing::InitGoogleTest(&argc, argv);

@@ -269,6 +269,13 @@ namespace integrator {
 		// execute loops
 		MPI_Barrier(MPI_COMM_WORLD);
 		for (int i = 0; i < timesteps; ++i) {
+			// clear out the forces on each atom which is NECESSARY before each new step
+			for (int j = 0; j < sys->natoms(); ++j) {
+				for (int k = 0; k < 3; ++k) {
+					sys->get_atom(j)->force[k] = 0.0;
+				}
+			}
+			
 		    // generate lists of atoms to be sent to neighbouring cells
 		    if (gen_send_lists(sys)) {
 				sprintf(err_msg, "Problem generating lists to send out on rank %d", rank);
@@ -291,6 +298,7 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
+			
 			// Delete the atoms the processor is not responsible for
 			sys->clear_ghost_atoms ();
 
@@ -301,6 +309,8 @@ namespace integrator {
 				flag_error (err_msg, __FILE__, __LINE__);
 				return check;
 			}
+			
+			
 
 			// check to move atoms if necessary
 			if (nprocs > 1) {
