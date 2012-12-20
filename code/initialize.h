@@ -3,6 +3,9 @@
  \author Nathan A. Mahynski
  */
 
+#ifndef INITIALIZE_H_
+#define INITIALIZE_H_
+
 #include "read_xml.h"
 #include "read_interaction.h"
 #include "global.h"
@@ -18,3 +21,5 @@ int initialize_from_files (const string xml_filename, const string energy_filena
 int start_mpi (int argc, char *argv[]);
 int end_mpi ();
 int abort_mpi ();
+
+#endif

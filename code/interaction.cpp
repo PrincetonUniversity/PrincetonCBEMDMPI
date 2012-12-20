@@ -5,6 +5,12 @@
 
 #include "interaction.h"
 
+class NewException : public exception {
+	virtual const char* what() const throw() {
+		return "Fene distance out of bounds (r > r0)";
+	}
+} fene_bounds_error;
+
 // define new slj etc. functions here
 /*void force_serial (Atom *atom1, Atom *atom2, const vector <double> *box) {
 	double delta_=1., rcut=1., sigma_=0.1, epsilon_=0.1;
@@ -110,10 +116,8 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
         // check if atom coordinates in a fene bond are further than r0 apart
         // this can cause a singularity so we want to guard against this
         if ( d1 > args->at(4) ) {
-                sprintf(err_msg,"Distance between atoms is %4.4f greater than r0 and fene bonded. Exiting Gracefully", d1);
-                flag_error ( err_msg, __FILE__, __LINE__);
-		MPI_Abort(MPI_COMM_WORLD, MPI_FAIL);
-		exit(ILLEGAL_VALUE);
+			throw(fene_bounds_error);
+			return 0.0;
         }
 	
 	// compute logarithmic portion
