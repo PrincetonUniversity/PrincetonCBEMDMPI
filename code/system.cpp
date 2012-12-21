@@ -131,7 +131,18 @@ namespace sim_system {
 	void System::add_ghost_atoms (const int natoms, Atom *new_atoms) {
 		for (int i = 0; i < natoms; ++i) {
 			try {
-				atoms_.push_back(new_atoms[i]);
+				// only add the atom to the system if it is not already contained in the system
+				// do this by going through the atoms and comparing sys_index of the atoms already in the system and the atoms to be added
+				bool found_atom = false;
+				for (unsigned int j = 0; j < atoms_.size(); ++j) {
+					if (atoms_[j].sys_index == new_atoms[i].sys_index) {
+						found_atom = true;
+						break;
+					}
+				}
+				if (!found_atom) {
+					atoms_.push_back(new_atoms[i]);
+				}
 			}
 			catch (bad_alloc& ba) {
 				char err_msg[MYERR_FLAG_SIZE]; 
