@@ -66,7 +66,8 @@ namespace integrator {
 					if (sys->get_atom(i)->pos[j] >= box[j]) {
 						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
 						}*/
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
+					//sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
 		}
@@ -300,6 +301,10 @@ namespace integrator {
 			// Delete the atoms the processor is not responsible for
 			sys->clear_ghost_atoms ();
 
+
+			// create animation
+			write_xyz ("output.xyz", sys, i, false);
+
 			// step forward
 			check = integrator->step(sys);
 			if (check != 0) {
@@ -328,9 +333,8 @@ namespace integrator {
 				}
 			}
 
-			// create animation
-			write_xyz ("output.xyz", sys, i, false);
 		}
+		write_xyz ("output.xyz", sys, timesteps, false);
 		
 	return 0;
 	}
