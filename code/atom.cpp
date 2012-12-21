@@ -22,10 +22,10 @@ void create_MPI_ATOM () {
 	MPI_Type_extent (MPI_DOUBLE, &extent);
 	
 	offsets[0] = 0;
-	blockcounts[0] = 11;
+	blockcounts[0] = 14;
 	oldtypes[0] = MPI_DOUBLE;
 	
-	offsets[1] = (11*extent);
+	offsets[1] = (14*extent);
 	blockcounts[1] = 2;
 	oldtypes[1] = MPI_INT;
 	
