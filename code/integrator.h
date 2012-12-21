@@ -46,7 +46,6 @@ namespace integrator {
 	private:
 		int timestep_;
 		double dt2_;
-		vector <vector <double> > prev_pos_;
 	};
 	
 	//! NVE, Velocity Verlet

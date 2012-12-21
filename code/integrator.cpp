@@ -21,16 +21,12 @@ namespace integrator {
 	 Maintains atom positions in the box if atoms cross boundaries.
 	*/
 	int Verlet::step (System *sys) {
-		prev_pos_.resize(sys->natoms());
-		for (int i=0; i<sys->natoms(); i++) {
-		  prev_pos_[i].reserve(3);
-		}
 		double prev_prev_pos;
 		vector <double> box = sys->box();
 		if (timestep_ == 0) {
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < 3; ++j) {
-					prev_pos_[i][j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
 					// maintain atom position in the box
 					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
@@ -40,22 +36,22 @@ namespace integrator {
 					while (sys->get_atom(i)->pos[j] > box[j]) {
 						sys->get_atom(i)->pos[j] -= box[j];
 					}*/
-					if (sys->get_atom(i)->pos[j] < 0.0) {
+					/*if (sys->get_atom(i)->pos[j] < 0.0) {
 						sys->get_atom(i)->pos[j] += ceil(-sys->get_atom(i)->pos[j]/box[j])*box[j];
 					}
 					if (sys->get_atom(i)->pos[j] >= box[j]) {
 						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
-					}
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_pos_[i][j]) / dt_;
+						}*/
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
 		}
 		else {
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < 3; ++j) {
-					prev_prev_pos = prev_pos_[i][j];
-					prev_pos_[i][j] = sys->get_atom(i)->pos[j];
-					sys->get_atom(i)->pos[j] = 2.0 *  prev_pos_[i][j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
 					// maintain atom position in the box
 					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
 					/*while (sys->get_atom(i)->pos[j] < 0.0) {
@@ -64,12 +60,12 @@ namespace integrator {
 					while (sys->get_atom(i)->pos[j] > box[j]) {
 						sys->get_atom(i)->pos[j] -= box[j];
 					}*/
-					if (sys->get_atom(i)->pos[j] < 0.0) {
+					/*if (sys->get_atom(i)->pos[j] < 0.0) {
 						sys->get_atom(i)->pos[j] += ceil(-sys->get_atom(i)->pos[j]/box[j])*box[j];
 					}
 					if (sys->get_atom(i)->pos[j] >= box[j]) {
 						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
-					}
+						}*/
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
 				}
 			}
