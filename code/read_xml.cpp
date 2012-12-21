@@ -682,10 +682,11 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 
 		// print header
 		vector <double> box = sys->box(), npos(3);
-		fprintf(fp1, "%d \n", tot_atoms);
-		fprintf(fp1, "timestep = %d \n", timestep);
+		fprintf(fp1, "%d\n", tot_atoms);
+		fprintf(fp1, "Atoms. Timestep: %d\n", timestep);
 		for (int i = 0; i < tot_atoms; ++i) {
-			fprintf(fp1, "%s \t", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
+			//fprintf(fp1, "%s ", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
+			fprintf(fp1, "%d ", atom_ptr[i]->type+1);
 			if (wrap_pos) {
 				npos = pbc (&atom_ptr[i]->pos[0], box);
 			} else {
@@ -698,7 +699,11 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 					fclose(fp1);
 					return ILLEGAL_VALUE;
 				}
-				fprintf(fp1, "%8.8g\t", npos[m]);
+				fprintf(fp1, "%g", npos[m]);
+				if (m < 2) {
+					fprintf(fp1, " ");
+				}
+
 			}
 			fprintf(fp1, "\n");
 		}	
