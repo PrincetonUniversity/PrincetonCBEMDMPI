@@ -17,21 +17,31 @@ int force_calc(System *sys) { // pass interaction array
 					return ILLEGAL_VALUE;
 				}
 				
-				// don't count ghosts
-				if (i < sys->natoms() && j < sys->natoms()) {
+				// don't count ghost-ghost interactions
+				// count ghost-cell interactions if the index of the atom in the cell is smaller than the ghost index
+				if ((i < sys->natoms() && j < sys->natoms()) || 
+				    (i < sys->natoms() && sys->get_atom(i)->sys_index < sys->get_atom(j)->sys_index) ||
+				    (j < sys->natoms() && sys->get_atom(j)->sys_index < sys->get_atom(i)->sys_index)) {
 					potential_energy += dE;
-					for (int k = 0; k < 3; ++k) {
-						kinetic_energy += 0.5*(sys->get_atom(i)->mass*sys->get_atom(i)->vel[k]*sys->get_atom(i)->vel[k]+sys->get_atom(j)->mass*sys->get_atom(j)->vel[k]*sys->get_atom(j)->vel[k]);
-					}
 				}
 		    }
 		}
+		if (i < sys->natoms()) {
+			for (int k = 0; k < 3; ++k) {
+				kinetic_energy += 0.5*(sys->get_atom(i)->mass*sys->get_atom(i)->vel[k]*sys->get_atom(i)->vel[k]);
+			}
+		}
 	}
+	
 	
 	// keep track of these on all processors (needed for things like thermostats, etc.)
 	MPI_Allreduce (&kinetic_energy, &totKE, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 	MPI_Allreduce (&potential_energy, &totPE, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 	sys->set_total_KE(totKE);
 	sys->set_total_PE(totPE);
+	if (sys->rank() == 0) {
+		double totE = totPE + totKE; 
+		cout << "KE = " << totKE<< ", PE = " << totPE << ", total = " << totE <<  endl;
+	}
 	return 0;
 }
