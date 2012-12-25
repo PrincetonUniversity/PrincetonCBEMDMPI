@@ -14,7 +14,7 @@ int main (int argc, char *argv[]) {
 	int check;
 	long int nsteps;
 	double dt;
-	System mysys; /**< Declare system */
+	System mysys; //Declare system
 	
 	if (argc != 5) {
 		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file\n");
@@ -23,7 +23,7 @@ int main (int argc, char *argv[]) {
 	
 	// read nsteps and dt
 	char* str_ptr;
-	nsteps = strtol(argv[1], &str_ptr, 10); /**< Store number of steps */
+	nsteps = strtol(argv[1], &str_ptr, 10); // Store number of steps
 	dt = atof(argv[2]);
 	if (str_ptr == argv[1]) {
 	    fprintf(stderr, "No value was found for the number of steps. \n");
@@ -36,7 +36,7 @@ int main (int argc, char *argv[]) {
 
 	// setup integrator
 	Integrator *myint = new Verlet (dt);
-	myint->set_dt(dt);  /**< Set timestep of integrator  */
+	myint->set_dt(dt);  // Set timestep of integrator
 
 	check = start_mpi (argc, argv);
 	if (check != 0) {
