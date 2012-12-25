@@ -1,0 +1,61 @@
+\hypertarget{classintegrator_1_1Verlet}{\section{integrator\-:\-:Verlet Class Reference}
+\label{classintegrator_1_1Verlet}\index{integrator\-::\-Verlet@{integrator\-::\-Verlet}}
+}
+
+
+N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}.  
+
+
+
+
+{\ttfamily \#include $<$integrator.\-h$>$}
+
+Inheritance diagram for integrator\-:\-:Verlet\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classintegrator_1_1Verlet}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classintegrator_1_1Verlet_a30340cd5a1eab3aed2266523e9ac6887}{\hyperlink{classintegrator_1_1Verlet_a30340cd5a1eab3aed2266523e9ac6887}{Verlet} (double deltat)}\label{classintegrator_1_1Verlet_a30340cd5a1eab3aed2266523e9ac6887}
+
+\begin{DoxyCompactList}\small\item\em N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
+\hypertarget{classintegrator_1_1Verlet_aaf0739070361925c4353ae54873f2d2e}{double {\bfseries get\-Time} ()}\label{classintegrator_1_1Verlet_aaf0739070361925c4353ae54873f2d2e}
+
+\item 
+\hypertarget{classintegrator_1_1Verlet_afe8dfd71c2a1aa0b45eee4e242fad791}{double {\bfseries getdt} ()}\label{classintegrator_1_1Verlet_afe8dfd71c2a1aa0b45eee4e242fad791}
+
+\item 
+int \hyperlink{classintegrator_1_1Verlet_a24796d8665c8bc58867e13ec11d5cdbe}{step} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classintegrator_1_1Verlet_a24796d8665c8bc58867e13ec11d5cdbe}{\index{integrator\-::\-Verlet@{integrator\-::\-Verlet}!step@{step}}
+\index{step@{step}!integrator::Verlet@{integrator\-::\-Verlet}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}int integrator\-::\-Verlet\-::step (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classintegrator_1_1Verlet_a24796d8665c8bc58867e13ec11d5cdbe}
+This function integrates. Call it to make a step. Will update atom positions and velocities Maintains atom positions in the box if atoms cross boundaries. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sys} & Pointer to System to make an integration step in \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classintegrator_1_1Integrator_a10a05ea2e4a2add5b14c08c33b34c3cb}{integrator\-::\-Integrator}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{integrator_8h}{integrator.\-h}\item 
+\hyperlink{integrator_8cpp}{integrator.\-cpp}\end{DoxyCompactItemize}

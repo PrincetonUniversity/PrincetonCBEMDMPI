@@ -1,0 +1,86 @@
+\hypertarget{initialize_8cpp}{\section{initialize.\-cpp File Reference}
+\label{initialize_8cpp}\index{initialize.\-cpp@{initialize.\-cpp}}
+}
+
+
+Initialization routines for System object.  
+
+
+{\ttfamily \#include \char`\"{}initialize.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{initialize_8cpp_ae7423a7d38da76104c00de34e055e3df}{initialize\-\_\-from\-\_\-files} (const string xml\-\_\-filename, const string energy\-\_\-filename, \hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Parse an X\-M\-L and energy file to obtain atom and interaction information. \end{DoxyCompactList}\item 
+int \hyperlink{initialize_8cpp_a09724383bd0445d86479cde6af6a6a5c}{start\-\_\-mpi} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{initialize_8cpp_a372804c04ed8048c9c664437279d159f}{end\-\_\-mpi} ()
+\begin{DoxyCompactList}\small\item\em Finalize M\-P\-I. \end{DoxyCompactList}\item 
+int \hyperlink{initialize_8cpp_a16ec3fecee9e2fcfe9af40d1a7bf9344}{abort\-\_\-mpi} ()
+\begin{DoxyCompactList}\small\item\em Abort M\-P\-I. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Initialization routines for System object. \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{initialize_8cpp_a16ec3fecee9e2fcfe9af40d1a7bf9344}{\index{initialize.\-cpp@{initialize.\-cpp}!abort\-\_\-mpi@{abort\-\_\-mpi}}
+\index{abort\-\_\-mpi@{abort\-\_\-mpi}!initialize.cpp@{initialize.\-cpp}}
+\subsubsection[{abort\-\_\-mpi}]{\setlength{\rightskip}{0pt plus 5cm}int abort\-\_\-mpi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{initialize_8cpp_a16ec3fecee9e2fcfe9af40d1a7bf9344}
+
+
+Abort M\-P\-I. 
+
+Abort the M\-P\-I as a result of a failure. \hypertarget{initialize_8cpp_a372804c04ed8048c9c664437279d159f}{\index{initialize.\-cpp@{initialize.\-cpp}!end\-\_\-mpi@{end\-\_\-mpi}}
+\index{end\-\_\-mpi@{end\-\_\-mpi}!initialize.cpp@{initialize.\-cpp}}
+\subsubsection[{end\-\_\-mpi}]{\setlength{\rightskip}{0pt plus 5cm}int end\-\_\-mpi (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{initialize_8cpp_a372804c04ed8048c9c664437279d159f}
+
+
+Finalize M\-P\-I. 
+
+Finalize M\-P\-I and clean up derived data types. \hypertarget{initialize_8cpp_ae7423a7d38da76104c00de34e055e3df}{\index{initialize.\-cpp@{initialize.\-cpp}!initialize\-\_\-from\-\_\-files@{initialize\-\_\-from\-\_\-files}}
+\index{initialize\-\_\-from\-\_\-files@{initialize\-\_\-from\-\_\-files}!initialize.cpp@{initialize.\-cpp}}
+\subsubsection[{initialize\-\_\-from\-\_\-files}]{\setlength{\rightskip}{0pt plus 5cm}int initialize\-\_\-from\-\_\-files (
+\begin{DoxyParamCaption}
+\item[{const string}]{xml\-\_\-filename, }
+\item[{const string}]{energy\-\_\-filename, }
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{initialize_8cpp_ae7423a7d38da76104c00de34e055e3df}
+
+
+Parse an X\-M\-L and energy file to obtain atom and interaction information. 
+
+Parse an X\-M\-L and energy file to obtain atom and interaction information. Returns 0 if successful, non-\/zero if failure. Operates in a \char`\"{}cascade\char`\"{} between ranks so that each processor (if M\-P\-I is used) opens and initializes from the file in order. Returns 0 if successful, else integer flag for failure. Does domain decomposition. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em xml\-\_\-filename} & Name of coordinate file to open and read. \\
+\hline
+\mbox{\tt in}  & {\em energy\-\_\-filename} & Name of file containing bonds, pair potential parameters, etc. \\
+\hline
+\mbox{\tt in}  & {\em nprocs} & Number of processors total. \\
+\hline
+\mbox{\tt in}  & {\em rank} & Rank of this process. \\
+\hline
+\mbox{\tt in,out}  & {\em sys} & Pointer to System object to store its information at. \\
+\hline
+\end{DoxyParams}
+\hypertarget{initialize_8cpp_a09724383bd0445d86479cde6af6a6a5c}{\index{initialize.\-cpp@{initialize.\-cpp}!start\-\_\-mpi@{start\-\_\-mpi}}
+\index{start\-\_\-mpi@{start\-\_\-mpi}!initialize.cpp@{initialize.\-cpp}}
+\subsubsection[{start\-\_\-mpi}]{\setlength{\rightskip}{0pt plus 5cm}int start\-\_\-mpi (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{initialize_8cpp_a09724383bd0445d86479cde6af6a6a5c}
+Call M\-P\-I\-\_\-\-Init and start the M\-P\-I ensuring it began successfully. 

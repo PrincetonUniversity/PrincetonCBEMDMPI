@@ -1,0 +1,251 @@
+\hypertarget{domain__decomp_8h}{\section{domain\-\_\-decomp.\-h File Reference}
+\label{domain__decomp_8h}\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}}
+}
+
+
+Header file for domain decomposition.  
+
+
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mpi.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{domain__decomp_8h_a5dff21a3c71bc2b5822508e41fdcf697}{gen\-\_\-sets} (const vector$<$ int $>$ \&factors, const double box\mbox{[}$\,$\mbox{]}, const int level, double \&final\-\_\-diff, vector$<$ int $>$ \&final\-\_\-breakup, int add)
+\begin{DoxyCompactList}\small\item\em Given the box size and factors of nprocs, checks which combination generates the most cubic domains. \end{DoxyCompactList}\item 
+vector$<$ int $>$ \hyperlink{domain__decomp_8h_af08c020490d351043482fe498e7b6f1c}{factorize} (const int nprocs)
+\begin{DoxyCompactList}\small\item\em Given a number returns the prime factors (does not count 1 as a prime factor) \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_adb16a776f045b9fd68b06a31ed29c035}{init\-\_\-domain\-\_\-decomp} (const vector$<$ double $>$ box, const int nprocs, double widths\mbox{[}$\,$\mbox{]}, vector$<$ int $>$ \&final\-\_\-breakup)
+\begin{DoxyCompactList}\small\item\em Decomposes the box into domains for each processor to handle. \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_ac1a67f8956fb748c46d0d9772a1f6d32}{get\-\_\-processor} (const vector$<$ double $>$ pos, const \hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Given the co-\/ordinates of a point, determines within which domain the point lies. \end{DoxyCompactList}\item 
+\hypertarget{domain__decomp_8h_ab4a446734f29c8476be0c8766871205a}{int \hyperlink{domain__decomp_8h_ab4a446734f29c8476be0c8766871205a}{get\-\_\-processor\-\_\-id} (const int x\-\_\-id, const int y\-\_\-id, const int z\-\_\-id, const vector$<$ int $>$ \&final\-\_\-breakup)}\label{domain__decomp_8h_ab4a446734f29c8476be0c8766871205a}
+
+\begin{DoxyCompactList}\small\item\em Given the x, y, z ids of a domain, determines the domain id (useful for locating neighbouring domains) \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_ab7e6998f4d09ce978b0be93256a7aea7}{get\-\_\-xyz\-\_\-ids} (const int domain\-\_\-id, const vector$<$ int $>$ \&final\-\_\-breakup, int xyz\-\_\-id\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Given a domain\-\_\-id specifies the x, y, z ids of the domain. \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_a6089fbe2af876c7807125a3ca60ec325}{gen\-\_\-send\-\_\-lists} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Generates the lists of molecules that need to be passed to other processors. \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_a91bec4369dfa716b9da0f3768b42f0b6}{gen\-\_\-send\-\_\-table} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Given the rank, generates the list of its neighbours. \end{DoxyCompactList}\item 
+\hypertarget{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}{double \hyperlink{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}{gen\-\_\-skin\-\_\-cutoff} (...)}\label{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}
+
+\begin{DoxyCompactList}\small\item\em Generates the skin cutoff distance based on the largest cutoff in the system. \end{DoxyCompactList}\item 
+void \hyperlink{domain__decomp_8h_a273ef862952335fba02a34fbf164180c}{gen\-\_\-goes\-\_\-to} (const vector$<$ int $>$ \&is\-\_\-near\-\_\-border, vector$<$ int $>$ \&goes\-\_\-to, const int ndims)
+\begin{DoxyCompactList}\small\item\em Generates the list of neighbours a particle should be sent to based on the borders its near. \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_aee4072f52ae76435a626b818498e3e27}{power} (int base, int exponent)
+\begin{DoxyCompactList}\small\item\em Computes the exponentiation of an integer by an integral power. \end{DoxyCompactList}\item 
+int \hyperlink{domain__decomp_8h_a66b4457a4c1558782b561737fccb1f39}{communicate\-\_\-skin\-\_\-atoms} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Communicates the atoms in the skin regions of the processors to the appropriate neighbours. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file for domain decomposition. \begin{DoxyAuthor}{Author}
+Arun L. Prabhu 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{domain__decomp_8h_a66b4457a4c1558782b561737fccb1f39}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!communicate\-\_\-skin\-\_\-atoms@{communicate\-\_\-skin\-\_\-atoms}}
+\index{communicate\-\_\-skin\-\_\-atoms@{communicate\-\_\-skin\-\_\-atoms}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{communicate\-\_\-skin\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}int communicate\-\_\-skin\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_a66b4457a4c1558782b561737fccb1f39}
+
+
+Communicates the atoms in the skin regions of the processors to the appropriate neighbours. 
+
+Communicates the atoms in the skin regions of the processors to the appropriate neighbours 
+\begin{DoxyParams}{Parameters}
+{\em sys} & \mbox{[}in,out\mbox{]} System to be evaluated \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_af08c020490d351043482fe498e7b6f1c}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!factorize@{factorize}}
+\index{factorize@{factorize}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{factorize}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ factorize (
+\begin{DoxyParamCaption}
+\item[{const int}]{nprocs}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_af08c020490d351043482fe498e7b6f1c}
+
+
+Given a number returns the prime factors (does not count 1 as a prime factor) 
+
+Given a number returns the prime factors of that number. This function does not count 1 as a prime factor. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em nprocs} & number of processors \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_a273ef862952335fba02a34fbf164180c}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-goes\-\_\-to@{gen\-\_\-goes\-\_\-to}}
+\index{gen\-\_\-goes\-\_\-to@{gen\-\_\-goes\-\_\-to}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{gen\-\_\-goes\-\_\-to}]{\setlength{\rightskip}{0pt plus 5cm}void gen\-\_\-goes\-\_\-to (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ int $>$ \&}]{is\-\_\-near\-\_\-border, }
+\item[{vector$<$ int $>$ \&}]{goes\-\_\-to, }
+\item[{const int}]{ndims}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_a273ef862952335fba02a34fbf164180c}
+
+
+Generates the list of neighbours a particle should be sent to based on the borders its near. 
+
+Generates the list of neighbours a particle should be sent to based on the borders its near 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em is\-\_\-near\-\_\-border} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+ & {\em goes\-\_\-to} & \mbox{[}in\mbox{]} W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em ndims} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_a6089fbe2af876c7807125a3ca60ec325}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-send\-\_\-lists@{gen\-\_\-send\-\_\-lists}}
+\index{gen\-\_\-send\-\_\-lists@{gen\-\_\-send\-\_\-lists}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{gen\-\_\-send\-\_\-lists}]{\setlength{\rightskip}{0pt plus 5cm}int gen\-\_\-send\-\_\-lists (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_a6089fbe2af876c7807125a3ca60ec325}
+
+
+Generates the lists of molecules that need to be passed to other processors. 
+
+Generates the lists of molecules that need to be passed to other processors 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sys} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em rank} & rank of processor \\
+\hline
+\mbox{\tt in}  & {\em skin\-\_\-cutoff} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_a91bec4369dfa716b9da0f3768b42f0b6}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-send\-\_\-table@{gen\-\_\-send\-\_\-table}}
+\index{gen\-\_\-send\-\_\-table@{gen\-\_\-send\-\_\-table}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{gen\-\_\-send\-\_\-table}]{\setlength{\rightskip}{0pt plus 5cm}int gen\-\_\-send\-\_\-table (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_a91bec4369dfa716b9da0f3768b42f0b6}
+
+
+Given the rank, generates the list of its neighbours. 
+
+Given the rank, generates the list of its neighbours Assumes 3\-D system, for different number of dimensions need to make this a recursive function 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sys} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_a5dff21a3c71bc2b5822508e41fdcf697}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-sets@{gen\-\_\-sets}}
+\index{gen\-\_\-sets@{gen\-\_\-sets}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{gen\-\_\-sets}]{\setlength{\rightskip}{0pt plus 5cm}void gen\-\_\-sets (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ int $>$ \&}]{factors, }
+\item[{const double}]{box\mbox{[}$\,$\mbox{]}, }
+\item[{const int}]{level, }
+\item[{double \&}]{final\-\_\-diff, }
+\item[{vector$<$ int $>$ \&}]{final\-\_\-breakup, }
+\item[{int}]{add}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_a5dff21a3c71bc2b5822508e41fdcf697}
+
+
+Given the box size and factors of nprocs, checks which combination generates the most cubic domains. 
+
+Given the box size and factors of nprocs, this recursive function checks which combination generates the most cubic domains 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em factors} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em box} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em level} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_ac1a67f8956fb748c46d0d9772a1f6d32}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!get\-\_\-processor@{get\-\_\-processor}}
+\index{get\-\_\-processor@{get\-\_\-processor}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{get\-\_\-processor}]{\setlength{\rightskip}{0pt plus 5cm}int get\-\_\-processor (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ double $>$}]{pos, }
+\item[{const {\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_ac1a67f8956fb748c46d0d9772a1f6d32}
+
+
+Given the co-\/ordinates of a point, determines within which domain the point lies. 
+
+Given the coordinates of a point, determines within which domain the point lies. This function is overloaded. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pos} & the vector containing the coordinates of a point \\
+\hline
+\mbox{\tt in}  & {\em sys} & system passed to be able to utilize final domain decomposition \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_ab7e6998f4d09ce978b0be93256a7aea7}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!get\-\_\-xyz\-\_\-ids@{get\-\_\-xyz\-\_\-ids}}
+\index{get\-\_\-xyz\-\_\-ids@{get\-\_\-xyz\-\_\-ids}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{get\-\_\-xyz\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}int get\-\_\-xyz\-\_\-ids (
+\begin{DoxyParamCaption}
+\item[{const int}]{domain\-\_\-id, }
+\item[{const vector$<$ int $>$ \&}]{final\-\_\-breakup, }
+\item[{int}]{xyz\-\_\-id\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_ab7e6998f4d09ce978b0be93256a7aea7}
+
+
+Given a domain\-\_\-id specifies the x, y, z ids of the domain. 
+
+Given a domain\-\_\-id specifies the x, y, z ids of the domain 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em domain\-\_\-id} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em xyz\-\_\-id} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_adb16a776f045b9fd68b06a31ed29c035}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!init\-\_\-domain\-\_\-decomp@{init\-\_\-domain\-\_\-decomp}}
+\index{init\-\_\-domain\-\_\-decomp@{init\-\_\-domain\-\_\-decomp}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{init\-\_\-domain\-\_\-decomp}]{\setlength{\rightskip}{0pt plus 5cm}int init\-\_\-domain\-\_\-decomp (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ double $>$}]{box, }
+\item[{const int}]{nprocs, }
+\item[{double}]{widths\mbox{[}$\,$\mbox{]}, }
+\item[{vector$<$ int $>$ \&}]{final\-\_\-breakup}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_adb16a776f045b9fd68b06a31ed29c035}
+
+
+Decomposes the box into domains for each processor to handle. 
+
+Decomposes the box into domains for each processor to handle 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em box} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt in}  & {\em nprocs} & number of processors \\
+\hline
+\mbox{\tt in}  & {\em widths} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\mbox{\tt out}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\hline
+\end{DoxyParams}
+\hypertarget{domain__decomp_8h_aee4072f52ae76435a626b818498e3e27}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!power@{power}}
+\index{power@{power}!domain_decomp.h@{domain\-\_\-decomp.\-h}}
+\subsubsection[{power}]{\setlength{\rightskip}{0pt plus 5cm}int power (
+\begin{DoxyParamCaption}
+\item[{int}]{base, }
+\item[{int}]{exponent}
+\end{DoxyParamCaption}
+)}}\label{domain__decomp_8h_aee4072f52ae76435a626b818498e3e27}
+
+
+Computes the exponentiation of an integer by an integral power. 
+
+Computes the exponentiation of an integer by an integral power 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em base} & the base value to be raised to a power \\
+\hline
+\mbox{\tt in}  & {\em exponent} & the exponent of the power base is raised to \\
+\hline
+\end{DoxyParams}

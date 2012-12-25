@@ -1,0 +1,104 @@
+\hypertarget{interaction_8cpp}{\section{interaction.\-cpp File Reference}
+\label{interaction_8cpp}\index{interaction.\-cpp@{interaction.\-cpp}}
+}
+
+
+Source code for interaction functions.  
+
+
+{\ttfamily \#include \char`\"{}interaction.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{interaction_8cpp_a9df9b71177d4ec37340add3c77ebbcce}{slj} (\hyperlink{structatom_1_1Atom}{Atom} $\ast$atom1, \hyperlink{structatom_1_1Atom}{Atom} $\ast$atom2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
+\begin{DoxyCompactList}\small\item\em Shifted Lennard-\/\-Jones Force. \end{DoxyCompactList}\item 
+double \hyperlink{interaction_8cpp_a21a087784db18908294103a70136806f}{harmonic} (\hyperlink{structatom_1_1Atom}{Atom} $\ast$a1, \hyperlink{structatom_1_1Atom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
+\begin{DoxyCompactList}\small\item\em Computes force and energy of a Harmonic bond. \end{DoxyCompactList}\item 
+double \hyperlink{interaction_8cpp_af3536032a069492cf617a36ffecc9013}{fene} (\hyperlink{structatom_1_1Atom}{Atom} $\ast$a1, \hyperlink{structatom_1_1Atom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
+\begin{DoxyCompactList}\small\item\em Computes force and energy of a Fene bond. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Source code for interaction functions. \begin{DoxyAuthor}{Authors}
+\{Nathan A. Mahynski, George Khoury\} 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{interaction_8cpp_af3536032a069492cf617a36ffecc9013}{\index{interaction.\-cpp@{interaction.\-cpp}!fene@{fene}}
+\index{fene@{fene}!interaction.cpp@{interaction.\-cpp}}
+\subsubsection[{fene}]{\setlength{\rightskip}{0pt plus 5cm}double fene (
+\begin{DoxyParamCaption}
+\item[{{\bf Atom} $\ast$}]{a1, }
+\item[{{\bf Atom} $\ast$}]{a2, }
+\item[{const vector$<$ double $>$ $\ast$}]{box, }
+\item[{const vector$<$ double $>$ $\ast$}]{args}
+\end{DoxyParamCaption}
+)}}\label{interaction_8cpp_af3536032a069492cf617a36ffecc9013}
+
+
+Computes force and energy of a Fene bond. 
+
+Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potential is given by\-: \[ U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA} \] Where the short range repulsion is provided by the W\-C\-A potential\-: \begin{eqnarray*} U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}  is usually set such that \$ = (d\-\_\-i+d\-\_\-j)/2-\/1\$ where \$d\-\_\-i\$ is the diameter of species i, but the user may decide on other parameters. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
+\hline
+\mbox{\tt in,out}  & {\em $\ast$atom2} & Pointer to second atom \\
+\hline
+\mbox{\tt in}  & {\em $\ast$box} & Pointer to vector of box size \\
+\hline
+\mbox{\tt in}  & {\em $\ast$args} & Vector of arguments $<$epsilon, sigma, delta, k, r0$>$ \\
+\hline
+\end{DoxyParams}
+\hypertarget{interaction_8cpp_a21a087784db18908294103a70136806f}{\index{interaction.\-cpp@{interaction.\-cpp}!harmonic@{harmonic}}
+\index{harmonic@{harmonic}!interaction.cpp@{interaction.\-cpp}}
+\subsubsection[{harmonic}]{\setlength{\rightskip}{0pt plus 5cm}double harmonic (
+\begin{DoxyParamCaption}
+\item[{{\bf Atom} $\ast$}]{a1, }
+\item[{{\bf Atom} $\ast$}]{a2, }
+\item[{const vector$<$ double $>$ $\ast$}]{box, }
+\item[{const vector$<$ double $>$ $\ast$}]{args}
+\end{DoxyParamCaption}
+)}}\label{interaction_8cpp_a21a087784db18908294103a70136806f}
+
+
+Computes force and energy of a Harmonic bond. 
+
+Harmonic Bond The Harmonic bond potential is given by\-: \[ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2 \] 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
+\hline
+\mbox{\tt in,out}  & {\em $\ast$atom2} & Pointer to second atom \\
+\hline
+\mbox{\tt in}  & {\em $\ast$box} & Pointer to vector of box size \\
+\hline
+\mbox{\tt in}  & {\em $\ast$args} & Vector of arguments $<$k, r0$>$ \\
+\hline
+\end{DoxyParams}
+\hypertarget{interaction_8cpp_a9df9b71177d4ec37340add3c77ebbcce}{\index{interaction.\-cpp@{interaction.\-cpp}!slj@{slj}}
+\index{slj@{slj}!interaction.cpp@{interaction.\-cpp}}
+\subsubsection[{slj}]{\setlength{\rightskip}{0pt plus 5cm}double slj (
+\begin{DoxyParamCaption}
+\item[{{\bf Atom} $\ast$}]{atom1, }
+\item[{{\bf Atom} $\ast$}]{atom2, }
+\item[{const vector$<$ double $>$ $\ast$}]{box, }
+\item[{const vector$<$ double $>$ $\ast$}]{args}
+\end{DoxyParamCaption}
+)}}\label{interaction_8cpp_a9df9b71177d4ec37340add3c77ebbcce}
+
+
+Shifted Lennard-\/\-Jones Force. 
+
+Computes force and energy of Shifted Lennard-\/\-Jones interaction.
+
+This is the same as standard L\-J if  = 0. This is generally useful for systems with large size asymmetries. The energy U(r) is returned\-: \begin{eqnarray*} U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*} Forces are added to atoms\-: \begin{eqnarray*} F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*} 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em atom1} & Pointer to first atom \\
+\hline
+\mbox{\tt in,out}  & {\em atom2} & Pointer to second atom \\
+\hline
+\mbox{\tt in}  & {\em box} & Pointer to vector of box size \\
+\hline
+\mbox{\tt in}  & {\em args} & Vector of arguments $<$epsilon, sigma, delta, U\-\_\-\{shift\}, rcut$^\wedge$2$>$ \\
+\hline
+\end{DoxyParams}

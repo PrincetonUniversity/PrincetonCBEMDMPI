@@ -1,0 +1,44 @@
+\hypertarget{integrator_8h}{\section{integrator.\-h File Reference}
+\label{integrator_8h}\index{integrator.\-h@{integrator.\-h}}
+}
+
+
+M\-D Integrator(s) Information.  
+
+
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}mpi.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}domain\-\_\-decomp.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}atom.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}force\-\_\-calc.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}read\-\_\-xml.\-h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classintegrator_1_1Integrator}{integrator\-::\-Integrator}
+\begin{DoxyCompactList}\small\item\em $<$ Abstract base class for integrators \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Verlet}{integrator\-::\-Verlet}
+\begin{DoxyCompactList}\small\item\em N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Velocity__verlet}{integrator\-::\-Velocity\-\_\-verlet}
+\begin{DoxyCompactList}\small\item\em N\-V\-E, Velocity \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Andersen}{integrator\-::\-Andersen}
+\begin{DoxyCompactList}\small\item\em N\-V\-T, \hyperlink{classintegrator_1_1Andersen}{Andersen} thermostat. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1NoseHoover}{integrator\-::\-Nose\-Hoover}
+\begin{DoxyCompactList}\small\item\em N\-V\-T, Nose-\/\-Hooser thermostat. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1NHA}{integrator\-::\-N\-H\-A}
+\begin{DoxyCompactList}\small\item\em N\-P\-T, Nose-\/\-Hoover thermostat + \hyperlink{classintegrator_1_1Andersen}{Andersen} barostat Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int {\bfseries integrator\-::move\-\_\-atoms} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, const int rank, const int nprocs)
+\begin{DoxyCompactList}\small\item\em Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\item 
+int {\bfseries integrator\-::run} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, Integrator $\ast$integrator, const int timesteps)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+M\-D Integrator(s) Information. \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}

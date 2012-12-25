@@ -1,0 +1,63 @@
+\hypertarget{read__interaction_8cpp}{\section{read\-\_\-interaction.\-cpp File Reference}
+\label{read__interaction_8cpp}\index{read\-\_\-interaction.\-cpp@{read\-\_\-interaction.\-cpp}}
+}
+
+
+Source code to read in interaction parameters from a parameter file.  
+
+
+{\ttfamily \#include \char`\"{}read\-\_\-interaction.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{read__interaction_8cpp_aac5c3aa8175670e7097069c3ca90f45c}{read\-\_\-interactions} (const string filename, \hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Function to read in interaction parameters and store them into the system. \end{DoxyCompactList}\item 
+force\-\_\-energy\-\_\-ptr \hyperlink{read__interaction_8cpp_a9f294994aaed21e8691e71eb93b45c3f}{get\-\_\-fn} (const string name, vector$<$ double $>$ $\ast$args, double $\ast$r\-\_\-cut\-\_\-max)
+\begin{DoxyCompactList}\small\item\em Given a name, return the force\-\_\-energy\-\_\-ptr associated with it. Also check the arguments that will be passed to it are in acceptable range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Source code to read in interaction parameters from a parameter file. 
+
+\subsection{Function Documentation}
+\hypertarget{read__interaction_8cpp_a9f294994aaed21e8691e71eb93b45c3f}{\index{read\-\_\-interaction.\-cpp@{read\-\_\-interaction.\-cpp}!get\-\_\-fn@{get\-\_\-fn}}
+\index{get\-\_\-fn@{get\-\_\-fn}!read_interaction.cpp@{read\-\_\-interaction.\-cpp}}
+\subsubsection[{get\-\_\-fn}]{\setlength{\rightskip}{0pt plus 5cm}force\-\_\-energy\-\_\-ptr get\-\_\-fn (
+\begin{DoxyParamCaption}
+\item[{const string}]{name, }
+\item[{vector$<$ double $>$ $\ast$}]{args, }
+\item[{double $\ast$}]{r\-\_\-cut\-\_\-max}
+\end{DoxyParamCaption}
+)}}\label{read__interaction_8cpp_a9f294994aaed21e8691e71eb93b45c3f}
+
+
+Given a name, return the force\-\_\-energy\-\_\-ptr associated with it. Also check the arguments that will be passed to it are in acceptable range. 
+
+Function to return a force\-\_\-energy\-\_\-ptr given a type of interaction name.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & Name of interaction, i.\-e. \char`\"{}fene\char`\"{} or \char`\"{}slj\char`\"{} \\
+\hline
+\mbox{\tt in}  & {\em $\ast$args} & Pointer to vector of arguments that will be passed to this interaction later on \\
+\hline
+\end{DoxyParams}
+\hypertarget{read__interaction_8cpp_aac5c3aa8175670e7097069c3ca90f45c}{\index{read\-\_\-interaction.\-cpp@{read\-\_\-interaction.\-cpp}!read\-\_\-interactions@{read\-\_\-interactions}}
+\index{read\-\_\-interactions@{read\-\_\-interactions}!read_interaction.cpp@{read\-\_\-interaction.\-cpp}}
+\subsubsection[{read\-\_\-interactions}]{\setlength{\rightskip}{0pt plus 5cm}int read\-\_\-interactions (
+\begin{DoxyParamCaption}
+\item[{const string}]{filename, }
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{read__interaction_8cpp_aac5c3aa8175670e7097069c3ca90f45c}
+
+
+Function to read in interaction parameters and store them into the system. 
+
+Function to read in interaction parameters and store them into the system 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em filename} & name of file containing the interaction parameters to be processed \\
+\hline
+\mbox{\tt in,out}  & {\em sys} & Pointer to system \\
+\hline
+\end{DoxyParams}

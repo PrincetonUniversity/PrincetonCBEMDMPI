@@ -1,0 +1,36 @@
+\hypertarget{misc_8h}{\section{misc.\-h File Reference}
+\label{misc_8h}\index{misc.\-h@{misc.\-h}}
+}
+
+
+Header for Miscellaneous Routines.  
+
+
+{\ttfamily \#include \char`\"{}common.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}atom.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries misc\-::flag\-\_\-error} (const char $\ast$msg, const char $\ast$file, const int line)
+\begin{DoxyCompactList}\small\item\em Report error message Error messages are piped to stderr not stdout. \end{DoxyCompactList}\item 
+void {\bfseries misc\-::flag\-\_\-notify} (const char $\ast$msg, const char $\ast$file, const int line)
+\begin{DoxyCompactList}\small\item\em Report a notification Notification messages are piped to stderr not stdout. \end{DoxyCompactList}\item 
+F\-I\-L\-E $\ast$ {\bfseries misc\-::mfopen} (const char $\ast$filename, const char $\ast$opt)
+\begin{DoxyCompactList}\small\item\em Safely open a file Tries to open a file, if fails it returns a N\-U\-L\-L pointer and alerts the user with an error message. If it suceeds it returns the file pointer. \end{DoxyCompactList}\item 
+vector$<$ double $>$ {\bfseries misc\-::pbc} (const vector$<$ double $>$ coords, const vector$<$ double $>$ box)
+\begin{DoxyCompactList}\small\item\em Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries. Recall that the simulation box is defined such that, regardless of the input file, it is normalized to have a corner at (0,0,0). If this routine fails, it returns an empty vector (size = 0). \end{DoxyCompactList}\item 
+vector$<$ double $>$ {\bfseries misc\-::pbc} (const double $\ast$coords, const vector$<$ double $>$ box)
+\begin{DoxyCompactList}\small\item\em Returns the equivalent cartesian coordinates back in the simulation box assuming periodic boundaries. Recall that the simulation box is defined such that, regardless of the input file, it is normalized to have a corner at (0,0,0). If this routine fails, it returns an empty vector (size = 0). \end{DoxyCompactList}\item 
+double {\bfseries misc\-::min\-\_\-image\-\_\-dist2} (const vector$<$ double $>$ coords1, const vector$<$ double $>$ coords2, const vector$<$ double $>$ box)
+\begin{DoxyCompactList}\small\item\em Return the square of the minimum image distance between 2 coordinate vectors. \end{DoxyCompactList}\item 
+double {\bfseries misc\-::min\-\_\-image\-\_\-dist2} (const \hyperlink{structatom_1_1Atom}{Atom} $\ast$a1, const \hyperlink{structatom_1_1Atom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box, double $\ast$xyz)
+\begin{DoxyCompactList}\small\item\em Returns the square of the minimum image distance between 2 atoms, also returns the minimum image distance vector xyz that points from atom1 to atom2. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header for Miscellaneous Routines. \begin{DoxyAuthor}{Author}
+Nathan A. Mahynski 
+\end{DoxyAuthor}
