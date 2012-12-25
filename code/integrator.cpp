@@ -23,7 +23,7 @@ namespace integrator {
 	  Call it to make a step.
 	  Will update atom positions and velocities
 	  Maintains atom positions in the box if atoms cross boundaries.
-	  \param [in] sys Pointer to System to make an integration step in
+	  \param [in,out] sys Pointer to System to make an integration step in
 	*/
 	int Verlet::step (System *sys) {
 		double prev_prev_pos;

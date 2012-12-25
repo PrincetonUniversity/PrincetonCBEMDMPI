@@ -16,9 +16,8 @@
 using namespace std;
 using namespace atom;
 
-/* \namespace misc
-  Namespace for miscellaneous functions and tools
-*/
+//! \namespace misc
+//! Namespace for miscellaneous functions and tools
 namespace misc {
 		
 	//! Report an error message

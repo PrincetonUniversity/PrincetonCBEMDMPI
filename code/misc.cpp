@@ -7,9 +7,8 @@
 
 #include "misc.h"
 
-/* \namespace misc
-  Namespace for miscellaneous functions and tools
-*/
+//! \namespace misc
+//! Namespace for miscellaneous functions and tools
 namespace misc {
           
 /*!

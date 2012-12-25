@@ -7,6 +7,7 @@
 #include "system.h"
 
 //! \namespace sim_system
+//! Namespace for functions and classes related to the MD system
 namespace sim_system {	
 	/*!
 	 Upon initialization, resize vectors as necessary.  Set T < 0.
