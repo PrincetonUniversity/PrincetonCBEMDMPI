@@ -20,9 +20,8 @@ using namespace std;
 using namespace atom;
 using namespace misc;
 
-/* \namespace sim_system
-  Namespace containing all system variable and quantities
-*/
+//! \namespace sim_system
+//! Namespace for functions and classes related to the MD system
 namespace sim_system {
 	class System {
 	public:
