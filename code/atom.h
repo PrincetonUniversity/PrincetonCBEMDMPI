@@ -16,10 +16,10 @@
 namespace atom {
     //! Atom class is defined as a struct so as to be easy to pass with MPI
 	typedef struct {
-		double pos[3];				//!< Cartesian coordinates
-		double prev_pos[3];         //!< Cartesian coordinates for the previous position of the atom (needed for integrator)
-		double vel[3];				//!< Cartesian velocities (vx, vy, vz)
-		double force[3];			//!< Cartesian force, (fx, fy, fz)
+		double pos[NDIM];				//!< Cartesian coordinates
+		double prev_pos[NDIM];         //!< Cartesian coordinates for the previous position of the atom (needed for integrator)
+		double vel[NDIM];				//!< Cartesian velocities (vx, vy, vz)
+		double force[NDIM];			//!< Cartesian force, (fx, fy, fz)
 		double mass;				//!< Atomic mass (in reduced units)
 		double diam;				//!< Atomic diameter (in reduced units)
 		int type;					//!< Internally indexed type of this atom

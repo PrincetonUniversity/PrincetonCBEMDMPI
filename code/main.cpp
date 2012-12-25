@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 	System sys1;
 
 	// set system box
-	vector<double> box(3,10.0);
+	vector<double> box(NDIM,10.0);
 	sys1.set_box(box);
 	
 	Interaction interaction1;

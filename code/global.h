@@ -14,5 +14,6 @@ enum RETURN_FLAGS {SAFE_EXIT = 0, BAD_MEM = 1, ILLEGAL_VALUE = 2, MPI_FAIL = 3, 
 const double WCA_CUTOFF = pow(2.0, 1/6.0);
 extern MPI_Datatype MPI_ATOM;
 const int NDIM = 3;  /**< NDIM is 3 since we are working in 3-D space */
+const int NNEIGHBORS=26; // each domain has 26 nearest neighbors
 
 #endif

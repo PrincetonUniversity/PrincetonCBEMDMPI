@@ -13,8 +13,8 @@ namespace sim_system {
 	 Upon initialization, resize vectors as necessary.  Set T < 0.
 	 */
 	System::System() {
-	    send_lists.reserve(26);
-	    get_lists.reserve(26);
+	    send_lists.reserve(NNEIGHBORS);
+	    get_lists.reserve(NNEIGHBORS);
 	    num_atoms_ = 0;
 		try {
 			box_.resize(3,-1);

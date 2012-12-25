@@ -77,7 +77,7 @@ int read_xml (const string filename, System *sys) {
 	// read box
 	rewind(input);
 	check = 0;
-	vector<double> box(3, -1);
+	vector<double> box(NDIM, -1);
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "box") != NULL) {
 			check = 1;
@@ -109,7 +109,7 @@ int read_xml (const string filename, System *sys) {
 		fclose(input);
 		return FILE_ERROR;
 	}
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < NDIM; ++i) {
 		if (box[i] <= 0.0) {
 			sprintf(err_msg, "Could not read box dimensions (%g,%g,%g) properly from %s on rank %d", box[0], box[1], box[2], filename_cstr, rank);
 			flag_error (err_msg, __FILE__, __LINE__);
@@ -160,7 +160,7 @@ int read_xml (const string filename, System *sys) {
 	}
 	
 	// allocate space to temporarily store atom coordinates, velocities, etc.
-	vector <double> atom_coords(3);
+	vector <double> atom_coords(NDIM);
 	vector <int> lbond (nbonds, -1);
 	vector <int> rbond (nbonds, -1);
 	
@@ -179,13 +179,13 @@ int read_xml (const string filename, System *sys) {
 				fclose(input);
 				return FILE_ERROR;
 			    }				
-				if (sscanf(buff, "%lf %lf %lf", &atom_coords[0], &atom_coords[1], &atom_coords[2]) != 3) {
+				if (sscanf(buff, "%lf %lf %lf", &atom_coords[0], &atom_coords[1], &atom_coords[2]) != NDIM) {
 					sprintf(err_msg, "Could not read atom index %d coordinates from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
 					fclose(input);
 					return FILE_ERROR;
 				}
-				for (int j = 0; j < 3; ++j) {
+				for (int j = 0; j < NDIM; ++j) {
 					if (atom_coords[j] < 0.0 || atom_coords[j] >= box[j]) {
 						sprintf(err_msg, "Atom index %d coordinates (%g,%g,%g) out of range", i, atom_coords[0], atom_coords[1], atom_coords[2]);
 						flag_error (err_msg, __FILE__, __LINE__);
@@ -225,7 +225,7 @@ int read_xml (const string filename, System *sys) {
 				fclose(input);
 				return FILE_ERROR;
 			    }				
-				if (sscanf(buff, "%lf %lf %lf", &new_atoms[i].vel[0], &new_atoms[i].vel[1], &new_atoms[i].vel[2]) != 3) {
+				if (sscanf(buff, "%lf %lf %lf", &new_atoms[i].vel[0], &new_atoms[i].vel[1], &new_atoms[i].vel[2]) != NDIM) {
 					sprintf(err_msg, "Could not read atom index %d velocity from %s on rank %d", i, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
 					fclose(input);
@@ -369,7 +369,7 @@ int read_xml (const string filename, System *sys) {
 				fclose(input);
 				return FILE_ERROR;
 			    }				
-				if (sscanf(buff, "%s %d %d", bname, &lbond[i], &rbond[i]) != 3) {
+				if (sscanf(buff, "%s %d %d", bname, &lbond[i], &rbond[i]) != NDIM) {
 					sprintf(err_msg, "Could not read bond number %d from %s on rank %d", i+1, filename_cstr, rank);
 					flag_error (err_msg, __FILE__, __LINE__);
 					fclose(input);
@@ -503,13 +503,13 @@ int print_xml (const string filename, const System *sys) {
 		}
 
 		// print header
-		vector <double> box = sys->box(), npos(3);
+		vector <double> box = sys->box(), npos(NDIM);
 		fprintf(fp1, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<hoomd_xml version=\"1.4\">\n");
 		fprintf(fp1, "<configuration time_step=\"0\" dimensions=\"3\" natoms=\"%d\">\n<box lx=\"%12.12g\" ly=\"%12.12g\" lz=\"%12.12g\"/>\n", tot_atoms, box[0], box[1], box[2]);
 		fprintf(fp1, "<position num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
 			npos = pbc (&atom_ptr[i]->pos[0], box);
-			for (int m = 0; m < 3; ++m) {
+			for (int m = 0; m < NDIM; ++m) {
 				if (npos[m] != npos[m]) {
 					sprintf(err_msg, "Atom %d has nan for its coordinates, cannot print", i);
 					flag_error (err_msg, __FILE__, __LINE__);
@@ -523,7 +523,7 @@ int print_xml (const string filename, const System *sys) {
 
 		fprintf(fp1, "<velocity num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
-			for (int m = 0; m < 3; ++m) {
+			for (int m = 0; m < NDIM; ++m) {
 				fprintf(fp1, "%12.12g\t", atom_ptr[i]->vel[m]);
 			}
 			fprintf(fp1, "\n");
@@ -532,7 +532,7 @@ int print_xml (const string filename, const System *sys) {
 		
 		fprintf(fp1, "<acceleration num=\"%d\">\n", tot_atoms);
 		for (int i = 0; i < tot_atoms; ++i) {
-			for (int m = 0; m < 3; ++m) {
+			for (int m = 0; m < NDIM; ++m) {
 				fprintf(fp1, "%12.12g\t", atom_ptr[i]->force[m]/atom_ptr[i]->mass);
 			}
 			fprintf(fp1, "\n");
@@ -682,7 +682,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		}
 
 		// print header
-		vector <double> box = sys->box(), npos(3);
+		vector <double> box = sys->box(), npos(NDIM);
 		fprintf(fp1, "%d\n", tot_atoms);
 		fprintf(fp1, "Atoms. Timestep: %d\n", timestep);
 		for (int i = 0; i < tot_atoms; ++i) {
@@ -693,7 +693,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			} else {
 				npos.assign (atom_ptr[i]->pos, atom_ptr[i]->pos + sizeof(atom_ptr[i]->pos) / sizeof(double)); 
 			}
-			for (int m = 0; m < 3; ++m) {
+			for (int m = 0; m < NDIM; ++m) {
 				if (npos[m] != npos[m]) {
 					sprintf(err_msg, "Atom %d has nan for its coordinates, cannot print", i);
 					flag_error (err_msg, __FILE__, __LINE__);

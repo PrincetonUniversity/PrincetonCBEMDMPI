@@ -38,7 +38,7 @@ int force_calc(System *sys) { // pass interaction array
 		}
 		// KE = sum(i,1/2 *m(i)*v(i)*v(i))
 		if (i < sys->natoms()) {
-			for (int k = 0; k < 3; ++k) {
+			for (int k = 0; k < NDIM; ++k) {
 				kinetic_energy += 0.5*(sys->get_atom(i)->mass*sys->get_atom(i)->vel[k]*sys->get_atom(i)->vel[k]);
 			}
 		}

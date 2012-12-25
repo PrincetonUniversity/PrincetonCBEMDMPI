@@ -61,13 +61,13 @@ namespace sim_system {
 		int gen_domain_info ();
 		void clear_ghost_atoms ();
 		
-		double proc_widths[3];									//!< Width for domain decomposition
+		double proc_widths[NDIM];									//!< Width for domain decomposition
 		vector<int> final_proc_breakup;							//!< Final domain decomposition
-		int xyz_id[3];
-		double xyz_limits[3][2];
-		int send_table [26];
+		int xyz_id[NDIM];
+		double xyz_limits[NDIM][2];
+		int send_table [NNEIGHBORS];
 		vector< vector<Atom> > send_lists;
-		int send_list_size[26], get_list_size[26];
+		int send_list_size[NNEIGHBORS], get_list_size[NNEIGHBORS];
 		vector< vector<Atom> > get_lists;
 		
 		vector <vector <Interaction> > interact;               //!< Interaction matrix between atoms indexed by global id's (symetric)

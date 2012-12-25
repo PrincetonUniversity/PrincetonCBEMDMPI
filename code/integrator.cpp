@@ -30,7 +30,7 @@ namespace integrator {
 		vector <double> box = sys->box();
 		if (timestep_ == 0) {
 			for (int i = 0; i < sys->natoms(); ++i) {
-				for (int j = 0; j < 3; ++j) {
+				for (int j = 0; j < NDIM; ++j) {
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
 					// maintain atom position in the box
@@ -53,7 +53,7 @@ namespace integrator {
 		}
 		else {
 			for (int i = 0; i < sys->natoms(); ++i) {
-				for (int j = 0; j < 3; ++j) {
+				for (int j = 0; j < NDIM; ++j) {
 					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
@@ -93,7 +93,7 @@ namespace integrator {
 	    char err_msg[MYERR_FLAG_SIZE];
 		vector <int> nsend_atoms(nprocs,0), nrecv_atoms(nprocs,0);
 		int iproc;
-		vector <double> pos(3);
+		vector <double> pos(NDIM);
 		vector < vector <int> > atom_goes;
 		vector <int> atom_goes_loc, dummy_catch;
 		Atom **leaving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *)), **arriving_atoms = (Atom **)malloc(nprocs*sizeof(Atom *));
@@ -113,7 +113,7 @@ namespace integrator {
 		// collect and enumerate number atoms that go to each processor
 		int tot_send = 0;
 		for (int i = 0; i < sys->natoms(); ++i) {
-			for (int j = 0; j < 3; ++j) {
+			for (int j = 0; j < NDIM; ++j) {
 				pos[j] = sys->get_atom(i)->pos[j];
 			}
 			iproc = get_processor (pos, sys);
@@ -281,7 +281,7 @@ namespace integrator {
 		for (int i = 0; i < timesteps; ++i) {
 			// clear out the forces on each atom which is NECESSARY before each new step
 			for (int j = 0; j < sys->natoms(); ++j) {
-				for (int k = 0; k < 3; ++k) {
+				for (int k = 0; k < NDIM; ++k) {
 					sys->get_atom(j)->force[k] = 0.0;
 				}
 			}

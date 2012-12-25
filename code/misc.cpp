@@ -59,8 +59,8 @@ FILE *mfopen(const char *filename, const char *opt) {
  \param [in] box Vector of box dimensions (L_x, L_y, L_z).
  */
 vector <double> pbc (const vector <double> coords, const vector <double> box) {
-	vector <double> in_box(3, 0.0); 
-	for (int i = 0; i < 3; ++i) {
+	vector <double> in_box(NDIM, 0.0); 
+	for (int i = 0; i < NDIM; ++i) {
 	    in_box[i] = coords[i];
 		// because box is defined with corner at (0,0,0) ceil/floor when used appropriately puts back in box with one operation
 		in_box[i] = coords[i];
@@ -83,8 +83,8 @@ vector <double> pbc (const vector <double> coords, const vector <double> box) {
 	 \param [in] box Vector of box dimensions (L_x, L_y, L_z).
 	 */
 	vector <double> pbc (const double *coords, const vector <double> box) {
-		vector <double> in_box(3, 0.0);
-		for (int i = 0; i < 3; ++i) {
+		vector <double> in_box(NDIM, 0.0);
+		for (int i = 0; i < NDIM; ++i) {
 			in_box[i] = coords[i];
 			if (coords[i] < 0.0) {
 				in_box[i] = coords[i] + ceil(-coords[i]/box[i])*box[i];
@@ -108,7 +108,7 @@ double min_image_dist2 (const vector <double> coords1, const vector <double> coo
 	 assert (box.size() == 3);*/
 	
 	double ans = 0.0, dist;
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < NDIM; ++i) {
 		dist = coords2[i] - coords1[i];
 		dist -= round(dist/box[i])*box[i];
 		ans += dist*dist;
@@ -126,7 +126,7 @@ double min_image_dist2 (const vector <double> coords1, const vector <double> coo
  */
 double min_image_dist2 (const Atom *a1, const Atom *a2, const vector <double> *box, double *xyz) {
 	double ans = 0.0;
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < NDIM; ++i) {
 		xyz[i] = a2->pos[i] - a1->pos[i];
 		xyz[i] -= round(xyz[i]/box->at(i))*box->at(i);
 		ans += xyz[i]*xyz[i];

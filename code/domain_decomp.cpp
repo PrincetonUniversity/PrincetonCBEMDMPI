@@ -16,11 +16,11 @@
 void gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add) {
 
     vector<int> remaining;
-    double widths[3];
-    static int breakup[3]={1,1,1};
+    double widths[NDIM];
+    static int breakup[NDIM]={1,1,1};
     
     if (factors.size() == 0) {
-		for (int m=0; m<3; m++) {
+		for (int m=0; m<NDIM; m++) {
 			widths[m] = box[m] / breakup[m];
 		}
 		double diff = (widths[1]-widths[0])*(widths[1]-widths[0]) + (widths[2]-widths[1])*(widths[2]-widths[1]) + (widths[0]-widths[2])*(widths[0]-widths[2]);
@@ -40,7 +40,7 @@ void gen_sets (const vector<int>& factors, const double box[], const int level, 
 			breakup[level-1] /= factors[j];
 		}
     } else if (level == 0 && add == 0) {
-		for (int m=0; m<3; m++) {
+		for (int m=0; m<NDIM; m++) {
 			breakup[m] = 1;
 		}
 		for (int i=1; i<=((int)factors.size()-2); i++) {
@@ -91,13 +91,13 @@ vector <int> factorize (const int nprocs) {
 */
 int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup) {
 
-    double box_dims[3];
+    double box_dims[NDIM];
     double final_diff=10000;
     vector<int> factors;
 
-    final_breakup.resize(3, -1);
+    final_breakup.resize(NDIM, -1);
 	
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<NDIM; i++) {
 	box_dims[i] = box[i];
     }
 
@@ -108,7 +108,7 @@ int init_domain_decomp (const vector<double> box, const int nprocs, double width
 
     // gen_sets is a recursive function, initial call must have level=0 and add=0
     gen_sets(factors, box_dims, 0, final_diff, final_breakup, 0);
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<NDIM; i++) {
 	widths[i] = box_dims[i] / final_breakup[i];
     }
 
@@ -172,7 +172,7 @@ int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_
  \param [in] skin_cutoff WHAT DOES IT DO
 */
 int gen_send_lists (System *sys) {
-    const int ndims=3;
+    const int ndims=NDIM;
     const double skin_cutoff=sys->max_rcut();
     /* Since a particle can have only 3 relationships to a dimension of the box, we define
        0 = in the middle (itm),
@@ -184,7 +184,7 @@ int gen_send_lists (System *sys) {
     vector<int> goes_to;
 
     sys->send_lists.clear();
-    for (int i=0; i<26; i++) {
+    for (int i=0; i<NNEIGHBORS; i++) {
 		sys->send_list_size[i] = 0;
     }
     for (int i=0; i < sys->natoms(); i++) {
@@ -213,10 +213,10 @@ int gen_send_lists (System *sys) {
 */
 int gen_send_table (System *sys) {
 
-    const int nvals=3;
-    int xyz_id[3], ngh_xyz_id[3], domain_id, value;
+    const int nvals=NDIM;
+    int xyz_id[NDIM], ngh_xyz_id[NDIM], domain_id, value;
 
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<NDIM; i++) {
 	xyz_id[i] = sys->xyz_id[i];
     }
     for (int i=-1; i<=1; i++) {
@@ -225,7 +225,7 @@ int gen_send_table (System *sys) {
 		ngh_xyz_id[0] = i + xyz_id[0];
 		ngh_xyz_id[1] = j + xyz_id[1];
 		ngh_xyz_id[2] = k + xyz_id[2];
-		for (int m=0; m<3; m++) {
+		for (int m=0; m<NDIM; m++) {
 		    if (ngh_xyz_id[m] < 0) {
 			ngh_xyz_id[m] = sys->final_proc_breakup[m]-1;
 		    } else if (ngh_xyz_id[m] == sys->final_proc_breakup[m]) {
@@ -304,24 +304,23 @@ int communicate_skin_atoms (System *sys) {
     MPI_Barrier (MPI_COMM_WORLD);
     MPI_Request req[52], req2[52];
     MPI_Status stat[52];
-    // 26 is here because in 3D each domain has 26 nearest neighbours
-    for (int i=0; i<26; i++) {
+    for (int i=0; i<NNEIGHBORS; i++) {
 	MPI_Isend (&sys->send_list_size[i], 1, MPI_INT, sys->send_table[i], sys->rank(), MPI_COMM_WORLD, &req[i]);
-	MPI_Irecv (&sys->get_list_size[i], 1, MPI_INT, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req[26+i]);
+	MPI_Irecv (&sys->get_list_size[i], 1, MPI_INT, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req[NNEIGHBORS+i]);
     }
     MPI_Waitall (52, req, stat);
     
-    for(int i=0; i<26; i++) {
+    for(int i=0; i<NNEIGHBORS; i++) {
 	sys->get_lists[i].reserve(sys->get_list_size[i]);
     }
 
-    for (int i=0; i<26; i++) {
+    for (int i=0; i<NNEIGHBORS; i++) {
 	MPI_Isend (&sys->send_lists[i].front(), sys->send_list_size[i], MPI_ATOM, sys->send_table[i], sys->rank(), MPI_COMM_WORLD, &req2[i]);
-	MPI_Irecv (&sys->get_lists[i].front(), sys->get_list_size[i], MPI_ATOM, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req2[26+i]);
+	MPI_Irecv (&sys->get_lists[i].front(), sys->get_list_size[i], MPI_ATOM, sys->send_table[i], sys->send_table[i], MPI_COMM_WORLD, &req2[NNEIGHBORS+i]);
     }
     MPI_Waitall (52, req2, stat);
 
-    for (int i=0; i<26; i++) {
+    for (int i=0; i<NNEIGHBORS; i++) {
 	sys->add_ghost_atoms(sys->get_list_size[i], &(sys->get_lists[i].front()));
     }
     return 0;
