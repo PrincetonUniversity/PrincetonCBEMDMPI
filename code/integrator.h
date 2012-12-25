@@ -1,6 +1,7 @@
 /**
- MD Integrator(s) Information
+ \brief MD Integrator(s) Information
  \author Nathan A. Mahynski
+ \file integrator.h
  **/
 
 #ifndef INTEGRATOR_H_
@@ -19,6 +20,7 @@ using namespace sim_system;
 using namespace misc;
 using namespace atom;
 
+//! \namespace integrator
 namespace integrator {
 	//!< Abstract base class for integrators
 	/*!
@@ -48,6 +50,9 @@ namespace integrator {
 		double dt2_;
 	};
 	
+	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.
+	int move_atoms (System *sys, const int rank, const int nprocs);
+	
 	//! NVE, Velocity Verlet
 	class Velocity_verlet : public Integrator {
 	public:
@@ -74,12 +79,6 @@ namespace integrator {
 	
 	
 	//!< Run (i.e. integrate) a system forward in time for a specified number of timesteps
-	/*!
-	 Function returns 0 if successful, -1 if it encountered an error.
-	 \param [in] \*sys Pointer to System to integrate
-	 \param [in] \*sys Pointer to Integrator to use
-	 \param [in] timesteps Number of timesteps to integrate over
-	 */
 	int run (System *sys, Integrator *integrator, const int timesteps);
 }
 

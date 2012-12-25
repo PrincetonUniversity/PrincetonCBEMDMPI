@@ -1,17 +1,20 @@
-/**
-MD Atom Information
+/*!
+ \file atom.cpp
+ \brief Functions for handling MD Atom Information
 \author Nathan A. Mahynski
 **/
 
+
 #include "atom.h"
 
+//! \namespace atom
 namespace atom {
 
-//! Creates the MPI_Atom class so it can be passed over MPI
-/*
- \sa initialize
+/*!
+ * \sa initialize
+ * This function creates and commits to the system the MPI_ATOM derived data type.
+ * (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
  */
-// (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
 void create_MPI_ATOM () {
 	const int num_types = 2;
 	MPI_Datatype oldtypes[num_types];
@@ -33,12 +36,12 @@ void create_MPI_ATOM () {
 	MPI_Type_commit (&MPI_ATOM);
 }
 
-//! Free the MPI type at the end of the program
-/*! 
- \sa finalize
+/*!
+ * This function utilizes the complementary MPI_Type_free routine
+ * to mark the MPI_ATOM type for deallocation
+ * \sa finalize
  */
 void delete_MPI_atom() {
-    //    extern MPI_Datatype MPI_ATOM;
 	MPI_Type_free (&MPI_ATOM);
 }
 

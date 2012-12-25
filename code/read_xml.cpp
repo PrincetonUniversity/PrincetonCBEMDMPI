@@ -1,5 +1,6 @@
 /**
- Read HOOMD XML file format into System object
+ \file read_xml.cpp
+ \brief Read HOOMD XML file format into System object
  \author Nathan A. Mahynski
  **/
 
@@ -12,7 +13,7 @@
  \param [in] filename Name of file to open and read.
  \param [in] nprocs Number of processors total.
  \param [in] rank Rank of this process.
- \param [in,out] \*sys System object to store its information at.
+ \param [in,out] sys Pointer to System object to store its information at.
  */
 int read_xml (const string filename, System *sys) {
 	int nprocs, rank;
@@ -423,7 +424,7 @@ int read_xml (const string filename, System *sys) {
  Print atom information to an xml file. Returns 0 if successful, non-zero if failure. This only operates on the master node when multiple processors are used, 
  the rest pause and are sequentially informed to send information as needed.
  \param [in] filename Name of file to open and read.
- \param [in,out] \*sys System object for the main node to stores its information at.
+ \param [in,out] sys Pointer to System object for the main node to stores its information at.
  */
 int print_xml (const string filename, const System *sys) {
     char err_msg[MYERR_FLAG_SIZE];

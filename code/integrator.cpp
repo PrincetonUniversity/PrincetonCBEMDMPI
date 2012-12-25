@@ -1,12 +1,15 @@
 /**
-   MD Integrator(s) Information
+   \brief MD Integrator(s) Information
    \authors{George Khoury, Carmeline Dsilva, Nathan A. Mahynski}
+   \file integrator.cpp
 **/
 
 #include "integrator.h"
 #include "force_calc.h"
 
+//! \namespace integrator
 namespace integrator {
+
 	//! NVE, Verlet
 	Verlet::Verlet (double deltat) {
 		timestep_ = 0;
@@ -18,7 +21,8 @@ namespace integrator {
 	  This function integrates.
 	  Call it to make a step.
 	  Will update atom positions and velocities
-	 Maintains atom positions in the box if atoms cross boundaries.
+	  Maintains atom positions in the box if atoms cross boundaries.
+	  \param [in] sys Pointer to System to make an integration step in
 	*/
 	int Verlet::step (System *sys) {
 		double prev_prev_pos;
@@ -75,7 +79,15 @@ namespace integrator {
 		return 0;
 	}
 	
-	//! Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.
+	
+	/*! 
+	  This function loops through all atoms in the system, sends atoms that
+      are outside this domain to the proper domain and
+      deletes them locally. Also, it will receive and insert new atoms.
+   	  \param [in] sys Pointer to System to integrate
+	  \param [in] rank processor rank
+	  \param [in] nprocs number of processors 
+	*/	
 	int move_atoms (System *sys, const int rank, const int nprocs) {
 	    char err_msg[MYERR_FLAG_SIZE];
 		vector <int> nsend_atoms(nprocs,0), nrecv_atoms(nprocs,0);
@@ -182,8 +194,8 @@ namespace integrator {
 	//!< Run (i.e. integrate) a system forward in time for a specified number of timesteps
 	/*!
 	  Function returns 0 if successful, -1 if it encountered an error.
-	  \param [in] \*sys Pointer to System to integrate
-	  \param [in] \*sys Pointer to Integrator to use
+	  \param [in] sys Pointer to System to integrate
+	  \param [in] integrator Pointer to Integrator to use
 	  \param [in] timesteps Number of timesteps to integrate over
 	*/
 	int run (System *sys, Integrator *integrator, const int timesteps) {

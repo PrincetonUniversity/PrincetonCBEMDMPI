@@ -1,5 +1,6 @@
 /**
- MD System Information
+ \file system.h
+ \brief Header for MD System Information
  \author Nathan A. Mahynski
  **/
 
@@ -19,7 +20,9 @@ using namespace std;
 using namespace atom;
 using namespace misc;
 
-//! Namespace containing all system variable and quantities
+/* \namespace sim_system
+  Namespace containing all system variable and quantities
+*/
 namespace sim_system {
 	class System {
 	public:

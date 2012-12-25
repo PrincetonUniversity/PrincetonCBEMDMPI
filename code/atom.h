@@ -1,5 +1,6 @@
-/**
- MD Atom Information
+/*!
+ \file atom.h
+ \brief MD Atom Information
  \author Nathan A. Mahynski
 **/
 
@@ -10,13 +11,14 @@
 #include "mpi.h"
 #include "global.h"
 
+//! \namespace atom
 //! Namespace containing pertinent Atom information
 namespace atom {
-	//! Atom class is defined so as to be easy to pass with MPI 
+    //! Atom class is defined as a struct so as to be easy to pass with MPI
 	typedef struct {
 		double pos[3];				//!< Cartesian coordinates
-		double prev_pos[3];                     //!< Cartesian coordinates for the previous position of the atom (needed for integrator)
-		double vel[3];				//!< Cartesian velocities
+		double prev_pos[3];         //!< Cartesian coordinates for the previous position of the atom (needed for integrator)
+		double vel[3];				//!< Cartesian velocities (vx, vy, vz)
 		double force[3];			//!< Cartesian force, (fx, fy, fz)
 		double mass;				//!< Atomic mass (in reduced units)
 		double diam;				//!< Atomic diameter (in reduced units)
@@ -27,17 +29,10 @@ namespace atom {
 	//! MPI version of Atom
 	//extern MPI_Datatype MPI_ATOM; // George : is this global? Maybe we should put in driver. 11/30 11:51PM
 	
-	//! Creates the MPI_Atom class so it can be passed over MPI
-	/*
-	 \sa initialize
-	 */
-	// (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
+    //! Creates the MPI_Atom class so it can be passed over MPI
 	void create_MPI_ATOM ();
 	
-	//! Free the MPI type at the end of the program
-	/*! 
-	 \sa finalize
-	 */
+    //! Free the MPI type at the end of the program
 	void delete_MPI_atom();
 }
 

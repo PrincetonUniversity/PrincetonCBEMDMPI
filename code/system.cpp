@@ -1,10 +1,12 @@
 /**
-MD System Information
+\file system.cpp
+\brief Source code for the System object
 \author Nathan A. Mahynski
 **/
 
 #include "system.h"
 
+//! \namespace sim_system
 namespace sim_system {	
 	/*!
 	 Upon initialization, resize vectors as necessary.  Set T < 0.

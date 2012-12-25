@@ -1,3 +1,8 @@
+/*!
+ \file common.h
+ \brief Header that lumps all common header files into one
+*/
+
 #ifndef COMMON_H_
 #define COMMON_H_
 

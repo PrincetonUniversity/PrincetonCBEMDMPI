@@ -1,3 +1,8 @@
+/**
+ \file test_all.cpp
+ \authors {Arun L. Prabhu, Carmeline Dsilva, Nathan Mahynski, George Khoury}
+ **/
+ 
 #include <gtest/gtest.h>
 #include "atom.h"
 #include "integrator.h"

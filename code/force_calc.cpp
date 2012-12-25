@@ -1,8 +1,18 @@
+/*!
+ \file force_calc.cpp
+ \brief Source code for force calculation function
+ \authors{Nathan Mahynski, Carmeline Dsilva, Arun Prabhu, George Khoury}
+**/
+
 #include "force_calc.h"
 
 using namespace std;
 using namespace sim_system;
 
+/*!
+ \brief Calculates the forces between the particles in the system
+ \param sys [in] System for which to evaluate the forces
+*/
 int force_calc(System *sys) { // pass interaction array
 	const vector<double> box = sys->box();
 	double kinetic_energy = 0.0, potential_energy = 0.0, dE, totKE, totPE;
@@ -26,6 +36,7 @@ int force_calc(System *sys) { // pass interaction array
 				}
 		    }
 		}
+		// KE = sum(i,1/2 *m(i)*v(i)*v(i))
 		if (i < sys->natoms()) {
 			for (int k = 0; k < 3; ++k) {
 				kinetic_energy += 0.5*(sys->get_atom(i)->mass*sys->get_atom(i)->vel[k]*sys->get_atom(i)->vel[k]);

@@ -1,5 +1,6 @@
 /**
- I/O for XML
+ \file read_xml.h
+ \brief I/O for XML
  \author Nathan A. Mahynski
  **/
 

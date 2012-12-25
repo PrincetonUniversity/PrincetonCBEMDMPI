@@ -1,5 +1,14 @@
+/*! 
+ \file read_interaction.cpp
+ \brief Source code to read in interaction parameters from a parameter file
+**/
+
 #include "read_interaction.h"
 
+/*! Function to read in interaction parameters and store them into the system
+ \param [in] filename  name of file containing the interaction parameters to be processed
+ \param [in,out] sys Pointer to system
+*/
 int read_interactions (const string filename, System *sys) {
 	const int buffsize = 1000;
 	char buff[buffsize];
@@ -171,8 +180,8 @@ int read_interactions (const string filename, System *sys) {
 	return 0;
 }
 
-//! Given a name, return the force_energy_ptr associated with it.  Also check the arguments that will be passed to it are in acceptable range.
 /*!
+ \brief Given a name, return the force_energy_ptr associated with it.  Also check the arguments that will be passed to it are in acceptable range.
  \param [in] name Name of interaction, i.e. "fene" or "slj"
  \param [in] \*args Pointer to vector of arguments that will be passed to this interaction later on
  */

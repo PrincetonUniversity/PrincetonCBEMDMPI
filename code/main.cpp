@@ -1,7 +1,19 @@
+/*!
+ \brief Test MD driver program for serial implementation of code
+ \file main.cpp
+ \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury}
+ **/
+
 #include "integrator.h"
 #include "system.h"
 #include "CBEMD.h"
 
+/*!
+ \brief Function to perform the force calculation
+ \param [in] a1 Pointer to Atom 1 involved in force calculation
+ \param [in] a2 Pointer to Atom 2 involved in force calculation
+ \param [in] box Pointer to the system box
+*/
 inline void force_calc(System *sys, void (*force)(Atom *a1, Atom *a2, const vector <double> *box)) {
 	const vector<double> box = sys->box();
 	for (int i=0; i!=sys->natoms(); ++i) {
@@ -15,6 +27,9 @@ inline void force_calc(System *sys, void (*force)(Atom *a1, Atom *a2, const vect
 	}
 }
 
+/*!
+ \brief Main setting up a few atoms and their velocities and performing MD 
+*/
 int main(int argc, char** argv) {
 
 	// make new system    
@@ -58,7 +73,7 @@ int main(int argc, char** argv) {
 		integrator1.step(&sys1);
 		cout << sys1.get_atom(0)->pos[0] << " " << sys1.get_atom(0)->pos[1] << " " <<sys1.get_atom(0)->pos[2] << endl;
 	}
-	cout << "YIPPEE" << endl;
+	cout << "YIPPEE" << endl;  // Happiness if successful.
 	return 0;
 
 }

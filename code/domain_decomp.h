@@ -1,3 +1,9 @@
+/*!
+ \file domain_decomp.h
+ \author Arun L. Prabhu
+ \brief Header file for domain decomposition
+*/
+
 #include "common.h"
 #include "system.h"
 #include "mpi.h"

@@ -1,3 +1,8 @@
+/**
+ \file test_all.cpp
+ \authors {Arun L. Prabhu, Carmeline Dsilva, Nathan Mahynski, George Khoury}
+ **/
+
 #include "../gtest-1.6.0/include/gtest/gtest.h"
 #include "domain_decomp.h"
 #include "system.h"

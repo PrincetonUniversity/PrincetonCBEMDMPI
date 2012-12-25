@@ -1,14 +1,20 @@
+/*!
+ \brief Driver for MPI Version of CBEMD
+ \file main_mpi.cpp
+ \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury}
+ **/
+
 #include "CBEMD.h"
 
-//! Driver for mpi version
 /*!
+ \brief Main 
  \param \*argv[] ./cbemd nsteps dt xml_file bond_file
  */
 int main (int argc, char *argv[]) {
 	int check;
 	long int nsteps;
 	double dt;
-	System mysys;
+	System mysys; /**< Declare system */
 	
 	if (argc != 5) {
 		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file\n");
@@ -17,7 +23,7 @@ int main (int argc, char *argv[]) {
 	
 	// read nsteps and dt
 	char* str_ptr;
-	nsteps = strtol(argv[1], &str_ptr, 10);
+	nsteps = strtol(argv[1], &str_ptr, 10); /**< Store number of steps */
 	dt = atof(argv[2]);
 	if (str_ptr == argv[1]) {
 	    fprintf(stderr, "No value was found for the number of steps. \n");
@@ -28,9 +34,9 @@ int main (int argc, char *argv[]) {
 	    fprintf(stdout, " Ignored characters : %s\n", str_ptr);
 	}
 
-	// set integrator
+	// setup integrator
 	Integrator *myint = new Verlet (dt);
-	myint->set_dt(dt);
+	myint->set_dt(dt);  /**< Set timestep of integrator  */
 
 	check = start_mpi (argc, argv);
 	if (check != 0) {

@@ -1,6 +1,7 @@
-/**
- Interaction Information
- \authors{Nathan A. Mahynski, George A. Khoury}
+/*!
+ \brief Source code for interaction functions
+ \file interaction.cpp
+ \authors{Nathan A. Mahynski, George Khoury}
  **/
 
 #include "interaction.h"
@@ -17,10 +18,10 @@
  F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\
  &=& 0 & r - \Delta \ge r_{cut}
  \f}
- \param [in,out] \*atom1 Pointer to first atom
- \param [in,out] \*atom2 Pointer to second atom
- \param [in] \*box Pointer to vector of box size
- \param [in] \*args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut^2>
+ \param [in,out] atom1 Pointer to first atom
+ \param [in,out] atom2 Pointer to second atom
+ \param [in] box Pointer to vector of box size
+ \param [in] args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut^2>
  */
 double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <double> *args) {
 	// compute min image distance
@@ -40,7 +41,9 @@ double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <
 		double sigma=args->at(1), epsilon=args->at(0);
 		double b = 1.0/x, a = sigma*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
 		factor = 24.0*epsilon*a6*(2.0*a6-1.0)*b/r;
-		// The vector xyz MUST be pointing from a1 to a2 for the vectors to be correct.  This is automatically handled in min_image_dist2().
+		/* The vector xyz MUST be pointing from a1 to a2 for the vectors to 
+        be correct.  This is automatically handled in min_image_dist2().
+        */
 		for (int i = 0; i < 3; ++i) {
 			val = xyz[i]*factor;
 			atom1->force[i] -= val;
@@ -52,8 +55,8 @@ double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <
 	}
 }
 
-//! Harmonic Bond
 /*!
+ Harmonic Bond
  The Harmonic bond potential is given by:
  \f[
  U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2
@@ -74,8 +77,8 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
 	return 0.5*args->at(0)*(d1-args->at(1))*(d1-args->at(1));
 }
 
-//! Finitely Extensible Non-linear Elastic Bond
 /*!
+ Finitely Extensible Non-linear Elastic Bond (FENE)
  The Fene bond potential is given by:
  \f[
  U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA}

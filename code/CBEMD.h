@@ -1,3 +1,8 @@
+/*!
+ \file CBEMD.h
+ \brief Header grouping source headers into one simple header
+*/
+
 #include "atom.h"
 #include "system.h"
 #include "integrator.h"
