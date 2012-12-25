@@ -21,6 +21,7 @@ using namespace misc;
 using namespace atom;
 
 //! \namespace integrator
+//! Namespace for the base class for integrators
 namespace integrator {
 	//!< Abstract base class for integrators
 	/*!

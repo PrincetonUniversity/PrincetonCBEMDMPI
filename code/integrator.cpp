@@ -8,6 +8,7 @@
 #include "force_calc.h"
 
 //! \namespace integrator
+//! Namespace for the base class for integrators
 namespace integrator {
 
 	//! NVE, Verlet
