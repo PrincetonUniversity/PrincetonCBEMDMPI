@@ -1,0 +1,73 @@
+\hypertarget{namespaceintegrator}{\section{integrator Namespace Reference}
+\label{namespaceintegrator}\index{integrator@{integrator}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classintegrator_1_1Integrator}{Integrator}
+\begin{DoxyCompactList}\small\item\em $<$ Abstract base class for integrators \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Verlet}{Verlet}
+\begin{DoxyCompactList}\small\item\em N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Velocity__verlet}{Velocity\-\_\-verlet}
+\begin{DoxyCompactList}\small\item\em N\-V\-E, Velocity \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1Andersen}{Andersen}
+\begin{DoxyCompactList}\small\item\em N\-V\-T, \hyperlink{classintegrator_1_1Andersen}{Andersen} thermostat. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1NoseHoover}{Nose\-Hoover}
+\begin{DoxyCompactList}\small\item\em N\-V\-T, Nose-\/\-Hooser thermostat. \end{DoxyCompactList}\item 
+class \hyperlink{classintegrator_1_1NHA}{N\-H\-A}
+\begin{DoxyCompactList}\small\item\em N\-P\-T, Nose-\/\-Hoover thermostat + \hyperlink{classintegrator_1_1Andersen}{Andersen} barostat Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespaceintegrator_a0e16957f4e63c97d3317957f62e27850}{move\-\_\-atoms} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, const int rank, const int nprocs)
+\begin{DoxyCompactList}\small\item\em Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\item 
+int \hyperlink{namespaceintegrator_ae2beebff4a0f3bd03ae47ffb6725f414}{run} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, \hyperlink{classintegrator_1_1Integrator}{Integrator} $\ast$integrator, const int timesteps)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Namespace for the base class for integrators 
+
+\subsection{Function Documentation}
+\hypertarget{namespaceintegrator_a0e16957f4e63c97d3317957f62e27850}{\index{integrator@{integrator}!move\-\_\-atoms@{move\-\_\-atoms}}
+\index{move\-\_\-atoms@{move\-\_\-atoms}!integrator@{integrator}}
+\subsubsection[{move\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}int integrator\-::move\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys, }
+\item[{const int}]{rank, }
+\item[{const int}]{nprocs}
+\end{DoxyParamCaption}
+)}}\label{namespaceintegrator_a0e16957f4e63c97d3317957f62e27850}
+
+
+Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. 
+
+Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.
+
+This function loops through all atoms in the system, sends atoms that are outside this domain to the proper domain and deletes them locally. Also, it will receive and insert new atoms. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sys} & Pointer to System to integrate \\
+\hline
+\mbox{\tt in}  & {\em rank} & processor rank \\
+\hline
+\mbox{\tt in}  & {\em nprocs} & number of processors \\
+\hline
+\end{DoxyParams}
+\hypertarget{namespaceintegrator_ae2beebff4a0f3bd03ae47ffb6725f414}{\index{integrator@{integrator}!run@{run}}
+\index{run@{run}!integrator@{integrator}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}int integrator\-::run (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys, }
+\item[{Integrator $\ast$}]{integrator, }
+\item[{const int}]{timesteps}
+\end{DoxyParamCaption}
+)}}\label{namespaceintegrator_ae2beebff4a0f3bd03ae47ffb6725f414}
+Function returns 0 if successful, -\/1 if it encountered an error. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sys} & Pointer to System to integrate \\
+\hline
+\mbox{\tt in}  & {\em integrator} & Pointer to \hyperlink{classintegrator_1_1Integrator}{Integrator} to use \\
+\hline
+\mbox{\tt in}  & {\em timesteps} & Number of timesteps to integrate over \\
+\hline
+\end{DoxyParams}

@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2012.8.28)  25 DEC 2012 00:00
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2012.8.28)  25 DEC 2012 00:19
 entering extended mode
 **_formulas.tex
 (./_formulas.tex
@@ -91,34 +91,46 @@ Type  H <return>  for immediate help.
 l.5 ...ht) + U_{shift} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
 
-? 
+? r
+OK, entering \nonstopmode...
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.5 ...ht) + U_{shift} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.5 ...ht) + U_{shift} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 ! Missing } inserted.
 <inserted text> 
                 }
 l.5 ...ht) + U_{shift} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.5 ... r - \Delta < r_{cut} \\ &=& 0 & r - \Delta
                                                    \ge r_{cut} \end{eqnarray*}
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -128,25 +140,39 @@ Type  H <return>  for immediate help.
                                                   
 l.5 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.5 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.5 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing } inserted.
 <inserted text> 
                 }
 l.5 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 [1
 
 ]
@@ -155,50 +181,75 @@ l.5 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                 U
 l.8 ...n{eqnarray*} F_i &=& -\frac{\del U}{\del r}
                                                   \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Undefined control sequence.
 <argument> \del 
                 r
 l.8 ...n{eqnarray*} F_i &=& -\frac{\del U}{\del r}
                                                   \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Undefined control sequence.
 <argument> \del 
                 r
 l.8 ...frac{\del U}{\del r}\frac{\del r}{\del x_i}
                                                    = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Undefined control sequence.
 <argument> \del 
                 x_i
 l.8 ...frac{\del U}{\del r}\frac{\del r}{\del x_i}
                                                    = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Undefined control sequence.
 <argument> \del 
                 U
 l.8 ...{\del r}{\del x_i} = -\frac{\del U}{\del r}
                                                   \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Undefined control sequence.
 <argument> \del 
                 r
 l.8 ...{\del r}{\del x_i} = -\frac{\del U}{\del r}
                                                   \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.8 ...c{\del U}{\del r}\frac{x_i}{r} & r - \Delta
                                                    < r_{cut} \\ &=& 0 & r - ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -209,34 +260,47 @@ Type  H <return>  for immediate help.
 l.8 ...r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
 
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.8 ...r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.8 ...r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 ! Missing } inserted.
 <inserted text> 
                 }
 l.8 ...r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.8 ... r - \Delta < r_{cut} \\ &=& 0 & r - \Delta
                                                    \ge r_{cut} \end{eqnarray*}
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -246,39 +310,58 @@ Type  H <return>  for immediate help.
                                                   
 l.8 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.8 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.8 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing } inserted.
 <inserted text> 
                 }
 l.8 ... 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
                                                   
-? 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 [2] [3]
 ! Undefined control sequence.
 l.14 \[ U(r) = -\frac{1}{2}kr_{0}^2\text
                                         {ln}\left(1-\left(\frac{r-\Delta}{r_...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 [4]
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.17 ...igma}{r-\Delta} \right)^6 \right) & r < 2^
                                                   {1/6}\sigma+\Delta \\ &=& ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -289,35 +372,47 @@ Type  H <return>  for immediate help.
 l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
 
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 ! Missing } inserted.
 <inserted text> 
                 }
 l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
-? 
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.17 ... < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta
                                                    \ge 2^{1/6}\sigma \end{eq...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-? 
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -327,25 +422,39 @@ Type  H <return>  for immediate help.
                                                   
 l.17 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
                                                   
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
 l.17 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
                                                   
-? 
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
 ! Missing $ inserted.
 <inserted text> 
                 $
 l.17 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
                                                   
-? 
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
 ! Missing } inserted.
 <inserted text> 
                 }
 l.17 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
                                                   
-? 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
 [5] (./_formulas.aux) ) 
 Here is how much of TeX's memory you used:
  536 strings out of 94501

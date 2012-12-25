@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: integrator.h File Reference</title>
+<title>APC524 Group Project: CBEMD: integrator Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -36,9 +36,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li class="current"><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -59,8 +59,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
+      <li><a href="namespaces.html"><span>Namespace&#160;List</span></a></li>
+      <li><a href="namespacemembers.html"><span>Namespace&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -81,67 +81,133 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">integrator.h File Reference</div>  </div>
+<div class="title">integrator Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>MD Integrator(s) Information.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="system_8h_source.html">system.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="misc_8h_source.html">misc.h</a>&quot;</code><br/>
-<code>#include &quot;mpi.h&quot;</code><br/>
-<code>#include &quot;<a class="el" href="domain__decomp_8h_source.html">domain_decomp.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="atom_8h_source.html">atom.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="force__calc_8h_source.html">force_calc.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="read__xml_8h_source.html">read_xml.h</a>&quot;</code><br/>
-</div>
-<p><a href="integrator_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Integrator.html">integrator::Integrator</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Integrator.html">Integrator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Abstract base class for integrators  <a href="classintegrator_1_1Integrator.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Verlet.html">integrator::Verlet</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Verlet.html">Verlet</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">NVE, <a class="el" href="classintegrator_1_1Verlet.html" title="NVE, Verlet.">Verlet</a>.  <a href="classintegrator_1_1Verlet.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Velocity__verlet.html">integrator::Velocity_verlet</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Velocity__verlet.html">Velocity_verlet</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">NVE, Velocity <a class="el" href="classintegrator_1_1Verlet.html" title="NVE, Verlet.">Verlet</a>.  <a href="classintegrator_1_1Velocity__verlet.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Andersen.html">integrator::Andersen</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1Andersen.html">Andersen</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">NVT, <a class="el" href="classintegrator_1_1Andersen.html" title="NVT, Andersen thermostat.">Andersen</a> thermostat.  <a href="classintegrator_1_1Andersen.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1NoseHoover.html">integrator::NoseHoover</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1NoseHoover.html">NoseHoover</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">NVT, Nose-Hooser thermostat.  <a href="classintegrator_1_1NoseHoover.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1NHA.html">integrator::NHA</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classintegrator_1_1NHA.html">NHA</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">NPT, Nose-Hoover thermostat + <a class="el" href="classintegrator_1_1Andersen.html" title="NVT, Andersen thermostat.">Andersen</a> barostat Run (i.e. integrate) a system forward in time for a specified number of timesteps.  <a href="classintegrator_1_1NHA.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceintegrator"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceintegrator.html">integrator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0e16957f4e63c97d3317957f62e27850"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceintegrator.html#a0e16957f4e63c97d3317957f62e27850">integrator::move_atoms</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys, const int rank, const int nprocs)</td></tr>
+<tr class="memitem:a0e16957f4e63c97d3317957f62e27850"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceintegrator.html#a0e16957f4e63c97d3317957f62e27850">move_atoms</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys, const int rank, const int nprocs)</td></tr>
 <tr class="memdesc:a0e16957f4e63c97d3317957f62e27850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run (i.e. integrate) a system forward in time for a specified number of timesteps.  <a href="#a0e16957f4e63c97d3317957f62e27850"></a><br/></td></tr>
 <tr class="separator:a0e16957f4e63c97d3317957f62e27850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2beebff4a0f3bd03ae47ffb6725f414"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceintegrator.html#ae2beebff4a0f3bd03ae47ffb6725f414">integrator::run</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys, Integrator *integrator, const int timesteps)</td></tr>
+<tr class="memitem:ae2beebff4a0f3bd03ae47ffb6725f414"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceintegrator.html#ae2beebff4a0f3bd03ae47ffb6725f414">run</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys, <a class="el" href="classintegrator_1_1Integrator.html">Integrator</a> *integrator, const int timesteps)</td></tr>
 <tr class="separator:ae2beebff4a0f3bd03ae47ffb6725f414"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>MD Integrator(s) Information. </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Namespace for the base class for integrators </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a0e16957f4e63c97d3317957f62e27850"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int integrator::move_atoms </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramname"><em>sys</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>rank</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>nprocs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run (i.e. integrate) a system forward in time for a specified number of timesteps. </p>
+<p>Loop through all atoms in the system, send atoms that are outside this domain to the proper domain and delete them locally; also receive and insert new ones.</p>
+<p>This function loops through all atoms in the system, sends atoms that are outside this domain to the proper domain and deletes them locally. Also, it will receive and insert new atoms. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sys</td><td>Pointer to System to integrate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rank</td><td>processor rank </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nprocs</td><td>number of processors </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae2beebff4a0f3bd03ae47ffb6725f414"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int integrator::run </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramname"><em>sys</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Integrator *&#160;</td>
+          <td class="paramname"><em>integrator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>timesteps</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function returns 0 if successful, -1 if it encountered an error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">sys</td><td>Pointer to System to integrate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">integrator</td><td>Pointer to <a class="el" href="classintegrator_1_1Integrator.html" title="&lt; Abstract base class for integrators">Integrator</a> to use </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timesteps</td><td>Number of timesteps to integrate over </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 25 2012 00:19:16 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

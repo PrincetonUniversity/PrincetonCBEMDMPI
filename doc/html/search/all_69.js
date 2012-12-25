@@ -4,6 +4,7 @@ var searchData=
   ['initialize_2ecpp',['initialize.cpp',['../initialize_8cpp.html',1,'']]],
   ['initialize_5ffrom_5ffiles',['initialize_from_files',['../initialize_8cpp.html#ae7423a7d38da76104c00de34e055e3df',1,'initialize.cpp']]],
   ['integrator',['Integrator',['../classintegrator_1_1Integrator.html',1,'integrator']]],
+  ['integrator',['integrator',['../namespaceintegrator.html',1,'']]],
   ['integrator_2ecpp',['integrator.cpp',['../integrator_8cpp.html',1,'']]],
   ['integrator_2eh',['integrator.h',['../integrator_8h.html',1,'']]],
   ['interact',['interact',['../classsim__system_1_1System.html#a60bd9f309d9f1358209179e53425ef11',1,'sim_system::System']]],
