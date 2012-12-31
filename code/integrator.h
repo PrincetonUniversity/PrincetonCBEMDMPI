@@ -80,7 +80,7 @@ namespace integrator {
 	
 	
 	//!< Run (i.e. integrate) a system forward in time for a specified number of timesteps
-	int run (System *sys, Integrator *integrator, const int timesteps);
+	int run (System *sys, Integrator *integrator, const int timesteps, const string outfile);
 }
 
 

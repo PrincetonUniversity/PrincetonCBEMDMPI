@@ -199,7 +199,9 @@ namespace integrator {
 	  \param [in] integrator Pointer to Integrator to use
 	  \param [in] timesteps Number of timesteps to integrate over
 	*/
-	int run (System *sys, Integrator *integrator, const int timesteps) {
+	int run (System *sys, Integrator *integrator, const int timesteps, const string outfile) {
+		const bool wrap_pos = true;
+
 		// The way this function is written it can be easily interpreted by SWIG with python!
 		int check = 0, nprocs, rank;
 		char err_msg[MYERR_FLAG_SIZE];
@@ -316,7 +318,7 @@ namespace integrator {
 
 
 			// create animation
-			write_xyz ("output.xyz", sys, i, false);
+			write_xyz (outfile, sys, i, wrap_pos);
 
 			// step forward
 			check = integrator->step(sys);
@@ -347,7 +349,7 @@ namespace integrator {
 			}
 
 		}
-		write_xyz ("output.xyz", sys, timesteps, false);
+		write_xyz ("output.xyz", sys, timesteps, wrap_pos);
 		
 	return 0;
 	}

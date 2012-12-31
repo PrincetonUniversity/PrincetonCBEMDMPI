@@ -8,7 +8,7 @@
 
 /*!
  \brief Main 
- \param \*argv[] ./cbemd nsteps dt xml_file bond_file
+ \param \*argv[] ./cbemd nsteps dt xml_file bond_file output_file
  */
 int main (int argc, char *argv[]) {
 	int check;
@@ -16,8 +16,8 @@ int main (int argc, char *argv[]) {
 	double dt;
 	System mysys; //Declare system
 	
-	if (argc != 5) {
-		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file\n");
+	if (argc != 6) {
+		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file output_file\n");
 		return ILLEGAL_VALUE;
 	}
 	
@@ -50,7 +50,7 @@ int main (int argc, char *argv[]) {
 	}
 	
 	// run
-	check = run (&mysys, myint, nsteps);
+	check = run (&mysys, myint, nsteps, argv[5]);
 	if (check != 0) {
 		goto finalize;
 	}

@@ -686,8 +686,8 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		fprintf(fp1, "%d\n", tot_atoms);
 		fprintf(fp1, "Atoms. Timestep: %d\n", timestep);
 		for (int i = 0; i < tot_atoms; ++i) {
-			//fprintf(fp1, "%s ", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
-			fprintf(fp1, "%d ", atom_ptr[i]->type+1);
+			fprintf(fp1, "%s ", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
+			//fprintf(fp1, "%d ", atom_ptr[i]->type+1);
 			if (wrap_pos) {
 				npos = pbc (&atom_ptr[i]->pos[0], box);
 			} else {
