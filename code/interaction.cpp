@@ -85,7 +85,7 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  \f]
  Where the short range repulsion is provided by the WCA potential:
  \f{eqnarray*}{
- U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) & r < 2^{1/6}\sigma+\Delta \\
+ U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta \\
  &=& 0 &r-\Delta \ge 2^{1/6}\sigma
  \f}
  \Delta is usually set such that $\Delta = (d_i+d_j)/2-1$ where $d_i$ is the diameter of species i, but the user may decide on other parameters.
