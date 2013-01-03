@@ -6,11 +6,146 @@
 
 #include "integrator.h"
 #include "force_calc.h"
+#include </home/gkhoury/boost_1_52_0/boost/tr1/random.hpp>
+
 
 //! \namespace integrator
 //! Namespace for the base class for integrators
 namespace integrator {
 
+	//
+	// Generate a random number between 0 and 1
+	// return a uniform number in [0,1].
+	double unifRand()
+	{
+	    return rand() / double(RAND_MAX);
+	}
+	//
+	// Generate a random number in a real interval.
+	// param a one end point of the interval
+	// param b the other end of the interval
+	// return a inform rand numberin [a,b].
+	double unifRand(double a, double b)
+	{
+	    return (b-a)*unifRand() + a;
+	}
+
+
+	// ! NVT, Andersen Thermostat
+	Andersen::Andersen(double deltat, double temp){
+		timestep_ = 0;
+		dt_ = deltat;
+		dt2_ = dt_*dt_;
+		temp_ = temp;
+	}
+
+	int Andersen::step (System *sys) {
+		double prev_prev_pos;
+		double nu = 0.01; // thermostat parameter controlling frequency of collisions with heat bath
+		vector <double> box = sys->box();
+		int check = 0, nprocs, rank;
+		char err_msg[MYERR_FLAG_SIZE];
+		MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
+		MPI_Comm_rank (MPI_COMM_WORLD, &rank);
+                //std::tr1::default_random_engine generator;
+
+		//std::mt19937 Myceng;
+		typedef std::tr1::linear_congruential<int, 16807, 0, (int)((1U << 31) -1 ) > Myceng;
+		Myceng eng;
+		if (timestep_ == 0) {
+
+			// step #1 
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+				}
+			}
+
+			// move atoms
+			// check to move atoms if necessary
+			if (nprocs > 1) {
+				check = move_atoms (sys, rank, nprocs);
+				if (check != 0) {
+					sprintf(err_msg, "Couldn't move atoms from rank %d on step %d", rank, dt_);
+					flag_error (err_msg, __FILE__, __LINE__);
+					return check;
+				}
+			}
+
+			// step #2 
+			double tempa = 0;
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+					tempa += sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+				}
+			}
+
+			double sig;
+			sig = sqrt(temp_);
+			std::tr1::normal_distribution<double> distribution(0.0,sig);
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					if (unifRand() < nu*dt_) {
+						sys->get_atom(i)->vel[j] = distribution(eng);
+					}
+				}
+			}
+		}
+		else {
+
+			// step 1
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+				}
+			}
+
+			// move atoms
+			// check to move atoms if necessary
+			if (nprocs > 1) {
+				check = move_atoms (sys, rank, nprocs);
+				if (check != 0) {
+					sprintf(err_msg, "Couldn't move atoms from rank %d on step %d", rank, dt_);
+					flag_error (err_msg, __FILE__, __LINE__);
+					return check;
+				}
+			}
+
+			// step 2
+			double tempa = 0;
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
+					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
+					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+					tempa += sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+				}
+			}
+
+			double sig;
+			sig = sqrt(temp_);
+			std::tr1::normal_distribution<double> distribution(0.0,sig);
+			for (int i = 0; i < sys->natoms(); ++i) {
+				for (int j = 0; j < NDIM; ++j) {
+					if (unifRand() < nu*dt_) {
+						sys->get_atom(i)->vel[j] = distribution(eng);
+					}
+				}
+			}
+		}
+		timestep_++;
+		return 0;
+	}
 	//! NVE, Verlet
 	Verlet::Verlet (double deltat) {
 		timestep_ = 0;
@@ -46,7 +181,8 @@ namespace integrator {
 					}
 					if (sys->get_atom(i)->pos[j] >= box[j]) {
 						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
-						}*/
+						}
+					*/
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
@@ -57,21 +193,6 @@ namespace integrator {
 					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
-					// maintain atom position in the box
-					// use direct iteration NOT ceil/floor here because positions should not move excessively unless you have bigger problems
-					/*while (sys->get_atom(i)->pos[j] < 0.0) {
-						sys->get_atom(i)->pos[j] += box[j];
-					}
-					while (sys->get_atom(i)->pos[j] > box[j]) {
-						sys->get_atom(i)->pos[j] -= box[j];
-					}*/
-					/*if (sys->get_atom(i)->pos[j] < 0.0) {
-						sys->get_atom(i)->pos[j] += ceil(-sys->get_atom(i)->pos[j]/box[j])*box[j];
-					}
-					if (sys->get_atom(i)->pos[j] >= box[j]) {
-						sys->get_atom(i)->pos[j] -= floor(sys->get_atom(i)->pos[j]/box[j])*box[j];
-						}*/
-					//sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - prev_prev_pos) / (2.0 * dt_);
 					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
