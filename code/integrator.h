@@ -19,6 +19,7 @@
 using namespace sim_system; 
 using namespace misc;
 using namespace atom;
+using namespace std;
 
 //! \namespace integrator
 //! Namespace for the base class for integrators
@@ -33,9 +34,13 @@ namespace integrator {
 		~Integrator(){};
 		void set_dt (const double dt) {dt_ = dt;}
 		double dt () const {return dt_;}
+		void set_temp (double temp) {temp_ = temp;}
+		double getTemp() const {return temp_;}
 		virtual int step (System *sys) = 0;		//!< Requires all subclasses to be able to execute a step
+		double type();
 	protected:
 		double dt_;
+		double temp_;
 	};
 	
 	//! NVE, Verlet
@@ -46,6 +51,7 @@ namespace integrator {
 		double getTime();
 		double getdt();
 		int step(System *sys);
+		double type; 
 	private:
 		int timestep_;
 		double dt2_;
@@ -63,7 +69,17 @@ namespace integrator {
 	//! NVT, Andersen thermostat
 	class Andersen : public Integrator {
 	public:
+		Andersen(double deltat, double temp);
+		~Andersen(){};
+		void set_temp (double temp) {temp_ = temp;}
+		double getTemp() const {return temp_;}
+		double getdt();
+		int step(System *sys);
+		double type;
 	private:
+		int timestep_;
+		double dt2_;
+		double temp_;
 	};
   
 	//! NVT, Nose-Hooser thermostat

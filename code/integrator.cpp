@@ -37,31 +37,41 @@ namespace integrator {
 		dt_ = deltat;
 		dt2_ = dt_*dt_;
 		temp_ = temp;
+		type = 2;
 	}
-
+	
+	// http://phycomp.technion.ac.il/~talimu/md4.html
 	int Andersen::step (System *sys) {
 		double prev_prev_pos;
-		double nu = 0.01; // thermostat parameter controlling frequency of collisions with heat bath
+		double nu = 10.0; // thermostat parameter controlling frequency of collisions with heat bath
 		vector <double> box = sys->box();
 		int check = 0, nprocs, rank;
 		char err_msg[MYERR_FLAG_SIZE];
 		MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
 		MPI_Comm_rank (MPI_COMM_WORLD, &rank);
                 //std::tr1::default_random_engine generator;
-
+		double totalmass = 0;  // initialize totalmass of system
+		for (int i = 0; i < sys->natoms(); ++i) {
+			totalmass += sys->get_atom(i)->mass;
+		}
+		//totalmass = totalmass / sys->natoms();
 		//std::mt19937 Myceng;
 		typedef std::tr1::linear_congruential<int, 16807, 0, (int)((1U << 31) -1 ) > Myceng;
 		Myceng eng;
-		if (timestep_ == 0) {
-
-			// step #1 
+                cout << "temp is " << temp_ << endl;
+//		if (timestep_ == 0) {
+			// step #1
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < NDIM; ++j) {
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] += sys->get_atom(i)->vel[j] * dt_ + 0.5 * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+					sys->get_atom(i)->vel[j] += 0.5* dt_*sys->get_atom(i)->force[j] / sys->get_atom(i)->mass;
+					//sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
+
+			// force calc
+			check = force_calc(sys);
 
 			// move atoms
 			// check to move atoms if necessary
@@ -76,38 +86,57 @@ namespace integrator {
 
 			// step #2 
 			double tempa = 0;
+			//temp_ = 0 ;
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < NDIM; ++j) {
 					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
-					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
-					tempa += sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+					//sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
+					sys->get_atom(i)->vel[j] = sys->get_atom(i)->vel[j] + 0.5 * dt_ * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass;
+					tempa += sys->get_atom(i)->mass*sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+					//temp_ += sys->get_atom(i)->mass*sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
 				}
 			}
 
+			double s = 3.0 ;
+			tempa = tempa / ( s * (sys->natoms()));
+			//temp_ = temp_ / (s* sys->natoms());
+
+			cout << "Instantaneous Temp is "  << tempa << endl;
+			//cout << "Instantaneous Temp is " << temp_ << endl;
 			double sig;
-			sig = sqrt(temp_);
+			sig = sqrt(temp_); //should this be div by totalmass?!
 			std::tr1::normal_distribution<double> distribution(0.0,sig);
+			double rannum;
 			for (int i = 0; i < sys->natoms(); ++i) {
-				for (int j = 0; j < NDIM; ++j) {
-					if (unifRand() < nu*dt_) {
+				rannum = unifRand();
+				//cout << rannum << " is random number " << endl;
+				if (rannum < nu*dt_) {
+					//sig = sqrt(temp_/sys->get_atom(i)->mass);
+					//std::tr1::normal_distribution<double> distribution(0.0,sig);
+					for (int j = 0; j < NDIM; ++j) {
+					//if (unifRand() < nu*dt_) {
 						sys->get_atom(i)->vel[j] = distribution(eng);
 					}
 				}
 			}
-		}
-		else {
+//		}
+//		else {
 
-			// step 1
+/*			// step 1
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < NDIM; ++j) {
 					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+                                        sys->get_atom(i)->vel[j] += 0.5* dt_*sys->get_atom(i)->force[j] / sys->get_atom(i)->mass;
+
+					//sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
 				}
 			}
+
+                        // force calc
+                        check = force_calc(sys);
 
 			// move atoms
 			// check to move atoms if necessary
@@ -122,18 +151,27 @@ namespace integrator {
 
 			// step 2
 			double tempa = 0;
+			//temp_ = 0;
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < NDIM; ++j) {
 					prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 					sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 					sys->get_atom(i)->pos[j] = 2.0 *  sys->get_atom(i)->prev_pos[j] - prev_prev_pos + sys->get_atom(i)->force[j] / sys->get_atom(i)->mass * dt2_;
-					sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
-					tempa += sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+					//sys->get_atom(i)->vel[j] = (sys->get_atom(i)->pos[j] - sys->get_atom(i)->prev_pos[j]) / dt_;
+                                        sys->get_atom(i)->vel[j] = sys->get_atom(i)->vel[j] + 0.5 * dt_ * sys->get_atom(i)->force[j];
+                                        tempa += sys->get_atom(i)->mass*sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
+					//temp_ += sys->get_atom(i)->mass*sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
 				}
 			}
 
+                        double s = 3.0 / totalmass;
+                        tempa = tempa / ( (s * sys->natoms()));
+			//temp_ = temp_ / (s* sys->natoms());
+
+			cout << "Instantaneous Temp " << tempa << endl;
+			//cout << "Instantaneous Temp " << temp_ << endl;
 			double sig;
-			sig = sqrt(temp_);
+			sig = sqrt(temp_); // should this be tempa NO
 			std::tr1::normal_distribution<double> distribution(0.0,sig);
 			for (int i = 0; i < sys->natoms(); ++i) {
 				for (int j = 0; j < NDIM; ++j) {
@@ -142,7 +180,8 @@ namespace integrator {
 					}
 				}
 			}
-		}
+//		}
+		*/
 		timestep_++;
 		return 0;
 	}
@@ -151,6 +190,7 @@ namespace integrator {
 		timestep_ = 0;
 		dt_ = deltat;
 		dt2_ = dt_ * dt_;
+		type = 1;
 	}
 
 	/*! 
@@ -426,8 +466,18 @@ namespace integrator {
 			MPI_Barrier(MPI_COMM_WORLD);
 			
 			// calc_force
-			check = force_calc(sys);
-			
+			if (i == 0) {
+				check = force_calc(sys);
+			}
+			//else if (i > 0 and integrator->type == 1){
+			else if (integrator->getTemp() == 0 ) {
+				cout << " You are running NVE,nothing changed " << endl;
+				check = force_calc(sys);
+			}
+			else {
+				cout << "You are running NVT, nothing changed " << endl;
+			}
+
 			if (check != 0) {
 				sprintf(err_msg, "Error encountered during force calc after step %d", i+1);
 				flag_error (err_msg, __FILE__, __LINE__);
