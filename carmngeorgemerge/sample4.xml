@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hoomd_xml version="1.4">
+<configuration time_step="0" dimensions="3" natoms="15" >
+<box lx="10" ly="10" lz="10"/>
+<position num="15">
+9 9 9
+9 7.2 9
+9 7.2 7.2
+7.2 7.2 7.2
+7.2 7.2 5.4
+7.2 5.4 5.4
+5.4 5.4 5.4
+0 0 0
+0 1.8 1.8
+0 1.8 3.6
+0 0 0.9
+0 0 1.98
+1.8 1.8 3.6
+1.8 3.6 3.6
+8.1 8.1 8.1
+</position>
+<velocity num="15">
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+</velocity>
+<mass num="15">
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+</mass>
+<diameter num="15">
+1
+1
+1
+1
+1
+1
+1
+2
+2
+2
+2
+2
+2
+2
+2
+</diameter>
+<type num="15">
+A
+A
+A
+A
+A
+A
+A
+B
+B
+B
+B
+B
+B
+B
+B
+</type>
+<bond num="0">
+</bond>
+</configuration>
+</hoomd_xml>
