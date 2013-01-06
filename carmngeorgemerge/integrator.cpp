@@ -160,6 +160,13 @@ int run (System *sys, Integrator *integrator, const int timesteps, const string 
 			}
 		}
 	}
+	
+	// Check that the number of processors is not too large such that the width of domain does not exceed max_rcut
+	if (sys->max_rcut() > sys->box()[PARALLELDIM]/nprocs) {
+		sprintf(err_msg, "Domain widths (%g) exceeds maximum r_cut in the system (%g), cannot use this many processors", sys->box()[PARALLELDIM]/nprocs, sys->max_rcut());
+		flag_error (err_msg, __FILE__, __LINE__);
+		return ILLEGAL_VALUE;
+	}
 		
 	// Check their are some atoms in the system
 	if (sys->global_atom_types.size() < 1) {
