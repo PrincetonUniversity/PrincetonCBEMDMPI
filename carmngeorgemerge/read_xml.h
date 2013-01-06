@@ -18,13 +18,15 @@
 #include "read_interaction.h"
 
 using namespace std;
-using namespace sim_system;
-using namespace misc;
-using namespace atom;
 using namespace boost::algorithm;
 
+//! Read an xml file to initialize a System object
 int read_xml (const string filename, System *sys);
+
+//! Print the current state of the system to a .xml file
 int print_xml (const string filename, const System *sys);
+
+//! Write an animation file (.xyz)
 int write_xyz (const string filename, const System *sys, const int timestep, const bool wrap_pos);
 
 #endif

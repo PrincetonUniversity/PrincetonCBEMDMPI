@@ -1,6 +1,7 @@
 /*!
  \file CBEMD.h
- \brief Header grouping source headers into one simple header
+ \brief Header grouping source headers into one simple header for the driver program(s).
+ \author {Carmeline Dsilva}
 */
 
 #include "atom.h"
@@ -16,7 +17,3 @@
 #include <limits>
 
 using namespace std;
-using namespace atom;
-using namespace sim_system;
-using namespace integrator;
-using namespace misc;

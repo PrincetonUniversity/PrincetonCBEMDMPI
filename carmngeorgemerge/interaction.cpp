@@ -18,25 +18,25 @@
  F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\
  &=& 0 & r - \Delta \ge r_{cut}
  \f}
- \param [in,out] atom1 Pointer to first atom
- \param [in,out] atom2 Pointer to second atom
- \param [in] box Pointer to vector of box size
- \param [in] args Vector of arguments <epsilon, sigma, delta, U_{shift}, rcut^2>
+ \param [in,out] \*atom1 Pointer to first atom
+ \param [in,out] \*atom2 Pointer to second atom
+ \param [in] \*box Pointer to vector of box size
+ \param [in] \*args Pointer to vector of arguments <epsilon, sigma, delta, U_{shift}, rcut^2>
  */
 double slj (Atom *atom1, Atom *atom2, const vector <double> *box, const vector <double> *args) {
-	// compute min image distance
+	// Compute min image distance
 	double xyz[NDIM];
 	double d2 = min_image_dist2 ((const Atom *)atom1, (const Atom *) atom2, box, xyz);
 	double delta=args->at(2), r = sqrt(d2), x = r - delta;	
 	
-	// check that r > delta, else error has occurred
+	// Check that r > delta, else error has occurred
 	if (x < 0) {
 		SljException slj_bounds_error (atom1->sys_index, atom2->sys_index, d2, args->at(2));
 		throw(slj_bounds_error);
 		return 0.0;
 	}
 	
-	// if (r-delta)^2 < rcut^2 compute
+	// If (r-delta)^2 < rcut^2 compute
 	if (x*x < args->at(4)) {
 		double sigma=args->at(1), epsilon=args->at(0);
 		double b = 1.0/x, a = sigma*b, a2 = a*a, a6 = a2*a2*a2, val, factor;
@@ -100,23 +100,21 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
 	double d1 = sqrt(d2), d1shift = d1 - args->at(2);
 	double factor = args->at(3)*d1shift/(d1shift/args->at(4)*d1shift/args->at(4)-1.0)/d1, energy = 0.0;
 
-	// check_fene
-	// check if atom coordinates in a fene bond are further than r0 apart
-	// this can cause a singularity so we want to guard against this
+	// Check if atom coordinates in a fene bond are further than r0 apart; this can cause a singularity so we want to guard against this.
 	if (d1 > args->at(4)) {
 		FeneException fene_bounds_error (a1->sys_index, a2->sys_index, d1, args->at(4));
 		throw(fene_bounds_error);
 		return 0.0;
 	}
 	
-	// wca portion potentially also has singularity that needs to be checked
+	// WCA portion potentially also has singularity that needs to be checked
 	if (d1shift < 0) {
 		SljException slj_bounds_error (a1->sys_index, a2->sys_index, d1, args->at(2));
 		throw(slj_bounds_error);
 		return 0.0;
 	}
 	
-	// compute logarithmic portion
+	// Compute logarithmic portion
 	for (int i = 0; i < NDIM; ++i) {
 		a1->force[i] -= xyz[i]*factor;
 		a2->force[i] += xyz[i]*factor;

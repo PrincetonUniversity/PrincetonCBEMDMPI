@@ -12,10 +12,8 @@
 #include "global.h"
 
 using namespace std;
-using namespace atom;
-using namespace misc;
 
-// Functor for functions that compute (and store) force vector between 2 atoms, and return the energy between them.
+// Function pointer for functions that compute (and store) force vector between 2 atoms, and return the energy between them.
 typedef double (*force_energy_ptr) (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args);
 
 //! Computes force and energy of Shifted Lennard-Jones interaction
@@ -27,6 +25,9 @@ double fene (Atom *a1, Atom *a2, const vector <double> *box, const vector <doubl
 //! Computes force and energy of a Harmonic bond
 double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <double> *args);	
 	
+//! Error message for exception classes
+static char err_MSG[1000];
+
 //! This class stores how a pair of particles interacts
 /*!
  Returns energy and force as long as r < r_{cut}, else 0.
@@ -41,7 +42,7 @@ public:
     force_energy_ptr check_force_energy_function () const {return my_force_energy_;}				//!< Return the function for force and energy calculations
 						  
 private:
-	force_energy_ptr my_force_energy_; 
+	force_energy_ptr my_force_energy_;		//!< Functor to evaluate
 	vector <double> energy_args_;			//!< Energy (and force) arguments
 };
 
@@ -50,10 +51,10 @@ class FeneException : public exception {
 public:
 	FeneException (const int ind1, const int ind2, const double dist, const double r0) {ind1_=ind1; ind2_=ind2; dist_=dist, r0_=r0;}
 	virtual const char* what() const throw() {
-		char err_msg[1000];
-		sprintf(err_msg, "Fene distance for atoms (%d,%d) = %g > %g, out of bounds (r > r0)", ind1_, ind2_, dist_, r0_);
-		return err_msg;
+		sprintf(err_MSG, "Fene distance for atoms (%d,%d) = %g > %g, out of bounds (r > r0)", ind1_, ind2_, dist_, r0_);
+		return err_MSG;
 	}
+	
 protected:
 	int ind1_, ind2_;
 	double dist_, r0_;
@@ -64,10 +65,10 @@ class SljException : public exception {
 public:
 	SljException (const int ind1, const int ind2, const double dist, const double delta) {ind1_=ind1; ind2_=ind2; dist_=dist, delta_=delta;}
 	virtual const char* what() const throw() {
-		char err_msg[1000];
-		sprintf(err_msg, "Shifted Lennard-Jones for atoms (%d,%d) has separation of %g < %g out of bounds (r < delta)", ind1_, ind2_, dist_, delta_);
-		return err_msg;
+		sprintf(err_MSG, "Shifted Lennard-Jones for atoms (%d,%d) has separation of %g < %g out of bounds (r < delta)", ind1_, ind2_, dist_, delta_);
+		return err_MSG;
 	}
+	
 protected:
 	int ind1_, ind2_;
 	double dist_, delta_;

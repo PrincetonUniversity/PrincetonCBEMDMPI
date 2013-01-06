@@ -1,18 +1,17 @@
 /*!
  \file force_calc.cpp
- \brief Source code for force calculation function
- \authors{Nathan Mahynski, Carmeline Dsilva, Arun Prabhu, George Khoury}
+ \brief Source code for force calculation
+ \authors{Frank Ricci, Jun Park, Nathan Mahynski, Carmeline Dsilva, Arun Prabhu, George Khoury}
 **/
 
 #include "force_calc.h"
 
 using namespace std;
-using namespace sim_system;
 
 /*!
-This function sends the atoms that have left the domain of the processor to the relevant neighboring processor
-If the atom has moved more than one box, it returns an error flag
-\param sys [in] System for which to move the atoms
+ This function sends the atoms that have left the domain of the processor to the relevant neighboring processor.
+ If the atom has moved more than one domain width, it returns an error flag, else returns SAFE_EXIT for success.
+ \param \*sys [in] Pointer to system for which to move the atoms from
 **/
 int send_atoms(System *sys) {
 	char err_msg[MYERR_FLAG_SIZE];
@@ -26,11 +25,13 @@ int send_atoms(System *sys) {
 	int num_to_left = 0;
 	int num_to_right = 0;
 	int num_from_left, num_from_right;
+	
 	// store atoms to send and receive
 	vector<Atom> to_left;
 	vector<Atom> to_right;
 	vector<Atom> from_left;
 	vector<Atom> from_right;
+	
 	// store indices of atoms that have been sent (so we can delete them)
 	vector<int> to_delete;
 
@@ -84,14 +85,14 @@ int send_atoms(System *sys) {
 	sys->delete_atoms(to_delete);
 	
 	MPI_Barrier(MPI_COMM_WORLD);
-	return 0;
+	return SAFE_EXIT;
 }
 	
 /*!
- \brief Calculates the forces between the particles in the system
- \param sys [in] System for which to evaluate the forces
+ Returns SAFE_EXIT if successful, else returns an error flag.
+ \param [in] \*sys Pointer to system for which to evaluate the forces
 */
-int force_calc(System *sys) { // pass interaction array
+int force_calc(System *sys) { 
 	const double skin_cutoff = sys->max_rcut();
 	const vector<double> box = sys->box();
 	double kinetic_energy = 0.0, potential_energy = 0.0, dE, totKE, totPE;
@@ -99,11 +100,12 @@ int force_calc(System *sys) { // pass interaction array
 	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 	
-	// store number of atoms to send to and receive from the processor on the left and on the right
+	// Store number of atoms to send to and receive from the processor on the left and on the right
 	int num_to_left = 0;
 	int num_to_right = 0;
 	int num_from_left, num_from_right;
-	// store atoms to send and receive
+	
+	// Store atoms to send and receive
 	vector<Atom> to_left;
 	vector<Atom> to_right;
 	vector<Atom> from_left;
@@ -112,9 +114,10 @@ int force_calc(System *sys) { // pass interaction array
 	MPI_Request req[4], req2[4];
 	MPI_Status stat[4], stat2[4];
 
-	// calculate force between all atoms in the system
+	// Calculate forces between all atoms in the system
 	for (int i=0; i!=sys->natoms(); ++i) {
 		for (int j=i+1; j!=sys->natoms(); ++j) {
+			// A "try" statement is necessary here because interactions can throw errors which need to be caught here
 			try {
 				dE = sys->interact[(*(sys->get_atom(i))).sys_index][(*(sys->get_atom(j))).sys_index].force_energy(sys->get_atom(i), sys->get_atom(j), &box);
 			}
@@ -122,11 +125,10 @@ int force_calc(System *sys) { // pass interaction array
 				flag_error(e.what(), __FILE__, __LINE__);
 				return ILLEGAL_VALUE;
 			}
-				
 			potential_energy += dE;
 		}
 		
-		// remember if atom needs to be sent to neighborign processor
+		// Remember if atom needs to be sent to neighboring processor
 		if (pbc(sys->get_atom(i)->pos, box)[0] < rank * box[0] / nprocs + skin_cutoff) {
 			to_left.push_back(*(sys->get_atom(i)));
 			num_to_left++;
@@ -140,11 +142,10 @@ int force_calc(System *sys) { // pass interaction array
 		for (int k = 0; k < NDIM; ++k) {
 			kinetic_energy += 0.5*(sys->get_atom(i)->mass*sys->get_atom(i)->vel[k]*sys->get_atom(i)->vel[k]);
 		}
-
 	}
 	
 	if (nprocs > 1) {
-		// send ghost atoms to neighboring processor
+		// Send ghost atoms to neighboring processor
 		MPI_Isend(&num_to_left, 1, MPI_INT, (rank - 1 + nprocs) % nprocs, 1, MPI_COMM_WORLD, req);
 		MPI_Irecv(&num_from_left, 1, MPI_INT, (rank - 1 + nprocs) % nprocs, 1, MPI_COMM_WORLD, req+1);
 		MPI_Isend(&num_to_right, 1, MPI_INT, (rank + 1) % nprocs, 1, MPI_COMM_WORLD, req+2);
@@ -160,7 +161,7 @@ int force_calc(System *sys) { // pass interaction array
 		MPI_Irecv(&from_right[0], num_from_right, MPI_ATOM, (rank + 1) % nprocs, 1, MPI_COMM_WORLD, req2+3);
 		MPI_Waitall (4, req2, stat2);
 
-		// calculate interactions between new (ghost) atoms and atoms on processor
+		// Calculate interactions between new (ghost) atoms and atoms on processor
 		for (int i=0; i!=sys->natoms(); ++i) {
 			for (int j=0; j < num_from_left; ++j) {
 				try {
@@ -170,7 +171,7 @@ int force_calc(System *sys) { // pass interaction array
 					flag_error(e.what(), __FILE__, __LINE__);
 					return ILLEGAL_VALUE;
 				}
-				// update PE only with interactions from atoms on the left
+				// Update PE only with interactions from atoms on the left so this energy is not doubly counted in the MPI_Allreduce() below
 				potential_energy += dE;
 			}
 			for (int j=0; j < num_from_right; ++j) {
@@ -182,11 +183,10 @@ int force_calc(System *sys) { // pass interaction array
 					return ILLEGAL_VALUE;
 				}
 			}
-
 		}
 	}	
 
-	// keep track of these on all processors (needed for things like thermostats, etc.)
+	// Keep track of these on all processors (needed for things like thermostats, etc.)
 	MPI_Allreduce (&kinetic_energy, &totKE, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 	MPI_Allreduce (&potential_energy, &totPE, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 	sys->set_total_KE(totKE);
@@ -195,6 +195,8 @@ int force_calc(System *sys) { // pass interaction array
 		double totE = totPE + totKE; 
 		cout << "KE = " << totKE<< ", PE = " << totPE << ", total = " << totE <<  endl;
 	}
+	
+	// Must wait for all forces to finish calculating before continuing
 	MPI_Barrier(MPI_COMM_WORLD);
-	return 0;
+	return SAFE_EXIT;
 }

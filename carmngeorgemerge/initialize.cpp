@@ -1,6 +1,6 @@
 /**
  \file initialize.cpp
- \brief Initialization routines for System object.
+ \brief Initialization routines for System object, as well as finalization of MPI.
  \author Nathan A. Mahynski
  **/
 
@@ -9,12 +9,10 @@
 /*!
  Parse an XML and energy file to obtain atom and interaction information. Returns 0 if successful, non-zero if failure. Operates in
  a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the
- file in order. Returns 0 if successful, else integer flag for failure.  Does domain decomposition.
+ input file in order. 
  \param [in] xml_filename Name of coordinate file to open and read.
  \param [in] energy_filename Name of file containing bonds, pair potential parameters, etc.
- \param [in] nprocs Number of processors total.
- \param [in] rank Rank of this process.
- \param [in,out] sys Pointer to System object to store its information at.
+ \param [in,out] \*sys Pointer to System object to store this information in.
  */
 int initialize_from_files (const string xml_filename, const string energy_filename, System *sys) {
 	int isignal, check, check2, check_sum, nprocs, rank;
@@ -60,7 +58,9 @@ int initialize_from_files (const string xml_filename, const string energy_filena
 }
 
 /*!
- Call MPI_Init and start the MPI ensuring it began successfully.
+ Call MPI_Init and start the MPI ensuring it began successfully.  Returns SAFE_EXIT if successful.
+ \param [in] argc Number of arguments in \*argv[].
+ \param [in] \*argv[] Array of character arguments.
  */
 int start_mpi (int argc, char *argv[]) {
 	// set up MPI
@@ -73,7 +73,7 @@ int start_mpi (int argc, char *argv[]) {
 	
 	// create and bind derived data type for atom
 	create_MPI_ATOM();
-	return 0;
+	return SAFE_EXIT;
 }
 
 /*!
@@ -86,7 +86,7 @@ int end_mpi () {
 }
 
 /*!
- Abort the MPI as a result of a failure.
+ Abort the MPI as a result of a failure, freeing MPI_ATOM as necessary.
  */
 int abort_mpi () {
     delete_MPI_atom();

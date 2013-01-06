@@ -1,5 +1,6 @@
 /*!
  \file mpiatom.h
+ \author Nathan A. Mahynski
  **/
 
 #ifndef MPI_ATOM_H_

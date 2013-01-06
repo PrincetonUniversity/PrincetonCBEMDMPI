@@ -16,9 +16,6 @@
 #include "global.h"
 
 using namespace std;
-using namespace sim_system;
-using namespace misc;
-using namespace atom;
 using namespace boost::algorithm;
 
 //! Function to read in interaction parameters and store them into the system
