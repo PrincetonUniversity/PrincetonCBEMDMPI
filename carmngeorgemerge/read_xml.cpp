@@ -185,7 +185,7 @@ int read_xml (const string filename, System *sys) {
 				}
 
 				// See if this atom belongs on this processor
-				if (floor(new_atoms[i].pos[0] / sys->box()[0] * nprocs) == rank) {
+				if (floor(new_atoms[i].pos[PARALLELDIM] / sys->box()[PARALLELDIM] * nprocs) == rank) {
 					atom_belongs.push_back(i);
 				}
 				

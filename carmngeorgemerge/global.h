@@ -33,4 +33,7 @@ const int NDIM = 3;
 //! Nearest neighbors for 3D Domain decomposition
 const int NNEIGHBORS = 26;
 
+//! dimension along which to do the domain decomposition
+const int PARALLELDIM = 0;
+
 #endif

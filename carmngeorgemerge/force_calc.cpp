@@ -41,7 +41,7 @@ int send_atoms(System *sys) {
 	int proc_to;
 	for (int i=0; i!=sys->natoms(); ++i) {
 		// calculate the processor for each atom
-		proc_to = floor(pbc(sys->get_atom(i)->pos, box)[0] / box[0] * nprocs);
+		proc_to = floor(pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] / box[PARALLELDIM] * nprocs);
 		if (proc_to == (rank - 1 + nprocs) % nprocs) {
 			to_left.push_back(*(sys->get_atom(i)));
 			num_to_left++;
@@ -129,11 +129,11 @@ int force_calc(System *sys) {
 		}
 		
 		// Remember if atom needs to be sent to neighboring processor
-		if (pbc(sys->get_atom(i)->pos, box)[0] < rank * box[0] / nprocs + skin_cutoff) {
+		if (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] < rank * box[PARALLELDIM] / nprocs + skin_cutoff) {
 			to_left.push_back(*(sys->get_atom(i)));
 			num_to_left++;
 		}
-		else if  (pbc(sys->get_atom(i)->pos, box)[0] > (rank + 1) * box[0] / nprocs - skin_cutoff) {
+		else if  (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] > (rank + 1) * box[PARALLELDIM] / nprocs - skin_cutoff) {
 			to_right.push_back(*(sys->get_atom(i)));
 			num_to_right++;
 		}
