@@ -1,0 +1,187 @@
+In file included from newtests.cpp:6:
+../gtest-1.6.0/include/gtest/gtest.h:57:43: error: gtest/internal/gtest-internal.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:58:41: error: gtest/internal/gtest-string.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:59:36: error: gtest/gtest-death-test.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:60:33: error: gtest/gtest-message.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:61:36: error: gtest/gtest-param-test.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:62:34: error: gtest/gtest-printers.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:63:30: error: gtest/gtest_prod.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:64:35: error: gtest/gtest-test-part.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:65:36: error: gtest/gtest-typed-test.h: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:1798:35: error: gtest/gtest_pred_impl.h: No such file or directory
+In file included from integrator.h:17,
+                 from newtests.cpp:8:
+read_xml.h:10:38: error: boost/algorithm/string.hpp: No such file or directory
+read_xml.h:11:26: error: boost/bind.hpp: No such file or directory
+read_xml.h:12:30: error: boost/function.hpp: No such file or directory
+../gtest-1.6.0/include/gtest/gtest.h:87: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:90: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:94: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:99: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:103: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:107: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:111: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:115: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:118: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:122: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:126: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:129: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:133: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:138: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:143: error: expected constructor, destructor, or type conversion before ‘(’ token
+../gtest-1.6.0/include/gtest/gtest.h:161: error: variable or field ‘ReportFailureInUnknownLocation’ declared void
+../gtest-1.6.0/include/gtest/gtest.h:161: error: ‘TestPartResult’ has not been declared
+../gtest-1.6.0/include/gtest/gtest.h:162: error: expected primary-expression before ‘const’
+../gtest-1.6.0/include/gtest/gtest.h:162: error: initializer expression list treated as compound expression
+../gtest-1.6.0/include/gtest/gtest.h:172: error: expected constructor, destructor, or type conversion before ‘StreamableToString’
+../gtest-1.6.0/include/gtest/gtest.h:265: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:324: error: expected initializer before ‘AssertionSuccess’
+../gtest-1.6.0/include/gtest/gtest.h:327: error: expected initializer before ‘AssertionFailure’
+../gtest-1.6.0/include/gtest/gtest.h:331: error: expected initializer before ‘AssertionFailure’
+../gtest-1.6.0/include/gtest/gtest.h:356: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:465: error: ‘TimeInMillis’ in namespace ‘testing::internal’ does not name a type
+../gtest-1.6.0/include/gtest/gtest.h:497: error: ‘String’ in namespace ‘testing::internal’ does not name a type
+../gtest-1.6.0/include/gtest/gtest.h:499: error: ‘String’ in namespace ‘testing::internal’ does not name a type
+../gtest-1.6.0/include/gtest/gtest.h: In constructor ‘testing::TestProperty::TestProperty(const char*, const char*)’:
+../gtest-1.6.0/include/gtest/gtest.h:477: error: class ‘testing::TestProperty’ does not have any field named ‘key_’
+../gtest-1.6.0/include/gtest/gtest.h:477: error: class ‘testing::TestProperty’ does not have any field named ‘value_’
+../gtest-1.6.0/include/gtest/gtest.h: In member function ‘const char* testing::TestProperty::key() const’:
+../gtest-1.6.0/include/gtest/gtest.h:482: error: ‘key_’ was not declared in this scope
+../gtest-1.6.0/include/gtest/gtest.h: In member function ‘const char* testing::TestProperty::value() const’:
+../gtest-1.6.0/include/gtest/gtest.h:487: error: ‘value_’ was not declared in this scope
+../gtest-1.6.0/include/gtest/gtest.h: In member function ‘void testing::TestProperty::SetValue(const char*)’:
+../gtest-1.6.0/include/gtest/gtest.h:492: error: ‘value_’ was not declared in this scope
+../gtest-1.6.0/include/gtest/gtest.h: At global scope:
+../gtest-1.6.0/include/gtest/gtest.h:508: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:625: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:740: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:955: error: expected ‘,’ or ‘...’ before ‘&’ token
+../gtest-1.6.0/include/gtest/gtest.h:955: error: ISO C++ forbids declaration of ‘TestPartResult’ with no type
+../gtest-1.6.0/include/gtest/gtest.h:991: error: expected ‘,’ or ‘...’ before ‘&’ token
+../gtest-1.6.0/include/gtest/gtest.h:991: error: ISO C++ forbids declaration of ‘TestPartResult’ with no type
+../gtest-1.6.0/include/gtest/gtest.h:1002: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:1089: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h: In function ‘testing::Environment* testing::AddGlobalTestEnvironment(testing::Environment*)’:
+../gtest-1.6.0/include/gtest/gtest.h:1264: error: incomplete type ‘testing::UnitTest’ used in nested name specifier
+../gtest-1.6.0/include/gtest/gtest.h: At global scope:
+../gtest-1.6.0/include/gtest/gtest.h:1276: error: two or more data types in declaration of ‘InitGoogleTest’
+../gtest-1.6.0/include/gtest/gtest.h:1280: error: two or more data types in declaration of ‘InitGoogleTest’
+../gtest-1.6.0/include/gtest/gtest.h:1297: error: expected constructor, destructor, or type conversion before ‘FormatForComparisonFailureMessage’
+../gtest-1.6.0/include/gtest/gtest.h:1306: error: expected constructor, destructor, or type conversion before ‘CmpHelperEQ’
+../gtest-1.6.0/include/gtest/gtest.h:1334: error: expected initializer before ‘CmpHelperEQ’
+../gtest-1.6.0/include/gtest/gtest.h:1348: error: expected initializer before ‘Compare’
+../gtest-1.6.0/include/gtest/gtest.h:1362: error: ‘AssertionResult’ does not name a type
+../gtest-1.6.0/include/gtest/gtest.h:1381: error: expected initializer before ‘Compare’
+../gtest-1.6.0/include/gtest/gtest.h:1399: error: expected initializer before ‘Compare’
+../gtest-1.6.0/include/gtest/gtest.h:1445: error: expected constructor, destructor, or type conversion before ‘CmpHelperNE’
+../gtest-1.6.0/include/gtest/gtest.h:1445: error: expected initializer before ‘CmpHelperNE’
+../gtest-1.6.0/include/gtest/gtest.h:1447: error: expected constructor, destructor, or type conversion before ‘CmpHelperLE’
+../gtest-1.6.0/include/gtest/gtest.h:1447: error: expected initializer before ‘CmpHelperLE’
+../gtest-1.6.0/include/gtest/gtest.h:1449: error: expected constructor, destructor, or type conversion before ‘CmpHelperLT’
+../gtest-1.6.0/include/gtest/gtest.h:1449: error: expected initializer before ‘CmpHelperLT’
+../gtest-1.6.0/include/gtest/gtest.h:1451: error: expected constructor, destructor, or type conversion before ‘CmpHelperGE’
+../gtest-1.6.0/include/gtest/gtest.h:1451: error: expected initializer before ‘CmpHelperGE’
+../gtest-1.6.0/include/gtest/gtest.h:1453: error: expected constructor, destructor, or type conversion before ‘CmpHelperGT’
+../gtest-1.6.0/include/gtest/gtest.h:1453: error: expected initializer before ‘CmpHelperGT’
+../gtest-1.6.0/include/gtest/gtest.h:1460: error: expected initializer before ‘CmpHelperSTREQ’
+../gtest-1.6.0/include/gtest/gtest.h:1468: error: expected initializer before ‘CmpHelperSTRCASEEQ’
+../gtest-1.6.0/include/gtest/gtest.h:1476: error: expected initializer before ‘CmpHelperSTRNE’
+../gtest-1.6.0/include/gtest/gtest.h:1484: error: expected initializer before ‘CmpHelperSTRCASENE’
+../gtest-1.6.0/include/gtest/gtest.h:1493: error: expected initializer before ‘CmpHelperSTREQ’
+../gtest-1.6.0/include/gtest/gtest.h:1501: error: expected initializer before ‘CmpHelperSTRNE’
+../gtest-1.6.0/include/gtest/gtest.h:1516: error: expected initializer before ‘IsSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1519: error: expected initializer before ‘IsSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1522: error: expected initializer before ‘IsNotSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1525: error: expected initializer before ‘IsNotSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1528: error: expected initializer before ‘IsSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1531: error: expected initializer before ‘IsNotSubstring’
+../gtest-1.6.0/include/gtest/gtest.h:1554: error: expected constructor, destructor, or type conversion before ‘CmpHelperFloatingPointEQ’
+../gtest-1.6.0/include/gtest/gtest.h:1582: error: expected initializer before ‘DoubleNearPredFormat’
+../gtest-1.6.0/include/gtest/gtest.h:1591: error: invalid function declaration
+../gtest-1.6.0/include/gtest/gtest.h:1982: error: expected initializer before ‘FloatLE’
+../gtest-1.6.0/include/gtest/gtest.h:1984: error: expected initializer before ‘DoubleLE’
+../gtest-1.6.0/include/gtest/gtest.h: In function ‘bool testing::StaticAssertTypeEq()’:
+../gtest-1.6.0/include/gtest/gtest.h:2075: error: ‘StaticAssertTypeEqHelper’ is not a member of ‘testing::internal’
+../gtest-1.6.0/include/gtest/gtest.h:2075: error: expected primary-expression before ‘,’ token
+../gtest-1.6.0/include/gtest/gtest.h:2075: error: expected primary-expression before ‘>’ token
+../gtest-1.6.0/include/gtest/gtest.h:2075: error: expected primary-expression before ‘)’ token
+interaction.h: In member function ‘virtual const char* FeneException::what() const’:
+interaction.h:53: warning: address of local variable ‘err_msg’ returned
+interaction.h: In member function ‘virtual const char* SljException::what() const’:
+interaction.h:67: warning: address of local variable ‘err_msg’ returned
+read_interaction.h: At global scope:
+read_interaction.h:22: error: ‘boost’ has not been declared
+read_interaction.h:22: error: ‘algorithm’ is not a namespace-name
+read_interaction.h:22: error: expected namespace-name before ‘;’ token
+read_xml.h:24: error: ‘boost’ has not been declared
+read_xml.h:24: error: ‘algorithm’ is not a namespace-name
+read_xml.h:24: error: expected namespace-name before ‘;’ token
+newtests.cpp:18: error: invalid use of undefined type ‘struct testing::Test’
+../gtest-1.6.0/include/gtest/gtest.h:181: error: forward declaration of ‘struct testing::Test’
+newtests.cpp:63: error: invalid use of undefined type ‘struct testing::Test’
+../gtest-1.6.0/include/gtest/gtest.h:181: error: forward declaration of ‘struct testing::Test’
+newtests.cpp: In member function ‘virtual void ManyBodyTest::SetUp()’:
+newtests.cpp:82: warning: converting to ‘int’ from ‘double’
+newtests.cpp:92: warning: converting to ‘int’ from ‘double’
+newtests.cpp: At global scope:
+newtests.cpp:101: error: ‘VerletNoForces’ has not been declared
+newtests.cpp:101: error: ‘testing::internal::GetTypeId’ has not been declared
+newtests.cpp:101: error: expected ‘,’ or ‘...’ before ‘<’ token
+newtests.cpp:101: error: ISO C++ forbids declaration of ‘GTEST_TEST_’ with no type
+newtests.cpp: In function ‘int GTEST_TEST_(TwoBodyTest, int, TwoBodyTest, int)’:
+newtests.cpp:105: error: ‘sys’ was not declared in this scope
+newtests.cpp:107: error: a function call cannot appear in a constant-expression
+newtests.cpp:107: error: template argument 1 is invalid
+newtests.cpp:107: error: ‘ASSERT_PRED_FORMAT2’ was not declared in this scope
+newtests.cpp:108: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:108: error: expected primary-expression before ‘double’
+newtests.cpp:108: error: ‘sys’ was not declared in this scope
+newtests.cpp:108: error: ‘EXPECT_PRED_FORMAT2’ was not declared in this scope
+newtests.cpp:109: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:109: error: expected primary-expression before ‘double’
+newtests.cpp:110: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:110: error: expected primary-expression before ‘double’
+newtests.cpp:111: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:111: error: expected primary-expression before ‘double’
+newtests.cpp:112: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:112: error: expected primary-expression before ‘double’
+newtests.cpp:113: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:113: error: expected primary-expression before ‘double’
+newtests.cpp: At global scope:
+newtests.cpp:116: error: ‘VerletNoInitVelocity’ has not been declared
+newtests.cpp:116: error: ‘testing::internal::GetTypeId’ has not been declared
+newtests.cpp:116: error: expected ‘,’ or ‘...’ before ‘<’ token
+newtests.cpp:116: error: ISO C++ forbids declaration of ‘GTEST_TEST_’ with no type
+newtests.cpp: In function ‘int GTEST_TEST_(TwoBodyTest, int, TwoBodyTest, int)’:
+newtests.cpp:116: error: redefinition of ‘int GTEST_TEST_(TwoBodyTest, int, TwoBodyTest, int)’
+newtests.cpp:101: error: ‘int GTEST_TEST_(TwoBodyTest, int, TwoBodyTest, int)’ previously defined here
+newtests.cpp:119: error: ‘sys’ was not declared in this scope
+newtests.cpp:124: error: ‘sys’ was not declared in this scope
+newtests.cpp:126: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:126: error: expected primary-expression before ‘double’
+newtests.cpp:126: error: ‘EXPECT_PRED_FORMAT2’ was not declared in this scope
+newtests.cpp:127: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:127: error: expected primary-expression before ‘double’
+newtests.cpp:128: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:128: error: expected primary-expression before ‘double’
+newtests.cpp:129: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:129: error: expected primary-expression before ‘double’
+newtests.cpp:130: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:130: error: expected primary-expression before ‘double’
+newtests.cpp:131: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:131: error: expected primary-expression before ‘double’
+newtests.cpp:134: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:134: error: expected primary-expression before ‘double’
+newtests.cpp:135: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:135: error: expected primary-expression before ‘double’
+newtests.cpp:136: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:136: error: expected primary-expression before ‘double’
+newtests.cpp:137: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:137: error: expected primary-expression before ‘double’
+newtests.cpp:138: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:138: error: expected primary-expression before ‘double’
+newtests.cpp:139: error: ‘CmpHelperFloatingPointEQ’ is not a member of ‘testing::internal’
+newtests.cpp:139: error: expected primary-expression before ‘double’
+newtests.cpp: At global scope:
+newtests.cpp:143: error: expected constructor, destructor, or type conversion before ‘(’ token
+make: *** [newtests.o] Error 1

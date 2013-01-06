@@ -1,0 +1,21 @@
+atom_style	atomic
+
+read_data	${datafile}
+
+pair_style	lj/cut 2.5
+pair_coeff	1 1 1.0 1.0
+pair_coeff	1 2 1.5 0.5
+pair_coeff	2 2 0.8 0.88
+
+timestep	0.003
+
+run_style 	verlet
+fix		1 all nve
+
+thermo		1
+thermo_style	custom step ke pe etotal
+thermo_modify	norm no
+dump		1 all xyz 1 ${outfile}
+
+run		${timesteps}
+
