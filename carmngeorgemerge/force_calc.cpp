@@ -129,13 +129,25 @@ int force_calc(System *sys) {
 		}
 		
 		// Remember if atom needs to be sent to neighboring processor
-		if (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] < rank * box[PARALLELDIM] / nprocs + skin_cutoff) {
-			to_left.push_back(*(sys->get_atom(i)));
-			num_to_left++;
-		}
-		else if  (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] > (rank + 1) * box[PARALLELDIM] / nprocs - skin_cutoff) {
-			to_right.push_back(*(sys->get_atom(i)));
-			num_to_right++;
+		// special case for nprocs==2; don't want to send same atom twise
+		if (nprocs == 2) {
+ 			if (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] < rank * box[PARALLELDIM] / nprocs + skin_cutoff) {
+				to_left.push_back(*(sys->get_atom(i)));
+				num_to_left++;
+			}
+			else if  (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] > (rank + 1) * box[PARALLELDIM] / nprocs - skin_cutoff) {
+				to_right.push_back(*(sys->get_atom(i)));
+				num_to_right++;
+			}
+		} else {
+ 			if (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] < rank * box[PARALLELDIM] / nprocs + skin_cutoff) {
+				to_left.push_back(*(sys->get_atom(i)));
+				num_to_left++;
+			}
+			if  (pbc(sys->get_atom(i)->pos, box)[PARALLELDIM] > (rank + 1) * box[PARALLELDIM] / nprocs - skin_cutoff) {
+				to_right.push_back(*(sys->get_atom(i)));
+				num_to_right++;
+			}
 		}
 		
 		// KE = sum(i,1/2 *m(i)*v(i)*v(i))
