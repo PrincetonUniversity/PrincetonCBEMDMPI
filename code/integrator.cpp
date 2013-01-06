@@ -43,7 +43,7 @@ namespace integrator {
 	// http://phycomp.technion.ac.il/~talimu/md4.html
 	int Andersen::step (System *sys) {
 		double prev_prev_pos;
-		double nu = 10.0; // thermostat parameter controlling frequency of collisions with heat bath
+		double nu = 100.0; // thermostat parameter controlling frequency of collisions with heat bath
 		vector <double> box = sys->box();
 		int check = 0, nprocs, rank;
 		char err_msg[MYERR_FLAG_SIZE];

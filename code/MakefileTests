@@ -2,11 +2,11 @@ LDFLAGS = -lm
 CXX = mpic++
 CXXFLAGS = -O3 -lstdc++ -g
 
-GTESTDIR = /Users/nathanmahynski/Documents/synced_folder/programs
+GTESTDIR = ../
 GTEST_HEADERS = $(GTESTDIR)/gtest-1.6.0/include/gtest/*.h \
 	      $(GTESTDIR)/gtest-1.6.0/include/gtest/internal/*.h
 
-GTESTFLAGS = -I$(GTESTDIR)/gtest-1.6.0/include -lpthread
+GTESTFLAGS = -I$(GTESTDIR)/gtest-1.6.0/include -lpthread -I /home/gkhoury/boost_1_52_0
 GTEST_SRCS_ = $(GTESTDIR)/src/*.cc $(GTESTDIR)/src/*.h $(GTEST_HEADERS)
 
 all: tests
