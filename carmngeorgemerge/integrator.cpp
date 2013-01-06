@@ -23,7 +23,6 @@ Andersen::Andersen(double deltat, double temp, double nu){
  \param [in] \*sys Pointer to System to integrate.
  */
 int Andersen::step (System *sys) {
-	double prev_prev_pos;
 	vector <double> box = sys->box();
 	int check = 0, nprocs, rank;
 	MPI_Comm_size (MPI_COMM_WORLD, &nprocs);
@@ -49,10 +48,14 @@ int Andersen::step (System *sys) {
 
 	// Step 2 is to find the forces after updating the positions and velocities
 	check = force_calc(sys);
+
+        if (check != 0) {
+                return check;
+        }
+
 	double tempa = 0;
 	for (int i = 0; i < sys->natoms(); ++i) {
 		for (int j = 0; j < NDIM; ++j) {
-			prev_prev_pos = sys->get_atom(i)->prev_pos[j];
 			sys->get_atom(i)->prev_pos[j] = sys->get_atom(i)->pos[j];
 			sys->get_atom(i)->vel[j] = sys->get_atom(i)->vel[j] + 0.5 * dt_ * sys->get_atom(i)->force[j] / sys->get_atom(i)->mass;
 			tempa += sys->get_atom(i)->mass*sys->get_atom(i)->vel[j]*sys->get_atom(i)->vel[j];
