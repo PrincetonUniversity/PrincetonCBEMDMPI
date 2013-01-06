@@ -1,14 +1,13 @@
 /*!
- \brief Driver for MPI Version of CBEMD
- \file main_mpi.cpp
- \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury}
+ \brief Driver for MPI Version of CBEMD verlet
+ \file verlet.cpp
+ \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury, Frank Ricci, Jun Park}
  **/
 
 #include "CBEMD.h"
 
 /*!
- \brief Main 
- \param \*argv[] ./cbemd nsteps dt xml_file bond_file output_file
+ \param \*argv[] ./verlet nsteps dt xml_file energy_file animation_file
  */
 int main (int argc, char *argv[]) {
 	int check;
@@ -17,11 +16,11 @@ int main (int argc, char *argv[]) {
 	System mysys; //Declare system
 	
 	if (argc != 6) {
-		fprintf(stderr, "syntax: ./cbemd nsteps dt xml_file energy_file output_file\n");
+		fprintf(stderr, "syntax: ./verlet nsteps dt xml_file energy_file animation_file\n");
 		return ILLEGAL_VALUE;
 	}
 	
-	// read nsteps and dt
+	// Read nsteps and dt
 	char* str_ptr;
 	nsteps = strtol(argv[1], &str_ptr, 10); // Store number of steps
 	dt = atof(argv[2]);
@@ -34,34 +33,35 @@ int main (int argc, char *argv[]) {
 	    fprintf(stdout, " Ignored characters : %s\n", str_ptr);
 	}
 
-	// setup integrator
+	// Setup integrator
 	Integrator *myint = new Verlet (dt);
-	myint->set_dt(dt);  // Set timestep of integrator
+	myint->set_dt(dt);  
 
 	check = start_mpi (argc, argv);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// initialize coordinates
+	// Initialize coordinates
 	check = initialize_from_files (argv[3], argv[4], &mysys);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// run
+	// Run
 	check = run (&mysys, myint, nsteps, argv[5]);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// print
+	// Print final coordinates
 	print_xml("outfile.xml", &mysys);
 		  
-	// finish
+	// Finish safely
 	end_mpi();
 	return SAFE_EXIT;
 	
+	// Finish if error was reported
 finalize:
 	abort_mpi();
 	return BAD_EXIT;

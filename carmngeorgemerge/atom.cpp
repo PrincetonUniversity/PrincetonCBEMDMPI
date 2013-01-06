@@ -1,25 +1,26 @@
 /*!
  \file atom.cpp
  \brief Functions for handling MD Atom Information
-\author Nathan A. Mahynski
+ \author {Nathan A. Mahynski, Carmeline Dsilva}
 **/
-
 
 #include "atom.h"
 
-//! \namespace atom
-namespace atom {
-
 /*!
- * \sa initialize
- * This function creates and commits to the system the MPI_ATOM derived data type.
+ * This function creates and commits to memory the MPI_ATOM derived data type.
  * (see example of use at https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types)
+ * \sa initialize, MPI_ATOM
  */
 void create_MPI_ATOM () {
 	const int num_fields = 9;
 
 	MPI_Datatype type[num_fields] = {MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_DOUBLE, MPI_INT, MPI_INT, MPI_UB};
 	int blocklen[num_fields] = {NDIM, NDIM, NDIM, NDIM, 1, 1, 1, 1, 1};
+	
+	/* To ensure memory padding (done by compiler) in an array (or vector) is 
+	 measured correctly, define a dummy array here to check addresses 
+	 explicitly.  This is much better practice and safer for more compilers.
+	*/
 	Atom atom[2];
 	MPI_Aint disp[num_fields];
 	MPI_Aint start_address, address;
@@ -55,16 +56,13 @@ void create_MPI_ATOM () {
 
 	MPI_Type_create_struct(num_fields, blocklen, disp, type, &MPI_ATOM);
 	MPI_Type_commit(&MPI_ATOM); 
-
 }
 
 /*!
  * This function utilizes the complementary MPI_Type_free routine
- * to mark the MPI_ATOM type for deallocation
+ * to mark the MPI_ATOM type for deallocation at the end of the program.
  * \sa finalize
  */
 void delete_MPI_atom() {
 	MPI_Type_free (&MPI_ATOM);
-}
-
 }

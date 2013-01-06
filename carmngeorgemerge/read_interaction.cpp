@@ -1,19 +1,21 @@
 /*! 
  \file read_interaction.cpp
  \brief Source code to read in interaction parameters from a parameter file
+ \author {Nathan A. Mahynski, Carmeline Dsilva}
 **/
 
 #include "read_interaction.h"
 
-/*! Function to read in interaction parameters and store them into the system
+/*! 
  \param [in] filename  name of file containing the interaction parameters to be processed
- \param [in,out] sys Pointer to system
+ \param [in,out] \*sys Pointer to system
 */
 int read_interactions (const string filename, System *sys) {
 	const int buffsize = 1000;
 	char buff[buffsize];
 	double rcut_max = -1.0;
 	
+	// Try to open file
 	char err_msg[MYERR_FLAG_SIZE];
 	const char *filename_cstr=filename.c_str();
 	FILE *input = mfopen(filename_cstr, "r");
@@ -30,6 +32,7 @@ int read_interactions (const string filename, System *sys) {
 	int rank;
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+	// Loop over the entire file for all key words
 	char *dummy_char;
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		vector <string> fields;
@@ -66,8 +69,7 @@ int read_interactions (const string filename, System *sys) {
 			interaction.set_args(force_args);
 			
 			inters_PPOT.push_back(interaction);
-		}
-		else if (fields[0] == "BOND") {
+		} else if (fields[0] == "BOND") {
 			if (fields.size() < 3) {
 				sprintf(err_msg, "Insufficient data");
 				flag_error (err_msg, __FILE__, __LINE__);
@@ -75,12 +77,13 @@ int read_interactions (const string filename, System *sys) {
 			}
 			Interaction interaction;
 			
-			// get and check force arguments
+			// Get and check force arguments
 			vector <double> force_args;
 			for (unsigned int i = 3; i < fields.size(); ++i) {
 				force_args.push_back(atof(fields[i].c_str()));
 			}
 			
+			// Get force/energy pointer from "factory"
 			force_energy_ptr fn = get_fn(fields[2], &force_args, &rcut_max);
 			if (fn == NULL) {
 				sprintf(err_msg, "Invalid function.");
@@ -101,10 +104,10 @@ int read_interactions (const string filename, System *sys) {
 	}
 	fclose(input);
 	
-	// find total number of atoms
+	// Find total number of atoms
 	int total_atoms = sys->global_atom_types.size();
 
-	// resize interact
+	// Resize interact matrix
 	try {
 		sys->interact.resize(total_atoms);
 	}
@@ -124,7 +127,7 @@ int read_interactions (const string filename, System *sys) {
 		}
 	}
 	
-	// initialize interact with specified pair potentials
+	// Initialize interact with specified pair potentials
 	for (int i = 0; i < total_atoms; ++i) {
 		for (int j = 0; j < i; ++j) {
 			pair <string, string> a_pair;
@@ -148,7 +151,7 @@ int read_interactions (const string filename, System *sys) {
 		}
 	}
 
-	// go through bonded atoms and change their interaction to bonding potentials in interact
+	// Go through bonded atoms and change their interaction to bonding potentials in interact
 	for (int i = 0; i < sys->nbonds(); ++i) {
 		string b_type = sys->bond_name(sys->get_bond_type(i));
 		int b_index = sys->bond_type(b_type);
@@ -165,25 +168,25 @@ int read_interactions (const string filename, System *sys) {
 			return FILE_ERROR;
 		}
 		
-		// add interaction to interact
-		// symmetric
+		// Add interaction to interact (symmetric)
 		const pair <int, int> b_pair = sys->get_bond(i);
 		sys->interact[b_pair.first][b_pair.second] = inters_BOND[index];
 		sys->interact[b_pair.second][b_pair.first] = inters_BOND[index];
 	}
 
-	// set max cutoff radius for "skin" calculations with MPI later on
+	// Set max cutoff radius for "skin" calculations with MPI later on
 	sys->set_max_rcut(rcut_max);
 	
 	sprintf(err_msg, "Successfully read energy parameters from %s on rank %d", filename_cstr, rank);
 	flag_notify (err_msg, __FILE__, __LINE__);
-	return 0;
+	return SAFE_EXIT;
 }
 
 /*!
- \brief Given a name, return the force_energy_ptr associated with it.  Also check the arguments that will be passed to it are in acceptable range.
+ Essentially a factory, given a name, return the force_energy_ptr associated with it.  Also check the arguments that will be passed to it are in acceptable range.
  \param [in] name Name of interaction, i.e. "fene" or "slj"
  \param [in] \*args Pointer to vector of arguments that will be passed to this interaction later on
+ \param [in,out] \*r_cut_max Maximum cutoff radius for interactions
  */
 force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_max) {
 	char err_msg[MYERR_FLAG_SIZE];
@@ -208,7 +211,7 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 			}
 		}
 		
-		// for fene bonds, the equivalent "r_cut" is r0
+		// For fene bonds, the equivalent "r_cut" is r0
 		if (args->at(4) > *r_cut_max) {
 			*r_cut_max = args->at(4);
 		}
@@ -230,6 +233,7 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 				return NULL;
 			}
 		}
+		
 		return &harmonic;
 	}
 	else if (name == "slj" || name == "SLJ") {
@@ -245,7 +249,7 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 		names[3] = "U_shift";
 		names[4] = "r_cut";
 		for (int i = 0; i < 5; ++i) {
-			// skip U_shift test which can be < 0 if we want
+			// Skip U_shift test which can be < 0 if we want
 			if (i == 3) {
 				continue;
 			}
@@ -256,12 +260,12 @@ force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_
 			}
 		}
 		
-		// test r_cut_max
+		// Test r_cut_max
 		if (*r_cut_max < args->at(4)) {
 			*r_cut_max = args->at(4);
 		}
 		
-		// square to rcut value here since it is stored internally this way; it will be much faster to have this as such
+		// Square the rcut value here since it is stored internally this way (for speed)
 		args->at(4) = args->at(4)*args->at(4);
 		return &slj;
 	}

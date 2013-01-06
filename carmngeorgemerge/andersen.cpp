@@ -1,28 +1,26 @@
 /*!
- \brief Driver for MPI Version of CBEMD
- \file main_mpi.cpp
- \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury}
+ \brief Driver for MPI Version of CBEMD with Andersen Thermostat
+ \file andersen.cpp
+ \authors{Nathan A. Mahynski, Carmeline Dsilva, Arun L. Prabhu, George Khoury, Frank Ricci, Jun Park}
  **/
 
 #include "CBEMD.h"
 
 /*!
- \brief Main 
- \param \*argv[] ./andersen nsteps dt temperature xml_file bond_file output_file temperature
+ \param \*argv[] ./andersen nsteps dt temperature xml_file bond_file animation_file temperature nu
  */
 int main (int argc, char *argv[]) {
 	int check;
 	long int nsteps;
 	double dt;
-	double temp;
 	System mysys; //Declare system
 	
-	if (argc != 7) {
-		fprintf(stderr, "syntax: ./andersen nsteps dt xml_file energy_file output_file temperature \n");
+	if (argc != 8) {
+		fprintf(stderr, "syntax: ./andersen nsteps dt xml_file energy_file animation_file temperature nu \n");
 		return ILLEGAL_VALUE;
 	}
 	
-	// read nsteps and dt
+	// Read nsteps and dt
 	char* str_ptr;
 	nsteps = strtol(argv[1], &str_ptr, 10); // Store number of steps
 	dt = atof(argv[2]);
@@ -35,38 +33,42 @@ int main (int argc, char *argv[]) {
 	    fprintf(stdout, " Ignored characters : %s\n", str_ptr);
 	}
 
-	// read temperature
-	temp = atof(argv[6]);
+	// Read temperature
+	double temp = atof(argv[6]);
+	
+	// Read nu
+	double nu = atof(argv[7]);
 
-	// setup integrator
-	Integrator *myint = new Andersen (dt,temp);
-	myint->set_dt(dt);  // Set timestep of integrator
-	myint->set_temp(temp); // set temperature of integrator 
+	// Setup integrator
+	Integrator *myint = new Andersen (dt,temp,nu);
+	myint->set_dt(dt);  
+	myint->set_temp(temp); 
 
 	check = start_mpi (argc, argv);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// initialize coordinates
+	// Initialize coordinates
 	check = initialize_from_files (argv[3], argv[4], &mysys);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// run
+	// Run
 	check = run (&mysys, myint, nsteps, argv[5]);
 	if (check != 0) {
 		goto finalize;
 	}
 	
-	// print
+	// Print
 	print_xml("outfile.xml", &mysys);
 		  
-	// finish
+	// Finish if successful
 	end_mpi();
 	return SAFE_EXIT;
 	
+	// Finish if error was reported
 finalize:
 	abort_mpi();
 	return BAD_EXIT;

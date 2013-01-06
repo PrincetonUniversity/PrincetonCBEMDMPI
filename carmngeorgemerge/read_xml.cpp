@@ -1,6 +1,6 @@
 /**
  \file read_xml.cpp
- \brief Read HOOMD XML file format into System object
+ \brief I/O for XML file format 
  \author Nathan A. Mahynski
  **/
 
@@ -9,11 +9,9 @@
 /*!
  Parse an XML file to obtain atom information. Initializes a System object but only stores
  information that belongs to this processor rank according to domain decomposition.
- If a value is specified multiple times, only the first occurence of the same will be used
+ Returns SAFE_EXIT if successful, else returns an error flag.
  \param [in] filename Name of file to open and read.
- \param [in] nprocs Number of processors total.
- \param [in] rank Rank of this process.
- \param [in,out] sys Pointer to System object to store its information at.
+ \param [in,out] \*sys Pointer to System object to store its information at.
  */
 int read_xml (const string filename, System *sys) {
 	int nprocs, rank;
@@ -29,7 +27,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 	
-	// header
+	// Read header
 	int check = 0;
 	int natoms = -1;
 	const int buffsize=1000;
@@ -74,7 +72,7 @@ int read_xml (const string filename, System *sys) {
 		return BAD_MEM;
 	}
 
-	// read box
+	// Read box size
 	rewind(input);
 	check = 0;
 	vector<double> box(NDIM, -1);
@@ -118,15 +116,8 @@ int read_xml (const string filename, System *sys) {
 		}
 	}
 	sys->set_box(box);
-	/*check = init_domain_decomp (box, nprocs, sys->proc_widths, sys->final_proc_breakup);
-	if (check != 0) {
-		sprintf(err_msg, "Failed to initialize domain decomposition");
-		flag_error (err_msg, __FILE__, __LINE__);
-		fclose (input);
-		return ILLEGAL_VALUE;
-		}*/
-	
-	// also read bonds now
+
+	// Read bond information
 	rewind(input);
 	check = 0;
 	int nbonds = 0;
@@ -159,16 +150,15 @@ int read_xml (const string filename, System *sys) {
 		return ILLEGAL_VALUE;
 	}
 	
-	// allocate space to temporarily store atom coordinates, velocities, etc.
+	// Allocate space to temporarily store atom coordinates, velocities, etc.
 	vector <double> atom_coords(NDIM);
 	vector <int> lbond (nbonds, -1);
 	vector <int> rbond (nbonds, -1);
 	
-	// read in positions, remember that by default this program normalizes the box corner to 0,0,0 and hoomd is shifted
+	// Read in positions
 	rewind(input);
 	check = 0;
 	vector <int> atom_belongs;
-	int processor;
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
 		if (strstr(buff, "position") != NULL) {
 			check = 1;
@@ -194,10 +184,8 @@ int read_xml (const string filename, System *sys) {
 					new_atoms[i].pos[j] = atom_coords[j];
 				}
 
-				// see if this atom belongs on this processor
-				//processor = get_processor (atom_coords, sys);
-				if (floor(new_atoms[i].pos[0] / sys->box()[0] * nprocs) == rank) {
-					//if (processor == rank) {
+				// See if this atom belongs on this processor
+				if (floor(new_atoms[i].pos[PARALLELDIM] / sys->box()[PARALLELDIM] * nprocs) == rank) {
 					atom_belongs.push_back(i);
 				}
 				
@@ -213,7 +201,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 	
-	// read velocities
+	// Read velocities
 	rewind(input);
 	check = 0;
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
@@ -243,7 +231,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 	
-	// read mass
+	// Read mass
 	rewind(input);
 	check = 0;
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
@@ -279,7 +267,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 	
-	// read sizes (diameters)
+	// Read sizes (diameters)
 	rewind(input);
 	check = 0;
 	while ((dummy_char = fgets(buff, buffsize, input)) != NULL) {
@@ -315,7 +303,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 
-	// read types
+	// Read types
 	rewind(input);
 	char aname[ATOM_NAME_LENGTH];
 	check = 0;
@@ -356,7 +344,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 
-	// read bonds
+	// Read bonds
 	rewind(input);
 	char bname[BOND_NAME_LENGTH];
 	check = 0;
@@ -407,7 +395,7 @@ int read_xml (const string filename, System *sys) {
 		return FILE_ERROR;
 	}
 
-	// now add the atoms that belong to this domain to the System object
+	// Now add the atoms that belong to this domain to the System object
 	vector<Atom> atom_array;
 	atom_array.resize(atom_belongs.size());
 	for (unsigned int i = 0; i < atom_belongs.size(); ++i) {
@@ -418,14 +406,14 @@ int read_xml (const string filename, System *sys) {
 	
 	sprintf(err_msg, "Successfully read coordinates from %s on rank %d", filename_cstr, rank);
 	flag_notify (err_msg, __FILE__, __LINE__);
-	return 0;
+	return SAFE_EXIT;
 }
 
 /*!
- Print atom information to an xml file. Returns 0 if successful, non-zero if failure. This only operates on the master node when multiple processors are used, 
+ Print atom information to an xml file. Returns SAFE_EXIT if successful, else an error flag if failure. This only operates on the master node when multiple processors are used, 
  the rest pause and are sequentially informed to send information as needed.
  \param [in] filename Name of file to open and read.
- \param [in,out] sys Pointer to System object for the main node to stores its information at.
+ \param [in,out] \*sys Pointer to System object for the main node to stores its information at.
  */
 int print_xml (const string filename, const System *sys) {
     char err_msg[MYERR_FLAG_SIZE];
@@ -450,7 +438,7 @@ int print_xml (const string filename, const System *sys) {
 			return -1;
 		}
 
-		// get number of incoming atoms from workers
+		// Get number of incoming atoms from workers
 		const int nprocs_less_one = nprocs-1;
 		int worker_atoms[nprocs_less_one];
 		for (int i=0; i<nprocs-1; i++) {
@@ -470,7 +458,7 @@ int print_xml (const string filename, const System *sys) {
 
 		int tot_atoms = sys->natoms();
 
-		// get memory "offsets" so we know where to store incoming atoms
+		// Get memory "offsets" so we know where to store incoming atoms
 		vector <int> offsets (nprocs-1);
 		for (int i = 0; i < nprocs-1; ++i) {
 			tot_atoms += worker_atoms[i];
@@ -482,7 +470,7 @@ int print_xml (const string filename, const System *sys) {
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
 		}
 
-		// allocate room for incoming atoms
+		// Allocate room for incoming atoms
 		Atom *system_atoms = new Atom[tot_atoms-sys->natoms()];
 		
 		for (int i = 0; i < nprocs-1; ++i) {
@@ -493,7 +481,7 @@ int print_xml (const string filename, const System *sys) {
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
 		}
 
-		// now main node has all atoms, use pointers to print atoms in order
+		// Now main node has all atoms, use pointers to print atoms in order
 		vector <Atom *> atom_ptr(tot_atoms);
 		for (int i = 0; i < sys->natoms(); ++i) {
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
@@ -503,7 +491,7 @@ int print_xml (const string filename, const System *sys) {
 			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
 		}
 
-		// print header
+		// Print the file
 		vector <double> box = sys->box(), npos(NDIM);
 		fprintf(fp1, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<hoomd_xml version=\"1.4\">\n");
 		fprintf(fp1, "<configuration time_step=\"0\" dimensions=\"3\" natoms=\"%d\">\n<box lx=\"%12.12g\" ly=\"%12.12g\" lz=\"%12.12g\"/>\n", tot_atoms, box[0], box[1], box[2]);
@@ -570,6 +558,7 @@ int print_xml (const string filename, const System *sys) {
 			delete [] system_atoms;
 		}
 	} else {
+		// Wait to recieve a signal to report atoms on this processor
 		int print_flag, dummy, natoms = sys->natoms();
 		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 		if (print_flag == 1) {
@@ -582,25 +571,26 @@ int print_xml (const string filename, const System *sys) {
 			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
 			delete [] atom_vec;
 		} else {
+			// If there is a problem, report that to all subsequent processors and fail
 			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
 			flag_error (err_msg, __FILE__, __LINE__);
 			status = FILE_ERROR;
 		}
 	}
+	
 	MPI_Barrier (MPI_COMM_WORLD);
 	return status;
 }
 
 /*!
  Write an xyz file that stores the coordinates of all the atoms in the simulation
- If timestep=0, then the file is created, or overwritten if it exists already
- If timestep>0, then the current information is appended to the existing file 
- (or the file is created if it does not exist)
- This file can then be read by vbd to produce animations
+ If timestep=0, then the file is created, or overwritten if it exists already.
+ If timestep>0, then the current information is appended to the existing file.
+ This file can then be read by VMD or another visualization program to produce animations.
  \param [in] filename Name of file to open and write to.
  \param [in] \*sys System object where the atoms are stored
  \param [in] timestep Current timestep of the simulation
- \param [in] wrap_pos Annotates whether the positions should be written in unwrapped (wrap_pos=false) or wrapped (wrap_pos=true) coordinates
+ \param [in] wrap_pos Whether the positions should be written in unwrapped (wrap_pos=false) or wrapped (wrap_pos=true) coordinates
  */
 int write_xyz (const string filename, const System *sys, const int timestep, const bool wrap_pos) {
 	char err_msg[MYERR_FLAG_SIZE];
@@ -629,7 +619,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			return -1;
 		}
 
-		// get number of incoming atoms from workers
+		// Get number of incoming atoms from workers
 		const int nprocs_less_one = nprocs-1;
 		int worker_atoms[nprocs_less_one];
 		for (int i=0; i<nprocs-1; i++) {
@@ -649,7 +639,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 
 		int tot_atoms = sys->natoms();
 
-		// get memory "offsets" so we know where to store incoming atoms
+		// Get memory "offsets" so we know where to store incoming atoms
 		vector <int> offsets (nprocs-1);
 		for (int i = 0; i < nprocs-1; ++i) {
 			tot_atoms += worker_atoms[i];
@@ -661,7 +651,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			MPI_Isend (&i_need_to_print, 1, MPI_INT, i+1, 0, MPI_COMM_WORLD, &send_reqs[i]);
 		}
 
-		// allocate room for incoming atoms
+		// Allocate room for incoming atoms
 		Atom *system_atoms = new Atom[tot_atoms-sys->natoms()];
 		
 		for (int i = 0; i < nprocs-1; ++i) {
@@ -672,7 +662,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			MPI_Waitall (nprocs-1, recv_reqs2, worker_stats2);
 		}
 
-		// now main node has all atoms, use pointers to print atoms in order
+		// Now main node has all atoms, use pointers to print atoms in order
 		vector <Atom *> atom_ptr(tot_atoms);
 		for (int i = 0; i < sys->natoms(); ++i) {
 		    atom_ptr[((System *)sys)->get_atom(i)->sys_index] = ((System *)sys)->get_atom(i);
@@ -682,13 +672,12 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			atom_ptr[system_atoms[i].sys_index] = &system_atoms[i];
 		}
 
-		// print header
+		// Print record
 		vector <double> box = sys->box(), npos(NDIM);
 		fprintf(fp1, "%d\n", tot_atoms);
 		fprintf(fp1, "Atoms. Timestep: %d\n", timestep);
 		for (int i = 0; i < tot_atoms; ++i) {
 			fprintf(fp1, "%s ", ((System *)sys)->atom_name(atom_ptr[i]->type).c_str());
-			//fprintf(fp1, "%d ", atom_ptr[i]->type+1);
 			if (wrap_pos) {
 				npos = pbc (&atom_ptr[i]->pos[0], box);
 			} else {
@@ -715,6 +704,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 		fclose(fp1);
 
 	} else {
+		// Wait to report atoms to main node
 		int print_flag, dummy, natoms = sys->natoms();
 		MPI_Recv (&print_flag, 1, MPI_INT, 0, 0, MPI_COMM_WORLD, &Stat);
 		if (print_flag == 1) {
@@ -727,6 +717,7 @@ int write_xyz (const string filename, const System *sys, const int timestep, con
 			MPI_Send (atom_vec, natoms, MPI_ATOM, 0, rank, MPI_COMM_WORLD);
 			delete [] atom_vec;
 		} else {
+			// If failure, report failure to subsequent processes
 			sprintf(err_msg, "Rank %d received bad signal to report its atom to master node, print failure", rank);
 			flag_error (err_msg, __FILE__, __LINE__);
 			status = FILE_ERROR;
