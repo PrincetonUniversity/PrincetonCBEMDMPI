@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2012.8.28)  25 DEC 2012 00:19
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=latex 2012.8.28)  6 JAN 2013 20:13
 entering extended mode
 **_formulas.tex
 (./_formulas.tex
@@ -80,7 +80,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 l.5 ...\right)^{6}\right) + U_{shift} & r - \Delta
                                                    < r_{cut} \\ &=& 0 & r - ...
 
-? 
+? r
+OK, entering \nonstopmode...
 
 ! LaTeX Error: Too many columns in eqnarray environment.
 
@@ -91,8 +92,9 @@ Type  H <return>  for immediate help.
 l.5 ...ht) + U_{shift} & r - \Delta < r_{cut} \\ &
                                                   =& 0 & r - \Delta \ge r_{c...
 
-? r
-OK, entering \nonstopmode...
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
@@ -357,7 +359,7 @@ and I'll forget about whatever was undefined.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.17 ...igma}{r-\Delta} \right)^6 \right) & r < 2^
+l.17 ...lta} \right)^6 \right) + \epsilon & r < 2^
                                                   {1/6}\sigma+\Delta \\ &=& ...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -369,7 +371,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
+l.17 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
 
 Try typing  <return>  to proceed.
@@ -378,7 +380,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Extra }, or forgotten $.
 <template> \egroup 
                    \endtemplate 
-l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
+l.17 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -389,7 +391,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
+l.17 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -397,7 +399,7 @@ you left one out. Proceed, with fingers crossed.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.17 ...^6 \right) & r < 2^{1/6}\sigma+\Delta \\ &
+l.17 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
                                                   =& 0 &r-\Delta \ge 2^{1/6}...
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -463,6 +465,6 @@ Here is how much of TeX's memory you used:
  3771 multiletter control sequences out of 10000+50000
  3640 words of font info for 14 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 1000
- 32i,8n,21p,250b,100s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 32i,8n,21p,261b,100s stack positions out of 1500i,500n,5000p,200000b,5000s
 
-Output written on _formulas.dvi (5 pages, 2252 bytes).
+Output written on _formulas.dvi (5 pages, 2264 bytes).

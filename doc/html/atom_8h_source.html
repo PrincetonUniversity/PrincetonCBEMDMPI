@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: atom.h Source File</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: atom.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,34 +87,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef ATOM_H_</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ATOM_H_</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="common_8h.html" title="Header that lumps all common header files into one.">common.h</a>&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;mpi.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="global_8h.html" title="Global variables.">global.h</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>atom {</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html">   18</a></span>&#160;    <span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a7acbde98e9818512724c2551894ba8e0">   19</a></span>&#160;        <span class="keywordtype">double</span> pos[3];              </div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a500f35c4575248f9079244236b8b4d3f">   20</a></span>&#160;        <span class="keywordtype">double</span> prev_pos[3];         </div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a76876313225c6fd231435e41e30047d3">   21</a></span>&#160;        <span class="keywordtype">double</span> vel[3];              </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a019685c7e932fd17a4779eaa35f190b2">   22</a></span>&#160;        <span class="keywordtype">double</span> force[3];            </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#ae6421dce659064f837aa5afad53b07db">   23</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="structatom_1_1Atom.html#ae6421dce659064f837aa5afad53b07db" title="Atomic mass (in reduced units)">mass</a>;                </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#ab5c7879119b1dbd1c2f6f2b3bd995bd2">   24</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="structatom_1_1Atom.html#ab5c7879119b1dbd1c2f6f2b3bd995bd2" title="Atomic diameter (in reduced units)">diam</a>;                </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a1de1a9006c51194e98f077e4caf6971b">   25</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="structatom_1_1Atom.html#a1de1a9006c51194e98f077e4caf6971b" title="Internally indexed type of this atom.">type</a>;                   </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="structatom_1_1Atom.html#a668df1e955b0cf6bd22ad7a2f80cac5e">   26</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="structatom_1_1Atom.html#a668df1e955b0cf6bd22ad7a2f80cac5e" title="Global atom index, i.e. unique in the system.">sys_index</a>;              </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    } <a class="code" href="structatom_1_1Atom.html" title="Atom class is defined as a struct so as to be easy to pass with MPI.">Atom</a>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="comment">//extern MPI_Datatype MPI_ATOM; // George : is this global? Maybe we should put in driver. 11/30 11:51PM</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespaceatom.html#a2ff83b4e5fd34d597e76d4c0db30db2d" title="MPI version of Atom.">create_MPI_ATOM</a> ();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="namespaceatom.html#a810235b68ff377831ea415e440b81a76" title="Free the MPI type at the end of the program.">delete_MPI_atom</a>();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;mpi.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="global_8h.html" title="Global variables.">global.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="code" href="structAtom.html">   14</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="structAtom.html#a99bc3071c5e17dd454c6257dce692a2a">   15</a></span>&#160;    <span class="keywordtype">double</span> pos[<a class="code" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a" title="Number of dimensions in the system (3D), but future work may include 2D as well. This leaves the door...">NDIM</a>];           </div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="structAtom.html#a5ab233568e9091c7acdfef42efcd933c">   16</a></span>&#160;    <span class="keywordtype">double</span> prev_pos[<a class="code" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a" title="Number of dimensions in the system (3D), but future work may include 2D as well. This leaves the door...">NDIM</a>];      </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="structAtom.html#afe6686a5403e25e7fe0e64f6623547ba">   17</a></span>&#160;    <span class="keywordtype">double</span> vel[<a class="code" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a" title="Number of dimensions in the system (3D), but future work may include 2D as well. This leaves the door...">NDIM</a>];           </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="structAtom.html#afcf18b786e37ff87a7d781c5e333ef40">   18</a></span>&#160;    <span class="keywordtype">double</span> force[<a class="code" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a" title="Number of dimensions in the system (3D), but future work may include 2D as well. This leaves the door...">NDIM</a>];         </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="structAtom.html#a90e6f00ca3ae2fda9b87cb27aac5929d">   19</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="structAtom.html#a90e6f00ca3ae2fda9b87cb27aac5929d" title="Atomic mass (in reduced units)">mass</a>;                </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="structAtom.html#adc9135600cf2007211e760b6005e1a18">   20</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="structAtom.html#adc9135600cf2007211e760b6005e1a18" title="Atomic diameter (in reduced units)">diam</a>;                </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="structAtom.html#a7c2770b985ea2d1615ab750fba4d45b8">   21</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structAtom.html#a7c2770b985ea2d1615ab750fba4d45b8" title="Internally indexed type of this atom.">type</a>;                   </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="structAtom.html#a7a297229ec0e4988ee6620f2caf3f572">   22</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structAtom.html#a7a297229ec0e4988ee6620f2caf3f572" title="Global atom index, i.e. unique in the system.">sys_index</a>;              </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;} <a class="code" href="structAtom.html" title="Atom class is defined as a struct so as to be easy to pass with MPI.">Atom</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> <a class="code" href="atom_8cpp.html#ab7a7ac0b58e21d337f3e6face200725d" title="Creates the MPI_Atom class so it can be passed with MPI.">create_MPI_ATOM</a> ();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> <a class="code" href="atom_8cpp.html#a4b444ef72f56b0f4bb21050ec3fa89da" title="Free the MPI type at the end of the program.">delete_MPI_atom</a>();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

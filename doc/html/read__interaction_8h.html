@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: read_interaction.h File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: read_interaction.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,13 +96,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &quot;<a class="el" href="atom_8h_source.html">atom.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="system_8h_source.html">system.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="global_8h_source.html">global.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="domain__decomp_8h_source.html">domain_decomp.h</a>&quot;</code><br/>
 </div>
 <p><a href="read__interaction_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aac5c3aa8175670e7097069c3ca90f45c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__interaction_8h.html#aac5c3aa8175670e7097069c3ca90f45c">read_interactions</a> (const string filename, <a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:aac5c3aa8175670e7097069c3ca90f45c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__interaction_8h.html#aac5c3aa8175670e7097069c3ca90f45c">read_interactions</a> (const string filename, <a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:aac5c3aa8175670e7097069c3ca90f45c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to read in interaction parameters and store them into the system.  <a href="#aac5c3aa8175670e7097069c3ca90f45c"></a><br/></td></tr>
 <tr class="separator:aac5c3aa8175670e7097069c3ca90f45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f294994aaed21e8691e71eb93b45c3f"><td class="memItemLeft" align="right" valign="top">force_energy_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__interaction_8h.html#a9f294994aaed21e8691e71eb93b45c3f">get_fn</a> (const string name, vector&lt; double &gt; *args, double *r_cut_max)</td></tr>
@@ -143,11 +142,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function to return a force_energy_ptr given a type of interaction name. </p>
-<p>Function to return a force_energy_ptr given a type of interaction name.</p>
+<p>Essentially a factory, given a name, return the force_energy_ptr associated with it. Also check the arguments that will be passed to it are in acceptable range. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>Name of interaction, i.e. "fene" or "slj" </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*args</td><td>Pointer to vector of arguments that will be passed to this interaction later on </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*r_cut_max</td><td>Maximum cutoff radius for interactions </td></tr>
   </table>
   </dd>
 </dl>
@@ -167,7 +167,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>&#160;</td>
         </tr>
         <tr>
@@ -179,11 +179,10 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function to read in interaction parameters and store them into the system. </p>
-<p>Function to read in interaction parameters and store them into the system </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>name of file containing the interaction parameters to be processed </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">sys</td><td>Pointer to system </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*sys</td><td>Pointer to system </td></tr>
   </table>
   </dd>
 </dl>
@@ -193,7 +192,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

@@ -9,41 +9,52 @@ M\-D Integrator(s) Information.
 {\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}misc.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}mpi.\-h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}domain\-\_\-decomp.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}atom.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}force\-\_\-calc.\-h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}read\-\_\-xml.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$boost/tr1/random.\-hpp$>$}\\*
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \hyperlink{classintegrator_1_1Integrator}{integrator\-::\-Integrator}
+class \hyperlink{classIntegrator}{Integrator}
 \begin{DoxyCompactList}\small\item\em $<$ Abstract base class for integrators \end{DoxyCompactList}\item 
-class \hyperlink{classintegrator_1_1Verlet}{integrator\-::\-Verlet}
-\begin{DoxyCompactList}\small\item\em N\-V\-E, \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
-class \hyperlink{classintegrator_1_1Velocity__verlet}{integrator\-::\-Velocity\-\_\-verlet}
-\begin{DoxyCompactList}\small\item\em N\-V\-E, Velocity \hyperlink{classintegrator_1_1Verlet}{Verlet}. \end{DoxyCompactList}\item 
-class \hyperlink{classintegrator_1_1Andersen}{integrator\-::\-Andersen}
-\begin{DoxyCompactList}\small\item\em N\-V\-T, \hyperlink{classintegrator_1_1Andersen}{Andersen} thermostat. \end{DoxyCompactList}\item 
-class \hyperlink{classintegrator_1_1NoseHoover}{integrator\-::\-Nose\-Hoover}
-\begin{DoxyCompactList}\small\item\em N\-V\-T, Nose-\/\-Hooser thermostat. \end{DoxyCompactList}\item 
-class \hyperlink{classintegrator_1_1NHA}{integrator\-::\-N\-H\-A}
-\begin{DoxyCompactList}\small\item\em N\-P\-T, Nose-\/\-Hoover thermostat + \hyperlink{classintegrator_1_1Andersen}{Andersen} barostat Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Namespaces}
-\begin{DoxyCompactItemize}
-\item 
-namespace \hyperlink{namespaceintegrator}{integrator}
-\end{DoxyCompactItemize}
+class \hyperlink{classVerlet}{Verlet}
+\begin{DoxyCompactList}\small\item\em N\-V\-E, \hyperlink{classVerlet}{Verlet}. \end{DoxyCompactList}\item 
+class \hyperlink{classAndersen}{Andersen}
+\begin{DoxyCompactList}\small\item\em N\-V\-T, \hyperlink{classAndersen}{Andersen} thermostat Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{namespaceintegrator_a0e16957f4e63c97d3317957f62e27850}{integrator\-::move\-\_\-atoms} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, const int rank, const int nprocs)
-\begin{DoxyCompactList}\small\item\em Run (i.\-e. integrate) a system forward in time for a specified number of timesteps. \end{DoxyCompactList}\item 
-int \hyperlink{namespaceintegrator_ae2beebff4a0f3bd03ae47ffb6725f414}{integrator\-::run} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys, Integrator $\ast$integrator, const int timesteps)
+int \hyperlink{integrator_8h_a1ce505fe03121da936bb79ac69e833bb}{run} (\hyperlink{classSystem}{System} $\ast$sys, \hyperlink{classIntegrator}{Integrator} $\ast$integrator, const int timesteps, const string outfile)
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 M\-D Integrator(s) Information. \begin{DoxyAuthor}{Author}
-Nathan A. Mahynski 
+\{Nathan A. Mahynski, George Khoury\} 
 \end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{integrator_8h_a1ce505fe03121da936bb79ac69e833bb}{\index{integrator.\-h@{integrator.\-h}!run@{run}}
+\index{run@{run}!integrator.h@{integrator.\-h}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}int run (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys, }
+\item[{{\bf Integrator} $\ast$}]{integrator, }
+\item[{const int}]{timesteps, }
+\item[{const string}]{outfile}
+\end{DoxyParamCaption}
+)}}\label{integrator_8h_a1ce505fe03121da936bb79ac69e833bb}
+Function returns S\-A\-F\-E\-\_\-\-E\-X\-I\-T if successful, error flag otherwise. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em $\ast$sys} & Pointer to \hyperlink{classSystem}{System} to integrate \\
+\hline
+\mbox{\tt in}  & {\em $\ast$integrator} & Pointer to \hyperlink{classIntegrator}{Integrator} to use \\
+\hline
+\mbox{\tt in}  & {\em timesteps} & Number of timesteps to integrate over \\
+\hline
+\mbox{\tt in}  & {\em outfile} & Name of file to print animation to \\
+\hline
+\end{DoxyParams}

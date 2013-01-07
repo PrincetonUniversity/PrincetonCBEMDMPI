@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: initialize.cpp File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: initialize.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,26 +86,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Initialization routines for System object.  
+<p>Initialization routines for <a class="el" href="classSystem.html">System</a> object, as well as finalization of MPI.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;initialize.h&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae7423a7d38da76104c00de34e055e3df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initialize_8cpp.html#ae7423a7d38da76104c00de34e055e3df">initialize_from_files</a> (const string xml_filename, const string energy_filename, <a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:ae7423a7d38da76104c00de34e055e3df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initialize_8cpp.html#ae7423a7d38da76104c00de34e055e3df">initialize_from_files</a> (const string xml_filename, const string energy_filename, <a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:ae7423a7d38da76104c00de34e055e3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse an XML and energy file to obtain atom and interaction information.  <a href="#ae7423a7d38da76104c00de34e055e3df"></a><br/></td></tr>
 <tr class="separator:ae7423a7d38da76104c00de34e055e3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09724383bd0445d86479cde6af6a6a5c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initialize_8cpp.html#a09724383bd0445d86479cde6af6a6a5c">start_mpi</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a09724383bd0445d86479cde6af6a6a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call MPI_Init and start the MPI ensuring it began successfully.  <a href="#a09724383bd0445d86479cde6af6a6a5c"></a><br/></td></tr>
 <tr class="separator:a09724383bd0445d86479cde6af6a6a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a372804c04ed8048c9c664437279d159f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initialize_8cpp.html#a372804c04ed8048c9c664437279d159f">end_mpi</a> ()</td></tr>
-<tr class="memdesc:a372804c04ed8048c9c664437279d159f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize MPI.  <a href="#a372804c04ed8048c9c664437279d159f"></a><br/></td></tr>
+<tr class="memdesc:a372804c04ed8048c9c664437279d159f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize MPI when program finishes successfully.  <a href="#a372804c04ed8048c9c664437279d159f"></a><br/></td></tr>
 <tr class="separator:a372804c04ed8048c9c664437279d159f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16ec3fecee9e2fcfe9af40d1a7bf9344"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initialize_8cpp.html#a16ec3fecee9e2fcfe9af40d1a7bf9344">abort_mpi</a> ()</td></tr>
-<tr class="memdesc:a16ec3fecee9e2fcfe9af40d1a7bf9344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort MPI.  <a href="#a16ec3fecee9e2fcfe9af40d1a7bf9344"></a><br/></td></tr>
+<tr class="memdesc:a16ec3fecee9e2fcfe9af40d1a7bf9344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort MPI in case of failure.  <a href="#a16ec3fecee9e2fcfe9af40d1a7bf9344"></a><br/></td></tr>
 <tr class="separator:a16ec3fecee9e2fcfe9af40d1a7bf9344"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Initialization routines for System object. </p>
+<div class="textblock"><p>Initialization routines for <a class="el" href="classSystem.html">System</a> object, as well as finalization of MPI. </p>
 <dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a16ec3fecee9e2fcfe9af40d1a7bf9344"></a>
@@ -121,8 +122,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Abort MPI. </p>
-<p>Abort the MPI as a result of a failure. </p>
+<p>Abort MPI in case of failure. </p>
+<p>Abort the MPI as a result of a failure, freeing MPI_ATOM as necessary. </p>
 
 </div>
 </div>
@@ -139,7 +140,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Finalize MPI. </p>
+<p>Finalize MPI when program finishes successfully. </p>
 <p>Finalize MPI and clean up derived data types. </p>
 
 </div>
@@ -163,7 +164,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>&#160;</td>
         </tr>
         <tr>
@@ -175,14 +176,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Parse an XML and energy file to obtain atom and interaction information. </p>
-<p>Parse an XML and energy file to obtain atom and interaction information. Returns 0 if successful, non-zero if failure. Operates in a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the file in order. Returns 0 if successful, else integer flag for failure. Does domain decomposition. </p>
+<p>Parse an XML and energy file to obtain atom and interaction information. Returns 0 if successful, non-zero if failure. Operates in a "cascade" between ranks so that each processor (if MPI is used) opens and initializes from the input file in order. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">xml_filename</td><td>Name of coordinate file to open and read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">energy_filename</td><td>Name of file containing bonds, pair potential parameters, etc. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nprocs</td><td>Number of processors total. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rank</td><td>Rank of this process. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">sys</td><td>Pointer to System object to store its information at. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*sys</td><td>Pointer to <a class="el" href="classSystem.html">System</a> object to store this information in. </td></tr>
   </table>
   </dd>
 </dl>
@@ -212,14 +211,23 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
 <p>Call MPI_Init and start the MPI ensuring it began successfully. </p>
+<p>Call MPI_Init and start the MPI ensuring it began successfully. Returns SAFE_EXIT if successful. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argc</td><td>Number of arguments in *argv[]. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*argv[]</td><td>Array of character arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

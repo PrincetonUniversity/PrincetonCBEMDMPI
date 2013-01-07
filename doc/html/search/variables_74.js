@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type',['type',['../structatom_1_1Atom.html#a1de1a9006c51194e98f077e4caf6971b',1,'atom::Atom']]]
+  ['type',['type',['../structAtom.html#a7c2770b985ea2d1615ab750fba4d45b8',1,'Atom']]]
 ];

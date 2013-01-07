@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: atom.cpp File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: atom.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -80,38 +80,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">atom.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions for handling MD Atom Information.  
+<p>Functions for handling MD <a class="el" href="structAtom.html" title="Atom class is defined as a struct so as to be easy to pass with MPI.">Atom</a> Information.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="atom_8h_source.html">atom.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceatom"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatom.html">atom</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2ff83b4e5fd34d597e76d4c0db30db2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatom.html#a2ff83b4e5fd34d597e76d4c0db30db2d">atom::create_MPI_ATOM</a> ()</td></tr>
-<tr class="memdesc:a2ff83b4e5fd34d597e76d4c0db30db2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPI version of <a class="el" href="structatom_1_1Atom.html" title="Atom class is defined as a struct so as to be easy to pass with MPI.">Atom</a>.  <a href="#a2ff83b4e5fd34d597e76d4c0db30db2d"></a><br/></td></tr>
-<tr class="separator:a2ff83b4e5fd34d597e76d4c0db30db2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a810235b68ff377831ea415e440b81a76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceatom.html#a810235b68ff377831ea415e440b81a76">atom::delete_MPI_atom</a> ()</td></tr>
-<tr class="memdesc:a810235b68ff377831ea415e440b81a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the MPI type at the end of the program.  <a href="#a810235b68ff377831ea415e440b81a76"></a><br/></td></tr>
-<tr class="separator:a810235b68ff377831ea415e440b81a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a7ac0b58e21d337f3e6face200725d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atom_8cpp.html#ab7a7ac0b58e21d337f3e6face200725d">create_MPI_ATOM</a> ()</td></tr>
+<tr class="memdesc:ab7a7ac0b58e21d337f3e6face200725d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the MPI_Atom class so it can be passed with MPI.  <a href="#ab7a7ac0b58e21d337f3e6face200725d"></a><br/></td></tr>
+<tr class="separator:ab7a7ac0b58e21d337f3e6face200725d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b444ef72f56b0f4bb21050ec3fa89da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atom_8cpp.html#a4b444ef72f56b0f4bb21050ec3fa89da">delete_MPI_atom</a> ()</td></tr>
+<tr class="memdesc:a4b444ef72f56b0f4bb21050ec3fa89da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the MPI type at the end of the program.  <a href="#a4b444ef72f56b0f4bb21050ec3fa89da"></a><br/></td></tr>
+<tr class="separator:a4b444ef72f56b0f4bb21050ec3fa89da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Functions for handling MD Atom Information. </p>
-<dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Functions for handling MD <a class="el" href="structAtom.html" title="Atom class is defined as a struct so as to be easy to pass with MPI.">Atom</a> Information. </p>
+<dl class="section author"><dt>Author</dt><dd>{Nathan A. Mahynski, Carmeline Dsilva} </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ab7a7ac0b58e21d337f3e6face200725d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void create_MPI_ATOM </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the MPI_Atom class so it can be passed with MPI. </p>
+<p>This function creates and commits to memory the MPI_ATOM derived data type. (see example of use at <a href="https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types">https://computing.llnl.gov/tutorials/mpi/#Derived_Data_Types</a>) </p>
+<dl class="section see"><dt>See Also</dt><dd>initialize, <a class="el" href="mpiatom_8h.html#a628d6a0c02ae3d09415ac91d6c842f23" title="MPI_ATOM is made visible to all routines.">MPI_ATOM</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4b444ef72f56b0f4bb21050ec3fa89da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void delete_MPI_atom </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free the MPI type at the end of the program. </p>
+<p>This function utilizes the complementary MPI_Type_free routine to mark the MPI_ATOM type for deallocation at the end of the program. </p>
+<dl class="section see"><dt>See Also</dt><dd>finalize </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

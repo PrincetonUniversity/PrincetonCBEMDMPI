@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['integrator',['Integrator',['../classintegrator_1_1Integrator.html',1,'integrator']]],
+  ['integrator',['Integrator',['../classIntegrator.html',1,'']]],
   ['interaction',['Interaction',['../classInteraction.html',1,'']]]
 ];

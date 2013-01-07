@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: domain_decomp.h File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: domain_decomp.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,7 +105,7 @@ Functions</h2></td></tr>
 <tr class="memitem:adb16a776f045b9fd68b06a31ed29c035"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#adb16a776f045b9fd68b06a31ed29c035">init_domain_decomp</a> (const vector&lt; double &gt; box, const int nprocs, double widths[], vector&lt; int &gt; &amp;final_breakup)</td></tr>
 <tr class="memdesc:adb16a776f045b9fd68b06a31ed29c035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decomposes the box into domains for each processor to handle.  <a href="#adb16a776f045b9fd68b06a31ed29c035"></a><br/></td></tr>
 <tr class="separator:adb16a776f045b9fd68b06a31ed29c035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1a67f8956fb748c46d0d9772a1f6d32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#ac1a67f8956fb748c46d0d9772a1f6d32">get_processor</a> (const vector&lt; double &gt; pos, const <a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:ac1a67f8956fb748c46d0d9772a1f6d32"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#ac1a67f8956fb748c46d0d9772a1f6d32">get_processor</a> (const vector&lt; double &gt; pos, const <a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:ac1a67f8956fb748c46d0d9772a1f6d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the co-ordinates of a point, determines within which domain the point lies.  <a href="#ac1a67f8956fb748c46d0d9772a1f6d32"></a><br/></td></tr>
 <tr class="separator:ac1a67f8956fb748c46d0d9772a1f6d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4a446734f29c8476be0c8766871205a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4a446734f29c8476be0c8766871205a"></a>
@@ -115,10 +115,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domai
 <tr class="memitem:ab7e6998f4d09ce978b0be93256a7aea7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#ab7e6998f4d09ce978b0be93256a7aea7">get_xyz_ids</a> (const int domain_id, const vector&lt; int &gt; &amp;final_breakup, int xyz_id[])</td></tr>
 <tr class="memdesc:ab7e6998f4d09ce978b0be93256a7aea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a domain_id specifies the x, y, z ids of the domain.  <a href="#ab7e6998f4d09ce978b0be93256a7aea7"></a><br/></td></tr>
 <tr class="separator:ab7e6998f4d09ce978b0be93256a7aea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6089fbe2af876c7807125a3ca60ec325"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a6089fbe2af876c7807125a3ca60ec325">gen_send_lists</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:a6089fbe2af876c7807125a3ca60ec325"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a6089fbe2af876c7807125a3ca60ec325">gen_send_lists</a> (<a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:a6089fbe2af876c7807125a3ca60ec325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the lists of molecules that need to be passed to other processors.  <a href="#a6089fbe2af876c7807125a3ca60ec325"></a><br/></td></tr>
 <tr class="separator:a6089fbe2af876c7807125a3ca60ec325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91bec4369dfa716b9da0f3768b42f0b6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a91bec4369dfa716b9da0f3768b42f0b6">gen_send_table</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:a91bec4369dfa716b9da0f3768b42f0b6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a91bec4369dfa716b9da0f3768b42f0b6">gen_send_table</a> (<a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:a91bec4369dfa716b9da0f3768b42f0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given the rank, generates the list of its neighbours.  <a href="#a91bec4369dfa716b9da0f3768b42f0b6"></a><br/></td></tr>
 <tr class="separator:a91bec4369dfa716b9da0f3768b42f0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310ac8170d9320c54906bed20e391478"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a310ac8170d9320c54906bed20e391478"></a>
@@ -131,7 +131,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
 <tr class="memitem:aee4072f52ae76435a626b818498e3e27"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#aee4072f52ae76435a626b818498e3e27">power</a> (int base, int exponent)</td></tr>
 <tr class="memdesc:aee4072f52ae76435a626b818498e3e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the exponentiation of an integer by an integral power.  <a href="#aee4072f52ae76435a626b818498e3e27"></a><br/></td></tr>
 <tr class="separator:aee4072f52ae76435a626b818498e3e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66b4457a4c1558782b561737fccb1f39"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a66b4457a4c1558782b561737fccb1f39">communicate_skin_atoms</a> (<a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:a66b4457a4c1558782b561737fccb1f39"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="domain__decomp_8h.html#a66b4457a4c1558782b561737fccb1f39">communicate_skin_atoms</a> (<a class="el" href="classSystem.html">System</a> *sys)</td></tr>
 <tr class="memdesc:a66b4457a4c1558782b561737fccb1f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Communicates the atoms in the skin regions of the processors to the appropriate neighbours.  <a href="#a66b4457a4c1558782b561737fccb1f39"></a><br/></td></tr>
 <tr class="separator:a66b4457a4c1558782b561737fccb1f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -146,7 +146,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
         <tr>
           <td class="memname">int communicate_skin_atoms </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em></td><td>)</td>
           <td></td>
         </tr>
@@ -157,7 +157,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
 <p>Communicates the atoms in the skin regions of the processors to the appropriate neighbours </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sys</td><td>[in,out] System to be evaluated </td></tr>
+    <tr><td class="paramname">sys</td><td>[in,out] <a class="el" href="classSystem.html">System</a> to be evaluated </td></tr>
   </table>
   </dd>
 </dl>
@@ -239,7 +239,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
         <tr>
           <td class="memname">int gen_send_lists </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em></td><td>)</td>
           <td></td>
         </tr>
@@ -266,7 +266,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
         <tr>
           <td class="memname">int gen_send_table </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em></td><td>)</td>
           <td></td>
         </tr>
@@ -359,7 +359,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>&#160;</td>
         </tr>
         <tr>
@@ -514,7 +514,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="do
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

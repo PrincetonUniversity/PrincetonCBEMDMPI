@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['t',['T',['../classsim__system_1_1System.html#a391570cba138604ffb8e242ea8207255',1,'sim_system::System']]],
+  ['t',['T',['../classSystem.html#a6419f1cf86b2ef66ca44cc3c74b9e5a8',1,'System']]],
   ['test_5fall_2ecpp',['test_all.cpp',['../test__all_8cpp.html',1,'']]],
-  ['total_5fatoms',['total_atoms',['../classsim__system_1_1System.html#a4f4cd4e3e72ba25b8bbde4ca095f1ae9',1,'sim_system::System']]],
+  ['total_5fatoms',['total_atoms',['../classSystem.html#aa1e45df46f5eed80d5ab09a882d2224f',1,'System']]],
   ['twobodytest',['TwoBodyTest',['../classTwoBodyTest.html',1,'']]],
-  ['type',['type',['../structatom_1_1Atom.html#a1de1a9006c51194e98f077e4caf6971b',1,'atom::Atom']]]
+  ['type',['type',['../structAtom.html#a7c2770b985ea2d1615ab750fba4d45b8',1,'Atom']]]
 ];

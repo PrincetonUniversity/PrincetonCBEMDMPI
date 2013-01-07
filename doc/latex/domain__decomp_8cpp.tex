@@ -16,15 +16,15 @@ vector$<$ int $>$ \hyperlink{domain__decomp_8cpp_af08c020490d351043482fe498e7b6f
 \begin{DoxyCompactList}\small\item\em Given a number returns the prime factors (does not count 1 as a prime factor) \end{DoxyCompactList}\item 
 int \hyperlink{domain__decomp_8cpp_adb16a776f045b9fd68b06a31ed29c035}{init\-\_\-domain\-\_\-decomp} (const vector$<$ double $>$ box, const int nprocs, double widths\mbox{[}$\,$\mbox{]}, vector$<$ int $>$ \&final\-\_\-breakup)
 \begin{DoxyCompactList}\small\item\em Decomposes the box into domains for each processor to handle. \end{DoxyCompactList}\item 
-int \hyperlink{domain__decomp_8cpp_ac1a67f8956fb748c46d0d9772a1f6d32}{get\-\_\-processor} (const vector$<$ double $>$ pos, const \hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+int \hyperlink{domain__decomp_8cpp_ac1a67f8956fb748c46d0d9772a1f6d32}{get\-\_\-processor} (const vector$<$ double $>$ pos, const \hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Given the co-\/ordinates of a point, determines within which domain the point lies. \end{DoxyCompactList}\item 
 int \hyperlink{domain__decomp_8cpp_a233c77efbd17cf4e8b014b90a109c1a1}{get\-\_\-processor} (const int x\-\_\-id, const int y\-\_\-id, const int z\-\_\-id, const vector$<$ int $>$ \&final\-\_\-breakup)
 \item 
 int \hyperlink{domain__decomp_8cpp_ab7e6998f4d09ce978b0be93256a7aea7}{get\-\_\-xyz\-\_\-ids} (const int domain\-\_\-id, const vector$<$ int $>$ \&final\-\_\-breakup, int xyz\-\_\-id\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Given a domain\-\_\-id specifies the x, y, z ids of the domain. \end{DoxyCompactList}\item 
-int \hyperlink{domain__decomp_8cpp_a6089fbe2af876c7807125a3ca60ec325}{gen\-\_\-send\-\_\-lists} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+int \hyperlink{domain__decomp_8cpp_a6089fbe2af876c7807125a3ca60ec325}{gen\-\_\-send\-\_\-lists} (\hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Generates the lists of molecules that need to be passed to other processors. \end{DoxyCompactList}\item 
-int \hyperlink{domain__decomp_8cpp_a91bec4369dfa716b9da0f3768b42f0b6}{gen\-\_\-send\-\_\-table} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+int \hyperlink{domain__decomp_8cpp_a91bec4369dfa716b9da0f3768b42f0b6}{gen\-\_\-send\-\_\-table} (\hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Given the rank, generates the list of its neighbours. \end{DoxyCompactList}\item 
 double \hyperlink{domain__decomp_8cpp_aaa04f749b41eddfe12bc9dd0f869a31c}{gen\-\_\-skin\-\_\-cutoff} ()
 \item 
@@ -32,7 +32,7 @@ void \hyperlink{domain__decomp_8cpp_a273ef862952335fba02a34fbf164180c}{gen\-\_\-
 \begin{DoxyCompactList}\small\item\em Generates the list of neighbours a particle should be sent to based on the borders its near. \end{DoxyCompactList}\item 
 int \hyperlink{domain__decomp_8cpp_aee4072f52ae76435a626b818498e3e27}{power} (int base, int exponent)
 \begin{DoxyCompactList}\small\item\em Computes the exponentiation of an integer by an integral power. \end{DoxyCompactList}\item 
-int \hyperlink{domain__decomp_8cpp_a66b4457a4c1558782b561737fccb1f39}{communicate\-\_\-skin\-\_\-atoms} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
+int \hyperlink{domain__decomp_8cpp_a66b4457a4c1558782b561737fccb1f39}{communicate\-\_\-skin\-\_\-atoms} (\hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Communicates the atoms in the skin regions of the processors to the appropriate neighbours. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -56,7 +56,7 @@ Communicates the atoms in the skin regions of the processors to the appropriate 
 
 Communicates the atoms in the skin regions of the processors to the appropriate neighbours 
 \begin{DoxyParams}{Parameters}
-{\em sys} & \mbox{[}in,out\mbox{]} System to be evaluated \\
+{\em sys} & \mbox{[}in,out\mbox{]} \hyperlink{classSystem}{System} to be evaluated \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8cpp_af08c020490d351043482fe498e7b6f1c}{\index{domain\-\_\-decomp.\-cpp@{domain\-\_\-decomp.\-cpp}!factorize@{factorize}}

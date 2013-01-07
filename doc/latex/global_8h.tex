@@ -7,15 +7,21 @@ Global variables.
 
 
 {\ttfamily \#include $<$exception$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$cstdlib$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-enum {\bfseries N\-A\-M\-E\-\_\-\-S\-I\-Z\-E\-S} \{ {\bfseries A\-T\-O\-M\-\_\-\-N\-A\-M\-E\-\_\-\-L\-E\-N\-G\-T\-H} = 100, 
+enum \hyperlink{global_8h_ace035e9623578923df6ac4c5199dda15}{N\-A\-M\-E\-\_\-\-S\-I\-Z\-E\-S} \{ {\bfseries A\-T\-O\-M\-\_\-\-N\-A\-M\-E\-\_\-\-L\-E\-N\-G\-T\-H} = 100, 
 {\bfseries B\-O\-N\-D\-\_\-\-N\-A\-M\-E\-\_\-\-L\-E\-N\-G\-T\-H} = 200, 
 {\bfseries M\-Y\-E\-R\-R\-\_\-\-F\-L\-A\-G\-\_\-\-S\-I\-Z\-E} = 1000
  \}
-\item 
-enum {\bfseries R\-E\-T\-U\-R\-N\-\_\-\-F\-L\-A\-G\-S} \{ \\*
+\begin{DoxyCompactList}\small\item\em Set maximum size for user-\/defined names of things. \end{DoxyCompactList}\item 
+enum \hyperlink{global_8h_a1bddccf9c11db3a1b009f05340f80af5}{R\-E\-T\-U\-R\-N\-\_\-\-F\-L\-A\-G\-S} \{ \\*
 {\bfseries S\-A\-F\-E\-\_\-\-E\-X\-I\-T} = 0, 
 {\bfseries B\-A\-D\-\_\-\-M\-E\-M} = 1, 
 {\bfseries I\-L\-L\-E\-G\-A\-L\-\_\-\-V\-A\-L\-U\-E} = 2, 
@@ -25,28 +31,28 @@ enum {\bfseries R\-E\-T\-U\-R\-N\-\_\-\-F\-L\-A\-G\-S} \{ \\*
 {\bfseries F\-I\-L\-E\-\_\-\-E\-R\-R\-O\-R} = 5, 
 {\bfseries B\-A\-D\-\_\-\-E\-X\-I\-T} = 6
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set error flags returned if a failure condition is met. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{global_8h_a8b0757a08349043359fea08bbb47114c}{const double {\bfseries W\-C\-A\-\_\-\-C\-U\-T\-O\-F\-F} = pow(2.\-0, 1/6.\-0)}\label{global_8h_a8b0757a08349043359fea08bbb47114c}
+\hypertarget{global_8h_a8b0757a08349043359fea08bbb47114c}{const double \hyperlink{global_8h_a8b0757a08349043359fea08bbb47114c}{W\-C\-A\-\_\-\-C\-U\-T\-O\-F\-F} = pow(2.\-0, 1/6.\-0)}\label{global_8h_a8b0757a08349043359fea08bbb47114c}
 
-\item 
-\hypertarget{global_8h_a628d6a0c02ae3d09415ac91d6c842f23}{M\-P\-I\-\_\-\-Datatype {\bfseries M\-P\-I\-\_\-\-A\-T\-O\-M}}\label{global_8h_a628d6a0c02ae3d09415ac91d6c842f23}
+\begin{DoxyCompactList}\small\item\em The Weeks-\/\-Chandler-\/\-Andersen cutoff length is a fixed number that is used in numerous places commonly in M\-D so it is precomputed here. \end{DoxyCompactList}\item 
+\hypertarget{global_8h_a628d6a0c02ae3d09415ac91d6c842f23}{M\-P\-I\-\_\-\-Datatype \hyperlink{global_8h_a628d6a0c02ae3d09415ac91d6c842f23}{M\-P\-I\-\_\-\-A\-T\-O\-M}}\label{global_8h_a628d6a0c02ae3d09415ac91d6c842f23}
 
-\item 
-const int \hyperlink{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{N\-D\-I\-M} = 3
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em M\-P\-I\-\_\-\-A\-T\-O\-M is made visible to all routines. \end{DoxyCompactList}\item 
+\hypertarget{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{const int \hyperlink{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{N\-D\-I\-M} = 3}\label{global_8h_ac92befc9e919a4caa991cbddc2455f6a}
+
+\begin{DoxyCompactList}\small\item\em Number of dimensions in the system (3\-D), but future work may include 2\-D as well. This leaves the door open for this. \end{DoxyCompactList}\item 
+\hypertarget{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}{const int \hyperlink{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}{N\-N\-E\-I\-G\-H\-B\-O\-R\-S} = 26}\label{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}
+
+\begin{DoxyCompactList}\small\item\em Nearest neighbors for 3\-D Domain decomposition. \end{DoxyCompactList}\item 
+\hypertarget{global_8h_a0c5339a8958f049881985e30f070891c}{const int \hyperlink{global_8h_a0c5339a8958f049881985e30f070891c}{P\-A\-R\-A\-L\-L\-E\-L\-D\-I\-M} = 0}\label{global_8h_a0c5339a8958f049881985e30f070891c}
+
+\begin{DoxyCompactList}\small\item\em dimension along which to do the domain decomposition \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Global variables. \begin{DoxyAuthor}{Authors}
 \{Nathan A. Mahynski, George Khoury\} 
 \end{DoxyAuthor}
-
-
-\subsection{Variable Documentation}
-\hypertarget{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{\index{global.\-h@{global.\-h}!N\-D\-I\-M@{N\-D\-I\-M}}
-\index{N\-D\-I\-M@{N\-D\-I\-M}!global.h@{global.\-h}}
-\subsubsection[{N\-D\-I\-M}]{\setlength{\rightskip}{0pt plus 5cm}const int N\-D\-I\-M = 3}}\label{global_8h_ac92befc9e919a4caa991cbddc2455f6a}
-N\-D\-I\-M is 3 since we are working in 3-\/\-D space 

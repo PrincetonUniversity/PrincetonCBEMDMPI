@@ -12,12 +12,17 @@ Header for force\-\_\-calc function.
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{force__calc_8h_aa53dddec5670e56b369f82439bda3b03}{force\-\_\-calc} (\hyperlink{classsim__system_1_1System}{System} $\ast$sys)
-\begin{DoxyCompactList}\small\item\em Calculates the forces between the particles in the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{force__calc_8h_aa53dddec5670e56b369f82439bda3b03}{force\-\_\-calc} (\hyperlink{classSystem}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Calculates the forces between the particles in the system. \end{DoxyCompactList}\item 
+int \hyperlink{force__calc_8h_ac16644bac238793e1d4d6ac61b8545b1}{send\-\_\-atoms} (\hyperlink{classSystem}{System} $\ast$sys)
+\begin{DoxyCompactList}\small\item\em Move atoms between processors (domains) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Header for force\-\_\-calc function. 
+Header for force\-\_\-calc function. \begin{DoxyAuthor}{Author}
+\{Frank Ricci, Jun Park\} 
+\end{DoxyAuthor}
+
 
 \subsection{Function Documentation}
 \hypertarget{force__calc_8h_aa53dddec5670e56b369f82439bda3b03}{\index{force\-\_\-calc.\-h@{force\-\_\-calc.\-h}!force\-\_\-calc@{force\-\_\-calc}}
@@ -31,8 +36,24 @@ Header for force\-\_\-calc function.
 
 Calculates the forces between the particles in the system. 
 
+Returns S\-A\-F\-E\-\_\-\-E\-X\-I\-T if successful, else returns an error flag. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em $\ast$sys} & Pointer to system for which to evaluate the forces \\
+\hline
+\end{DoxyParams}
+\hypertarget{force__calc_8h_ac16644bac238793e1d4d6ac61b8545b1}{\index{force\-\_\-calc.\-h@{force\-\_\-calc.\-h}!send\-\_\-atoms@{send\-\_\-atoms}}
+\index{send\-\_\-atoms@{send\-\_\-atoms}!force_calc.h@{force\-\_\-calc.\-h}}
+\subsubsection[{send\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}int send\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{{\bf System} $\ast$}]{sys}
+\end{DoxyParamCaption}
+)}}\label{force__calc_8h_ac16644bac238793e1d4d6ac61b8545b1}
 
+
+Move atoms between processors (domains) 
+
+This function sends the atoms that have left the domain of the processor to the relevant neighboring processor. If the atom has moved more than one domain width, it returns an error flag, else returns S\-A\-F\-E\-\_\-\-E\-X\-I\-T for success. 
 \begin{DoxyParams}{Parameters}
-{\em sys} & \mbox{[}in\mbox{]} System for which to evaluate the forces \\
+{\em $\ast$sys} & \mbox{[}in\mbox{]} Pointer to system for which to move the atoms from \\
 \hline
 \end{DoxyParams}

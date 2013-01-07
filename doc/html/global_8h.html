@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: global.h File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: global.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,17 +90,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Global variables.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;exception&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;cstdio&gt;</code><br/>
+<code>#include &lt;cstdlib&gt;</code><br/>
+<code>#include &lt;cmath&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
+<code>#include &lt;string&gt;</code><br/>
 </div>
 <p><a href="global_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ace035e9623578923df6ac4c5199dda15"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>NAME_SIZES</b> { <b>ATOM_NAME_LENGTH</b> = 100, 
+<tr class="memitem:ace035e9623578923df6ac4c5199dda15"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#ace035e9623578923df6ac4c5199dda15">NAME_SIZES</a> { <b>ATOM_NAME_LENGTH</b> = 100, 
 <b>BOND_NAME_LENGTH</b> = 200, 
 <b>MYERR_FLAG_SIZE</b> = 1000
  }</td></tr>
+<tr class="memdesc:ace035e9623578923df6ac4c5199dda15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set maximum size for user-defined names of things. <br/></td></tr>
 <tr class="separator:ace035e9623578923df6ac4c5199dda15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bddccf9c11db3a1b009f05340f80af5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>RETURN_FLAGS</b> { <br/>
+<tr class="memitem:a1bddccf9c11db3a1b009f05340f80af5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a1bddccf9c11db3a1b009f05340f80af5">RETURN_FLAGS</a> { <br/>
 &#160;&#160;<b>SAFE_EXIT</b> = 0, 
 <b>BAD_MEM</b> = 1, 
 <b>ILLEGAL_VALUE</b> = 2, 
@@ -111,40 +118,39 @@ Enumerations</h2></td></tr>
 <b>BAD_EXIT</b> = 6
 <br/>
  }</td></tr>
+<tr class="memdesc:a1bddccf9c11db3a1b009f05340f80af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set error flags returned if a failure condition is met. <br/></td></tr>
 <tr class="separator:a1bddccf9c11db3a1b009f05340f80af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8b0757a08349043359fea08bbb47114c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b0757a08349043359fea08bbb47114c"></a>
-const double&#160;</td><td class="memItemRight" valign="bottom"><b>WCA_CUTOFF</b> = pow(2.0, 1/6.0)</td></tr>
+const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a8b0757a08349043359fea08bbb47114c">WCA_CUTOFF</a> = pow(2.0, 1/6.0)</td></tr>
+<tr class="memdesc:a8b0757a08349043359fea08bbb47114c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Weeks-Chandler-Andersen cutoff length is a fixed number that is used in numerous places commonly in MD so it is precomputed here. <br/></td></tr>
 <tr class="separator:a8b0757a08349043359fea08bbb47114c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a628d6a0c02ae3d09415ac91d6c842f23"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a628d6a0c02ae3d09415ac91d6c842f23"></a>
-MPI_Datatype&#160;</td><td class="memItemRight" valign="bottom"><b>MPI_ATOM</b></td></tr>
+MPI_Datatype&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a628d6a0c02ae3d09415ac91d6c842f23">MPI_ATOM</a></td></tr>
+<tr class="memdesc:a628d6a0c02ae3d09415ac91d6c842f23"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPI_ATOM is made visible to all routines. <br/></td></tr>
 <tr class="separator:a628d6a0c02ae3d09415ac91d6c842f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac92befc9e919a4caa991cbddc2455f6a"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a">NDIM</a> = 3</td></tr>
+<tr class="memitem:ac92befc9e919a4caa991cbddc2455f6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac92befc9e919a4caa991cbddc2455f6a"></a>
+const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#ac92befc9e919a4caa991cbddc2455f6a">NDIM</a> = 3</td></tr>
+<tr class="memdesc:ac92befc9e919a4caa991cbddc2455f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of dimensions in the system (3D), but future work may include 2D as well. This leaves the door open for this. <br/></td></tr>
 <tr class="separator:ac92befc9e919a4caa991cbddc2455f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cee284b3e8b8dfb5a81d6c756123ae6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cee284b3e8b8dfb5a81d6c756123ae6"></a>
+const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a0cee284b3e8b8dfb5a81d6c756123ae6">NNEIGHBORS</a> = 26</td></tr>
+<tr class="memdesc:a0cee284b3e8b8dfb5a81d6c756123ae6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nearest neighbors for 3D Domain decomposition. <br/></td></tr>
+<tr class="separator:a0cee284b3e8b8dfb5a81d6c756123ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5339a8958f049881985e30f070891c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c5339a8958f049881985e30f070891c"></a>
+const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="global_8h.html#a0c5339a8958f049881985e30f070891c">PARALLELDIM</a> = 0</td></tr>
+<tr class="memdesc:a0c5339a8958f049881985e30f070891c"><td class="mdescLeft">&#160;</td><td class="mdescRight">dimension along which to do the domain decomposition <br/></td></tr>
+<tr class="separator:a0c5339a8958f049881985e30f070891c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Global variables. </p>
 <dl class="section author"><dt>Authors</dt><dd>{Nathan A. Mahynski, George Khoury} </dd></dl>
-</div><h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="ac92befc9e919a4caa991cbddc2455f6a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const int NDIM = 3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>NDIM is 3 since we are working in 3-D space </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

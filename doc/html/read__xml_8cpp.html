@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>APC524 Group Project: CBEMD: read_xml.cpp File Reference</title>
+<title>CBEMD: Parallelized MD in Various Thermodynamic Ensembles: read_xml.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">APC524 Group Project: CBEMD
+   <div id="projectname">CBEMD: Parallelized MD in Various Thermodynamic Ensembles
    </div>
   </td>
  </tr>
@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -86,21 +86,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Read HOOMD XML file format into System object.  
+<p>I/O for XML file format.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="read__xml_8h_source.html">read_xml.h</a>&quot;</code><br/>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a096fc4d87bdf7f2d1d94cb1f517b834e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a096fc4d87bdf7f2d1d94cb1f517b834e">read_xml</a> (const string filename, <a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:a096fc4d87bdf7f2d1d94cb1f517b834e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a096fc4d87bdf7f2d1d94cb1f517b834e">read_xml</a> (const string filename, <a class="el" href="classSystem.html">System</a> *sys)</td></tr>
+<tr class="memdesc:a096fc4d87bdf7f2d1d94cb1f517b834e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an xml file to initialize a <a class="el" href="classSystem.html">System</a> object.  <a href="#a096fc4d87bdf7f2d1d94cb1f517b834e"></a><br/></td></tr>
 <tr class="separator:a096fc4d87bdf7f2d1d94cb1f517b834e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a240bd6ebfa33269bd9852ab3d57f5fdd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a240bd6ebfa33269bd9852ab3d57f5fdd">print_xml</a> (const string filename, const <a class="el" href="classsim__system_1_1System.html">System</a> *sys)</td></tr>
+<tr class="memitem:a240bd6ebfa33269bd9852ab3d57f5fdd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a240bd6ebfa33269bd9852ab3d57f5fdd">print_xml</a> (const string filename, const <a class="el" href="classSystem.html">System</a> *sys)</td></tr>
+<tr class="memdesc:a240bd6ebfa33269bd9852ab3d57f5fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the current state of the system to a .xml file.  <a href="#a240bd6ebfa33269bd9852ab3d57f5fdd"></a><br/></td></tr>
 <tr class="separator:a240bd6ebfa33269bd9852ab3d57f5fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd307b804687ba7252a16fea56bb29d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a0cd307b804687ba7252a16fea56bb29d">write_xyz</a> (const string filename, const <a class="el" href="classsim__system_1_1System.html">System</a> *sys, const int timestep, const bool wrap_pos)</td></tr>
+<tr class="memitem:a0cd307b804687ba7252a16fea56bb29d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="read__xml_8cpp.html#a0cd307b804687ba7252a16fea56bb29d">write_xyz</a> (const string filename, const <a class="el" href="classSystem.html">System</a> *sys, const int timestep, const bool wrap_pos)</td></tr>
+<tr class="memdesc:a0cd307b804687ba7252a16fea56bb29d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write an animation file (.xyz)  <a href="#a0cd307b804687ba7252a16fea56bb29d"></a><br/></td></tr>
 <tr class="separator:a0cd307b804687ba7252a16fea56bb29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Read HOOMD XML file format into System object. </p>
+<div class="textblock"><p>I/O for XML file format. </p>
 <dl class="section author"><dt>Author</dt><dd>Nathan A. Mahynski </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a240bd6ebfa33269bd9852ab3d57f5fdd"></a>
@@ -116,7 +119,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>&#160;</td>
         </tr>
         <tr>
@@ -126,11 +129,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Print atom information to an xml file. Returns 0 if successful, non-zero if failure. This only operates on the master node when multiple processors are used, the rest pause and are sequentially informed to send information as needed. </p>
+
+<p>Print the current state of the system to a .xml file. </p>
+<p>Print atom information to an xml file. Returns SAFE_EXIT if successful, else an error flag if failure. This only operates on the master node when multiple processors are used, the rest pause and are sequentially informed to send information as needed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>Name of file to open and read. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">sys</td><td>Pointer to System object for the main node to stores its information at. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*sys</td><td>Pointer to <a class="el" href="classSystem.html">System</a> object for the main node to stores its information at. </td></tr>
   </table>
   </dd>
 </dl>
@@ -150,7 +155,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>&#160;</td>
         </tr>
         <tr>
@@ -160,13 +165,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parse an XML file to obtain atom information. Initializes a System object but only stores information that belongs to this processor rank according to domain decomposition. If a value is specified multiple times, only the first occurence of the same will be used </p>
+
+<p>Read an xml file to initialize a <a class="el" href="classSystem.html">System</a> object. </p>
+<p>Parse an XML file to obtain atom information. Initializes a <a class="el" href="classSystem.html">System</a> object but only stores information that belongs to this processor rank according to domain decomposition. Returns SAFE_EXIT if successful, else returns an error flag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>Name of file to open and read. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">nprocs</td><td>Number of processors total. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rank</td><td>Rank of this process. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">sys</td><td>Pointer to System object to store its information at. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*sys</td><td>Pointer to <a class="el" href="classSystem.html">System</a> object to store its information at. </td></tr>
   </table>
   </dd>
 </dl>
@@ -186,7 +191,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classsim__system_1_1System.html">System</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classSystem.html">System</a> *&#160;</td>
           <td class="paramname"><em>sys</em>, </td>
         </tr>
         <tr>
@@ -208,13 +213,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write an xyz file that stores the coordinates of all the atoms in the simulation If timestep=0, then the file is created, or overwritten if it exists already If timestep&gt;0, then the current information is appended to the existing file (or the file is created if it does not exist) This file can then be read by vbd to produce animations </p>
+
+<p>Write an animation file (.xyz) </p>
+<p>Write an xyz file that stores the coordinates of all the atoms in the simulation If timestep=0, then the file is created, or overwritten if it exists already. If timestep&gt;0, then the current information is appended to the existing file. This file can then be read by VMD or another visualization program to produce animations. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>Name of file to open and write to. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*sys</td><td>System object where the atoms are stored </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*sys</td><td><a class="el" href="classSystem.html">System</a> object where the atoms are stored </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">timestep</td><td>Current timestep of the simulation </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">wrap_pos</td><td>Annotates whether the positions should be written in unwrapped (wrap_pos=false) or wrapped (wrap_pos=true) coordinates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wrap_pos</td><td>Whether the positions should be written in unwrapped (wrap_pos=false) or wrapped (wrap_pos=true) coordinates </td></tr>
   </table>
   </dd>
 </dl>
@@ -224,7 +231,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Dec 25 2012 00:19:15 for APC524 Group Project: CBEMD by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jan 6 2013 20:13:30 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

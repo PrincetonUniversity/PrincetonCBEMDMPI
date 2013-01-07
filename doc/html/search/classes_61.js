@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['andersen',['Andersen',['../classintegrator_1_1Andersen.html',1,'integrator']]],
-  ['atom',['Atom',['../structatom_1_1Atom.html',1,'atom']]],
+  ['andersen',['Andersen',['../classAndersen.html',1,'']]],
+  ['atom',['Atom',['../structAtom.html',1,'']]],
   ['atomenergy',['AtomEnergy',['../classAtomEnergy.html',1,'']]]
 ];

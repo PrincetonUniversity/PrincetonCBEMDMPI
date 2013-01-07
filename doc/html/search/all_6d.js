@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main.cpp'],['../main__mpi_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main_mpi.cpp']]],
-  ['main_2ecpp',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['main_5fmpi_2ecpp',['main_mpi.cpp',['../main__mpi_8cpp.html',1,'']]],
+  ['main',['main',['../andersen_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;andersen.cpp'],['../verlet_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;verlet.cpp']]],
   ['manybodytest',['ManyBodyTest',['../classManyBodyTest.html',1,'']]],
-  ['mass',['mass',['../structatom_1_1Atom.html#ae6421dce659064f837aa5afad53b07db',1,'atom::Atom']]],
+  ['mass',['mass',['../structAtom.html#a90e6f00ca3ae2fda9b87cb27aac5929d',1,'Atom']]],
+  ['mfopen',['mfopen',['../misc_8cpp.html#a06529f23739fb369006af08b006e885e',1,'mfopen(const char *filename, const char *opt):&#160;misc.cpp'],['../misc_8h.html#a06529f23739fb369006af08b006e885e',1,'mfopen(const char *filename, const char *opt):&#160;misc.cpp']]],
+  ['min_5fimage_5fdist2',['min_image_dist2',['../misc_8cpp.html#a778ba3e6eccc86be4af8b6fd09786c20',1,'min_image_dist2(const vector&lt; double &gt; coords1, const vector&lt; double &gt; coords2, const vector&lt; double &gt; box):&#160;misc.cpp'],['../misc_8cpp.html#aaa2aea9cdbf8e8e1908d626ed931122b',1,'min_image_dist2(const Atom *a1, const Atom *a2, const vector&lt; double &gt; *box, double *xyz):&#160;misc.cpp'],['../misc_8h.html#a778ba3e6eccc86be4af8b6fd09786c20',1,'min_image_dist2(const vector&lt; double &gt; coords1, const vector&lt; double &gt; coords2, const vector&lt; double &gt; box):&#160;misc.cpp'],['../misc_8h.html#aaa2aea9cdbf8e8e1908d626ed931122b',1,'min_image_dist2(const Atom *a1, const Atom *a2, const vector&lt; double &gt; *box, double *xyz):&#160;misc.cpp']]],
   ['misc_2ecpp',['misc.cpp',['../misc_8cpp.html',1,'']]],
   ['misc_2eh',['misc.h',['../misc_8h.html',1,'']]],
-  ['move_5fatoms',['move_atoms',['../namespaceintegrator.html#a0e16957f4e63c97d3317957f62e27850',1,'integrator']]],
+  ['mpi_5fatom',['MPI_ATOM',['../global_8h.html#a628d6a0c02ae3d09415ac91d6c842f23',1,'MPI_ATOM():&#160;mpiatom.h'],['../mpiatom_8h.html#a628d6a0c02ae3d09415ac91d6c842f23',1,'MPI_ATOM():&#160;mpiatom.h']]],
   ['mpiatom_2eh',['mpiatom.h',['../mpiatom_8h.html',1,'']]]
 ];
