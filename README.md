@@ -87,3 +87,25 @@ openmpi/intel-11.1/1.4.3/64
 but is not gauranteed to work with them. To be safe, we recommend 
 using openmpi/gcc/1.2.8/64
 
+
+Sample PBS submission script for Della, Sesame, Tiger---------------------
+-1. follow instructions above to link makefile to googletests and boost
+0. type   module load openmpi 
+1. cd to src and type make
+2. type make -f MakefileTests all
+3. copy the below into a file run.sh, edit parameters to liking
+4. chmod u+x run.sh
+5. qsub run.sh
+
+#!/bin/bash -x
+#PBS -r n
+#PBS -l nodes=1:ppn=2,walltime=00:11:10
+
+cd $PBS_O_WORKDIR
+
+module load openmpi
+
+mpiexec -np 2 ./andersen 10 0.0005 LJ_1000.xml LJ.energy outputandersen 10 50
+
+mpiexec -np 2 ./verlet 10 0.0005 LJ_1000.xml LJ.energy output
+
