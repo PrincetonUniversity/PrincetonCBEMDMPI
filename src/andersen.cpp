@@ -7,7 +7,7 @@
 #include "CBEMD.h"
 
 /*!
- \param \*argv[] ./andersen nsteps dt temperature xml_file bond_file animation_file temperature nu
+ \param \*argv[] ./andersen nsteps dt xml_file energy_file bond_file animation_file temperature nu
  */
 int main (int argc, char *argv[]) {
 	int check;
