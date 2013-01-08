@@ -12,6 +12,5 @@ var searchData=
   ['atom_2ecpp',['atom.cpp',['../atom_8cpp.html',1,'']]],
   ['atom_2eh',['atom.h',['../atom_8h.html',1,'']]],
   ['atom_5fname',['atom_name',['../classSystem.html#a3e3d717c9362e163e6fc67ad7ff8b916',1,'System']]],
-  ['atom_5ftype',['atom_type',['../classSystem.html#afdb1451f2730a8c1f41ee75696cf2dc6',1,'System']]],
-  ['atomenergy',['AtomEnergy',['../classAtomEnergy.html',1,'']]]
+  ['atom_5ftype',['atom_type',['../classSystem.html#afdb1451f2730a8c1f41ee75696cf2dc6',1,'System']]]
 ];

@@ -1,0 +1,37 @@
+\hypertarget{classInteraction}{\section{Interaction Class Reference}
+\label{classInteraction}\index{Interaction@{Interaction}}
+}
+
+
+This class stores how a pair of particles interacts.  
+
+
+
+
+{\ttfamily \#include $<$interaction.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classInteraction_ac130c083d3ebb298daa2b65c23bdf6f5}{double \hyperlink{classInteraction_ac130c083d3ebb298daa2b65c23bdf6f5}{force\-\_\-energy} (\hyperlink{structAtom}{Atom} $\ast$a1, \hyperlink{structAtom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box)}\label{classInteraction_ac130c083d3ebb298daa2b65c23bdf6f5}
+
+\begin{DoxyCompactList}\small\item\em Computes force (stored on atoms) and energy (returned) \end{DoxyCompactList}\item 
+\hypertarget{classInteraction_a4c47992e9d1f5108bdededb441a2936e}{void \hyperlink{classInteraction_a4c47992e9d1f5108bdededb441a2936e}{set\-\_\-force\-\_\-energy} (force\-\_\-energy\-\_\-ptr ife)}\label{classInteraction_a4c47992e9d1f5108bdededb441a2936e}
+
+\begin{DoxyCompactList}\small\item\em Assign the potential calculator. \end{DoxyCompactList}\item 
+\hypertarget{classInteraction_a28f5616df90a267d61bf02d2f767de30}{void \hyperlink{classInteraction_a28f5616df90a267d61bf02d2f767de30}{set\-\_\-args} (const vector$<$ double $>$ args)}\label{classInteraction_a28f5616df90a267d61bf02d2f767de30}
+
+\begin{DoxyCompactList}\small\item\em Assign energy and force arguments. \end{DoxyCompactList}\item 
+\hypertarget{classInteraction_a28a9c76d26d78acaf9a8112850b2a1d8}{force\-\_\-energy\-\_\-ptr \hyperlink{classInteraction_a28a9c76d26d78acaf9a8112850b2a1d8}{check\-\_\-force\-\_\-energy\-\_\-function} () const }\label{classInteraction_a28a9c76d26d78acaf9a8112850b2a1d8}
+
+\begin{DoxyCompactList}\small\item\em Return the function for force and energy calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class stores how a pair of particles interacts. 
+
+Returns energy and force as long as r $<$ r\-\_\-\{cut\}, else 0. 
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{interaction_8h}{interaction.\-h}\end{DoxyCompactItemize}

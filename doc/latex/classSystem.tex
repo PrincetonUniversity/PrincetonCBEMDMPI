@@ -1,0 +1,370 @@
+\hypertarget{classSystem}{\section{System Class Reference}
+\label{classSystem}\index{System@{System}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSystem_ae317936c9bcf1374d61745572e0f2f8a}{System} ()
+\item 
+\hypertarget{classSystem_a866817ee987f092232d425275d5cc349}{void \hyperlink{classSystem_a866817ee987f092232d425275d5cc349}{set\-\_\-box} (const vector$<$ double $>$ new\-\_\-box)}\label{classSystem_a866817ee987f092232d425275d5cc349}
+
+\begin{DoxyCompactList}\small\item\em Set the global system box size. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a1eef18748e84f29b54acc48a6b056047}{vector$<$ double $>$ \hyperlink{classSystem_a1eef18748e84f29b54acc48a6b056047}{box} () const }\label{classSystem_a1eef18748e84f29b54acc48a6b056047}
+
+\begin{DoxyCompactList}\small\item\em Report system size. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aae97ba99bc1cc745216117517f23672a}{void \hyperlink{classSystem_aae97ba99bc1cc745216117517f23672a}{set\-\_\-\-T} (const double \hyperlink{classSystem_a6419f1cf86b2ef66ca44cc3c74b9e5a8}{T})}\label{classSystem_aae97ba99bc1cc745216117517f23672a}
+
+\begin{DoxyCompactList}\small\item\em Set the system temperature. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a12e5fc7a26fa2d106ba0f899ec058b3e}{void \hyperlink{classSystem_a12e5fc7a26fa2d106ba0f899ec058b3e}{set\-\_\-\-P} (const double \hyperlink{classSystem_acd7d6696787afb9b3bfa4197112802fa}{P})}\label{classSystem_a12e5fc7a26fa2d106ba0f899ec058b3e}
+
+\begin{DoxyCompactList}\small\item\em Set the system pressure. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a6419f1cf86b2ef66ca44cc3c74b9e5a8}{double \hyperlink{classSystem_a6419f1cf86b2ef66ca44cc3c74b9e5a8}{T} () const }\label{classSystem_a6419f1cf86b2ef66ca44cc3c74b9e5a8}
+
+\begin{DoxyCompactList}\small\item\em Report the temperature of the system. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_acd7d6696787afb9b3bfa4197112802fa}{double \hyperlink{classSystem_acd7d6696787afb9b3bfa4197112802fa}{P} () const }\label{classSystem_acd7d6696787afb9b3bfa4197112802fa}
+
+\begin{DoxyCompactList}\small\item\em Report the pressure of the system. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aa1e45df46f5eed80d5ab09a882d2224f}{int \hyperlink{classSystem_aa1e45df46f5eed80d5ab09a882d2224f}{total\-\_\-atoms} () const }\label{classSystem_aa1e45df46f5eed80d5ab09a882d2224f}
+
+\begin{DoxyCompactList}\small\item\em Return the number of atoms currently in this system (processor) including current ghosts. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a92088c8b2f7416199537a7e7f3152aff}{int \hyperlink{classSystem_a92088c8b2f7416199537a7e7f3152aff}{natoms} () const }\label{classSystem_a92088c8b2f7416199537a7e7f3152aff}
+
+\begin{DoxyCompactList}\small\item\em Return the number of atoms this system (processor) is responsible for. \end{DoxyCompactList}\item 
+int \hyperlink{classSystem_acfc399929213def0e539ab372cc07e8b}{add\-\_\-atom\-\_\-type} (const string \hyperlink{classSystem_a3e3d717c9362e163e6fc67ad7ff8b916}{atom\-\_\-name})
+\begin{DoxyCompactList}\small\item\em Index an atom name. \end{DoxyCompactList}\item 
+int \hyperlink{classSystem_afdb1451f2730a8c1f41ee75696cf2dc6}{atom\-\_\-type} (const string \hyperlink{classSystem_a3e3d717c9362e163e6fc67ad7ff8b916}{atom\-\_\-name})
+\begin{DoxyCompactList}\small\item\em Return the internal index associated with an atom name. \end{DoxyCompactList}\item 
+string \hyperlink{classSystem_a3e3d717c9362e163e6fc67ad7ff8b916}{atom\-\_\-name} (const unsigned int index)
+\begin{DoxyCompactList}\small\item\em Return the name associated with an index for atom type. \end{DoxyCompactList}\item 
+int \hyperlink{classSystem_a6c4660389a9be14fd2b73c7b03b992ec}{add\-\_\-bond\-\_\-type} (const string \hyperlink{classSystem_a8fa1e042039932552434fbba4b0c2a6d}{bond\-\_\-name})
+\begin{DoxyCompactList}\small\item\em Index a bond name. \end{DoxyCompactList}\item 
+int \hyperlink{classSystem_a71543a871f18ac7e139d150d86580a55}{bond\-\_\-type} (const string \hyperlink{classSystem_a8fa1e042039932552434fbba4b0c2a6d}{bond\-\_\-name})
+\begin{DoxyCompactList}\small\item\em Return the internal index associated with a bond name. \end{DoxyCompactList}\item 
+string \hyperlink{classSystem_a8fa1e042039932552434fbba4b0c2a6d}{bond\-\_\-name} (const unsigned int index)
+\begin{DoxyCompactList}\small\item\em Return the name associated with an index for bond type. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_ac58eb7d9e310d43b3c3922bb1845406e}{const pair$<$ int, int $>$ \hyperlink{classSystem_ac58eb7d9e310d43b3c3922bb1845406e}{get\-\_\-bond} (const int nbond)}\label{classSystem_ac58eb7d9e310d43b3c3922bb1845406e}
+
+\begin{DoxyCompactList}\small\item\em Return a specific bonded pair indices. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_adf6355446991e6541b119177623bc50d}{int \hyperlink{classSystem_adf6355446991e6541b119177623bc50d}{get\-\_\-bond\-\_\-type} (const int nbond)}\label{classSystem_adf6355446991e6541b119177623bc50d}
+
+\begin{DoxyCompactList}\small\item\em Return the internal index of a bond. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aeafaa4df6112a14cfb6d7204122543b0}{int \hyperlink{classSystem_aeafaa4df6112a14cfb6d7204122543b0}{nbonds} ()}\label{classSystem_aeafaa4df6112a14cfb6d7204122543b0}
+
+\begin{DoxyCompactList}\small\item\em Return the number of bonds in the system. \end{DoxyCompactList}\item 
+void \hyperlink{classSystem_a9247ae66b5bcb1614098184534173c7e}{add\-\_\-bond} (const int atom1, const int atom2, const int type)
+\item 
+vector$<$ int $>$ \hyperlink{classSystem_a18414259029791b3ee347eec3726f70a}{add\-\_\-atoms} (const int \hyperlink{classSystem_a92088c8b2f7416199537a7e7f3152aff}{natoms}, \hyperlink{structAtom}{Atom} $\ast$new\-\_\-atoms)
+\begin{DoxyCompactList}\small\item\em Add atom(s) to the system. \end{DoxyCompactList}\item 
+void \hyperlink{classSystem_a57b78a811d645a98999e32c9d1a3e520}{add\-\_\-ghost\-\_\-atoms} (const int \hyperlink{classSystem_a92088c8b2f7416199537a7e7f3152aff}{natoms}, \hyperlink{structAtom}{Atom} $\ast$new\-\_\-atoms)
+\begin{DoxyCompactList}\small\item\em Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for. \end{DoxyCompactList}\item 
+vector$<$ int $>$ \hyperlink{classSystem_a25243a7d9f3d58f6ce7c9d2699c0924e}{add\-\_\-atoms} (vector$<$ \hyperlink{structAtom}{Atom} $>$ $\ast$new\-\_\-atoms)
+\item 
+int \hyperlink{classSystem_a32e588844500d6ae56f5a7ac9a65014f}{delete\-\_\-atoms} (vector$<$ int $>$ indices)
+\begin{DoxyCompactList}\small\item\em Pop atoms with local indices from local storage. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_acc3e9636aa22693652559b987b71b279}{\hyperlink{structAtom}{Atom} $\ast$ \hyperlink{classSystem_acc3e9636aa22693652559b987b71b279}{get\-\_\-atom} (int index)}\label{classSystem_acc3e9636aa22693652559b987b71b279}
+
+\begin{DoxyCompactList}\small\item\em Get pointer to atom by local index. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_ad8a11a6960742e6265851f805f1e42ab}{\hyperlink{structAtom}{Atom} \hyperlink{classSystem_ad8a11a6960742e6265851f805f1e42ab}{copy\-\_\-atom} (int index)}\label{classSystem_ad8a11a6960742e6265851f805f1e42ab}
+
+\begin{DoxyCompactList}\small\item\em Report a copy of an atom. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a57997afb5d0cce89ab51e95d06d83972}{void {\bfseries set\-\_\-rank} (int rank)}\label{classSystem_a57997afb5d0cce89ab51e95d06d83972}
+
+\item 
+\hypertarget{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}{int {\bfseries rank} ()}\label{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}
+
+\item 
+\hypertarget{classSystem_ac33ec3abf09c300d1c080d36b206e966}{void {\bfseries set\-\_\-num\-\_\-atoms} (int size)}\label{classSystem_ac33ec3abf09c300d1c080d36b206e966}
+
+\item 
+void \hyperlink{classSystem_a3c598e8d2ca9bae20c78ef21759f3a12}{clear\-\_\-ghost\-\_\-atoms} ()
+\item 
+int \hyperlink{classSystem_ab7c96922f7c7da037044657f7edfd3e5}{gen\-\_\-domain\-\_\-info} ()
+\item 
+\hypertarget{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}{void {\bfseries set\-\_\-max\-\_\-rcut} (const double max\-\_\-rcut)}\label{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}
+
+\item 
+\hypertarget{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}{double {\bfseries max\-\_\-rcut} () const }\label{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}
+
+\item 
+\hypertarget{classSystem_ad6e5b77a96662d690db44852b80e7638}{void \hyperlink{classSystem_ad6e5b77a96662d690db44852b80e7638}{set\-\_\-total\-\_\-\-K\-E} (const double ke)}\label{classSystem_ad6e5b77a96662d690db44852b80e7638}
+
+\begin{DoxyCompactList}\small\item\em Set the global kinetic energy record. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a2da9018326f13e2ef9b66407234f6a5a}{void \hyperlink{classSystem_a2da9018326f13e2ef9b66407234f6a5a}{set\-\_\-total\-\_\-\-P\-E} (const double pe)}\label{classSystem_a2da9018326f13e2ef9b66407234f6a5a}
+
+\begin{DoxyCompactList}\small\item\em Set the global potential energy record. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aa71800b13f35268a6a288cd5153fe07b}{double {\bfseries K\-E} () const }\label{classSystem_aa71800b13f35268a6a288cd5153fe07b}
+
+\item 
+\hypertarget{classSystem_a25faf43e5d30464a88b2ca7fa3d1be59}{double {\bfseries U} () const }\label{classSystem_a25faf43e5d30464a88b2ca7fa3d1be59}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classSystem_aaa7b1f86ae1a3c465907f931a04a6e24}{double \hyperlink{classSystem_aaa7b1f86ae1a3c465907f931a04a6e24}{proc\-\_\-widths} \mbox{[}\hyperlink{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{N\-D\-I\-M}\mbox{]}}\label{classSystem_aaa7b1f86ae1a3c465907f931a04a6e24}
+
+\begin{DoxyCompactList}\small\item\em Width for domain decomposition. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a21ce85ec8f0e69a4d30f972b1e15d2bf}{vector$<$ int $>$ \hyperlink{classSystem_a21ce85ec8f0e69a4d30f972b1e15d2bf}{final\-\_\-proc\-\_\-breakup}}\label{classSystem_a21ce85ec8f0e69a4d30f972b1e15d2bf}
+
+\begin{DoxyCompactList}\small\item\em Final domain decomposition. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_a2a5944a369bc1fdc8e93789dda5664b4}{int {\bfseries xyz\-\_\-id} \mbox{[}\hyperlink{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{N\-D\-I\-M}\mbox{]}}\label{classSystem_a2a5944a369bc1fdc8e93789dda5664b4}
+
+\item 
+\hypertarget{classSystem_a50c76799e166bf7c2f75c8da176aa6d6}{double {\bfseries xyz\-\_\-limits} \mbox{[}\hyperlink{global_8h_ac92befc9e919a4caa991cbddc2455f6a}{N\-D\-I\-M}\mbox{]}\mbox{[}2\mbox{]}}\label{classSystem_a50c76799e166bf7c2f75c8da176aa6d6}
+
+\item 
+\hypertarget{classSystem_a6205d74e1ed4e018db409d7a011f567b}{int {\bfseries send\-\_\-table} \mbox{[}\hyperlink{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}{N\-N\-E\-I\-G\-H\-B\-O\-R\-S}\mbox{]}}\label{classSystem_a6205d74e1ed4e018db409d7a011f567b}
+
+\item 
+\hypertarget{classSystem_a8a8c0cb1f49192795390b9764d8aecfc}{vector$<$ vector$<$ \hyperlink{structAtom}{Atom} $>$ $>$ {\bfseries send\-\_\-lists}}\label{classSystem_a8a8c0cb1f49192795390b9764d8aecfc}
+
+\item 
+\hypertarget{classSystem_a3b47bb8410b95196ca24b2781fa8762e}{int {\bfseries send\-\_\-list\-\_\-size} \mbox{[}\hyperlink{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}{N\-N\-E\-I\-G\-H\-B\-O\-R\-S}\mbox{]}}\label{classSystem_a3b47bb8410b95196ca24b2781fa8762e}
+
+\item 
+\hypertarget{classSystem_a288318f0e26518078f711c4eedc3129a}{int {\bfseries get\-\_\-list\-\_\-size} \mbox{[}\hyperlink{global_8h_a0cee284b3e8b8dfb5a81d6c756123ae6}{N\-N\-E\-I\-G\-H\-B\-O\-R\-S}\mbox{]}}\label{classSystem_a288318f0e26518078f711c4eedc3129a}
+
+\item 
+\hypertarget{classSystem_a4f8fc9b04b342f40ce06f942e55173f4}{vector$<$ vector$<$ \hyperlink{structAtom}{Atom} $>$ $>$ {\bfseries get\-\_\-lists}}\label{classSystem_a4f8fc9b04b342f40ce06f942e55173f4}
+
+\item 
+\hypertarget{classSystem_ad5fa2ed5c7377c8ae6e7948713c52336}{vector$<$ vector$<$ \hyperlink{classInteraction}{Interaction} $>$ $>$ \hyperlink{classSystem_ad5fa2ed5c7377c8ae6e7948713c52336}{interact}}\label{classSystem_ad5fa2ed5c7377c8ae6e7948713c52336}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classInteraction}{Interaction} matrix between atoms indexed by global id's (symetric) \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aed13fee98be48bd9674b8d5dccaeee42}{vector$<$ string $>$ \hyperlink{classSystem_aed13fee98be48bd9674b8d5dccaeee42}{global\-\_\-atom\-\_\-types}}\label{classSystem_aed13fee98be48bd9674b8d5dccaeee42}
+
+\begin{DoxyCompactList}\small\item\em Keeps a record of every atom's type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classSystem_ae317936c9bcf1374d61745572e0f2f8a}{\index{System@{System}!System@{System}}
+\index{System@{System}!System@{System}}
+\subsubsection[{System}]{\setlength{\rightskip}{0pt plus 5cm}System\-::\-System (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSystem_ae317936c9bcf1374d61745572e0f2f8a}
+Upon initialization, resize vectors as necessary. Set T $<$ 0. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classSystem_acfc399929213def0e539ab372cc07e8b}{\index{System@{System}!add\-\_\-atom\-\_\-type@{add\-\_\-atom\-\_\-type}}
+\index{add\-\_\-atom\-\_\-type@{add\-\_\-atom\-\_\-type}!System@{System}}
+\subsubsection[{add\-\_\-atom\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::add\-\_\-atom\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{const string}]{atom\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{classSystem_acfc399929213def0e539ab372cc07e8b}
+
+
+Index an atom name. 
+
+Tries to add an atom type to the system, associating a user specified name with an internal index to reference this type in the future. This can return 3 different values\-: \begin{DoxyParagraph}{}
+Returns 0 if, atom\-\_\-name was new and was successfully indexed. 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+Returns -\/1 if, atom\-\_\-name was bad (i.\-e. empty string). 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+Returns +1 if, atom\-\_\-name already exists in the system and could not be indexed again. 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+
+\end{DoxyParagraph}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em atom\-\_\-name} & User specified name to index \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a18414259029791b3ee347eec3726f70a}{\index{System@{System}!add\-\_\-atoms@{add\-\_\-atoms}}
+\index{add\-\_\-atoms@{add\-\_\-atoms}!System@{System}}
+\subsubsection[{add\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ int $>$ System\-::add\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{const int}]{natoms, }
+\item[{{\bf Atom} $\ast$}]{new\-\_\-atoms}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a18414259029791b3ee347eec3726f70a}
+
+
+Add atom(s) to the system. 
+
+Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em natoms} & Length of the array of atoms to add to the system. \\
+\hline
+\mbox{\tt in}  & {\em $\ast$new\-\_\-atoms} & Pointer to an array of atoms the user has created elsewhere. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a25243a7d9f3d58f6ce7c9d2699c0924e}{\index{System@{System}!add\-\_\-atoms@{add\-\_\-atoms}}
+\index{add\-\_\-atoms@{add\-\_\-atoms}!System@{System}}
+\subsubsection[{add\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ int $>$ System\-::add\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf Atom} $>$ $\ast$}]{new\-\_\-atoms}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a25243a7d9f3d58f6ce7c9d2699c0924e}
+Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em natoms} & Length of the array of atoms to add to the system. \\
+\hline
+\mbox{\tt in}  & {\em $\ast$new\-\_\-atoms} & Pointer to an array of atoms the user has created elsewhere. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a9247ae66b5bcb1614098184534173c7e}{\index{System@{System}!add\-\_\-bond@{add\-\_\-bond}}
+\index{add\-\_\-bond@{add\-\_\-bond}!System@{System}}
+\subsubsection[{add\-\_\-bond}]{\setlength{\rightskip}{0pt plus 5cm}void System\-::add\-\_\-bond (
+\begin{DoxyParamCaption}
+\item[{const int}]{atom1, }
+\item[{const int}]{atom2, }
+\item[{const int}]{type}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a9247ae66b5bcb1614098184534173c7e}
+Adds a new bond and associated information to the \hyperlink{classSystem}{System} object. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em atom1} & Global index of atom1 in the bond. \\
+\hline
+\mbox{\tt in}  & {\em atom1} & Global index of atom2 in the bond. \\
+\hline
+\mbox{\tt in}  & {\em type} & Internal index associated with this bond type. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a6c4660389a9be14fd2b73c7b03b992ec}{\index{System@{System}!add\-\_\-bond\-\_\-type@{add\-\_\-bond\-\_\-type}}
+\index{add\-\_\-bond\-\_\-type@{add\-\_\-bond\-\_\-type}!System@{System}}
+\subsubsection[{add\-\_\-bond\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::add\-\_\-bond\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{const string}]{bond\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a6c4660389a9be14fd2b73c7b03b992ec}
+
+
+Index a bond name. 
+
+Tries to add a bond type to the system, associating a user specified name with an internal index to reference this type in the future. This can return 3 different values\-: \begin{DoxyParagraph}{}
+Returns 0 if, bond\-\_\-name was new and was successfully indexed. 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+Returns -\/1 if, bond\-\_\-name was bad (i.\-e. empty string). 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+Returns +1 if, bond\-\_\-name already exists in the system and could not be indexed again. 
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{}
+
+\end{DoxyParagraph}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em bond\-\_\-name} & User specified name to index \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a57b78a811d645a98999e32c9d1a3e520}{\index{System@{System}!add\-\_\-ghost\-\_\-atoms@{add\-\_\-ghost\-\_\-atoms}}
+\index{add\-\_\-ghost\-\_\-atoms@{add\-\_\-ghost\-\_\-atoms}!System@{System}}
+\subsubsection[{add\-\_\-ghost\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}void System\-::add\-\_\-ghost\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{const int}]{natoms, }
+\item[{{\bf Atom} $\ast$}]{new\-\_\-atoms}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a57b78a811d645a98999e32c9d1a3e520}
+
+
+Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for. 
+
+Attempt to push ghost atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. Does not change num\-\_\-atoms\-\_\- (the number of atoms a processor is responsible for) 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em natoms} & Length of the array of atoms to add to the system. \\
+\hline
+\mbox{\tt in}  & {\em $\ast$new\-\_\-atoms} & Pointer to an array of atoms the user has created elsewhere. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a3e3d717c9362e163e6fc67ad7ff8b916}{\index{System@{System}!atom\-\_\-name@{atom\-\_\-name}}
+\index{atom\-\_\-name@{atom\-\_\-name}!System@{System}}
+\subsubsection[{atom\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}string System\-::atom\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{index}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a3e3d717c9362e163e6fc67ad7ff8b916}
+
+
+Return the name associated with an index for atom type. 
+
+Returns the string \char`\"{}\-N\-U\-L\-L\char`\"{} if failed, else user defined name of atom. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em index} & Internal index to locate and return the name associated. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_afdb1451f2730a8c1f41ee75696cf2dc6}{\index{System@{System}!atom\-\_\-type@{atom\-\_\-type}}
+\index{atom\-\_\-type@{atom\-\_\-type}!System@{System}}
+\subsubsection[{atom\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::atom\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{const string}]{name}
+\end{DoxyParamCaption}
+)}}\label{classSystem_afdb1451f2730a8c1f41ee75696cf2dc6}
+
+
+Return the internal index associated with an atom name. 
+
+Returns the internal index associated with this atom name; returns -\/1 if not found. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & User defined name of atom type. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a8fa1e042039932552434fbba4b0c2a6d}{\index{System@{System}!bond\-\_\-name@{bond\-\_\-name}}
+\index{bond\-\_\-name@{bond\-\_\-name}!System@{System}}
+\subsubsection[{bond\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}string System\-::bond\-\_\-name (
+\begin{DoxyParamCaption}
+\item[{const unsigned int}]{index}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a8fa1e042039932552434fbba4b0c2a6d}
+
+
+Return the name associated with an index for bond type. 
+
+Returns the string \char`\"{}\-N\-U\-L\-L\char`\"{} if failed, else user defined name of bond. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em index} & Internal index to locate and return the name associated. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a71543a871f18ac7e139d150d86580a55}{\index{System@{System}!bond\-\_\-type@{bond\-\_\-type}}
+\index{bond\-\_\-type@{bond\-\_\-type}!System@{System}}
+\subsubsection[{bond\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::bond\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{const string}]{name}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a71543a871f18ac7e139d150d86580a55}
+
+
+Return the internal index associated with a bond name. 
+
+Returns the internal index associated with this bond name; returns -\/1 if not found. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & User defined name of bond type. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_a3c598e8d2ca9bae20c78ef21759f3a12}{\index{System@{System}!clear\-\_\-ghost\-\_\-atoms@{clear\-\_\-ghost\-\_\-atoms}}
+\index{clear\-\_\-ghost\-\_\-atoms@{clear\-\_\-ghost\-\_\-atoms}!System@{System}}
+\subsubsection[{clear\-\_\-ghost\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}void System\-::clear\-\_\-ghost\-\_\-atoms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a3c598e8d2ca9bae20c78ef21759f3a12}
+Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for. \hypertarget{classSystem_a32e588844500d6ae56f5a7ac9a65014f}{\index{System@{System}!delete\-\_\-atoms@{delete\-\_\-atoms}}
+\index{delete\-\_\-atoms@{delete\-\_\-atoms}!System@{System}}
+\subsubsection[{delete\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::delete\-\_\-atoms (
+\begin{DoxyParamCaption}
+\item[{vector$<$ int $>$}]{indices}
+\end{DoxyParamCaption}
+)}}\label{classSystem_a32e588844500d6ae56f5a7ac9a65014f}
+
+
+Pop atoms with local indices from local storage. 
+
+Remove atoms from the system. Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index. Returns the number of atoms deleted. \hypertarget{classSystem_ab7c96922f7c7da037044657f7edfd3e5}{\index{System@{System}!gen\-\_\-domain\-\_\-info@{gen\-\_\-domain\-\_\-info}}
+\index{gen\-\_\-domain\-\_\-info@{gen\-\_\-domain\-\_\-info}!System@{System}}
+\subsubsection[{gen\-\_\-domain\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::gen\-\_\-domain\-\_\-info (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classSystem_ab7c96922f7c7da037044657f7edfd3e5}
+Generates the x,y,z ids for each processor and the absolute extents of the domain Returns 0 if successful, -\/1 if not. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{system_8h}{system.\-h}\item 
+\hyperlink{system_8cpp}{system.\-cpp}\end{DoxyCompactItemize}
