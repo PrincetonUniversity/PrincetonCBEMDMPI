@@ -9,15 +9,13 @@
 //! Shifted Lennard-Jones Force
 /*!
  This is the same as standard LJ if \Delta = 0.  This is generally useful for systems with large size asymmetries. The energy U(r) is returned:
- \f{eqnarray*}{
- U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\
- &=& 0 & r - \Delta \ge r_{cut}
- \f}
+ \f[
+ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut}  &=& 0 & r - \Delta \ge r_{cut}
+ \f]
  Forces are added to atoms: 
- \f{eqnarray*}{
- F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\
- &=& 0 & r - \Delta \ge r_{cut}
- \f}
+ \f[
+ F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} &=& 0 & r - \Delta \ge r_{cut}
+ \f]
  \param [in,out] \*atom1 Pointer to first atom
  \param [in,out] \*atom2 Pointer to second atom
  \param [in] \*box Pointer to vector of box size
@@ -84,10 +82,9 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA}
  \f]
  Where the short range repulsion is provided by the WCA potential:
- \f{eqnarray*}{
- U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta \\
- &=& 0 &r-\Delta \ge 2^{1/6}\sigma
- \f}
+ \f[
+ U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta &=& 0 &r-\Delta \ge 2^{1/6}\sigma
+ \f]
  \Delta is usually set such that $\Delta = (d_i+d_j)/2-1$ where $d_i$ is the diameter of species i, but the user may decide on other parameters.
  \param [in,out] \*atom1 Pointer to first atom
  \param [in,out] \*atom2 Pointer to second atom
