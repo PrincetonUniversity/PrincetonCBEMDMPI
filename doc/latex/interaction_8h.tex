@@ -56,7 +56,7 @@ Nathan A. Mahynski
 
 Computes force and energy of a Fene bond. 
 
-Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potential is given by\-: Where the short range repulsion is provided by the W\-C\-A potential\-:  is usually set such that \$ = (d\-\_\-i+d\-\_\-j)/2-\/1\$ where \$d\-\_\-i\$ is the diameter of species i, but the user may decide on other parameters. 
+Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potential is given by\-: \[ U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA} \] Where the short range repulsion is provided by the W\-C\-A potential\-: \begin{eqnarray*} U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}  is usually set such that \$ = (d\-\_\-i+d\-\_\-j)/2-\/1\$ where \$d\-\_\-i\$ is the diameter of species i, but the user may decide on other parameters. 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline
@@ -81,7 +81,7 @@ Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potenti
 
 Computes force and energy of a Harmonic bond. 
 
-Harmonic Bond The Harmonic bond potential is given by\-: 
+Harmonic Bond The Harmonic bond potential is given by\-: \[ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2 \] 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline
@@ -108,7 +108,7 @@ Computes force and energy of Shifted Lennard-\/\-Jones interaction.
 
 Computes force and energy of Shifted Lennard-\/\-Jones interaction.
 
-
+This is the same as standard L\-J if  = 0. This is generally useful for systems with large size asymmetries. The energy U(r) is returned\-: \begin{eqnarray*} U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*} Forces are added to atoms\-: \begin{eqnarray*} F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*} 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline

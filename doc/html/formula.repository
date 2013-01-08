@@ -1,0 +1,5 @@
+\form#0:\begin{eqnarray*} U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+\form#1:\begin{eqnarray*} F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &=& 0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+\form#2:\[ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2 \]
+\form#3:\[ U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA} \]
+\form#4:\begin{eqnarray*} U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}

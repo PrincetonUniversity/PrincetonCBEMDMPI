@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2012.8.28)  8 JAN 2013 00:00
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2012.8.28)  8 JAN 2013 00:17
 entering extended mode
 **refman
 (./refman.tex
@@ -835,7 +835,7 @@ File: lstmisc.sty 2004/09/07 1.3 (Carsten Heinz)
 
 
 Writing index file refman.idx
-(./refman.aux)
+No file refman.aux.
 \openout1 = `refman.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
@@ -852,7 +852,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
 LaTeX Font Info:    ... okay on input line 48.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 48.
- (/usr/share/texmf/tex/latex/base/ts1cmr.fd
+(/usr/share/texmf/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 48.
@@ -949,8 +949,6 @@ Package: nameref 2003/12/03 v2.21 Cross-referencing by name of section
 )
 LaTeX Info: Redefining \ref on input line 48.
 LaTeX Info: Redefining \pageref on input line 48.
- (./refman.out)
-(./refman.out)
 \openout3 = `refman.out'.
 
 Package backref Info: ** backref set up for natbib ** on input line 48.
@@ -965,8 +963,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
  [1
 
 
-{/usr/share/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2
+{/usr/share/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
@@ -976,78 +973,20 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <24.88> not available
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 22.39185pt on input line 62.
 LaTeX Font Info:    Try loading font information for OT1+phv on input line 62.
- (/usr/share/texmf/tex/latex/psnfss/ot1phv.fd
+
+(/usr/share/texmf/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 22.39185pt on input line 62.
- (./refman.toc
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 8.99994pt on input line 1.
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 1.
-
-
-(/usr/share/texmf/tex/latex/psnfss/ot1ztmcm.fd
-File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
-)
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 1.
-
-
-(/usr/share/texmf/tex/latex/psnfss/omlztmcm.fd
-File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
-)
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 1.
-
-
-(/usr/share/texmf/tex/latex/psnfss/omsztmcm.fd
-File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
-)
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 1.
-
-
-(/usr/share/texmf/tex/latex/psnfss/omxztmcm.fd
-File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
-)
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 1.
-
-(/usr/share/texmf/tex/latex/psnfss/ot1ptm.fd
-File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
-)
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
- [1
-
-]
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 70.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 6.29996pt on input line 70.
- [2] [3] [4]
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 187.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 187.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 187.
-)
 \tf@toc=\write6
 \openout6 = `refman.toc'.
 
+ [1
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+] [2
 
- [5]
-[6]
+]
 Package hyperref Info: Option `pageanchor' set `true' on input line 65.
 
 Chapter 1.
@@ -1066,31 +1005,222 @@ LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 12.9599pt on input line 1.
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 12.9599pt on input line 1.
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 3.
+
+ (/usr/share/texmf/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 3.
+
+
+(/usr/share/texmf/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 3.
+
+(/usr/share/texmf/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 8.99994pt on input line 3.
+
+
+LaTeX Warning: Reference `structAtom' on page 1 undefined on input line 3.
+
+
+LaTeX Warning: Reference `classFeneException' on page 1 undefined on input line
+ 5.
+
+
+LaTeX Warning: Reference `classSljException' on page 1 undefined on input line 
+6.
+
+
+LaTeX Warning: Reference `classIntegrator' on page 1 undefined on input line 8.
+
+
+
+LaTeX Warning: Reference `classAndersen' on page 1 undefined on input line 10.
+
+
+LaTeX Warning: Reference `classVerlet' on page 1 undefined on input line 11.
+
+
+LaTeX Warning: Reference `classInteraction' on page 1 undefined on input line 1
+3.
+
+
+LaTeX Warning: Reference `classSystem' on page 1 undefined on input line 14.
+
 ) [1
 
-
-] [2
+]
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 68.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 6.29996pt on input line 68.
+ [2
 
 ]
 Chapter 2.
-(./annotated.tex) [3] [4
+(./annotated.tex
+
+LaTeX Warning: Reference `classAndersen' on page 3 undefined on input line 3.
+
+
+LaTeX Warning: Reference `structAtom' on page 3 undefined on input line 4.
+
+
+LaTeX Warning: Reference `classFeneException' on page 3 undefined on input line
+ 5.
+
+
+LaTeX Warning: Reference `classIntegrator' on page 3 undefined on input line 6.
+
+
+
+LaTeX Warning: Reference `classInteraction' on page 3 undefined on input line 7
+.
+
+
+LaTeX Warning: Reference `classSljException' on page 3 undefined on input line 
+8.
+
+
+LaTeX Warning: Reference `classSystem' on page 3 undefined on input line 9.
+
+
+LaTeX Warning: Reference `classVerlet' on page 3 undefined on input line 10.
+
+) [3] [4
 
 ]
 Chapter 3.
 (./files.tex
 
+LaTeX Warning: Reference `andersen_8cpp' on page 5 undefined on input line 3.
+
+
+LaTeX Warning: Reference `atom_8cpp' on page 5 undefined on input line 4.
+
+
+LaTeX Warning: Reference `atom_8h' on page 5 undefined on input line 5.
+
+
+LaTeX Warning: Reference `CBEMD_8h' on page 5 undefined on input line 6.
+
+
+LaTeX Warning: Reference `common_8h' on page 5 undefined on input line 7.
+
+
+LaTeX Warning: Reference `domain__decomp_8cpp' on page 5 undefined on input lin
+e 8.
+
+
+LaTeX Warning: Reference `domain__decomp_8h' on page 5 undefined on input line 
+9.
+
+
+LaTeX Warning: Reference `force__calc_8cpp' on page 5 undefined on input line 1
+0.
+
+
+LaTeX Warning: Reference `force__calc_8h' on page 5 undefined on input line 11.
+
+
+
+LaTeX Warning: Reference `global_8h' on page 5 undefined on input line 12.
+
+
+LaTeX Warning: Reference `initialize_8cpp' on page 5 undefined on input line 13
+.
+
+
 LaTeX Warning: Reference `initialize_8h' on page 5 undefined on input line 14.
 
-[5]) [6]
+
+LaTeX Warning: Reference `integrator_8cpp' on page 5 undefined on input line 15
+.
+
+
+LaTeX Warning: Reference `integrator_8h' on page 5 undefined on input line 16.
+
+
+LaTeX Warning: Reference `interaction_8cpp' on page 5 undefined on input line 1
+7.
+
+
+LaTeX Warning: Reference `interaction_8h' on page 5 undefined on input line 18.
+
+
+
+LaTeX Warning: Reference `misc_8cpp' on page 5 undefined on input line 19.
+
+
+LaTeX Warning: Reference `misc_8h' on page 5 undefined on input line 20.
+
+
+LaTeX Warning: Reference `mpiatom_8h' on page 5 undefined on input line 21.
+
+
+LaTeX Warning: Reference `read__interaction_8cpp' on page 5 undefined on input 
+line 22.
+
+
+LaTeX Warning: Reference `read__interaction_8h' on page 5 undefined on input li
+ne 23.
+
+[5]
+
+LaTeX Warning: Reference `read__xml_8cpp' on page 6 undefined on input line 24.
+
+
+
+LaTeX Warning: Reference `read__xml_8h' on page 6 undefined on input line 25.
+
+
+LaTeX Warning: Reference `system_8cpp' on page 6 undefined on input line 26.
+
+
+LaTeX Warning: Reference `system_8h' on page 6 undefined on input line 27.
+
+
+LaTeX Warning: Reference `verlet_8cpp' on page 6 undefined on input line 28.
+
+) [6]
 Chapter 4.
 (./classAndersen.tex
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 11.
  (/usr/share/texmf/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-<classAndersen.pdf, id=1122, 501.875pt x 535.33pt>
+<classAndersen.pdf, id=139, 501.875pt x 535.33pt>
 File: classAndersen.pdf Graphic file (type pdf)
  <use classAndersen.pdf>
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 10.79993pt on input line 19.
 LaTeX Font Info:    Font shape `OT1/phv/bc/n' will be
 (Font)              scaled to size 10.79993pt on input line 19.
 LaTeX Font Info:    Try loading font information for TS1+phv on input line 22.
@@ -1135,16 +1265,16 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9> not available
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
 (Font)              scaled to size 8.09995pt on input line 18.
 ) (./classFeneException.tex [8]
-<classFeneException.pdf, id=1193, 501.875pt x 386.06232pt>
+<classFeneException.pdf, id=219, 501.875pt x 386.06232pt>
 File: classFeneException.pdf Graphic file (type pdf)
 
 <use classFeneException.pdf>) (./classIntegrator.tex
-<classIntegrator.pdf, id=1194, 501.875pt x 267.67003pt>
+<classIntegrator.pdf, id=220, 501.875pt x 267.67003pt>
 File: classIntegrator.pdf Graphic file (type pdf)
 
 <use classIntegrator.pdf> [9 <./classFeneException.pdf> <./classIntegrator.pdf>
 ]) (./classInteraction.tex) (./classSljException.tex
-<classSljException.pdf, id=1220, 501.875pt x 451.1254pt>
+<classSljException.pdf, id=250, 501.875pt x 451.1254pt>
 File: classSljException.pdf Graphic file (type pdf)
 
 <use classSljException.pdf> [10]) (./classSystem.tex [11 <./classSljException.p
@@ -1191,7 +1321,7 @@ Underfull \vbox (badness 10000) detected at line 323
 Underfull \vbox (badness 10000) detected at line 339
  []
 
-[15]) (./classVerlet.tex <classVerlet.pdf, id=1395, 501.875pt x 542.567pt>
+[15]) (./classVerlet.tex <classVerlet.pdf, id=446, 501.875pt x 542.567pt>
 File: classVerlet.pdf Graphic file (type pdf)
 
 <use classVerlet.pdf>
@@ -1394,6 +1524,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--17
 
  []
 
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 21.
 
@@ -1409,14 +1543,392 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--10
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [33]
+! Undefined control sequence.
+l.42 ... by\-: \[ U(r) = -\frac{1}{2}kr_{0}^2\text
+                                                  {ln}\left(1-\left(\frac{r-...
+
+? r
+OK, entering \nonstopmode...
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...lta} \right)^6 \right) + \epsilon & r < 2^
+                                                  {1/6}\sigma+\Delta \\ &=& ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.42 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ... < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta
+                                                   \ge 2^{1/6}\sigma \end{eq...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.42 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.42 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.42 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
 Underfull \vbox (badness 10000) detected at line 52
  []
 
-
+[34]
 Underfull \vbox (badness 10000) detected at line 77
  []
 
-[34]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...right)^{6}\right) + U_{shift} & r - \Delta
+                                                   < r_{cut} \\ &=& 0 & r - ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...t) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.94 ...t) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...t) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.94 ...t) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...r - \Delta < r_{cut} \\ &=& 0 & r - \Delta
+                                                   \ge r_{cut} \end{eqnarray...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Undefined control sequence.
+<argument> \del 
+                U
+l.94 ...{eqnarray*} F_i &=& -\frac{\del U}{\del r}
+                                                  \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.94 ...{eqnarray*} F_i &=& -\frac{\del U}{\del r}
+                                                  \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.94 ...rac{\del U}{\del r}\frac{\del r}{\del x_i}
+                                                   = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                x_i
+l.94 ...rac{\del U}{\del r}\frac{\del r}{\del x_i}
+                                                   = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                U
+l.94 ...\del r}{\del x_i} = -\frac{\del U}{\del r}
+                                                  \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.94 ...\del r}{\del x_i} = -\frac{\del U}{\del r}
+                                                  \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...{\del U}{\del r}\frac{x_i}{r} & r - \Delta
+                                                   < r_{cut} \\ &=& 0 & r - ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.94 ...}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.94 ...}\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...r - \Delta < r_{cut} \\ &=& 0 & r - \Delta
+                                                   \ge r_{cut} \end{eqnarray*}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.94 ...0 & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
 Underfull \vbox (badness 10000) detected at line 104
  []
 
@@ -1426,12 +1938,394 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--12
  []
 
 [35]
+! Undefined control sequence.
+l.59 ... by\-: \[ U(r) = -\frac{1}{2}kr_{0}^2\text
+                                                  {ln}\left(1-\left(\frac{r-...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 ...lta} \right)^6 \right) + \epsilon & r < 2^
+                                                  {1/6}\sigma+\Delta \\ &=& ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.59 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.59 ...+ \epsilon & r < 2^{1/6}\sigma+\Delta \\ &
+                                                  =& 0 &r-\Delta \ge 2^{1/6}...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 ... < 2^{1/6}\sigma+\Delta \\ &=& 0 &r-\Delta
+                                                   \ge 2^{1/6}\sigma \end{eq...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.59 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.59 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.59 ...r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}
+                                                    is usually set such that...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
 Underfull \vbox (badness 10000) detected at line 69
  []
 
 
 Underfull \vbox (badness 10000) detected at line 94
  []
+
+[36]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ...ight)^{6}\right) + U_{shift} & r - \Delta
+                                                   < r_{cut} \\ &=& 0 & r - ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.111 ...) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.111 ...) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ...) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.111 ...) + U_{shift} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ... - \Delta < r_{cut} \\ &=& 0 & r - \Delta
+                                                   \ge r_{cut} \end{eqnarray...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                   Forces are added to atoms...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Undefined control sequence.
+<argument> \del 
+                U
+l.111 ...eqnarray*} F_i &=& -\frac{\del U}{\del r}
+                                                  \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.111 ...eqnarray*} F_i &=& -\frac{\del U}{\del r}
+                                                  \frac{\del r}{\del x_i} = ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.111 ...ac{\del U}{\del r}\frac{\del r}{\del x_i}
+                                                   = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                x_i
+l.111 ...ac{\del U}{\del r}\frac{\del r}{\del x_i}
+                                                   = -\frac{\del U}{\del r}\...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                U
+l.111 ...del r}{\del x_i} = -\frac{\del U}{\del r}
+                                                  \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \del 
+                r
+l.111 ...del r}{\del x_i} = -\frac{\del U}{\del r}
+                                                  \frac{x_i}{r} & r - \Delta...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ...\del U}{\del r}\frac{x_i}{r} & r - \Delta
+                                                   < r_{cut} \\ &=& 0 & r - ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.111 ...\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.111 ...\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ...\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.111 ...\frac{x_i}{r} & r - \Delta < r_{cut} \\ &
+                                                  =& 0 & r - \Delta \ge r_{c...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ... - \Delta < r_{cut} \\ &=& 0 & r - \Delta
+                                                   \ge r_{cut} \end{eqnarray*}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Too many columns in eqnarray environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Extra }, or forgotten $.
+<template> \egroup 
+                   \endtemplate 
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.111 ... & r - \Delta \ge r_{cut} \end{eqnarray*}
+                                                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 
 Underfull \vbox (badness 10000) detected at line 121
@@ -1442,7 +2336,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
-[36]
+[37]
 Underfull \vbox (badness 10000) detected at line 62
  []
 
@@ -1451,13 +2345,10 @@ Underfull \vbox (badness 10000) detected at line 84
  []
 
 
-Underfull \vbox (badness 3039) has occurred while \output is active []
-
- [37]
 Underfull \vbox (badness 10000) detected at line 103
  []
 
-
+[38]
 Underfull \vbox (badness 10000) detected at line 125
  []
 
@@ -1474,23 +2365,19 @@ Underfull \vbox (badness 10000) detected at line 188
  []
 
 
-Overfull \vbox (5.89618pt too high) has occurred while \output is active []
-
-
-[38]
 Underfull \vbox (badness 10000) detected at line 207
  []
 
-) (./misc_8h.tex
+) (./misc_8h.tex [39]
 Underfull \hbox (badness 10000) in paragraph at lines 9--13
 
  []
 
-[39]
+
 Underfull \vbox (badness 10000) detected at line 65
  []
 
-
+[40]
 Underfull \vbox (badness 10000) detected at line 87
  []
 
@@ -1502,11 +2389,11 @@ Underfull \vbox (badness 10000) detected at line 106
 Underfull \vbox (badness 10000) detected at line 128
  []
 
-[40]
+
 Underfull \vbox (badness 10000) detected at line 153
  []
 
-
+[41]
 Underfull \vbox (badness 10000) detected at line 172
  []
 
@@ -1518,12 +2405,12 @@ Underfull \vbox (badness 10000) detected at line 191
 Underfull \vbox (badness 10000) detected at line 210
  []
 
-) (./mpiatom_8h.tex) (./read__interaction_8cpp.tex [41]
+) (./mpiatom_8h.tex) (./read__interaction_8cpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
-
+[42]
 Underfull \vbox (badness 10000) detected at line 47
  []
 
@@ -1536,7 +2423,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--17
 
  []
 
-[42]
+[43]
 Underfull \vbox (badness 10000) detected at line 51
  []
 
@@ -1549,7 +2436,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
-[43]
+[44]
 Underfull \vbox (badness 10000) detected at line 46
  []
 
@@ -1557,7 +2444,7 @@ Underfull \vbox (badness 10000) detected at line 46
 Underfull \vbox (badness 10000) detected at line 65
  []
 
-[44]
+
 Underfull \vbox (badness 10000) detected at line 90
  []
 
@@ -1566,15 +2453,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--18
 
  []
 
-
+[45]
 Underfull \vbox (badness 10000) detected at line 54
  []
 
-[45]
+
 Underfull \vbox (badness 10000) detected at line 73
  []
 
-
+[46]
 Underfull \vbox (badness 10000) detected at line 98
  []
 
@@ -1588,39 +2475,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--16
 
  []
 
-[46]) (./verlet_8cpp.tex
+) (./verlet_8cpp.tex
 Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
  []
 
-
+[47]
 Underfull \vbox (badness 10000) detected at line 36
  []
 
-) (./refman.ind [47] [48
-
-] [49] [50
-
-]) (./refman.aux)
+)
+No file refman.ind.
+[48] (./refman.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 9505 strings out of 94500
- 135755 string characters out of 1176766
- 192250 words of memory out of 1000000
- 11829 multiletter control sequences out of 10000+50000
- 78594 words of font info for 123 fonts, out of 500000 for 2000
+ 9302 strings out of 94500
+ 131850 string characters out of 1176766
+ 177870 words of memory out of 1000000
+ 11633 multiletter control sequences out of 10000+50000
+ 77097 words of font info for 120 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 1000
- 41i,13n,68p,414b,445s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 41i,13n,68p,705b,445s stack positions out of 1500i,500n,5000p,200000b,5000s
 PDF statistics:
- 2101 PDF objects out of 300000
- 560 named destinations out of 131072
- 1538 words of extra memory for PDF output out of 65536
+ 1115 PDF objects out of 300000
+ 558 named destinations out of 131072
+ 42 words of extra memory for PDF output out of 65536
 
 ! pdfTeX warning (dest): name{global_8h_a1bddccf9c11db3a1b009f05340f80af5} has 
 been referenced but does not exist, replaced by a fixed one
@@ -1628,11 +2516,14 @@ been referenced but does not exist, replaced by a fixed one
 ! pdfTeX warning (dest): name{global_8h_ace035e9623578923df6ac4c5199dda15} has 
 been referenced but does not exist, replaced by a fixed one
 
-{/usr/share/texmf/fonts/enc/dvips/psnfss/8r.enc}</usr/share/texmf/fonts/type1/u
-rw/helvetic/uhvro8a.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvbo8ac.pfb
-></usr/share/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi10.pfb>
-</usr/share/texmf/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf/fonts/t
-ype1/urw/helvetic/uhvb8ac.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvr8a
-.pfb>
-Output written on refman.pdf (58 pages, 516358 bytes).
+</usr/share/texmf/fonts/type1/urw/symbol/usyr.pfb></usr/share/texmf/fonts/type1
+/urw/symbol/usyr.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmex10.pfb>{/usr/
+share/texmf/fonts/enc/dvips/psnfss/8r.enc}</usr/share/texmf/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/te
+xmf/fonts/type1/urw/times/utmri8a.pfb></usr/share/texmf/fonts/type1/urw/helveti
+c/uhvro8a.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvbo8ac.pfb></usr/sha
+re/texmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/urw/co
+urier/ucrr8a.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi10.pfb></usr/shar
+e/texmf/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf/fonts/type1/urw/h
+elvetic/uhvb8ac.pfb></usr/share/texmf/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on refman.pdf (52 pages, 383370 bytes).
