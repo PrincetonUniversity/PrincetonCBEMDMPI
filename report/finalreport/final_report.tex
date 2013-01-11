@@ -242,10 +242,25 @@ calling gen\_sets along the way.
 \section{Validation}
 We have compared the results of our code to LAMMPS, a molecular dynamics software package.
 %
-The comparison is shown in Figure ??.
+The comparison is shown in Figure \ref{fig:validate}.
+
+\begin{figure}[htb]
+\includegraphics[width=0.5\textwidth]{gr_1000_cbemd.pdf}
+\includegraphics[width=0.5\textwidth]{gr_1000_lammps.pdf}
+\caption{Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of Lennard Jones particles at $t=1000$ timesteps.}
+\label{fig:validate}
+\end{figure}
+
 
 \section{Profiling Results}
-We used gprof to profile our code and highlight the computational bottlenecks.
+We used gprof to profile our code and highlight the computational bottlenecks (see Figure \ref{fig:profiling}).
+
+\begin{figure}[htb]
+\includegraphics[width=0.5\textwidth]{serial.png}
+\includegraphics[width=0.5\textwidth]{mpi4procs.png}
+\caption{The results from profiling using KCacheGrind while running the code in serial (left) and in parallel on four processors (right).}
+\label{fig:profiling}
+\end{figure}
 
 \section{Optimization}
 From the results of our profiling, we opted to optimize the ``min\_image\_dist2()'' and the ``slj()'' functions.
