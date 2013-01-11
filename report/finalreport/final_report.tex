@@ -116,14 +116,7 @@ In this project, we implemented the Verlet integrator and the Andersen thermosta
 %
 Both of these integration schemes are developed specifically for molecular dynamics.
 
-The above algorithms are designed to maintain constant energy ($E$), volume ($V$), and number of particles ($N$).  This NVE ensemble is known in thermodynamics as the {\em microcanonical ensemble}.
-% and reaches equilibrium when the entropy of the system reaches a maximum.
-Although this ensemble is the simplest to analyze in a thermodynamic framework, it is almost never applicable to real world problems.
-Other widely used ensembles include the {\em canonical ensemble} (NVT) and the {\em isothermal-isobaric ensemble} (NPT), which is the often the most representative of experimental conditions.
-%These ensembles correspond to a maximization of entropy subject to constraints and their equilibrium corresponds to Helmholtz and Gibbs free energy, respectively.
-Our project will incorporate these additional ensembles, which corresponds to implementing different integrators.
-
-Several existing MD packages, such as HOOMD, LAMMPS, GROMACS, and NAMD, incorporate such ensembles. Members of our group use some of these codes in our every day research, but we do not know much about their internal structure. Therefore, it is a prudent exercise to develop our own codebase with a well-written interface that we can each extend for our custom applications.
+Several existing MD packages, such as HOOMD, LAMMPS, GROMACS, and NAMD, incorporate such ensembles. Members of our group use some of these codes in our every day research, but we do not know much about their internal structure. Therefore, it was a prudent exercise to develop our own codebase with a well-written interface that we can each extend for our custom applications.
 
 \subsection{Verlet integrator}
 The Verlet integrator is designed to maintain constant energy ($E$), volume ($V$), and number of particles ($N$).  
@@ -144,8 +137,12 @@ This NVT ensemble is known in thermodynamics as the {\em canonical ensemble}.
 
 The Andersen thermotat equations are
 
-\section{Code Structure}
-Our code is written in C++. 
+\section{Code Goals and Structure}
+Our code was written with the goals of generalizability and efficiency.
+
+Our code is written in C++, and utilizes many object-oriented features. 
+%
+The modular class structure allows for a general coding framework, such that users can easily define their own intergrators, pair potentials, and bond types. 
 %
 We have parallelized our code using MPI. 
 %
@@ -156,7 +153,7 @@ We have defined various classes for the different parts of our MD simulation.
 \item Atom: The atom class contains only an atom structure. This structure is passed between processors when the code is run in parallel.
 \item Integrator: The integrator class is an abstract base class. It defines the implementation structure for integrators. We have implemented two integrators (Verlet and Andersen), but our code can easily be extended to other integration schemes. 
 \item Interaction: The interaction class is an abstract base class. It defines the interaction between two atoms, including a function pointer to different interaction potentials. We have implemented standard Lennard-Jones potential, the harmonic bond potential, and the finitely extensiable nonlinear elastic (fene) bond potential. 
-\item System: The system class stores the information for the total simulation, including the box size, a list of atoms, and the interactions between atoms. When the code is run in parallel, each processor contains a system object that contains the atoms owned by that processor.
+\item System: The system class stores the information for the total simulation, including the box size, a list of atoms, and the interactions between atoms (stored as a matrix of function pointers to different interactions). When the code is run in parallel, each processor contains a system object that contains the atoms owned by that processor.
 \end{enumerate}
 
 We also have files ``read\_interaction.cpp'' and ``read\_xml.cpp'', which handle file I/O. 
@@ -174,11 +171,35 @@ The flow of our code is as follows:
 \end{enumerate}
 Steps 4-8 are repeated for each timestep. 
 %
-At the end of the simulation, the final configuration of the system is output to a file.
+At each time step, the configuration of the system is output to a file.
 %
 This output file can be read by VMD, a molecular visualization package.
 
+\subsection{Input and Output}
+Our code is initialized using user-supplied xml and energy files.
+%
+The xml file contains information such as the positions, velocities, and masses of all the atoms in the simulation.
+%
+%%%ADD SAMPLE FILE/FILE FORMAT
+%
+The energy file contains the parameters for each interaction type in the xml file.
+%%%ADD SAMPLE
+%
+At each timestep, our code writes the current configuration to an output file in ``xyz'' format. 
+%
+This file contains the positions of every atom in the simulation, and the ``xyz'' format is easily read by VMD and other molecular visualization packages.
+
+To parse the xml file, we used the Boost C++ library to allow for discrepancies in the xml file (such as extra white space, input arguments in arbitrairy orders, etc.).
+
 \subsection{Domain decomposition}
+In the final version of our code, we utilize a one-dimensional domain decomposition, where the simulation box is decomposed into vertical slabs.
+%
+Each vertical slab and the atoms it contains are assigned to a processor, and atoms are passed between processors as needed using MPI. 
+%
+However, we began our project with attempting a three-dimensional domain decomposition.
+%
+Although we could not get this algorithm completely debugged by the end of this project, we will include information on the structure and implementation since it comprised a large part of our efforts.
+
 The 3-D domain decomposition attempts to spatially split the simulation box into a number of
 identical domains based on the number of processors available. Each processor will then be responsible
 for one domain. Parallelization will be most efficient if each processor has approximately the same load.
@@ -226,7 +247,6 @@ The comparison is shown in Figure ??.
 \section{Profiling Results}
 We used gprof to profile our code and highlight the computational bottlenecks.
 
-
 \section{Optimization}
 From the results of our profiling, we opted to optimize the ``min\_image\_dist2()'' and the ``slj()'' functions.
 
@@ -240,7 +260,6 @@ The ``slj()'' function uses the ``pow'' function from the math library to comput
 %
 However, this function call is probably expensive and could be replaced by $r \times r \times r \times r \times r \times r$.
 %
-
 
 \section{Scaling}
 We looked at how the execution time of our code scaled with the number of processors.
