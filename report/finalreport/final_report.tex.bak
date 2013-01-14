@@ -78,6 +78,10 @@ Molecular dynamics is a technique commonly used to simulate the motions of a sys
 %
 Properties such as diffusion coefficients, specific heats, and chemical potentials, which are often difficult or impossible to measure in experiment, are commonly calculated in MD.
 %
+It has been used to quantitatively measure the folding rate and stability of proteins using probability and enthalpic interactions and entropy through coordinate variance, to measure the melting point of a protein through constructing a sigmoidal curve tracking the root-mean square deviation from the folded structure as a function of temperature, to measure the diffusivities of atoms and larger molecules in solution and in different environments and to perform measurements at temperature extremes that are higher and lower than are experimentally convenient.
+% 
+This list is non-exhaustive.
+%
 Because of the myriad of properties that can be calculated, MD has applications in such fields as material science, pharmaceutical design, cellular biology, thermodynamics, and fluid mechanics.
 %
 Due to its relative simplicity and its ability to be massively parallelized, MD is a common but powerful tool for many scientists and engineers today.
@@ -91,6 +95,18 @@ If no initial velocities are assigned, they can be computed.
 %
 Given an interaction potential $V (\overrightarrow{r})$ between these particles, MD integrates Newton's equation of motion, $\overrightarrow{F}=m\overrightarrow{a}$, forward in time.
 %
+Schematically it can be loosely illustrated as is shown in Figure~\ref{fig:workflow}.
+
+\begin{wrapfigure}{l}{0.5\textwidth}
+\vspace{-20pt}
+	\begin{center}	 \includegraphics[width=0.49\textwidth]{ddecomp.jpg}
+	\end{center}
+\vspace{-20pt}
+\caption{Schematic of typical workflow in a molecular dynamics simulation.}
+\vspace{-10pt}
+\label{fig:workflow}
+\end{wrapfigure}
+
 Thus, the flow of the program follows a well defined set of steps:
 \begin{enumerate}
     \item Initialize positions and choose a timestep, $dt$
@@ -128,6 +144,10 @@ Several existing MD packages, such as HOOMD, LAMMPS, GROMACS, and NAMD, incorpor
 The Verlet integrator is designed to maintain constant energy ($E$), volume ($V$), and number of particles ($N$).
 %
 This NVE ensemble is known in thermodynamics as the {\em microcanonical ensemble}.
+% 
+Such a system is a closed, isolated system, with no interactions with any external bath.
+%
+This scheme's equilibrium is characterized by maximum entropy.
 
 The Verlet integrator equations are
 $$ \overrightarrow{r}(t + \Delta t) = 2 \overrightarrow{r}(t) - \overrightarrow{r}(t- \Delta t) + \frac{\overrightarrow{F}(t) \Delta t ^2}{m}$$
@@ -140,6 +160,14 @@ These equations can be used to update the positions and velocities of the atoms 
 The Andersen thermostat is designed to maintain constant temperature ($T$), volume ($V$), and number of particles ($N$).
 %
 This NVT ensemble is known in thermodynamics as the {\em canonical ensemble}.
+%
+This scheme is setup in a way such that the system is coupled with an external heat bath that is maintained at a setpoint.
+%
+Its equilibrium is characterized by the minimum Helmholtz free energy, and energy is not conserved in the NVT ensemble.
+%
+The kinetic temperature is given by the equipartition theorem.
+
+$$\frac{3}{2} N k_{B} T = \sum_{i}^{N_{particles}} \frac{1}{2} m_{i} \overrightarrow{v{i}}^{2} $$
 
 In this description, the temperature setpoint specified by a user is denoted as $T_{bath}$. The system temperature is denoted as $T_{instant}$.
 In the Andersen thermostat, the velocity Verlet algorithm is used for integration of the equations of motion.
@@ -176,9 +204,33 @@ The above algorithm proceeds until a pre-specified number of steps has completed
 
 \section{Code Goals and Structure}
 Our code was written with the goals of generalizability and efficiency.
-
-Our code is written in C++, and utilizes many object-oriented features.
 %
+Namely we aim to produce a molecular dynamics codebase that can perform simulations
+\begin{enumerate}
+    \item Using different ensembles
+    \item Using an arbitrary number of particles
+    \item Using an arbitrary system size
+    \item Using arbitrary potentials
+    \item That is parallelized using MPI
+\end{enumerate}
+%
+Our code is written as a mixture of C and C++, and utilizes many object-oriented features.
+%
+C++ was chosen because of its excellent memory management and ability to be object oriented.
+%
+C was used to create convenient structs that needed to be constantly passed around between processors (such as the MPI Atom structure). 
+%
+Using C structs was less expensive than using a C++ class as a container to be constantly passed around.
+%
+Design decisions were constantly assessed to conform to style, were made to be convenient for us to program and for others to adapt, and, for ease of understanding.
+
+The code is optimized for small to medium-sized systems.
+%
+That is, a pairwise matrix of interactions exists, and we do not make use of neighbor lists in the implementation.
+%
+In terms of make vs. buy, it is 99.9\% make. That is, the only components of the $\approx$ 4000 lines of code produced that were not written were BOOST, MPI, and Googletests.
+%
+
 The modular class structure allows for a general coding framework, such that users can easily define their own integrators, pair potentials, and bond types.
 %
 We have parallelized our code using MPI.
@@ -189,7 +241,7 @@ We have defined various classes for the different parts of our MD simulation.
 \begin{enumerate}
 \item Atom: The atom class contains only an atom structure. This structure is passed between processors when the code is run in parallel.
 \item Integrator: The integrator class is an abstract base class. It defines the implementation structure for integrators. We have implemented two integrators (Verlet and Andersen), but our code can easily be extended to other integration schemes.
-\item Interaction: The interaction class is an abstract base class. It defines the interaction between two atoms, including a function pointer to different interaction potentials. We have implemented standard Lennard-Jones potential, the harmonic bond potential, and the finitely extensiable nonlinear elastic (fene) bond potential.
+\item Interaction: The interaction class is an abstract base class. It defines the interaction between two atoms, including a function pointer to different interaction potentials. We have implemented standard Lennard-Jones potential, the harmonic bond potential, and the finitely extensiable nonlinear elastic (fene) bond potential. It is optimized for small systems since it avoids bond lookup. 
 \item System: The system class stores the information for the total simulation, including the box size, a list of atoms, and the interactions between atoms (stored as a matrix of function pointers to different interactions). When the code is run in parallel, each processor contains a system object that contains the atoms owned by that processor.
 \end{enumerate}
 
@@ -215,7 +267,7 @@ This output file can be read by VMD, a molecular visualization package so a movi
 \subsection{Input and Output}
 Our code is initialized using user-supplied xml and energy files.
 %
-The xml file contains information such as the positions, velocities, and masses of all the atoms in the simulation. The data can be read in any order its provided by invoking the rewind function. A sample xml file is shown below.
+The xml file contains information such as the positions, velocities, and masses of all the atoms in the simulation. The data can be read in any order its provided by invoking the rewind() function. A sample xml file is shown below.
 %
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -248,7 +300,7 @@ feneA 0 1
 </configuration>
 </hoomd_xml>
 \end{verbatim}
-%
+
 The energy file contains the parameters for each interaction type in the xml file, as shown below. The parameters are the values of $\epsilon$, $\sigma$, $\Delta$, $U_{shift}$, and $r_{cut}$.
 \begin{verbatim}
 PPOT A A slj 1.0 1.0 0.0 0.0 2.4
@@ -257,7 +309,17 @@ PPOT B B slj 1.0 1.0 0.0 0.0 2.4
 BOND feneA fene 1.0 1.0 0.0 30.0 2.4
 
 \end{verbatim}
-%
+It can be read in as a cascade similar to the input xml file. Its advantages include a ``factory-style'' workflow for generating the interaction matrix, which avoids constantly needing to perform ``bond lookup.'' Instead, its implemented as just a direct computation.
+
+The shifted Lennard-Jones potential using the energy parameters, can be written as
+$$
+U(r) = 4\epsilon ( (\frac{\sigma}{r-\Delta})^{12} - (\frac{\sigma}{r-\Delta})^{6}) + U_{shift} ,   r - \Delta < r_{cut} $$
+and the Finitely Extensible Nonlinear Elastic Model bond potential (FENE bond) can be written as
+$$U(r) = -\frac{1}{2} k r_{0}^{2} ln(1 - (\frac{r-\Delta}{r_{0}} )^{2}) + U_{WCA}$$
+
+The force on a particle can be thus calculated as 
+$$ F_{i} = - \frac{\partial U}{\partial r} \frac{\partial r}{\partial x_{i}} = - \frac{\partial U}{\partial r} \frac{x_{i}}{r}$$
+
 At each timestep, our code writes the current configuration to an output file in ``xyz'' format.
 %
 This file contains the positions of every atom in the simulation, and the ``xyz'' format is easily read by VMD and other molecular visualization packages.
@@ -274,11 +336,26 @@ However, we began our project with attempting a three-dimensional domain decompo
 Although we could not get this algorithm completely debugged by the end of this project, we will include information on the structure and implementation since it comprised a large part of our efforts.
 
 The 3-D domain decomposition attempts to spatially split the simulation box into a number of
-identical domains based on the number of processors available. Each processor will then be responsible
-for one domain. Parallelization will be most efficient if each processor has approximately the same load.
-If we assume that the particles are uniformly distributed in the simulation box, then the most efficient
-way to partition the system is one in which the individual domains are as cubic as possible. This is what
-the 3-D domain decomposition algorithm attempts to do.
+identical domains based on the number of processors available. 
+\begin{wrapfigure}{l}{0.5\textwidth}
+\vspace{-20pt}
+	\begin{center}	 \includegraphics[width=0.49\textwidth]{ddecomp.jpg}
+	\end{center}
+\vspace{-20pt}
+\caption{An example of the domain decomposition. The set in use is $\{2,3,2\}$ (see step 3 of the algorithm).}
+\vspace{-10pt}
+\label{fig:ddecomp}
+\end{wrapfigure}
+
+Each processor will then be responsible
+for one domain. 
+%
+Parallelization will be most efficient if each processor has approximately the same load.
+
+
+If we assume that the particles are uniformly distributed in the simulation box, then the most efficient way to partition the system is one in which the individual domains are as cubic as possible.
+%
+This is what the 3-D domain decomposition algorithm attempts to do.
 
 Note: The 3-D domain decomposition assumes that the simulation box is a rectangular parallelepiped
 with one corner positioned at (0,0,0).
@@ -288,6 +365,7 @@ The algorithm is as below
 \item Generate the prime factorization of the number of processors available (e.g. $36 = 2 \times 2 \times 3 \times 3$).
 \item Generate a set of 3 numbers by combining the factors in different ways such that the product
 is still the number of processors available (e.g. for the case of 36 processors, possible sets are
+
 $\{2,3,6\}, \{3,2,6\}, \{1,4,9\}, \{2, 1, 18\}$, etc.).
 \item Divide the simulation box into domains by dividing the $x$, $y$, $z$ directions respectively into a
 number of parts based on the 3 numbers in one of the sets generated in step 2. (See Fig. \ref{fig:ddecomp} for an
@@ -305,28 +383,27 @@ The code implements steps 2-4 through the recursive function gen\_sets in domain
 The function init\_domain\_decomp in domain\_decomp.cpp starts the process from step 1 through 6
 calling gen\_sets along the way.
 
-\begin{figure}[htb]
-\includegraphics[width=0.5\textwidth]{ddecomp.jpg}
-\caption{An example of the domain decomposition. The set in use is $\{2,3,2\}$ (see step 3 of the algorithm).}
-\label{fig:ddecomp}
-\end{figure}
 
 \section{Validation}
-We have compared the results of our code to LAMMPS, a molecular dynamics software package.
+We have compared the accuracy of the results of our simulations generated by our code to LAMMPS, a commercial/academic molecular dynamics software package. Specifically, the radial distribution function $g(\overrightarrow{r})$ was calculated over the course of a 1000 timestep simulation for a 1000 particle system. The initial coordinates and velocities of this system was input to LAMMPS and into CBEMD independently and simulated. Next, the radial distribution function was calculated for the output generated by each method.
 %
 The comparison is shown in Figure \ref{fig:validate}.
 
 \begin{figure}[htb]
 \includegraphics[width=0.5\textwidth]{gr_1000_cbemd.pdf}
 \includegraphics[width=0.5\textwidth]{gr_1000_lammps.pdf}
-\caption{Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of Lennard Jones particles at $t=1000$ timesteps.}
+\caption{Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of Lennard Jones particles at $t=1000$ timesteps. The y-axis is the radial distribution function g(r) and the x-axis is the radius r.}
 \label{fig:validate}
 \end{figure}
 
+The radial distribution function is a very important metric that describes the probability of finding a particle at a distance $r$ from a given particle, averaged across all particles. From $g(\overrightarrow{r})$, its possible to derive macroscopic thermodynamic values such as the potential energy and pressure of a system. \textit{It is evident in ~\ref{fig:validate} that the $g(\overrightarrow{r})$ produced by CBEMD is identical to that produced by LAMMPS, validating the accuracy of our program.}
 
-\section{Profiling Results}
-We used gprof to profile our code and highlight the computational bottlenecks (see Figure \ref{fig:profiling}).
-
+\subsection{Testing}
+Testing was performed using GoogleTests to test individual key components of CBEMD. 
+%
+The ultimate test is the exact agreement between results generated by CBEMD and that produced by the commercial package LAMMPS as shown above.
+%
+Nevertheless, 22 tests were written to test components of domain decomposition, calculation of the harmonic bond, fene bond, and shifted Lennard-Jones potentials, file i/o, and two-body and many body interactions. In addition, tests with domain decomposition included tests on one processor and in parallel, given an arbitrary number of processors.
 \begin{figure}[htb]
 \includegraphics[width=0.5\textwidth]{serial.png}
 \includegraphics[width=0.5\textwidth]{mpi4procs.png}
@@ -334,6 +411,12 @@ We used gprof to profile our code and highlight the computational bottlenecks (s
 \label{fig:profiling}
 \end{figure}
 
+\section{Profiling Results}
+We used gprof to profile our code and highlight the computational bottlenecks (see Figure \ref{fig:profiling}).
+
+Regions in execution that are large portions of runtime are the force-calculation, with the calculation of the shifted lennard-jones potential and the computation of the minimum-image distance taking up the majority of the time. 
+%
+Similarly, the use of the pow command is unnecessary when the atomic computations can be used instead.
 \section{Optimization}
 From the results of our profiling, we opted to optimize the ``min\_image\_dist2()'' and the ``slj()'' functions.
 
@@ -348,11 +431,63 @@ The ``slj()'' function uses the ``pow'' function from the math library to comput
 However, this function call is probably expensive and could be replaced by $r \times r \times r \times r \times r \times r$.
 %
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+\vspace{-20pt}
+	\begin{center}	 \includegraphics[width=0.49\textwidth]{optimization.png}
+	\end{center}
+\vspace{-20pt}
+\caption{The results of optimization will be explained here.}
+\vspace{-10pt}
+\label{fig:optimization}
+\end{wrapfigure}
+
+Therefore, we performed several optimizations to our code to address these expensive components. The results are shown in Figure ~\ref{fig:optimization}.
+%
+The removal of the round function in the minimum image distance calculation reduced the time from 1000s to $\approx$ 700s, which is a dramatic reduction.
+%
+Conversely, comparing the runtime where the slj() function uses pow, vs. when it does the multiplications explicitly shows no improvement. 
+%
+This was initially unexpected. We uncovered the cause to be the use of the intel compiler for this run, which when using the optimization flag, will automatically convert uses of pow to explicit multiplications. 
+%
+As a result, we learned more about how compilers optimize code given to it to compile, which was very interesting.
+
 \section{Scaling}
 We looked at how the execution time of our code scaled with the number of processors.
 
+\begin{figure}[htb]
+\includegraphics[width=0.5\textwidth]{scalingdilute.png}
+\includegraphics[width=0.5\textwidth]{scalingdense.png}
+\caption{Scaling results as a function of number of processors for a dilute system (left) and a dense system (right).}
+\label{fig:scalingprocs}
+\end{figure}
+
+For the dilute system, there is marginal gains achieved when increasing the number of processors used, since the system is dense and it is rare that information needs to be passed from processor to processor since the interactions are quite sparse. 
+%
+Conversely, for a dense system, there are many instances where information must be passed from processor to processor, so partitioning the calculation across a number of processors decreases the total time.
+
+We next assessed scaling with system size. Theoretically, scaling should be quadratic since interactions are pairwise. 
+
+\begin{figure}[htb]
+\includegraphics[width=0.5\textwidth]{scalingverlet.png}
+\includegraphics[width=0.5\textwidth]{scalinganderson.png}
+\caption{Scaling results for integration under the N,V,E ensemble (Verlet, left) and N,V,T ensemble (Andersen thermostat, right).}
+\label{fig:scaling}
+\end{figure}
+
+It is evident that the both the Verlet and Andersen integrators scale quadratically with system size, as expected. This result is promising as it indicates that the design of our program led to the expected scaling.
+
+\section{Sample Simulation Results}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+\vspace{-20pt}
+	\begin{center} \includegraphics[width=0.49\textwidth]{snapshots.png}
+	\end{center}
+\vspace{-20pt}
+\caption{The results of the snapshots will be described here.}
+\vspace{-10pt}
+\label{fig:snapshots}
+\end{wrapfigure}
+
 \section{Conclusion}
-
-
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  13 JAN 2013 01:21
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2011.8.23)  13 JAN 2013 20:32
 entering extended mode
 **C:/Users/George/Desktop/repo2/report/finalreport/final_report.tex
 (C:/Users/George/Desktop/repo2/report/finalreport/final_report.tex
@@ -609,7 +609,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 64.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-<princeton.jpg, id=51, 313.17pt x 349.305pt>
+<princeton.jpg, id=63, 313.17pt x 349.305pt>
 File: princeton.jpg Graphic file (type jpg)
  <use princeton.jpg>
 Package pdftex.def Info: princeton.jpg used on input line 66.
@@ -617,123 +617,158 @@ Package pdftex.def Info: princeton.jpg used on input line 66.
  [1
 
 {C:/Users/George/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/G
-eorge/Desktop/repo2/report/finalreport/princeton.jpg>]pdfTeX warning (ext4): de
-stination with the same identifier (name{page.1}) has been already used, duplic
-ate ignored
+eorge/Desktop/repo2/report/finalreport/princeton.jpg>]
+<workflow.png, id=74, 519.3804pt x 260.172pt>
+File: workflow.png Graphic file (type png)
+ <use workflow.png>
+Package pdftex.def Info: workflow.png used on input line 102.
+(pdftex.def)             Requested size: 230.18253pt x 115.30176pt.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.132 T
-       he Verlet integrator equations are [1] [2] [3]
-Missing character: There is no “ in font cmtt10!
+l.140 
+       [1 <C:/Users/George/Desktop/repo2/report/finalreport/workflow.png>]
+[2] [3]
 Missing character: There is no “ in font cmtt10!
  [4]
-Overfull \hbox (60.06956pt too wide) in paragraph at lines 289--292
-\OT1/cmr/m/n/10 num-ber of pro-ces-sors avail-able (e.g. for the case of 36 pro
--ces-sors, pos-si-ble sets are $\OMS/cmsy/m/n/10 f\OT1/cmr/m/n/10 2\OML/cmm/m/i
-t/10 ; \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 6\OMS/cmsy/m/n/10 g\
-OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 f\OT1/cmr/m/n/10 3\OML/cmm/m/it/10 ; \OT1/cm
-r/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 6\OMS/cmsy/m/n/10 g\OML/cmm/m/it/1
-0 ; \OMS/cmsy/m/n/10 f\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 4\OML
-/cmm/m/it/10 ; \OT1/cmr/m/n/10 9\OMS/cmsy/m/n/10 g\OML/cmm/m/it/10 ; \OMS/cmsy/
-m/n/10 f\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ;
- \OT1/cmr/m/n/10 18\OMS/cmsy/m/n/10 g$\OT1/cmr/m/n/10 ,
- []
-
-<ddecomp.jpg, id=104, 379.4175pt x 221.8689pt>
+Missing character: There is no “ in font cmtt10!
+ <ddecomp.jpg, id=124, 379.4175pt x 221.8689pt>
 File: ddecomp.jpg Graphic file (type jpg)
  <use ddecomp.jpg>
-Package pdftex.def Info: ddecomp.jpg used on input line 309.
-(pdftex.def)             Requested size: 234.8775pt x 137.35077pt.
- [5 <C:/Users/George/Desktop/repo2/report/finalreport/ddecomp.jpg>]
-<gr_1000_cbemd.pdf, id=118, 753.81625pt x 529.98pt>
+Package pdftex.def Info: ddecomp.jpg used on input line 342.
+(pdftex.def)             Requested size: 230.18253pt x 134.60518pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 338--348
+\OT1/cmr/m/n/10 do-mains based on the num-ber of pro-ces-sors avail-able.
+ []
+
+[5] <gr_1000_cbemd.pdf, id=132, 753.81625pt x 529.98pt>
 File: gr_1000_cbemd.pdf Graphic file (type pdf)
- <use gr_1000_cbemd.pdf>
-Package pdftex.def Info: gr_1000_cbemd.pdf used on input line 320.
-(pdftex.def)             Requested size: 234.8775pt x 165.13312pt.
 
-<gr_1000_lammps.pdf, id=119, 753.81625pt x 529.98pt>
+<use gr_1000_cbemd.pdf>
+Package pdftex.def Info: gr_1000_cbemd.pdf used on input line 393.
+(pdftex.def)             Requested size: 234.8775pt x 165.13312pt.
+ <gr_1000_lammps.pdf, id=133, 753.81625pt x 529.98pt>
 File: gr_1000_lammps.pdf Graphic file (type pdf)
- <use gr_1000_lammps.pdf>
-Package pdftex.def Info: gr_1000_lammps.pdf used on input line 321.
+
+<use gr_1000_lammps.pdf>
+Package pdftex.def Info: gr_1000_lammps.pdf used on input line 394.
 (pdftex.def)             Requested size: 234.8775pt x 165.13312pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 320--322
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 393--395
 [][] [] 
  []
 
-<serial.png, id=122, 498.85487pt x 471.2004pt>
+<serial.png, id=135, 498.85487pt x 471.2004pt>
 File: serial.png Graphic file (type png)
  <use serial.png>
-Package pdftex.def Info: serial.png used on input line 332.
+Package pdftex.def Info: serial.png used on input line 408.
 (pdftex.def)             Requested size: 234.8775pt x 221.85965pt.
 
-<mpi4procs.png, id=124, 487.5816pt x 475.5366pt>
+<mpi4procs.png, id=136, 487.5816pt x 475.5366pt>
 File: mpi4procs.png Graphic file (type png)
  <use mpi4procs.png>
-Package pdftex.def Info: mpi4procs.png used on input line 333.
+Package pdftex.def Info: mpi4procs.png used on input line 409.
 (pdftex.def)             Requested size: 234.8775pt x 229.0749pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 332--334
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 408--410
 [][] [] 
  []
 
-<scalingverlet.png, id=125, 567.5604pt x 353.6412pt>
+[6 <C:/Users/George/Desktop/repo2/report/finalreport/ddecomp.jpg>] [7 <C:/Users
+/George/Desktop/repo2/report/finalreport/gr_1000_cbemd.pdf> <C:/Users/George/De
+sktop/repo2/report/finalreport/gr_1000_lammps.pdf> <C:/Users/George/Desktop/rep
+o2/report/finalreport/serial.png> <C:/Users/George/Desktop/repo2/report/finalre
+port/mpi4procs.png>] <optimization.png, id=171, 628.749pt x 354.123pt>
+File: optimization.png Graphic file (type png)
+
+<use optimization.png>
+Package pdftex.def Info: optimization.png used on input line 436.
+(pdftex.def)             Requested size: 230.18253pt x 129.64555pt.
+ <scalingdilute.png, id=173, 530.9436pt x 356.0502pt>
+File: scalingdilute.png Graphic file (type png)
+
+<use scalingdilute.png>
+Package pdftex.def Info: scalingdilute.png used on input line 458.
+(pdftex.def)             Requested size: 234.8775pt x 157.50465pt.
+ <scalingdense.png, id=174, 539.1342pt x 362.3136pt>
+File: scalingdense.png Graphic file (type png)
+
+<use scalingdense.png>
+Package pdftex.def Info: scalingdense.png used on input line 459.
+(pdftex.def)             Requested size: 234.8775pt x 157.84286pt.
+
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 458--460
+[][] [] 
+ []
+
+[8 <C:/Users/George/Desktop/repo2/report/finalreport/optimization.png> <C:/User
+s/George/Desktop/repo2/report/finalreport/scalingdilute.png> <C:/Users/George/D
+esktop/repo2/report/finalreport/scalingdense.png>]
+<scalingverlet.png, id=184, 567.5604pt x 353.6412pt>
 File: scalingverlet.png Graphic file (type png)
  <use scalingverlet.png>
-Package pdftex.def Info: scalingverlet.png used on input line 357.
+Package pdftex.def Info: scalingverlet.png used on input line 471.
 (pdftex.def)             Requested size: 234.8775pt x 146.34825pt.
 
-<scalinganderson.png, id=126, 577.6782pt x 354.6048pt>
+<scalinganderson.png, id=185, 577.6782pt x 354.6048pt>
 File: scalinganderson.png Graphic file (type png)
 
 <use scalinganderson.png>
-Package pdftex.def Info: scalinganderson.png used on input line 358.
+Package pdftex.def Info: scalinganderson.png used on input line 472.
 (pdftex.def)             Requested size: 234.8775pt x 144.17686pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 357--359
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 471--473
 [][] [] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
-[6 <C:/Users/George/Desktop/repo2/report/finalreport/gr_1000_cbemd.pdf> <C:/Use
-rs/George/Desktop/repo2/report/finalreport/gr_1000_lammps.pdf>] [7 <C:/Users/Ge
-orge/Desktop/repo2/report/finalreport/serial.png> <C:/Users/George/Desktop/repo
-2/report/finalreport/mpi4procs.png> <C:/Users/George/Desktop/repo2/report/final
-report/scalingverlet.png> <C:/Users/George/Desktop/repo2/report/finalreport/sca
-linganderson.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 366.
+<snapshots.png, id=186, 735.2268pt x 772.3254pt>
+File: snapshots.png Graphic file (type png)
+ <use snapshots.png>
+Package pdftex.def Info: snapshots.png used on input line 483.
+(pdftex.def)             Requested size: 230.18253pt x 241.7989pt.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 49
+1.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 496.
+[9 <C:/Users/George/Desktop/repo2/report/finalreport/scalingverlet.png> <C:/Use
+rs/George/Desktop/repo2/report/finalreport/scalinganderson.png> <C:/Users/Georg
+e/Desktop/repo2/report/finalreport/snapshots.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 496.
 
 (C:\Users\George\Desktop\repo2\report\finalreport\final_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 496.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 496.
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: 0F13016B3E7DE1B8F00282AACB734350;687.
+(rerunfilecheck)             Checksum: B390732D20AD26F92B1B2C765B9FA563;858.
  ) 
 Here is how much of TeX's memory you used:
- 9006 strings out of 494045
- 135092 string characters out of 3145966
- 244814 words of memory out of 3000000
- 12078 multiletter control sequences out of 15000+200000
+ 9054 strings out of 494045
+ 135837 string characters out of 3145966
+ 246300 words of memory out of 3000000
+ 12107 multiletter control sequences out of 15000+200000
  17235 words of font info for 64 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 42i,15n,43p,597b,339s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
-<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/
-Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Pr
-ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program 
-Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final_report.pdf (8 pages, 775718 bytes).
+ 42i,15n,43p,632b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Progra
+m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program F
+iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program File
+s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on final_report.pdf (10 pages, 1745520 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 48 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 253 PDF objects out of 1000 (max. 8388607)
+ 62 named destinations out of 1000 (max. 500000)
+ 186 words of extra memory for PDF output out of 10000 (max. 10000000)
 
