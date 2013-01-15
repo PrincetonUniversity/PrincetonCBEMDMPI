@@ -1,0 +1,5 @@
+PPOT A A slj 1.0 1.0 0.0 0.0 2.4
+PPOT A B slj 1.0 1.0 0.0 0.0 2.4
+PPOT B B slj 1.0 1.0 0.0 0.0 2.4
+BOND feneB fene 1.0 1.0 1.0 1.0 2.4
+BOND feneA fene 1.0 1.0 0.0 30.0 2.4
