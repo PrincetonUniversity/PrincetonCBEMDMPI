@@ -32,6 +32,7 @@ System::~System() {
 /*!
  Remove atoms from the system.  Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index.
  Returns the number of atoms deleted.
+ \param [in] indices Vector of local indices of atoms to delete from the system
 */
 int System::delete_atoms (vector <int> indices) {
 	vector <Atom>::iterator it = atoms_.begin();

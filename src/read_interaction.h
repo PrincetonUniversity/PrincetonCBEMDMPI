@@ -21,7 +21,7 @@ using namespace boost::algorithm;
 //! Function to read in interaction parameters and store them into the system
 int read_interactions(const string filename, System *sys);
 
-//! Function to return a force_energy_ptr given a type of interaction name
+//! Factory function to return a force_energy_ptr given a type of interaction name
 force_energy_ptr get_fn(const string name, vector <double> *args, double *r_cut_max);
 
 #endif

@@ -43,16 +43,16 @@ public:
 	int nbonds () {return bonded_.size();}					//!< Return the number of bonds in the system
 	void add_bond (const int atom1, const int atom2, const int type);
 		
-	vector <int> add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system 
+	vector <int> add_atoms (const int natoms, Atom *new_atoms);		//!< Add atom(s) to the system with an array of atoms
 	void add_ghost_atoms (const int natoms, Atom *new_atoms);		//!< Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for
-	vector <int> add_atoms (vector <Atom> *new_atoms);
+	vector <int> add_atoms (vector <Atom> *new_atoms);				//!< Add atom(s) to the system with an vector of atoms
 	int delete_atoms (vector <int> indices);				//!< Pop atoms with local indices from local storage
 	Atom *get_atom (int index) {return &atoms_[index];}		//!< Get pointer to atom by local index
 	Atom copy_atom (int index) {return atoms_[index];}		//!< Report a copy of an atom
-	void set_rank (int rank) {rank_ = rank;}
-	int rank () {return rank_;}
-	void set_num_atoms (int size) {num_atoms_ = size;}
-	void clear_ghost_atoms ();
+	void set_rank (int rank) {rank_ = rank;}				//!< Record the rank this system corresponds to
+	int rank () {return rank_;}								//!< Return the rank of the system
+	void set_num_atoms (int size) {num_atoms_ = size;}		//!< Manually set the number of atoms in the system
+	void clear_ghost_atoms ();								//!< Clear ghost atoms from system
 		
 	/* These are associated with 3D Domain Decomp */
 	int gen_domain_info ();
@@ -68,8 +68,8 @@ public:
 	vector <vector <Interaction> > interact;				//!< Interaction matrix between atoms indexed by global id's (symetric)
 	vector <string> global_atom_types;						//!< Keeps a record of every atom's type
 
-	void set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}
-	double max_rcut () const {return max_rcut_;}
+	void set_max_rcut (const double max_rcut) {max_rcut_ = max_rcut;}	//!< Set the maximum cutoff radius of all interactions in the system
+	double max_rcut () const {return max_rcut_;}						//!< Return the max cutoff radius
 		
 	void set_total_KE (const double ke) {KE_ = ke;}			//!< Set the global kinetic energy record
 	void set_total_PE (const double pe) {U_ = pe;}			//!< Set the global potential energy record
@@ -88,8 +88,8 @@ private:
 	map <string, unsigned int> bond_type_;			//!< Maps user specified name of bond type to internal index
 	map <string, unsigned int> ppot_type_;			//!< Maps user specified name of pair potential type to an internal index
 	map <int, int> glob_to_loc_id_;					//!< Maps global sys_index to the local index of atoms_ an atom is stored at on each processor; the opposite conversion can be done with lookup of Atom::sys_index
-	vector < pair <int, int> > bonded_;
-	vector <int> bonded_type_;
+	vector < pair <int, int> > bonded_;				//!< Vector of bonded pairs
+	vector <int> bonded_type_;						//!< Vector of types associated with each bond
 	int num_atoms_;									//!< The number of atoms the processor is responsible for
 	double max_rcut_;								//!< Max cutoff radius for all interactions used in the system
 };
