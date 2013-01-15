@@ -79,7 +79,7 @@ double harmonic (Atom *a1, Atom *a2, const vector <double> *box, const vector <d
  Finitely Extensible Non-linear Elastic Bond (FENE)
  The Fene bond potential is given by:
  \f[
- U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA}
+ U(r) &=& -\frac{1}{2} k r_{0}^2 \text{ln} \left( 1- \left( \frac{r-\Delta}{r_0} \right)^2 \right) + U_{WCA}
  \f]
  Where the short range repulsion is provided by the WCA potential:
  \f[
