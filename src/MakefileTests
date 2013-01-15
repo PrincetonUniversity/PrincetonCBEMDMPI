@@ -4,17 +4,17 @@ CXXFLAGS = -O3 -lstdc++ -g
 
 
 PATHTOBOOST = /home/gkhoury/boost_1_52_0
+GTESTDIR = /Users/nathanmahynski/Downloads/gtest-1.6.0
 
-GTESTDIR = ../
-GTEST_HEADERS = $(GTESTDIR)/gtest-1.6.0/include/gtest/*.h \
-	      $(GTESTDIR)/gtest-1.6.0/include/gtest/internal/*.h
+GTEST_HEADERS = $(GTESTDIR)/include/gtest/*.h \
+	      $(GTESTDIR)/include/gtest/internal/*.h
 
-GTESTFLAGS = -I$(GTESTDIR)/gtest-1.6.0/include -lpthread -I $(PATHTOBOOST)
+GTESTFLAGS = -I$(GTESTDIR)/include -lpthread -I $(PATHTOBOOST)
 GTEST_SRCS_ = $(GTESTDIR)/src/*.cc $(GTESTDIR)/src/*.h $(GTEST_HEADERS)
 
 all: tests
 
-tests : test_all.o domain_decomp.o initialize.o read_xml.o read_interaction.o force_calc.o system.o integrator.o misc.o interaction.o atom.o $(GTESTDIR)/gtest-1.6.0/make/gtest_main.a
+tests : test_all.o domain_decomp.o initialize.o read_xml.o read_interaction.o force_calc.o system.o integrator.o misc.o interaction.o atom.o $(GTESTDIR)/make/gtest_main.a
 	$(CXX) $(CXXFLAGS) $(GTESTFLAGS) -o $@ $^
 
 gtest-all.o : $(GTEST_SRCS_)
