@@ -3,7 +3,9 @@
  \authors {Arun L. Prabhu, Carmeline Dsilva, Nathan Mahynski, George Khoury}
  **/
 
-#include "../gtest-1.6.0/include/gtest/gtest.h"
+// You, the user, must put the right path to this gtest.h file depending on your installation of googletests:
+#include "/Users/nathanmahynski/Downloads/gtest-1.6.0/include/gtest/gtest.h"
+
 #include "domain_decomp.h"
 #include "system.h"
 #include "integrator.h"
@@ -330,7 +332,7 @@ TEST (DomainDecompTest, ThreeFactorLongBox3) {
 			   			   
 // the following use mpi in the tests
 TEST (ReadXMLTest, AtomPositions) {
-    int argc = 5;
+    int argc = 1;
     char *argv[] = {"dummy"};
     int check = start_mpi (argc, argv);
     System sys1;
@@ -343,7 +345,7 @@ TEST (ReadXMLTest, AtomPositions) {
 }
 
 TEST (ReadXMLTest, AtomVelocities) { 
-    int argc = 5;
+    int argc = 1;
     char *argv[] = {"dummy"};
     System sys1;
     int status;
@@ -355,7 +357,7 @@ TEST (ReadXMLTest, AtomVelocities) {
 }
 
 TEST (ReadXMLTest, BoxVolume) {
-    int argc = 5;
+    int argc = 1;
     char *argv[] = {"dummy"};
     System sys1;
     int status;
@@ -380,9 +382,6 @@ protected:
 };
 
 // FENE
-TEST_F (AtomEnergy, FeneBondsEnergy) {
-}
-
 TEST_F (AtomEnergy, FeneBondsForce) {
 	int icatch;
 	double x, r;

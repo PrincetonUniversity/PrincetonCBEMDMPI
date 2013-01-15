@@ -1,6 +1,6 @@
 LDFLAGS = -lm
 CXX = mpic++
-CXXFLAGS = -O3 -lstdc++ -g
+CXXFLAGS = -O3 -lstdc++ -Wno-deprecated
 
 PATHTOBOOST = /home/gkhoury/boost_1_52_0
 GTESTDIR = /Users/nathanmahynski/Downloads/gtest-1.6.0
