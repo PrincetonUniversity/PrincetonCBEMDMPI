@@ -4,7 +4,7 @@ MPICXX=mpic++
 
 PATHTOBOOST = /home/gkhoury/boost_1_52_0
 
-MPICXXFLAGS = -O3 -Wno-deprecated -I $(PATHTOBOOST)
+MPICXXFLAGS = -O3 -Wall -I $(PATHTOBOOST)
 
 all: verlet andersen
 

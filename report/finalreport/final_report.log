@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  14 JAN 2013 18:03
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  17 JAN 2013 01:19
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -627,142 +627,151 @@ eton.jpg>]
 <workflow.png, id=75, 519.3804pt x 260.172pt>
 File: workflow.png Graphic file (type png)
  <use workflow.png>
-Package pdftex.def Info: workflow.png used on input line 102.
+Package pdftex.def Info: workflow.png used on input line 100.
 (pdftex.def)             Requested size: 230.18253pt x 115.30176pt.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 10
+9.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 11
+0.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 11
+1.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 11
+2.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 11
+3.
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.140 
+l.142 
        [1 <./workflow.png>] [2] [3]
 Missing character: There is no “ in font cmtt10!
- [4]
 Missing character: There is no “ in font cmtt10!
-
-<ddecomp.jpg, id=125, 379.4175pt x 221.8689pt>
+ [4] [5]
+<ddecomp.jpg, id=132, 379.4175pt x 221.8689pt>
 File: ddecomp.jpg Graphic file (type jpg)
  <use ddecomp.jpg>
-Package pdftex.def Info: ddecomp.jpg used on input line 342.
+Package pdftex.def Info: ddecomp.jpg used on input line 319.
 (pdftex.def)             Requested size: 230.18253pt x 134.60518pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--348
-\OT1/cmr/m/n/10 do-mains based on the num-ber of pro-ces-sors avail-able.
+Overfull \hbox (20.64526pt too wide) in paragraph at lines 327--330
+\OT1/cmr/m/n/10 The func-tion init[]domain[]decomp in do-main[]decomp.cpp
  []
 
-[5] <gr_1000_cbemd.pdf, id=133, 753.81625pt x 529.98pt>
+<gr_1000_cbemd.pdf, id=134, 753.81625pt x 529.98pt>
 File: gr_1000_cbemd.pdf Graphic file (type pdf)
-
-<use gr_1000_cbemd.pdf>
-Package pdftex.def Info: gr_1000_cbemd.pdf used on input line 393.
+ <use gr_1000_cbemd.pdf>
+Package pdftex.def Info: gr_1000_cbemd.pdf used on input line 336.
 (pdftex.def)             Requested size: 234.8775pt x 165.13312pt.
- <gr_1000_lammps.pdf, id=134, 753.81625pt x 529.98pt>
+
+<gr_1000_lammps.pdf, id=135, 753.81625pt x 529.98pt>
 File: gr_1000_lammps.pdf Graphic file (type pdf)
-
-<use gr_1000_lammps.pdf>
-Package pdftex.def Info: gr_1000_lammps.pdf used on input line 394.
+ <use gr_1000_lammps.pdf>
+Package pdftex.def Info: gr_1000_lammps.pdf used on input line 337.
 (pdftex.def)             Requested size: 234.8775pt x 165.13312pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 393--395
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 336--338
 [][] [] 
  []
 
-<serial.png, id=136, 498.85487pt x 471.2004pt>
+<snapshots.png, id=136, 735.2268pt x 772.3254pt>
+File: snapshots.png Graphic file (type png)
+ <use snapshots.png>
+Package pdftex.def Info: snapshots.png used on input line 343.
+(pdftex.def)             Requested size: 234.8775pt x 246.72493pt.
+
+<serial.png, id=137, 498.85487pt x 471.2004pt>
 File: serial.png Graphic file (type png)
  <use serial.png>
-Package pdftex.def Info: serial.png used on input line 408.
+Package pdftex.def Info: serial.png used on input line 359.
 (pdftex.def)             Requested size: 234.8775pt x 221.85965pt.
 
-<mpi4procs.png, id=137, 487.5816pt x 475.5366pt>
+<mpi4procs.png, id=138, 487.5816pt x 475.5366pt>
 File: mpi4procs.png Graphic file (type png)
  <use mpi4procs.png>
-Package pdftex.def Info: mpi4procs.png used on input line 409.
+Package pdftex.def Info: mpi4procs.png used on input line 360.
 (pdftex.def)             Requested size: 234.8775pt x 229.0749pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 408--410
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 359--361
 [][] [] 
  []
 
-[6 <./ddecomp.jpg>] [7 <./gr_1000_cbemd.pdf> <./gr_1000_lammps.pdf> <./serial.p
-ng> <./mpi4procs.png>] <optimization.png, id=173, 628.749pt x 354.123pt>
+[6 <./ddecomp.jpg>] [7 <./gr_1000_cbemd.pdf> <./gr_1000_lammps.pdf>] [8 <./snap
+shots.png>] <optimization.png, id=179, 628.749pt x 354.123pt>
 File: optimization.png Graphic file (type png)
 
 <use optimization.png>
-Package pdftex.def Info: optimization.png used on input line 439.
+Package pdftex.def Info: optimization.png used on input line 390.
 (pdftex.def)             Requested size: 230.18253pt x 129.64555pt.
- <scalingdilute.png, id=175, 530.9436pt x 356.0502pt>
+ <scalingdilute.png, id=181, 530.9436pt x 356.0502pt>
 File: scalingdilute.png Graphic file (type png)
 
 <use scalingdilute.png>
-Package pdftex.def Info: scalingdilute.png used on input line 461.
+Package pdftex.def Info: scalingdilute.png used on input line 402.
 (pdftex.def)             Requested size: 234.8775pt x 157.50465pt.
- <scalingdense.png, id=176, 539.1342pt x 362.3136pt>
+ <scalingdense.png, id=182, 539.1342pt x 362.3136pt>
 File: scalingdense.png Graphic file (type png)
 
 <use scalingdense.png>
-Package pdftex.def Info: scalingdense.png used on input line 462.
+Package pdftex.def Info: scalingdense.png used on input line 403.
 (pdftex.def)             Requested size: 234.8775pt x 157.84286pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 461--463
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 402--404
 [][] [] 
  []
 
-<scalingverlet.png, id=177, 567.5604pt x 353.6412pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9 <./serial.png> <./mpi4procs.png> <./optimization.png>]
+<scalingverlet.png, id=193, 567.5604pt x 353.6412pt>
 File: scalingverlet.png Graphic file (type png)
  <use scalingverlet.png>
-Package pdftex.def Info: scalingverlet.png used on input line 474.
+Package pdftex.def Info: scalingverlet.png used on input line 413.
 (pdftex.def)             Requested size: 234.8775pt x 146.34825pt.
 
-<scalinganderson.png, id=178, 577.6782pt x 354.6048pt>
+<scalinganderson.png, id=194, 577.6782pt x 354.6048pt>
 File: scalinganderson.png Graphic file (type png)
 
 <use scalinganderson.png>
-Package pdftex.def Info: scalinganderson.png used on input line 475.
+Package pdftex.def Info: scalinganderson.png used on input line 414.
 (pdftex.def)             Requested size: 234.8775pt x 144.17686pt.
 
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 474--476
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 413--415
 [][] [] 
  []
 
-<snapshots.png, id=179, 735.2268pt x 772.3254pt>
-File: snapshots.png Graphic file (type png)
- <use snapshots.png>
-Package pdftex.def Info: snapshots.png used on input line 486.
-(pdftex.def)             Requested size: 230.18253pt x 241.7989pt.
-
-
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 49
-4.
-
-[8 <./optimization.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 499.
- [9 <./scalingdilute.png> <./scalingdense.png> <./scalingverlet.png> <./scaling
-anderson.png> <./snapshots.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 499.
+[10 <./scalingdilute.png> <./scalingdense.png> <./scalingverlet.png> <./scaling
+anderson.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 423.
+ [11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
  (./final_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 499.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 499.
-
-
-Package rerunfilecheck Warning: File `final_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `final_report.out':
-(rerunfilecheck)             Before: 520934BCF3AD8F68CAFC95A9FF0778E7;843
-(rerunfilecheck)             After:  F7914BDB800C2F2B1B11F53BFE31ECCA;901.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 499.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
+Package rerunfilecheck Info: File `final_report.out' has not changed.
+(rerunfilecheck)             Checksum: 3413651E457D79E55C46176E7257EEB8;866.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
  ) 
 Here is how much of TeX's memory you used:
- 8952 strings out of 493633
- 132909 string characters out of 3143378
- 244847 words of memory out of 3000000
- 12012 multiletter control sequences out of 15000+200000
+ 8954 strings out of 493633
+ 132934 string characters out of 3143378
+ 247106 words of memory out of 3000000
+ 12013 multiletter control sequences out of 15000+200000
  17235 words of font info for 64 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 42i,15n,43p,582b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,15n,43p,1775b,412s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -776,10 +785,10 @@ xlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
 ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
 e/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final_report.pdf (10 pages, 1728339 bytes).
+Output written on final_report.pdf (12 pages, 1731664 bytes).
 PDF statistics:
- 258 PDF objects out of 1000 (max. 8388607)
- 204 compressed objects within 3 object streams
- 63 named destinations out of 1000 (max. 500000)
+ 268 PDF objects out of 1000 (max. 8388607)
+ 212 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
  186 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -3,9 +3,7 @@
  \authors {Arun L. Prabhu, Carmeline Dsilva, Nathan Mahynski, George Khoury}
  **/
 
-// You, the user, must put the right path to this gtest.h file depending on your installation of googletests:
-#include "/Users/nathanmahynski/Downloads/gtest-1.6.0/include/gtest/gtest.h"
-
+#include <gtest/gtest.h>
 #include "domain_decomp.h"
 #include "system.h"
 #include "integrator.h"

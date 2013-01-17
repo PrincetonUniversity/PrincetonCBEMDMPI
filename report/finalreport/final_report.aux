@@ -17,33 +17,33 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Background on Molecular Dynamics}{1}{section.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Schematic of typical workflow in a molecular dynamics simulation.\relax }}{1}{figure.caption.2}}
-\newlabel{fig:workflow}{{1}{1}{Schematic of typical workflow in a molecular dynamics simulation.\relax \relax }{figure.caption.2}{}}
+\newlabel{fig: workflow}{{1}{1}{Schematic of typical workflow in a molecular dynamics simulation.\relax \relax }{figure.caption.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Verlet integrator}{2}{subsection.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Andersen thermostat}{2}{subsection.2.2}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Code Goals and Structure}{3}{section.3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Input and Output}{4}{subsection.3.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Domain decomposition}{5}{subsection.3.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An example of the domain decomposition. The set in use is $\{2,3,2\}$ (see step 3 of the algorithm).\relax }}{6}{figure.caption.3}}
-\newlabel{fig:ddecomp}{{2}{6}{An example of the domain decomposition. The set in use is $\{2,3,2\}$ (see step 3 of the algorithm).\relax \relax }{figure.caption.3}{}}
+\newlabel{fig: ddecomp}{{2}{6}{An example of the domain decomposition. The set in use is $\{2,3,2\}$ (see step 3 of the algorithm).\relax \relax }{figure.caption.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Validation}{6}{section.4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of Lennard Jones particles at $t=1000$ timesteps. The y-axis is the radial distribution function g(r) and the x-axis is the radius r.\relax }}{7}{figure.caption.4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Testing}{6}{subsection.4.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of identical Lennard Jones particles at $t=1000$ timesteps. The ordinate is the radial distribution function, $g(r)$, and the abscissa is the separation distance between particle centers, $r$.\relax }}{7}{figure.caption.4}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:validate}{{3}{7}{Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of Lennard Jones particles at $t=1000$ timesteps. The y-axis is the radial distribution function g(r) and the x-axis is the radius r.\relax \relax }{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Testing}{7}{subsection.4.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The results from profiling using KCacheGrind while running the code in serial (left) and in parallel on four processors (right).\relax }}{7}{figure.caption.5}}
-\newlabel{fig:profiling}{{4}{7}{The results from profiling using KCacheGrind while running the code in serial (left) and in parallel on four processors (right).\relax \relax }{figure.caption.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Comments on Specifics}{8}{section.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Profiling Results}{8}{section.6}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Optimization}{8}{section.7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The results of optimization will be explained here.\relax }}{8}{figure.caption.6}}
-\newlabel{fig:optimization}{{5}{8}{The results of optimization will be explained here.\relax \relax }{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Scaling}{8}{section.8}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Scaling results as a function of number of processors for a dilute system (left) and a dense system (right).\relax }}{9}{figure.caption.7}}
-\newlabel{fig:scalingprocs}{{6}{9}{Scaling results as a function of number of processors for a dilute system (left) and a dense system (right).\relax \relax }{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Scaling results for integration under the N,V,E ensemble (Verlet, left) and N,V,T ensemble (Andersen thermostat, right).\relax }}{9}{figure.caption.8}}
-\newlabel{fig:scaling}{{7}{9}{Scaling results for integration under the N,V,E ensemble (Verlet, left) and N,V,T ensemble (Andersen thermostat, right).\relax \relax }{figure.caption.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Sample Simulation Results}{9}{section.9}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Documentation}{9}{section.10}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The results of the snapshots will be described here.\relax }}{9}{figure.caption.9}}
-\newlabel{fig:snapshots}{{8}{9}{The results of the snapshots will be described here.\relax \relax }{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {11}Conclusion}{9}{section.11}}
+\newlabel{fig: validate}{{3}{7}{Comparison of the radial distribution function $g(r)$ for our code (left) and LAMMPS (right) for a 1000 atom system of identical Lennard Jones particles at $t=1000$ timesteps. The ordinate is the radial distribution function, $g(r)$, and the abscissa is the separation distance between particle centers, $r$.\relax \relax }{figure.caption.4}{}}
+\newlabel{sec: details}{{5}{7}{Comments on Specifics\relax }{section.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Comments on Specifics }{7}{section.5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The evolution of a binary system of 1000 Lennard-Jones particles over time.\relax }}{8}{figure.caption.5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Instructions for using CBEMD}{8}{section.6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces The results from profiling using Kcachegrind while running the code in serial (left) and in parallel on four processors (right).\relax }}{9}{figure.caption.6}}
+\newlabel{fig: profiling}{{5}{9}{The results from profiling using Kcachegrind while running the code in serial (left) and in parallel on four processors (right).\relax \relax }{figure.caption.6}{}}
+\newlabel{sec: optimize}{{7}{9}{Profiling and Optimization\relax }{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Profiling and Optimization }{9}{section.7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Timings for a system of 1000 Lennard-Jones particles using the pow() function to compute the slj() function (left), atomic operations (middle), and using while() loops to replace the round() math function in min\_image\_dist2() (right).\relax }}{9}{figure.caption.7}}
+\newlabel{fig: optimization}{{6}{9}{Timings for a system of 1000 Lennard-Jones particles using the pow() function to compute the slj() function (left), atomic operations (middle), and using while() loops to replace the round() math function in min\_image\_dist2() (right).\relax \relax }{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Scaling}{9}{section.8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Scaling results as a function of number of processors for a dilute system (left) and a dense system (right).\relax }}{10}{figure.caption.8}}
+\newlabel{fig: scalingprocs}{{7}{10}{Scaling results as a function of number of processors for a dilute system (left) and a dense system (right).\relax \relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Scaling results for serial integration under the NVE ensemble (Verlet, left) and NVT ensemble (Andersen thermostat, right).\relax }}{10}{figure.caption.9}}
+\newlabel{fig: scaling}{{8}{10}{Scaling results for serial integration under the NVE ensemble (Verlet, left) and NVT ensemble (Andersen thermostat, right).\relax \relax }{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Documentation}{10}{section.9}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{11}{section.10}}

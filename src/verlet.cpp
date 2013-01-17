@@ -8,6 +8,17 @@
 
 /*!
  \param \*argv[] ./verlet nsteps dt xml_file energy_file animation_file
+ The input arguments are as follows:
+ 
+ nsteps Number of timesteps to run for.
+ 
+ dt Timestep to use.
+ 
+ xml_file Initial configuration file (positions and velocities, etc.)
+ 
+ energy_file Energetics and interactions file that contains function parameters.
+ 
+ animation_file File to write the .xyz animation to.
  */
 int main (int argc, char *argv[]) {
 	int check;
