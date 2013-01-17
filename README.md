@@ -25,8 +25,7 @@ in both Makefile and MakefileTests
 Google Tests--------------------------------------------------------------------
 Google Tests can be downloaded from 
 http://code.google.com/p/googletest/downloads/list
-Our code was tested using version 1.6.0. It must be installed prior to making 
-MakefileTests. Information about installation can be found
+Our code was tested using version 1.6.0. It must be installed prior to making MakefileTests. Information about installation can be found
 on the google test webpage.
 
 Once installed, in MakefileTests, you must point the variable 
@@ -38,6 +37,8 @@ For example, if googletests is located in /home/gkhoury/gtest-1.6.0
 set GTESTDIR = /home/gkhoury/gtest-1.6.0
 
 in MakefileTests
+
+This directory must also be in your path so that test_all.cpp can link properly.
 
 
 OpenMPI-------------------------------------------------------------------------
