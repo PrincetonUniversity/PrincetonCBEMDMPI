@@ -9,7 +9,6 @@
 #include "mpi.h"
 
 using namespace std;
-using namespace sim_system;
 
 //! Given the box size and factors of nprocs, checks which combination generates the most cubic domains
 void gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add);
