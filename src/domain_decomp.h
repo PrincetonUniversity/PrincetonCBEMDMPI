@@ -9,6 +9,7 @@
 #include "mpi.h"
 
 using namespace std;
+using namespace sim_system;
 
 //! Given the box size and factors of nprocs, checks which combination generates the most cubic domains
 void gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add);
@@ -33,9 +34,6 @@ int gen_send_lists (System *sys);
 
 //! Given the rank, generates the list of its neighbours
 int gen_send_table (System *sys);
-
-//! Generates the skin cutoff distance based on the largest cutoff in the system
-double gen_skin_cutoff ( ... /*Need a list of all the cutoffs for the different interactions*/ );
 
 //! Generates the list of neighbours a particle should be sent to based on the borders its near
 void gen_goes_to (const vector<int>& is_near_border, vector<int>& goes_to, const int ndims);

@@ -8,10 +8,11 @@
 
 /*!
  Given the box size and factors of nprocs, this recursive function checks which combination generates the most cubic domains
- \param [in] factors WHAT DOES IT DO
- \param [in] box WHAT DOES IT DO
- \param [in] level WHAT DOES IT DO
- \param [in] final_breakup WHAT DOES IT DO
+ \param [in] factors list of prime factors to be used
+ \param [in] box dimensions of the simulation box
+ \param [in] level the depth of the recursion
+ \param [out] final_breakup the number of divisions of each dimension
+ \param [in] add the number of times to be spent at this level of recursion
 */
 void gen_sets (const vector<int>& factors, const double box[], const int level, double& final_diff, vector<int>& final_breakup, int add) {
 
@@ -84,10 +85,10 @@ vector <int> factorize (const int nprocs) {
 
 /*!
  Decomposes the box into domains for each processor to handle
- \param [in] box WHAT DOES IT DO
+ \param [in] box dimensions of the simulation box
  \param [in] nprocs number of processors
- \param [in] widths WHAT DOES IT DO
- \param [out] final_breakup WHAT DOES IT DO
+ \param [in] widths the dimensions of each domain
+ \param [out] final_breakup the number of divisions of each dimension
 */
 int init_domain_decomp (const vector<double> box, const int nprocs, double widths[], vector<int>& final_breakup) {
 
@@ -131,10 +132,10 @@ int get_processor (const vector<double> pos, const System *sys) {
 }
 
 /*! Given the coordinates of a point, determines within which domain the point lies. This function is overloaded.
- \param [in] x_id WHAT DOES IT DO
- \param [in] y_id WHAT DOES IT DO
- \param [in] z_id WHAT DOES IT DO
- \param [in] fina_breakup WHAT DOES IT DO
+ \param [in] x_id how many domains away from x_min the current domain is
+ \param [in] y_id how many domains away from y_min the current domain is
+ \param [in] z_id how many domains away from z_min the current domain is
+ \param [in] fina_breakup the number of divisions of each dimension
 */
 int get_processor (const int x_id, const int y_id, const int z_id, const vector<int>& final_breakup) {
 
@@ -143,9 +144,9 @@ int get_processor (const int x_id, const int y_id, const int z_id, const vector<
 }
 
 /*! Given a domain_id specifies the x, y, z ids of the domain
- \param [in] domain_id WHAT DOES IT DO
- \param [in] final_breakup WHAT DOES IT DO
- \param [in] xyz_id WHAT DOES IT DO
+ \param [in] domain_id domain identifier, same as the rank of the processor handling the domain
+ \param [in] final_breakup the number of divisions of each dimension
+ \param [in] xyz_id how many domains away from the lower limit of each dimension the current domain is
 */
 int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_id[]) {
 
@@ -167,9 +168,7 @@ int get_xyz_ids (const int domain_id, const vector<int>& final_breakup, int xyz_
 }
 
 /*! Generates the lists of molecules that need to be passed to other processors
- \param [in,out] sys WHAT DOES IT DO
- \param [in] rank rank of processor
- \param [in] skin_cutoff WHAT DOES IT DO
+ \param [in,out] sys System to be evaluated
 */
 int gen_send_lists (System *sys) {
     const int ndims=NDIM;
@@ -209,7 +208,7 @@ int gen_send_lists (System *sys) {
 
 /*! Given the rank, generates the list of its neighbours
  Assumes 3D system, for different number of dimensions need to make this a recursive function
- \param [in] sys WHAT DOES IT DO
+ \param [in,out] sys System to be evaluated
 */
 int gen_send_table (System *sys) {
 
@@ -243,18 +242,10 @@ int gen_send_table (System *sys) {
     return 0;
 }
 
-/*! Generates the skin cutoff distance based on the largest cutoff in the system
-*/
-double gen_skin_cutoff (/*Need a list of all the cutoffs for the different interactions*/ ) {
-    double skin_cutoff=0.5;
-
-    return skin_cutoff;
-}
-
 /*! Generates the list of neighbours a particle should be sent to based on the borders its near
- \param [in] is_near_border WHAT DOES IT DO
- \param goes_to [in] WHAT DOES IT DO
- \param [in] ndims WHAT DOES IT DO
+ \param [in] is_near_border information about which borders an atom is near
+ \param goes_to [in] vector containing the ids the current atoms needs to be communicated to
+ \param [in] ndims the number of dimensions of the simulation
 */
 void gen_goes_to (const vector<int>& is_near_border, vector<int>& goes_to, const int ndims) {
 
