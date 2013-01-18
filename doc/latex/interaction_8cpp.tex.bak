@@ -3,24 +3,24 @@
 }
 
 
-Source code for interaction functions.
+Source code for interaction functions.  
 
 
 {\ttfamily \#include \char`\"{}interaction.\-h\char`\"{}}\\*
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
-\item
+\item 
 double \hyperlink{interaction_8cpp_a9df9b71177d4ec37340add3c77ebbcce}{slj} (\hyperlink{structAtom}{Atom} $\ast$atom1, \hyperlink{structAtom}{Atom} $\ast$atom2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
-\begin{DoxyCompactList}\small\item\em Shifted Lennard-\/\-Jones Force. \end{DoxyCompactList}\item
+\begin{DoxyCompactList}\small\item\em Shifted Lennard-\/\-Jones Force. \end{DoxyCompactList}\item 
 double \hyperlink{interaction_8cpp_a21a087784db18908294103a70136806f}{harmonic} (\hyperlink{structAtom}{Atom} $\ast$a1, \hyperlink{structAtom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
-\begin{DoxyCompactList}\small\item\em Computes force and energy of a Harmonic bond. \end{DoxyCompactList}\item
+\begin{DoxyCompactList}\small\item\em Computes force and energy of a Harmonic bond. \end{DoxyCompactList}\item 
 double \hyperlink{interaction_8cpp_af3536032a069492cf617a36ffecc9013}{fene} (\hyperlink{structAtom}{Atom} $\ast$a1, \hyperlink{structAtom}{Atom} $\ast$a2, const vector$<$ double $>$ $\ast$box, const vector$<$ double $>$ $\ast$args)
 \begin{DoxyCompactList}\small\item\em Computes force and energy of a Fene bond. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Source code for interaction functions. \begin{DoxyAuthor}{Authors}
-\{Nathan A. Mahynski, George Khoury\}
+\{Nathan A. Mahynski, George Khoury\} 
 \end{DoxyAuthor}
 
 
@@ -37,9 +37,9 @@ Source code for interaction functions. \begin{DoxyAuthor}{Authors}
 )}}\label{interaction_8cpp_af3536032a069492cf617a36ffecc9013}
 
 
-Computes force and energy of a Fene bond.
+Computes force and energy of a Fene bond. 
 
-Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potential is given by\-: \[ U(r) &=& -\frac{1}{2} k r_{0}^2 \text{ln} \left( 1- \left( \frac{r-\Delta}{r_0} \right)^2 \right) + U_{WCA} \] Where the short range repulsion is provided by the W\-C\-A potential\-: \[ U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta &=& 0 &r-\Delta \ge 2^{1/6}\sigma \]  is usually set such that \$ = (d\-\_\-i+d\-\_\-j)/2-\/1\$ where \$d\-\_\-i\$ is the diameter of species i, but the user may decide on other parameters.
+Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potential is given by\-: \[ U(r) &=& -\frac{1}{2} k r_{0}^2 \text{ln} \left( 1- \left( \frac{r-\Delta}{r_0} \right)^2 \right) + U_{WCA} \] Where the short range repulsion is provided by the W\-C\-A potential\-: \[ U_{WCA} &=& 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon & r < 2^{1/6}\sigma+\Delta &=& 0 &r-\Delta \ge 2^{1/6}\sigma \]  is usually set such that \$ = (d\-\_\-i+d\-\_\-j)/2-\/1\$ where \$d\-\_\-i\$ is the diameter of species i, but the user may decide on other parameters. 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline
@@ -62,9 +62,9 @@ Finitely Extensible Non-\/linear Elastic Bond (F\-E\-N\-E) The Fene bond potenti
 )}}\label{interaction_8cpp_a21a087784db18908294103a70136806f}
 
 
-Computes force and energy of a Harmonic bond.
+Computes force and energy of a Harmonic bond. 
 
-Harmonic Bond The Harmonic bond potential is given by\-: \[ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2 \]
+Harmonic Bond The Harmonic bond potential is given by\-: \[ U(r) = \frac{1}{2}k\left(r - r_{0}\right)^2 \] 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline
@@ -87,11 +87,11 @@ Harmonic Bond The Harmonic bond potential is given by\-: \[ U(r) = \frac{1}{2}k\
 )}}\label{interaction_8cpp_a9df9b71177d4ec37340add3c77ebbcce}
 
 
-Shifted Lennard-\/\-Jones Force.
+Shifted Lennard-\/\-Jones Force. 
 
 Computes force and energy of Shifted Lennard-\/\-Jones interaction.
 
-This is the same as standard L\-J if  = 0. This is generally useful for systems with large size asymmetries. The energy U(r) is returned\-: \[ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} &=& 0 & r - \Delta \ge r_{cut} \] Forces are added to atoms\-: \[ F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} &=& 0 & r - \Delta \ge r_{cut} \]
+This is the same as standard L\-J if  = 0. This is generally useful for systems with large size asymmetries. The energy U(r) is returned\-: \[ U(r) &=& 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} & r - \Delta < r_{cut} &=& 0 & r - \Delta \ge r_{cut} \] Forces are added to atoms\-: \[ F_i &=& -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} & r - \Delta < r_{cut} &=& 0 & r - \Delta \ge r_{cut} \] 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in,out}  & {\em $\ast$atom1} & Pointer to first atom \\
 \hline
