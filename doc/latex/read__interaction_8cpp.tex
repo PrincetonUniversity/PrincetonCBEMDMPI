@@ -13,7 +13,7 @@ Source code to read in interaction parameters from a parameter file.
 int \hyperlink{read__interaction_8cpp_aac5c3aa8175670e7097069c3ca90f45c}{read\-\_\-interactions} (const string filename, \hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Function to read in interaction parameters and store them into the system. \end{DoxyCompactList}\item 
 force\-\_\-energy\-\_\-ptr \hyperlink{read__interaction_8cpp_a9f294994aaed21e8691e71eb93b45c3f}{get\-\_\-fn} (const string name, vector$<$ double $>$ $\ast$args, double $\ast$r\-\_\-cut\-\_\-max)
-\begin{DoxyCompactList}\small\item\em Function to return a force\-\_\-energy\-\_\-ptr given a type of interaction name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Factory function to return a force\-\_\-energy\-\_\-ptr given a type of interaction name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -34,7 +34,7 @@ Source code to read in interaction parameters from a parameter file. \begin{Doxy
 )}}\label{read__interaction_8cpp_a9f294994aaed21e8691e71eb93b45c3f}
 
 
-Function to return a force\-\_\-energy\-\_\-ptr given a type of interaction name. 
+Factory function to return a force\-\_\-energy\-\_\-ptr given a type of interaction name. 
 
 Essentially a factory, given a name, return the force\-\_\-energy\-\_\-ptr associated with it. Also check the arguments that will be passed to it are in acceptable range. 
 \begin{DoxyParams}[1]{Parameters}

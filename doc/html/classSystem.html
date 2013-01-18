@@ -158,12 +158,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:a9247ae66b5bcb1614098184534173c7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a9247ae66b5bcb1614098184534173c7e">add_bond</a> (const int atom1, const int atom2, const int type)</td></tr>
 <tr class="separator:a9247ae66b5bcb1614098184534173c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18414259029791b3ee347eec3726f70a"><td class="memItemLeft" align="right" valign="top">vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a18414259029791b3ee347eec3726f70a">add_atoms</a> (const int <a class="el" href="classSystem.html#a92088c8b2f7416199537a7e7f3152aff">natoms</a>, <a class="el" href="structAtom.html">Atom</a> *new_atoms)</td></tr>
-<tr class="memdesc:a18414259029791b3ee347eec3726f70a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add atom(s) to the system.  <a href="#a18414259029791b3ee347eec3726f70a"></a><br/></td></tr>
+<tr class="memdesc:a18414259029791b3ee347eec3726f70a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add atom(s) to the system with an array of atoms.  <a href="#a18414259029791b3ee347eec3726f70a"></a><br/></td></tr>
 <tr class="separator:a18414259029791b3ee347eec3726f70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57b78a811d645a98999e32c9d1a3e520"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a57b78a811d645a98999e32c9d1a3e520">add_ghost_atoms</a> (const int <a class="el" href="classSystem.html#a92088c8b2f7416199537a7e7f3152aff">natoms</a>, <a class="el" href="structAtom.html">Atom</a> *new_atoms)</td></tr>
 <tr class="memdesc:a57b78a811d645a98999e32c9d1a3e520"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for.  <a href="#a57b78a811d645a98999e32c9d1a3e520"></a><br/></td></tr>
 <tr class="separator:a57b78a811d645a98999e32c9d1a3e520"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25243a7d9f3d58f6ce7c9d2699c0924e"><td class="memItemLeft" align="right" valign="top">vector&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a25243a7d9f3d58f6ce7c9d2699c0924e">add_atoms</a> (vector&lt; <a class="el" href="structAtom.html">Atom</a> &gt; *new_atoms)</td></tr>
+<tr class="memdesc:a25243a7d9f3d58f6ce7c9d2699c0924e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add atom(s) to the system with an vector of atoms.  <a href="#a25243a7d9f3d58f6ce7c9d2699c0924e"></a><br/></td></tr>
 <tr class="separator:a25243a7d9f3d58f6ce7c9d2699c0924e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32e588844500d6ae56f5a7ac9a65014f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a32e588844500d6ae56f5a7ac9a65014f">delete_atoms</a> (vector&lt; int &gt; indices)</td></tr>
 <tr class="memdesc:a32e588844500d6ae56f5a7ac9a65014f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop atoms with local indices from local storage.  <a href="#a32e588844500d6ae56f5a7ac9a65014f"></a><br/></td></tr>
@@ -177,23 +178,29 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memdesc:ad8a11a6960742e6265851f805f1e42ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report a copy of an atom. <br/></td></tr>
 <tr class="separator:ad8a11a6960742e6265851f805f1e42ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57997afb5d0cce89ab51e95d06d83972"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57997afb5d0cce89ab51e95d06d83972"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_rank</b> (int rank)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a57997afb5d0cce89ab51e95d06d83972">set_rank</a> (int <a class="el" href="classSystem.html#ac09723cae5531f826fb85b05b6ad5f2b">rank</a>)</td></tr>
+<tr class="memdesc:a57997afb5d0cce89ab51e95d06d83972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record the rank this system corresponds to. <br/></td></tr>
 <tr class="separator:a57997afb5d0cce89ab51e95d06d83972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac09723cae5531f826fb85b05b6ad5f2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac09723cae5531f826fb85b05b6ad5f2b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>rank</b> ()</td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ac09723cae5531f826fb85b05b6ad5f2b">rank</a> ()</td></tr>
+<tr class="memdesc:ac09723cae5531f826fb85b05b6ad5f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the rank of the system. <br/></td></tr>
 <tr class="separator:ac09723cae5531f826fb85b05b6ad5f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac33ec3abf09c300d1c080d36b206e966"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac33ec3abf09c300d1c080d36b206e966"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_num_atoms</b> (int size)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ac33ec3abf09c300d1c080d36b206e966">set_num_atoms</a> (int size)</td></tr>
+<tr class="memdesc:ac33ec3abf09c300d1c080d36b206e966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually set the number of atoms in the system. <br/></td></tr>
 <tr class="separator:ac33ec3abf09c300d1c080d36b206e966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c598e8d2ca9bae20c78ef21759f3a12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a3c598e8d2ca9bae20c78ef21759f3a12">clear_ghost_atoms</a> ()</td></tr>
+<tr class="memdesc:a3c598e8d2ca9bae20c78ef21759f3a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear ghost atoms from system.  <a href="#a3c598e8d2ca9bae20c78ef21759f3a12"></a><br/></td></tr>
 <tr class="separator:a3c598e8d2ca9bae20c78ef21759f3a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7c96922f7c7da037044657f7edfd3e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ab7c96922f7c7da037044657f7edfd3e5">gen_domain_info</a> ()</td></tr>
 <tr class="separator:ab7c96922f7c7da037044657f7edfd3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f661d16570bd451fa4b017c0eebdbb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f661d16570bd451fa4b017c0eebdbb8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_max_rcut</b> (const double max_rcut)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a8f661d16570bd451fa4b017c0eebdbb8">set_max_rcut</a> (const double <a class="el" href="classSystem.html#aebf96e8a2302ab4dd48cee8614f546c1">max_rcut</a>)</td></tr>
+<tr class="memdesc:a8f661d16570bd451fa4b017c0eebdbb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum cutoff radius of all interactions in the system. <br/></td></tr>
 <tr class="separator:a8f661d16570bd451fa4b017c0eebdbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebf96e8a2302ab4dd48cee8614f546c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebf96e8a2302ab4dd48cee8614f546c1"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>max_rcut</b> () const </td></tr>
+double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#aebf96e8a2302ab4dd48cee8614f546c1">max_rcut</a> () const </td></tr>
+<tr class="memdesc:aebf96e8a2302ab4dd48cee8614f546c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the max cutoff radius. <br/></td></tr>
 <tr class="separator:aebf96e8a2302ab4dd48cee8614f546c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6e5b77a96662d690db44852b80e7638"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6e5b77a96662d690db44852b80e7638"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ad6e5b77a96662d690db44852b80e7638">set_total_KE</a> (const double ke)</td></tr>
@@ -321,7 +328,7 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cla
       </table>
 </div><div class="memdoc">
 
-<p>Add atom(s) to the system. </p>
+<p>Add atom(s) to the system with an array of atoms. </p>
 <p>Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -346,6 +353,8 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Add atom(s) to the system with an vector of atoms. </p>
 <p>Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -575,6 +584,8 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Clear ghost atoms from system. </p>
 <p>Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for. </p>
 
 </div>
@@ -595,6 +606,12 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 <p>Pop atoms with local indices from local storage. </p>
 <p>Remove atoms from the system. Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index. Returns the number of atoms deleted. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">indices</td><td>Vector of local indices of atoms to delete from the system </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -621,7 +638,7 @@ vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a cla
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 8 2013 00:17:36 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 18 2013 00:07:15 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

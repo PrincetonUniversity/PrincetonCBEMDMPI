@@ -168,11 +168,11 @@ Functions</h2></td></tr>
 <p>Computes force and energy of a Fene bond. </p>
 <p>Finitely Extensible Non-linear Elastic Bond (FENE) The Fene bond potential is given by: </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ U(r) = -\frac{1}{2}kr_{0}^2\text{ln}\left(1-\left(\frac{r-\Delta}{r_0}\right)^2\right) + U_{WCA} \]" src="form_3.png"/>
+<img class="formulaDsp" alt="\[ U(r) &amp;=&amp; -\frac{1}{2} k r_{0}^2 \text{ln} \left( 1- \left( \frac{r-\Delta}{r_0} \right)^2 \right) + U_{WCA} \]" src="form_3.png"/>
 </p>
 <p> Where the short range repulsion is provided by the WCA potential: </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{eqnarray*} U_{WCA} &amp;=&amp; 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon &amp; r < 2^{1/6}\sigma+\Delta \\ &amp;=&amp; 0 &amp;r-\Delta \ge 2^{1/6}\sigma \end{eqnarray*}" src="form_4.png"/>
+<img class="formulaDsp" alt="\[ U_{WCA} &amp;=&amp; 4\epsilon \left( \left( \frac{\sigma}{r-\Delta} \right)^{12} - \left( \frac{\sigma}{r-\Delta} \right)^6 \right) + \epsilon &amp; r < 2^{1/6}\sigma+\Delta &amp;=&amp; 0 &amp;r-\Delta \ge 2^{1/6}\sigma \]" src="form_4.png"/>
 </p>
 <p>  is usually set such that $ = (d_i+d_j)/2-1$ where $d_i$ is the diameter of species i, but the user may decide on other parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -280,11 +280,11 @@ Functions</h2></td></tr>
 <p>Computes force and energy of Shifted Lennard-Jones interaction.</p>
 <p>This is the same as standard LJ if  = 0. This is generally useful for systems with large size asymmetries. The energy U(r) is returned: </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{eqnarray*} U(r) &amp;=&amp; 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} &amp; r - \Delta < r_{cut} \\ &amp;=&amp; 0 &amp; r - \Delta \ge r_{cut} \end{eqnarray*}" src="form_0.png"/>
+<img class="formulaDsp" alt="\[ U(r) &amp;=&amp; 4\epsilon\left(\left(\frac{\sigma}{r-\Delta}\right)^{12} - \left(\frac{\sigma}{r-\Delta}\right)^{6}\right) + U_{shift} &amp; r - \Delta < r_{cut} &amp;=&amp; 0 &amp; r - \Delta \ge r_{cut} \]" src="form_0.png"/>
 </p>
 <p> Forces are added to atoms: </p>
 <p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{eqnarray*} F_i &amp;=&amp; -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} &amp; r - \Delta < r_{cut} \\ &amp;=&amp; 0 &amp; r - \Delta \ge r_{cut} \end{eqnarray*}" src="form_1.png"/>
+<img class="formulaDsp" alt="\[ F_i &amp;=&amp; -\frac{\del U}{\del r}\frac{\del r}{\del x_i} = -\frac{\del U}{\del r}\frac{x_i}{r} &amp; r - \Delta < r_{cut} &amp;=&amp; 0 &amp; r - \Delta \ge r_{cut} \]" src="form_1.png"/>
 </p>
  <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -301,7 +301,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 8 2013 00:17:35 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 18 2013 00:07:14 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

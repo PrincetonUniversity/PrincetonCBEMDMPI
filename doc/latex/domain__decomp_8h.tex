@@ -29,9 +29,6 @@ int \hyperlink{domain__decomp_8h_a6089fbe2af876c7807125a3ca60ec325}{gen\-\_\-sen
 \begin{DoxyCompactList}\small\item\em Generates the lists of molecules that need to be passed to other processors. \end{DoxyCompactList}\item 
 int \hyperlink{domain__decomp_8h_a91bec4369dfa716b9da0f3768b42f0b6}{gen\-\_\-send\-\_\-table} (\hyperlink{classSystem}{System} $\ast$sys)
 \begin{DoxyCompactList}\small\item\em Given the rank, generates the list of its neighbours. \end{DoxyCompactList}\item 
-\hypertarget{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}{double \hyperlink{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}{gen\-\_\-skin\-\_\-cutoff} (...)}\label{domain__decomp_8h_a310ac8170d9320c54906bed20e391478}
-
-\begin{DoxyCompactList}\small\item\em Generates the skin cutoff distance based on the largest cutoff in the system. \end{DoxyCompactList}\item 
 void \hyperlink{domain__decomp_8h_a273ef862952335fba02a34fbf164180c}{gen\-\_\-goes\-\_\-to} (const vector$<$ int $>$ \&is\-\_\-near\-\_\-border, vector$<$ int $>$ \&goes\-\_\-to, const int ndims)
 \begin{DoxyCompactList}\small\item\em Generates the list of neighbours a particle should be sent to based on the borders its near. \end{DoxyCompactList}\item 
 int \hyperlink{domain__decomp_8h_aee4072f52ae76435a626b818498e3e27}{power} (int base, int exponent)
@@ -94,11 +91,11 @@ Generates the list of neighbours a particle should be sent to based on the borde
 
 Generates the list of neighbours a particle should be sent to based on the borders its near 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em is\-\_\-near\-\_\-border} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em is\-\_\-near\-\_\-border} & information about which borders an atom is near \\
 \hline
- & {\em goes\-\_\-to} & \mbox{[}in\mbox{]} W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+ & {\em goes\-\_\-to} & \mbox{[}in\mbox{]} vector containing the ids the current atoms needs to be communicated to \\
 \hline
-\mbox{\tt in}  & {\em ndims} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em ndims} & the number of dimensions of the simulation \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_a6089fbe2af876c7807125a3ca60ec325}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-send\-\_\-lists@{gen\-\_\-send\-\_\-lists}}
@@ -114,11 +111,7 @@ Generates the lists of molecules that need to be passed to other processors.
 
 Generates the lists of molecules that need to be passed to other processors 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in,out}  & {\em sys} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
-\hline
-\mbox{\tt in}  & {\em rank} & rank of processor \\
-\hline
-\mbox{\tt in}  & {\em skin\-\_\-cutoff} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in,out}  & {\em sys} & \hyperlink{classSystem}{System} to be evaluated \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_a91bec4369dfa716b9da0f3768b42f0b6}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-send\-\_\-table@{gen\-\_\-send\-\_\-table}}
@@ -134,7 +127,7 @@ Given the rank, generates the list of its neighbours.
 
 Given the rank, generates the list of its neighbours Assumes 3\-D system, for different number of dimensions need to make this a recursive function 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em sys} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in,out}  & {\em sys} & \hyperlink{classSystem}{System} to be evaluated \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_a5dff21a3c71bc2b5822508e41fdcf697}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!gen\-\_\-sets@{gen\-\_\-sets}}
@@ -155,13 +148,15 @@ Given the box size and factors of nprocs, checks which combination generates the
 
 Given the box size and factors of nprocs, this recursive function checks which combination generates the most cubic domains 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em factors} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em factors} & list of prime factors to be used \\
 \hline
-\mbox{\tt in}  & {\em box} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em box} & dimensions of the simulation box \\
 \hline
-\mbox{\tt in}  & {\em level} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em level} & the depth of the recursion \\
 \hline
-\mbox{\tt in}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt out}  & {\em final\-\_\-breakup} & the number of divisions of each dimension \\
+\hline
+\mbox{\tt in}  & {\em add} & the number of times to be spent at this level of recursion \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_ac1a67f8956fb748c46d0d9772a1f6d32}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!get\-\_\-processor@{get\-\_\-processor}}
@@ -198,11 +193,11 @@ Given a domain\-\_\-id specifies the x, y, z ids of the domain.
 
 Given a domain\-\_\-id specifies the x, y, z ids of the domain 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em domain\-\_\-id} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em domain\-\_\-id} & domain identifier, same as the rank of the processor handling the domain \\
 \hline
-\mbox{\tt in}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em final\-\_\-breakup} & the number of divisions of each dimension \\
 \hline
-\mbox{\tt in}  & {\em xyz\-\_\-id} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em xyz\-\_\-id} & how many domains away from the lower limit of each dimension the current domain is \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_adb16a776f045b9fd68b06a31ed29c035}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!init\-\_\-domain\-\_\-decomp@{init\-\_\-domain\-\_\-decomp}}
@@ -221,13 +216,13 @@ Decomposes the box into domains for each processor to handle.
 
 Decomposes the box into domains for each processor to handle 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em box} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em box} & dimensions of the simulation box \\
 \hline
 \mbox{\tt in}  & {\em nprocs} & number of processors \\
 \hline
-\mbox{\tt in}  & {\em widths} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt in}  & {\em widths} & the dimensions of each domain \\
 \hline
-\mbox{\tt out}  & {\em final\-\_\-breakup} & W\-H\-A\-T D\-O\-E\-S I\-T D\-O \\
+\mbox{\tt out}  & {\em final\-\_\-breakup} & the number of divisions of each dimension \\
 \hline
 \end{DoxyParams}
 \hypertarget{domain__decomp_8h_aee4072f52ae76435a626b818498e3e27}{\index{domain\-\_\-decomp.\-h@{domain\-\_\-decomp.\-h}!power@{power}}

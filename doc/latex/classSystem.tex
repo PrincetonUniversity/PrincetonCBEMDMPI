@@ -54,11 +54,11 @@ string \hyperlink{classSystem_a8fa1e042039932552434fbba4b0c2a6d}{bond\-\_\-name}
 void \hyperlink{classSystem_a9247ae66b5bcb1614098184534173c7e}{add\-\_\-bond} (const int atom1, const int atom2, const int type)
 \item 
 vector$<$ int $>$ \hyperlink{classSystem_a18414259029791b3ee347eec3726f70a}{add\-\_\-atoms} (const int \hyperlink{classSystem_a92088c8b2f7416199537a7e7f3152aff}{natoms}, \hyperlink{structAtom}{Atom} $\ast$new\-\_\-atoms)
-\begin{DoxyCompactList}\small\item\em Add atom(s) to the system. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Add atom(s) to the system with an array of atoms. \end{DoxyCompactList}\item 
 void \hyperlink{classSystem_a57b78a811d645a98999e32c9d1a3e520}{add\-\_\-ghost\-\_\-atoms} (const int \hyperlink{classSystem_a92088c8b2f7416199537a7e7f3152aff}{natoms}, \hyperlink{structAtom}{Atom} $\ast$new\-\_\-atoms)
 \begin{DoxyCompactList}\small\item\em Add ghost atom(s) to the system (does not update the number of atoms the processor is responsible for. \end{DoxyCompactList}\item 
 vector$<$ int $>$ \hyperlink{classSystem_a25243a7d9f3d58f6ce7c9d2699c0924e}{add\-\_\-atoms} (vector$<$ \hyperlink{structAtom}{Atom} $>$ $\ast$new\-\_\-atoms)
-\item 
+\begin{DoxyCompactList}\small\item\em Add atom(s) to the system with an vector of atoms. \end{DoxyCompactList}\item 
 int \hyperlink{classSystem_a32e588844500d6ae56f5a7ac9a65014f}{delete\-\_\-atoms} (vector$<$ int $>$ indices)
 \begin{DoxyCompactList}\small\item\em Pop atoms with local indices from local storage. \end{DoxyCompactList}\item 
 \hypertarget{classSystem_acc3e9636aa22693652559b987b71b279}{\hyperlink{structAtom}{Atom} $\ast$ \hyperlink{classSystem_acc3e9636aa22693652559b987b71b279}{get\-\_\-atom} (int index)}\label{classSystem_acc3e9636aa22693652559b987b71b279}
@@ -67,25 +67,25 @@ int \hyperlink{classSystem_a32e588844500d6ae56f5a7ac9a65014f}{delete\-\_\-atoms}
 \hypertarget{classSystem_ad8a11a6960742e6265851f805f1e42ab}{\hyperlink{structAtom}{Atom} \hyperlink{classSystem_ad8a11a6960742e6265851f805f1e42ab}{copy\-\_\-atom} (int index)}\label{classSystem_ad8a11a6960742e6265851f805f1e42ab}
 
 \begin{DoxyCompactList}\small\item\em Report a copy of an atom. \end{DoxyCompactList}\item 
-\hypertarget{classSystem_a57997afb5d0cce89ab51e95d06d83972}{void {\bfseries set\-\_\-rank} (int rank)}\label{classSystem_a57997afb5d0cce89ab51e95d06d83972}
+\hypertarget{classSystem_a57997afb5d0cce89ab51e95d06d83972}{void \hyperlink{classSystem_a57997afb5d0cce89ab51e95d06d83972}{set\-\_\-rank} (int \hyperlink{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}{rank})}\label{classSystem_a57997afb5d0cce89ab51e95d06d83972}
 
-\item 
-\hypertarget{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}{int {\bfseries rank} ()}\label{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}
+\begin{DoxyCompactList}\small\item\em Record the rank this system corresponds to. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}{int \hyperlink{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}{rank} ()}\label{classSystem_ac09723cae5531f826fb85b05b6ad5f2b}
 
-\item 
-\hypertarget{classSystem_ac33ec3abf09c300d1c080d36b206e966}{void {\bfseries set\-\_\-num\-\_\-atoms} (int size)}\label{classSystem_ac33ec3abf09c300d1c080d36b206e966}
+\begin{DoxyCompactList}\small\item\em Return the rank of the system. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_ac33ec3abf09c300d1c080d36b206e966}{void \hyperlink{classSystem_ac33ec3abf09c300d1c080d36b206e966}{set\-\_\-num\-\_\-atoms} (int size)}\label{classSystem_ac33ec3abf09c300d1c080d36b206e966}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Manually set the number of atoms in the system. \end{DoxyCompactList}\item 
 void \hyperlink{classSystem_a3c598e8d2ca9bae20c78ef21759f3a12}{clear\-\_\-ghost\-\_\-atoms} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Clear ghost atoms from system. \end{DoxyCompactList}\item 
 int \hyperlink{classSystem_ab7c96922f7c7da037044657f7edfd3e5}{gen\-\_\-domain\-\_\-info} ()
 \item 
-\hypertarget{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}{void {\bfseries set\-\_\-max\-\_\-rcut} (const double max\-\_\-rcut)}\label{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}
+\hypertarget{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}{void \hyperlink{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}{set\-\_\-max\-\_\-rcut} (const double \hyperlink{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}{max\-\_\-rcut})}\label{classSystem_a8f661d16570bd451fa4b017c0eebdbb8}
 
-\item 
-\hypertarget{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}{double {\bfseries max\-\_\-rcut} () const }\label{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}
+\begin{DoxyCompactList}\small\item\em Set the maximum cutoff radius of all interactions in the system. \end{DoxyCompactList}\item 
+\hypertarget{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}{double \hyperlink{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}{max\-\_\-rcut} () const }\label{classSystem_aebf96e8a2302ab4dd48cee8614f546c1}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Return the max cutoff radius. \end{DoxyCompactList}\item 
 \hypertarget{classSystem_ad6e5b77a96662d690db44852b80e7638}{void \hyperlink{classSystem_ad6e5b77a96662d690db44852b80e7638}{set\-\_\-total\-\_\-\-K\-E} (const double ke)}\label{classSystem_ad6e5b77a96662d690db44852b80e7638}
 
 \begin{DoxyCompactList}\small\item\em Set the global kinetic energy record. \end{DoxyCompactList}\item 
@@ -185,7 +185,7 @@ Returns +1 if, atom\-\_\-name already exists in the system and could not be inde
 )}}\label{classSystem_a18414259029791b3ee347eec3726f70a}
 
 
-Add atom(s) to the system. 
+Add atom(s) to the system with an array of atoms. 
 
 Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. 
 \begin{DoxyParams}[1]{Parameters}
@@ -201,6 +201,10 @@ Attempt to push an atom(s) into the system. This assigns the map automatically t
 \item[{vector$<$ {\bf Atom} $>$ $\ast$}]{new\-\_\-atoms}
 \end{DoxyParamCaption}
 )}}\label{classSystem_a25243a7d9f3d58f6ce7c9d2699c0924e}
+
+
+Add atom(s) to the system with an vector of atoms. 
+
 Attempt to push an atom(s) into the system. This assigns the map automatically to link the atoms global index to the local storage location. This reallocates the internal vector that stores the atoms; if a memory error occurs during such reallocation, an error is given and the system exits. 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em natoms} & Length of the array of atoms to add to the system. \\
@@ -344,6 +348,10 @@ Returns the internal index associated with this bond name; returns -\/1 if not f
 {}
 \end{DoxyParamCaption}
 )}}\label{classSystem_a3c598e8d2ca9bae20c78ef21759f3a12}
+
+
+Clear ghost atoms from system. 
+
 Clears the atoms communicated from neighbouring domains from the list of atoms stored in the system leaving only the atoms the system is responsible for. \hypertarget{classSystem_a32e588844500d6ae56f5a7ac9a65014f}{\index{System@{System}!delete\-\_\-atoms@{delete\-\_\-atoms}}
 \index{delete\-\_\-atoms@{delete\-\_\-atoms}!System@{System}}
 \subsubsection[{delete\-\_\-atoms}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::delete\-\_\-atoms (
@@ -355,7 +363,12 @@ Clears the atoms communicated from neighbouring domains from the list of atoms s
 
 Pop atoms with local indices from local storage. 
 
-Remove atoms from the system. Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index. Returns the number of atoms deleted. \hypertarget{classSystem_ab7c96922f7c7da037044657f7edfd3e5}{\index{System@{System}!gen\-\_\-domain\-\_\-info@{gen\-\_\-domain\-\_\-info}}
+Remove atoms from the system. Needs to sort indices because erase() operation reorders things; also, because of this it is fastest to pop from lowest to highest index. Returns the number of atoms deleted. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em indices} & Vector of local indices of atoms to delete from the system \\
+\hline
+\end{DoxyParams}
+\hypertarget{classSystem_ab7c96922f7c7da037044657f7edfd3e5}{\index{System@{System}!gen\-\_\-domain\-\_\-info@{gen\-\_\-domain\-\_\-info}}
 \index{gen\-\_\-domain\-\_\-info@{gen\-\_\-domain\-\_\-info}!System@{System}}
 \subsubsection[{gen\-\_\-domain\-\_\-info}]{\setlength{\rightskip}{0pt plus 5cm}int System\-::gen\-\_\-domain\-\_\-info (
 \begin{DoxyParamCaption}

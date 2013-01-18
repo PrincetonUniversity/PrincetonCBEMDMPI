@@ -30,26 +30,26 @@
 \contentsline {subsubsection}{\numberline {4.7.2.3}add\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{14}{subsubsection.4.7.2.3}
 \contentsline {subsubsection}{\numberline {4.7.2.4}add\discretionary {-}{}{}\_\discretionary {-}{}{}bond}{14}{subsubsection.4.7.2.4}
 \contentsline {subsubsection}{\numberline {4.7.2.5}add\discretionary {-}{}{}\_\discretionary {-}{}{}bond\discretionary {-}{}{}\_\discretionary {-}{}{}type}{14}{subsubsection.4.7.2.5}
-\contentsline {subsubsection}{\numberline {4.7.2.6}add\discretionary {-}{}{}\_\discretionary {-}{}{}ghost\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{14}{subsubsection.4.7.2.6}
+\contentsline {subsubsection}{\numberline {4.7.2.6}add\discretionary {-}{}{}\_\discretionary {-}{}{}ghost\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{15}{subsubsection.4.7.2.6}
 \contentsline {subsubsection}{\numberline {4.7.2.7}atom\discretionary {-}{}{}\_\discretionary {-}{}{}name}{15}{subsubsection.4.7.2.7}
 \contentsline {subsubsection}{\numberline {4.7.2.8}atom\discretionary {-}{}{}\_\discretionary {-}{}{}type}{15}{subsubsection.4.7.2.8}
 \contentsline {subsubsection}{\numberline {4.7.2.9}bond\discretionary {-}{}{}\_\discretionary {-}{}{}name}{15}{subsubsection.4.7.2.9}
 \contentsline {subsubsection}{\numberline {4.7.2.10}bond\discretionary {-}{}{}\_\discretionary {-}{}{}type}{15}{subsubsection.4.7.2.10}
-\contentsline {subsubsection}{\numberline {4.7.2.11}clear\discretionary {-}{}{}\_\discretionary {-}{}{}ghost\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{15}{subsubsection.4.7.2.11}
-\contentsline {subsubsection}{\numberline {4.7.2.12}delete\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{15}{subsubsection.4.7.2.12}
+\contentsline {subsubsection}{\numberline {4.7.2.11}clear\discretionary {-}{}{}\_\discretionary {-}{}{}ghost\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{16}{subsubsection.4.7.2.11}
+\contentsline {subsubsection}{\numberline {4.7.2.12}delete\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{16}{subsubsection.4.7.2.12}
 \contentsline {subsubsection}{\numberline {4.7.2.13}gen\discretionary {-}{}{}\_\discretionary {-}{}{}domain\discretionary {-}{}{}\_\discretionary {-}{}{}info}{16}{subsubsection.4.7.2.13}
 \contentsline {section}{\numberline {4.8}Verlet Class Reference}{16}{section.4.8}
 \contentsline {subsection}{\numberline {4.8.1}Detailed Description}{16}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Constructor \& Destructor Documentation}{16}{subsection.4.8.2}
-\contentsline {subsubsection}{\numberline {4.8.2.1}Verlet}{16}{subsubsection.4.8.2.1}
-\contentsline {subsection}{\numberline {4.8.3}Member Function Documentation}{16}{subsection.4.8.3}
-\contentsline {subsubsection}{\numberline {4.8.3.1}step}{16}{subsubsection.4.8.3.1}
+\contentsline {subsection}{\numberline {4.8.2}Constructor \& Destructor Documentation}{17}{subsection.4.8.2}
+\contentsline {subsubsection}{\numberline {4.8.2.1}Verlet}{17}{subsubsection.4.8.2.1}
+\contentsline {subsection}{\numberline {4.8.3}Member Function Documentation}{17}{subsection.4.8.3}
+\contentsline {subsubsection}{\numberline {4.8.3.1}step}{17}{subsubsection.4.8.3.1}
 \contentsline {chapter}{\numberline {5}File Documentation}{19}{chapter.5}
 \contentsline {section}{\numberline {5.1}andersen.\discretionary {-}{}{}cpp File Reference}{19}{section.5.1}
 \contentsline {subsection}{\numberline {5.1.1}Detailed Description}{19}{subsection.5.1.1}
 \contentsline {subsection}{\numberline {5.1.2}Function Documentation}{19}{subsection.5.1.2}
 \contentsline {subsubsection}{\numberline {5.1.2.1}main}{19}{subsubsection.5.1.2.1}
-\contentsline {section}{\numberline {5.2}atom.\discretionary {-}{}{}cpp File Reference}{19}{section.5.2}
+\contentsline {section}{\numberline {5.2}atom.\discretionary {-}{}{}cpp File Reference}{20}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Detailed Description}{20}{subsection.5.2.1}
 \contentsline {subsection}{\numberline {5.2.2}Function Documentation}{20}{subsection.5.2.2}
 \contentsline {subsubsection}{\numberline {5.2.2.1}create\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}M\discretionary {-}{}{}P\discretionary {-}{}{}I\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}A\discretionary {-}{}{}T\discretionary {-}{}{}O\discretionary {-}{}{}M}{20}{subsubsection.5.2.2.1}
@@ -60,7 +60,7 @@
 \contentsline {subsubsection}{\numberline {5.3.2.1}create\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}M\discretionary {-}{}{}P\discretionary {-}{}{}I\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}A\discretionary {-}{}{}T\discretionary {-}{}{}O\discretionary {-}{}{}M}{21}{subsubsection.5.3.2.1}
 \contentsline {subsubsection}{\numberline {5.3.2.2}delete\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}M\discretionary {-}{}{}P\discretionary {-}{}{}I\discretionary {-}{}{}\_\discretionary {-}{}{}atom}{21}{subsubsection.5.3.2.2}
 \contentsline {section}{\numberline {5.4}C\discretionary {-}{}{}B\discretionary {-}{}{}E\discretionary {-}{}{}M\discretionary {-}{}{}D.\discretionary {-}{}{}h File Reference}{21}{section.5.4}
-\contentsline {subsection}{\numberline {5.4.1}Detailed Description}{21}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.1}Detailed Description}{22}{subsection.5.4.1}
 \contentsline {section}{\numberline {5.5}common.\discretionary {-}{}{}h File Reference}{22}{section.5.5}
 \contentsline {subsection}{\numberline {5.5.1}Detailed Description}{22}{subsection.5.5.1}
 \contentsline {section}{\numberline {5.6}domain\discretionary {-}{}{}\_\discretionary {-}{}{}decomp.\discretionary {-}{}{}cpp File Reference}{22}{section.5.6}
@@ -69,36 +69,35 @@
 \contentsline {subsubsection}{\numberline {5.6.2.1}communicate\discretionary {-}{}{}\_\discretionary {-}{}{}skin\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{23}{subsubsection.5.6.2.1}
 \contentsline {subsubsection}{\numberline {5.6.2.2}factorize}{23}{subsubsection.5.6.2.2}
 \contentsline {subsubsection}{\numberline {5.6.2.3}gen\discretionary {-}{}{}\_\discretionary {-}{}{}goes\discretionary {-}{}{}\_\discretionary {-}{}{}to}{23}{subsubsection.5.6.2.3}
-\contentsline {subsubsection}{\numberline {5.6.2.4}gen\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}\_\discretionary {-}{}{}lists}{23}{subsubsection.5.6.2.4}
+\contentsline {subsubsection}{\numberline {5.6.2.4}gen\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}\_\discretionary {-}{}{}lists}{24}{subsubsection.5.6.2.4}
 \contentsline {subsubsection}{\numberline {5.6.2.5}gen\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}\_\discretionary {-}{}{}table}{24}{subsubsection.5.6.2.5}
 \contentsline {subsubsection}{\numberline {5.6.2.6}gen\discretionary {-}{}{}\_\discretionary {-}{}{}sets}{24}{subsubsection.5.6.2.6}
-\contentsline {subsubsection}{\numberline {5.6.2.7}gen\discretionary {-}{}{}\_\discretionary {-}{}{}skin\discretionary {-}{}{}\_\discretionary {-}{}{}cutoff}{24}{subsubsection.5.6.2.7}
-\contentsline {subsubsection}{\numberline {5.6.2.8}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{24}{subsubsection.5.6.2.8}
-\contentsline {subsubsection}{\numberline {5.6.2.9}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{24}{subsubsection.5.6.2.9}
-\contentsline {subsubsection}{\numberline {5.6.2.10}get\discretionary {-}{}{}\_\discretionary {-}{}{}xyz\discretionary {-}{}{}\_\discretionary {-}{}{}ids}{24}{subsubsection.5.6.2.10}
-\contentsline {subsubsection}{\numberline {5.6.2.11}init\discretionary {-}{}{}\_\discretionary {-}{}{}domain\discretionary {-}{}{}\_\discretionary {-}{}{}decomp}{25}{subsubsection.5.6.2.11}
-\contentsline {subsubsection}{\numberline {5.6.2.12}power}{25}{subsubsection.5.6.2.12}
+\contentsline {subsubsection}{\numberline {5.6.2.7}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{24}{subsubsection.5.6.2.7}
+\contentsline {subsubsection}{\numberline {5.6.2.8}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{25}{subsubsection.5.6.2.8}
+\contentsline {subsubsection}{\numberline {5.6.2.9}get\discretionary {-}{}{}\_\discretionary {-}{}{}xyz\discretionary {-}{}{}\_\discretionary {-}{}{}ids}{25}{subsubsection.5.6.2.9}
+\contentsline {subsubsection}{\numberline {5.6.2.10}init\discretionary {-}{}{}\_\discretionary {-}{}{}domain\discretionary {-}{}{}\_\discretionary {-}{}{}decomp}{25}{subsubsection.5.6.2.10}
+\contentsline {subsubsection}{\numberline {5.6.2.11}power}{25}{subsubsection.5.6.2.11}
 \contentsline {section}{\numberline {5.7}domain\discretionary {-}{}{}\_\discretionary {-}{}{}decomp.\discretionary {-}{}{}h File Reference}{25}{section.5.7}
 \contentsline {subsection}{\numberline {5.7.1}Detailed Description}{26}{subsection.5.7.1}
 \contentsline {subsection}{\numberline {5.7.2}Function Documentation}{26}{subsection.5.7.2}
 \contentsline {subsubsection}{\numberline {5.7.2.1}communicate\discretionary {-}{}{}\_\discretionary {-}{}{}skin\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{26}{subsubsection.5.7.2.1}
-\contentsline {subsubsection}{\numberline {5.7.2.2}factorize}{26}{subsubsection.5.7.2.2}
-\contentsline {subsubsection}{\numberline {5.7.2.3}gen\discretionary {-}{}{}\_\discretionary {-}{}{}goes\discretionary {-}{}{}\_\discretionary {-}{}{}to}{26}{subsubsection.5.7.2.3}
+\contentsline {subsubsection}{\numberline {5.7.2.2}factorize}{27}{subsubsection.5.7.2.2}
+\contentsline {subsubsection}{\numberline {5.7.2.3}gen\discretionary {-}{}{}\_\discretionary {-}{}{}goes\discretionary {-}{}{}\_\discretionary {-}{}{}to}{27}{subsubsection.5.7.2.3}
 \contentsline {subsubsection}{\numberline {5.7.2.4}gen\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}\_\discretionary {-}{}{}lists}{27}{subsubsection.5.7.2.4}
 \contentsline {subsubsection}{\numberline {5.7.2.5}gen\discretionary {-}{}{}\_\discretionary {-}{}{}send\discretionary {-}{}{}\_\discretionary {-}{}{}table}{27}{subsubsection.5.7.2.5}
 \contentsline {subsubsection}{\numberline {5.7.2.6}gen\discretionary {-}{}{}\_\discretionary {-}{}{}sets}{27}{subsubsection.5.7.2.6}
-\contentsline {subsubsection}{\numberline {5.7.2.7}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{27}{subsubsection.5.7.2.7}
+\contentsline {subsubsection}{\numberline {5.7.2.7}get\discretionary {-}{}{}\_\discretionary {-}{}{}processor}{28}{subsubsection.5.7.2.7}
 \contentsline {subsubsection}{\numberline {5.7.2.8}get\discretionary {-}{}{}\_\discretionary {-}{}{}xyz\discretionary {-}{}{}\_\discretionary {-}{}{}ids}{28}{subsubsection.5.7.2.8}
 \contentsline {subsubsection}{\numberline {5.7.2.9}init\discretionary {-}{}{}\_\discretionary {-}{}{}domain\discretionary {-}{}{}\_\discretionary {-}{}{}decomp}{28}{subsubsection.5.7.2.9}
 \contentsline {subsubsection}{\numberline {5.7.2.10}power}{28}{subsubsection.5.7.2.10}
 \contentsline {section}{\numberline {5.8}force\discretionary {-}{}{}\_\discretionary {-}{}{}calc.\discretionary {-}{}{}cpp File Reference}{28}{section.5.8}
-\contentsline {subsection}{\numberline {5.8.1}Detailed Description}{28}{subsection.5.8.1}
+\contentsline {subsection}{\numberline {5.8.1}Detailed Description}{29}{subsection.5.8.1}
 \contentsline {subsection}{\numberline {5.8.2}Function Documentation}{29}{subsection.5.8.2}
 \contentsline {subsubsection}{\numberline {5.8.2.1}force\discretionary {-}{}{}\_\discretionary {-}{}{}calc}{29}{subsubsection.5.8.2.1}
 \contentsline {subsubsection}{\numberline {5.8.2.2}send\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{29}{subsubsection.5.8.2.2}
 \contentsline {section}{\numberline {5.9}force\discretionary {-}{}{}\_\discretionary {-}{}{}calc.\discretionary {-}{}{}h File Reference}{29}{section.5.9}
-\contentsline {subsection}{\numberline {5.9.1}Detailed Description}{29}{subsection.5.9.1}
-\contentsline {subsection}{\numberline {5.9.2}Function Documentation}{29}{subsection.5.9.2}
+\contentsline {subsection}{\numberline {5.9.1}Detailed Description}{30}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}Function Documentation}{30}{subsection.5.9.2}
 \contentsline {subsubsection}{\numberline {5.9.2.1}force\discretionary {-}{}{}\_\discretionary {-}{}{}calc}{30}{subsubsection.5.9.2.1}
 \contentsline {subsubsection}{\numberline {5.9.2.2}send\discretionary {-}{}{}\_\discretionary {-}{}{}atoms}{30}{subsubsection.5.9.2.2}
 \contentsline {section}{\numberline {5.10}global.\discretionary {-}{}{}h File Reference}{30}{section.5.10}
@@ -107,7 +106,7 @@
 \contentsline {subsection}{\numberline {5.11.1}Detailed Description}{31}{subsection.5.11.1}
 \contentsline {subsection}{\numberline {5.11.2}Function Documentation}{31}{subsection.5.11.2}
 \contentsline {subsubsection}{\numberline {5.11.2.1}abort\discretionary {-}{}{}\_\discretionary {-}{}{}mpi}{31}{subsubsection.5.11.2.1}
-\contentsline {subsubsection}{\numberline {5.11.2.2}end\discretionary {-}{}{}\_\discretionary {-}{}{}mpi}{31}{subsubsection.5.11.2.2}
+\contentsline {subsubsection}{\numberline {5.11.2.2}end\discretionary {-}{}{}\_\discretionary {-}{}{}mpi}{32}{subsubsection.5.11.2.2}
 \contentsline {subsubsection}{\numberline {5.11.2.3}initialize\discretionary {-}{}{}\_\discretionary {-}{}{}from\discretionary {-}{}{}\_\discretionary {-}{}{}files}{32}{subsubsection.5.11.2.3}
 \contentsline {subsubsection}{\numberline {5.11.2.4}start\discretionary {-}{}{}\_\discretionary {-}{}{}mpi}{32}{subsubsection.5.11.2.4}
 \contentsline {section}{\numberline {5.12}integrator.\discretionary {-}{}{}cpp File Reference}{32}{section.5.12}
@@ -118,7 +117,7 @@
 \contentsline {subsection}{\numberline {5.13.1}Detailed Description}{33}{subsection.5.13.1}
 \contentsline {subsection}{\numberline {5.13.2}Function Documentation}{33}{subsection.5.13.2}
 \contentsline {subsubsection}{\numberline {5.13.2.1}run}{33}{subsubsection.5.13.2.1}
-\contentsline {section}{\numberline {5.14}interaction.\discretionary {-}{}{}cpp File Reference}{33}{section.5.14}
+\contentsline {section}{\numberline {5.14}interaction.\discretionary {-}{}{}cpp File Reference}{34}{section.5.14}
 \contentsline {subsection}{\numberline {5.14.1}Detailed Description}{34}{subsection.5.14.1}
 \contentsline {subsection}{\numberline {5.14.2}Function Documentation}{34}{subsection.5.14.2}
 \contentsline {subsubsection}{\numberline {5.14.2.1}fene}{34}{subsubsection.5.14.2.1}

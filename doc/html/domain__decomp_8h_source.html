@@ -105,17 +105,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">int</span> <a class="code" href="domain__decomp_8cpp.html#a91bec4369dfa716b9da0f3768b42f0b6" title="Given the rank, generates the list of its neighbours.">gen_send_table</a> (<a class="code" href="classSystem.html">System</a> *sys);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">double</span> <a class="code" href="domain__decomp_8cpp.html#aaa04f749b41eddfe12bc9dd0f869a31c">gen_skin_cutoff</a> ( ... <span class="comment">/*Need a list of all the cutoffs for the different interactions*/</span> );</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="domain__decomp_8cpp.html#a273ef862952335fba02a34fbf164180c" title="Generates the list of neighbours a particle should be sent to based on the borders its near...">gen_goes_to</a> (<span class="keyword">const</span> vector&lt;int&gt;&amp; is_near_border, vector&lt;int&gt;&amp; goes_to, <span class="keyword">const</span> <span class="keywordtype">int</span> ndims);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">void</span> <a class="code" href="domain__decomp_8cpp.html#a273ef862952335fba02a34fbf164180c" title="Generates the list of neighbours a particle should be sent to based on the borders its near...">gen_goes_to</a> (<span class="keyword">const</span> vector&lt;int&gt;&amp; is_near_border, vector&lt;int&gt;&amp; goes_to, <span class="keyword">const</span> <span class="keywordtype">int</span> ndims);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keywordtype">int</span> <a class="code" href="domain__decomp_8cpp.html#aee4072f52ae76435a626b818498e3e27" title="Computes the exponentiation of an integer by an integral power.">power</a> (<span class="keywordtype">int</span> base, <span class="keywordtype">int</span> exponent);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">int</span> <a class="code" href="domain__decomp_8cpp.html#aee4072f52ae76435a626b818498e3e27" title="Computes the exponentiation of an integer by an integral power.">power</a> (<span class="keywordtype">int</span> base, <span class="keywordtype">int</span> exponent);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="domain__decomp_8cpp.html#a66b4457a4c1558782b561737fccb1f39" title="Communicates the atoms in the skin regions of the processors to the appropriate neighbours.">communicate_skin_atoms</a> (<a class="code" href="classSystem.html">System</a> *sys);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">int</span> <a class="code" href="domain__decomp_8cpp.html#a66b4457a4c1558782b561737fccb1f39" title="Communicates the atoms in the skin regions of the processors to the appropriate neighbours.">communicate_skin_atoms</a> (<a class="code" href="classSystem.html">System</a> *sys);</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 8 2013 00:17:35 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jan 18 2013 00:07:14 for CBEMD: Parallelized MD in Various Thermodynamic Ensembles by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
